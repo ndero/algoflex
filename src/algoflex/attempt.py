@@ -25,6 +25,24 @@ class PassScreen(ModalScreen):
         yield Markdown(self.PASS_MD)
 
 
+class FailScreen(ModalScreen):
+    FAIL_MD = """
+    Failed,
+    """
+    BINDINGS = [("escape", "dismiss", "Dismiss")]
+    DEFAULT_CSS = """
+    FailScreen {
+        align: center middle;
+    }
+    Markdown {
+        width: 50;
+    }
+    """
+
+    def compose(self):
+        yield Markdown(self.FAIL_MD)
+
+
 class AttemptScreen(App):
     DEFAULT_TEXT = """\
 def solution():
