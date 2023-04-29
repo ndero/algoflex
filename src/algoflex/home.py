@@ -6,6 +6,7 @@ from textual.containers import (
     VerticalScroll,
     ItemGrid,
     VerticalGroup,
+    HorizontalGroup,
 )
 from textual.widgets import Footer, Label, Markdown, Button
 
@@ -28,7 +29,7 @@ class ProblemScreen(VerticalScroll):
             yield Markdown(PROBLEM_MD)
 
 
-class HomeScreen(App):
+class HomeScreen(Screen):
     def compose(self):
         yield Label("Algo Flex - The terminal code practice app")
         yield ProblemScreen()
@@ -38,6 +39,6 @@ class HomeScreen(App):
         yield Footer()
 
 
-if __name__ == "__main__":
-    app = HomeScreen()
-    app.run()
+# if __name__ == "__main__":
+#     app = HomeScreen()
+#     app.run()
