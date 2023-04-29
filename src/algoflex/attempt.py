@@ -2,7 +2,7 @@ from textual.app import App
 from textual.widgets import TextArea, Button, Markdown
 from home import ProblemScreen
 from textual.containers import VerticalGroup, HorizontalGroup
-from textual.screen import ModalScreen
+from textual.screen import ModalScreen, Screen
 
 
 class PassScreen(ModalScreen):
@@ -43,7 +43,7 @@ class FailScreen(ModalScreen):
         yield Markdown(self.FAIL_MD)
 
 
-class AttemptScreen(App):
+class AttemptScreen(Screen):
     DEFAULT_TEXT = """\
 def solution():
     # your solution here
@@ -62,9 +62,9 @@ def solution():
                     yield Button("cancel")
 
     def action_show_modal(self):
-        self.push_screen(PassScreen())
+        self.app.push_screen(PassScreen())
 
 
-if __name__ == "__main__":
-    app = AttemptScreen()
-    app.run()
+# if __name__ == "__main__":
+#     app = AttemptScreen()
+#     app.run()
