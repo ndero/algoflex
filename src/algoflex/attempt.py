@@ -1,5 +1,5 @@
 from textual.app import App
-from textual.widgets import TextArea, Button, Markdown
+from textual.widgets import TextArea, Button, Markdown, Footer
 from home import ProblemScreen
 from textual.containers import VerticalGroup, HorizontalGroup
 from textual.screen import ModalScreen, Screen
@@ -60,6 +60,7 @@ def solution():
                 with HorizontalGroup():
                     yield Button("submit")
                     yield Button("cancel")
+        yield Footer()
 
     def action_show_modal(self):
         self.app.push_screen(PassScreen())
