@@ -12,6 +12,15 @@ from textual.containers import (
 from textual.widgets import Footer, Label, Markdown, Button, Static
 
 
+class TitleScreen(Center):
+    TITLE_MD = """
+# Algo Flex - The terminal code practice app
+"""
+
+    def compose(self):
+        yield Markdown(self.TITLE_MD)
+
+
 class ProblemScreen(VerticalScroll):
     DEFAULT_CSS = """
     VerticalScroll {
@@ -90,6 +99,7 @@ class HomeScreen(Screen):
     """
 
     def compose(self):
+        yield TitleScreen()
         yield ProblemScreen()
         yield StatScreen()
         yield Footer()
