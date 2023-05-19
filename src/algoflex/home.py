@@ -43,6 +43,36 @@ output: 30
             yield Markdown(self.PROBLEM_MD)
 
 
+class StatScreen(Vertical):
+    DEFAULT_CSS = """
+    Horizontal {
+        Vertical {
+            background: $boost;
+            padding: 1;
+            margin: 1 0;
+        }
+        #first {
+            padding-bottom: 1;
+        }
+    }
+    """
+
+    def compose(self):
+        with Horizontal():
+            with Vertical():
+                yield Static("[b]Attempts[/]", id="first")
+                yield Static("2")
+            with Vertical():
+                yield Static("[b]Skips[/]", id="first")
+                yield Static("5")
+            with Vertical():
+                yield Static("[b]Best time[/]", id="first")
+                yield Static("/...")
+            with Vertical():
+                yield Static("[b]Difficulty[/]", id="first")
+                yield Static("[b green]easy[/]")
+
+
 class HomeScreen(Screen):
     DEFAULT_CSS = """
     HomeScreen {
@@ -61,4 +91,5 @@ class HomeScreen(Screen):
 
     def compose(self):
         yield ProblemScreen()
+        yield StatScreen()
         yield Footer()
