@@ -8,8 +8,11 @@ class AlgoFlex(App):
     MODES = {"home": HomeScreen, "attempt": AttemptScreen}
     DEFAULT_MODE = "home"
     BINDINGS = [
-        Binding("h", "app.switch_mode('home')", "home", tooltip="show home screen"),
+        Binding("h", "app.switch_mode('home')", "home", tooltip="Go to home"),
         Binding(
-            "a", "app.switch_mode('attempt')", "attempt", tooltip="show attempt screen"
+            "a",
+            "app.switch_mode('attempt')",
+            "attempt",
+            tooltip="Attempt this question",
         ),
     ]

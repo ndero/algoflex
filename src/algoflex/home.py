@@ -10,6 +10,7 @@ from textual.containers import (
     Center,
 )
 from textual.widgets import Footer, Label, Markdown, Button, Static
+from textual.binding import Binding
 
 
 class TitleScreen(Center):
@@ -83,6 +84,7 @@ class StatScreen(Vertical):
 
 
 class HomeScreen(Screen):
+    BINDINGS = [Binding("s", "skip", "skip", tooltip="Skip this question")]
     DEFAULT_CSS = """
     HomeScreen {
         ProblemScreen {
