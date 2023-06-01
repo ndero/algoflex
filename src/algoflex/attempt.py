@@ -4,9 +4,11 @@ from home import ProblemScreen, TitleScreen
 from result import ResultModal
 from textual.containers import Vertical, Horizontal
 from textual.screen import ModalScreen, Screen
+from textual.binding import Binding
 
 
 class AttemptScreen(Screen):
+    BINDINGS = [Binding("s", "submit", "submit", tooltip="submit your solution")]
     DEFAULT_CSS = """
     ProblemScreen {
         margin: 0 1;
@@ -23,7 +25,6 @@ def solution(nums, target):
             return [lookup[target - num], i]
         lookup[num] = i
 """
-    BINDINGS = [("s", "show_modal", "Editor")]
 
     def compose(self):
         yield TitleScreen()
@@ -35,9 +36,10 @@ def solution(nums, target):
                     show_line_numbers=True,
                     language="python",
                     compact=True,
+                    tab_behavior="indent",
                 )
         yield Footer()
 
-    def action_show_modal(self):
+    def action_submit(self):
         code = self.query_one(TextArea)
         self.app.push_screen(ResultModal(code.text))

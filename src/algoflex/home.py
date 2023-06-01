@@ -27,7 +27,7 @@ class TitleScreen(Center):
     """
 
     def compose(self):
-        yield Static("[b]Algo Flex - The terminal code practice app[/]")
+        yield Static("[b]Algoflex - The terminal code practice app[/]")
 
 
 class ProblemScreen(VerticalScroll):
@@ -88,7 +88,7 @@ class StatScreen(Vertical):
                 yield Static("...")
             with Vertical():
                 yield Static("[b]Difficulty[/]", id="first")
-                yield Static("[b green]easy[/]")
+                yield Static("[b green]Easy[/]")
 
 
 class HomeScreen(Screen):
