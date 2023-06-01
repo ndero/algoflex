@@ -14,12 +14,20 @@ from textual.binding import Binding
 
 
 class TitleScreen(Center):
-    TITLE_MD = """
-# Algo Flex - The terminal code practice app
-"""
+    DEFAULT_CSS = """
+    TitleScreen {
+        height: 3;
+        Static {
+            height: 100%;
+            color: $markdown-h1-color;
+            background: $boost;
+            content-align: center middle;
+        }
+    }
+    """
 
     def compose(self):
-        yield Markdown(self.TITLE_MD)
+        yield Static("[b]Algo Flex - The terminal code practice app[/]")
 
 
 class ProblemScreen(VerticalScroll):
@@ -77,7 +85,7 @@ class StatScreen(Vertical):
                 yield Static("5")
             with Vertical():
                 yield Static("[b]Best time[/]", id="first")
-                yield Static("/...")
+                yield Static("...")
             with Vertical():
                 yield Static("[b]Difficulty[/]", id="first")
                 yield Static("[b green]easy[/]")
@@ -88,7 +96,7 @@ class HomeScreen(Screen):
     DEFAULT_CSS = """
     HomeScreen {
         ProblemScreen {
-            height: 66vh;
+            height: 70vh;
             &>*{ max-width: 100; }
             align: center middle;
             margin-top: 1;

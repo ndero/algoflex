@@ -1,12 +1,20 @@
 from textual.app import App
 from textual.widgets import TextArea, Button, Markdown, Footer
-from home import ProblemScreen
+from home import ProblemScreen, TitleScreen
 from result import ResultModal
-from textual.containers import VerticalGroup, HorizontalGroup
+from textual.containers import Vertical, Horizontal
 from textual.screen import ModalScreen, Screen
 
 
 class AttemptScreen(Screen):
+    DEFAULT_CSS = """
+    ProblemScreen {
+        margin: 0 1;
+    }
+    TextArea {
+        margin-right: 1;
+    }
+    """
     DEFAULT_CODE = """\
 def solution(nums, target):
     lookup = {}
@@ -18,22 +26,18 @@ def solution(nums, target):
     BINDINGS = [("s", "show_modal", "Editor")]
 
     def compose(self):
-        with HorizontalGroup():
+        yield TitleScreen()
+        with Horizontal():
             yield ProblemScreen()
-            with VerticalGroup():
+            with Vertical():
                 yield TextArea(
-                    self.DEFAULT_CODE, show_line_numbers=True, language="python"
+                    self.DEFAULT_CODE,
+                    show_line_numbers=True,
+                    language="python",
+                    compact=True,
                 )
-                with HorizontalGroup():
-                    yield Button("submit")
-                    yield Button("cancel")
         yield Footer()
 
     def action_show_modal(self):
         code = self.query_one(TextArea)
         self.app.push_screen(ResultModal(code.text))
-
-
-# if __name__ == "__main__":
-#     app = AttemptScreen()
-#     app.run()
