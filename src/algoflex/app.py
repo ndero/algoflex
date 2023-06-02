@@ -16,3 +16,13 @@ class AlgoFlex(App):
             tooltip="Attempt this question",
         ),
     ]
+
+    def check_action(self, action, parameters):
+        # disable footer switcher for current screen
+        if (
+            action == "switch_mode"
+            and parameters
+            and self.current_mode == parameters[0]
+        ):
+            return
+        return True
