@@ -11,6 +11,9 @@ from textual.containers import (
 )
 from textual.widgets import Footer, Label, Markdown, Button, Static
 from textual.binding import Binding
+from textual.reactive import Reactive
+from _data import questions
+from random import randint
 
 
 class TitleScreen(Center):
@@ -39,26 +42,18 @@ class ProblemScreen(VerticalScroll):
         }
     }
     """
-    PROBLEM_MD = """
-### Calculate the score
-Given an array of scores e.g `[ '5', '2', 'C', 'D', '+', '+', 'C' ]`, calculate the total points where:
-```
-+  add the last two scores.
-D  double the last score.
-C  cancel the last score and remove it.
-x  add the score
-```
-You're always guaranteed to have the last two scores for `+` and the previous score for `D`.
-### Example
-```
-input: [ '5', '2', 'C', 'D', '+', '+', 'C' ]
-output: 30
-```
-"""
+    Q_ID = Reactive(-1)
 
     def compose(self):
         with VerticalScroll():
-            yield Markdown(self.PROBLEM_MD)
+            yield Markdown()
+
+    def on_mount(self):
+        self.Q_ID = randint(0, 2)
+
+    def watch_Q_ID(self, id):
+        q_md = questions[id].get("markdown", "")
+        self.query_one(Markdown).update(markdown=q_md)
 
 
 class StatScreen(Vertical):
