@@ -42,18 +42,14 @@ class ProblemScreen(VerticalScroll):
         }
     }
     """
-    Q_ID = Reactive(-1)
+
+    def __init__(self, problem):
+        super().__init__()
+        self.problem = problem
 
     def compose(self):
         with VerticalScroll():
-            yield Markdown()
-
-    def on_mount(self):
-        self.Q_ID = randint(0, 2)
-
-    def watch_Q_ID(self, id):
-        q_md = questions[id].get("markdown", "")
-        self.query_one(Markdown).update(markdown=q_md)
+            yield Markdown(markdown=self.problem)
 
 
 class StatScreen(Vertical):
@@ -102,9 +98,18 @@ class HomeScreen(Screen):
         }
     }
     """
+    problem_id = Reactive(-1)
 
     def compose(self):
+        problem = questions.get(id, {}).get("markdown", "")
         yield TitleScreen()
-        yield ProblemScreen()
+        yield ProblemScreen(problem)
         yield StatScreen()
         yield Footer()
+
+    def on_mount(self):
+        self.problem_id = randint(0, 2)
+
+    def watch_problem_id(self, id):
+        problem = questions[id].get("markdown", "")
+        self.query_one(ProblemScreen).query_one(Markdown).update(markdown=problem)
