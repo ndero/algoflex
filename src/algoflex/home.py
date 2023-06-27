@@ -14,42 +14,8 @@ from textual.binding import Binding
 from textual.reactive import Reactive
 from _data import questions
 from random import randint
-
-
-class TitleScreen(Center):
-    DEFAULT_CSS = """
-    TitleScreen {
-        height: 3;
-        Static {
-            height: 100%;
-            color: $markdown-h1-color;
-            background: $boost;
-            content-align: center middle;
-        }
-    }
-    """
-
-    def compose(self):
-        yield Static("[b]Algoflex - The terminal code practice app[/]")
-
-
-class ProblemScreen(VerticalScroll):
-    DEFAULT_CSS = """
-    VerticalScroll {
-        Markdown {
-            height: 100%;
-            padding: 0 1;
-        }
-    }
-    """
-
-    def __init__(self, problem):
-        super().__init__()
-        self.problem = problem
-
-    def compose(self):
-        with VerticalScroll():
-            yield Markdown(markdown=self.problem)
+from attempt import AttemptScreen
+from custom_widgets import TitleScreen, ProblemScreen
 
 
 class StatScreen(Vertical):
@@ -82,8 +48,11 @@ class StatScreen(Vertical):
                 yield Static("[b green]Easy[/]")
 
 
-class HomeScreen(Screen):
-    BINDINGS = [Binding("s", "skip", "skip", tooltip="Skip this question")]
+class HomeScreen(App):
+    BINDINGS = [
+        Binding("a", "attempt", "attempt", tooltip="Attempt this question"),
+        Binding("n", "next", "next", tooltip="Next question"),
+    ]
     DEFAULT_CSS = """
     HomeScreen {
         ProblemScreen {
@@ -113,3 +82,11 @@ class HomeScreen(Screen):
     def watch_problem_id(self, id):
         problem = questions[id].get("markdown", "")
         self.query_one(ProblemScreen).query_one(Markdown).update(markdown=problem)
+
+    def action_attempt(self):
+        problem = questions[self.problem_id].get("markdown", "")
+        attempt = AttemptScreen(problem)
+        self.push_screen(attempt)
+
+    def action_next(self):
+        self.problem_id = randint(0, 2)
