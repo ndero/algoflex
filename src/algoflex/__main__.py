@@ -1,4 +1,4 @@
-from app import AlgoFlex
+from home import HomeScreen
 
 if __name__ == "__main__":
-    AlgoFlex().run()
+    HomeScreen().run()

@@ -73,7 +73,7 @@ if __name__ == "__main__":
                 ["python3", tmp_file.name], capture_output=True, text=True, timeout=10
             )
             if result.stdout:
-                output_log.write(result.stdout)
+                output_log.write(result.stdout, animate=True)
             if result.stderr:
                 output_log.write(f"[red]{result.stderr}[/red]")
         except subprocess.TimeoutExpired:

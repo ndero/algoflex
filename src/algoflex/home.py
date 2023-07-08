@@ -90,3 +90,9 @@ class HomeScreen(App):
 
     def action_next(self):
         self.problem_id = randint(0, 2)
+
+    def check_action(self, action, parameters):
+        if not self.screen.id == "_default":
+            if action == "attempt" or action == "next":
+                return False
+        return True
