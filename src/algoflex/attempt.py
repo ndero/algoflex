@@ -25,12 +25,8 @@ class AttemptScreen(Screen):
     }
     """
     DEFAULT_CODE = """\
-def solution(nums, target):
-    lookup = {}
-    for i, num in enumerate(nums):
-        if target - num in lookup:
-            return [lookup[target - num], i]
-        lookup[num] = i
+def solution():
+    # do your thing
 """
 
     def __init__(self, problem_id):
@@ -53,7 +49,7 @@ def solution(nums, target):
 
     def action_submit(self):
         code = self.query_one(TextArea)
-        self.app.push_screen(ResultModal(code.text))
+        self.app.push_screen(ResultModal(self.problem_id, code.text))
 
     def action_cancel(self):
         self.dismiss()

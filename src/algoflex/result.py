@@ -1,7 +1,7 @@
 from textual.screen import ModalScreen
 from textual.widgets import Log, Button, TextArea, RichLog
 from textual.containers import VerticalScroll, Center
-
+from _data import questions
 import tempfile
 import subprocess
 import os
@@ -27,43 +27,41 @@ class ResultModal(ModalScreen):
     """
     TEST_CODE = """
 def run_tests():
-    test_cases = [
-        (([2, 7, 11, 15], 9), [0, 1]),
-        (([3, 2, 4], 6), [1, 2]),
-        (([3, 3], 6), [0, 1]),
-        (([1, 2, 3], 4), [0, 2]),
-    ]
     passed = 0
-    for i, (inputs, expected) in enumerate(test_cases):
+    for i, [inputs, expected] in enumerate(test_cases):
         try:
             result = solution(*inputs)
             if result == expected:
-                print(f"Test case {i+1} passed ✅")
+                print(f"[green]✔ test case {i+1} passed![/]")
                 passed += 1
             else:
-                print(f"Test case {i+1} failed ❌ — got {result}, expected {expected}")
+                print(f"[red][b]x[/] test case {i+1} failed![/] \\n\\tinputs: {inputs}\\n\\tgot: [red]{result}[/]\\n\\texpected: [green]{expected}[/]")
+                return
         except Exception as e:
-            print(f"Test case {i+1} error ❌ — {e}")
-    print(f"\\nPassed {passed}/{len(test_cases)} test cases.")
+            print(f"[red]test case {i+1} error - {e}[/]")
+            return
+    print(f"\\n🚀 passed [b]{passed}/{passed}[/] test cases!")
 
 if __name__ == "__main__":
     run_tests()
     """
 
-    def __init__(self, code):
+    def __init__(self, problem_id, user_code):
         super().__init__()
-        self.code = code
+        self.problem_id = problem_id
+        self.user_code = user_code
 
     def on_mount(self):
         self.run_user_code()
 
     def compose(self):
-        yield RichLog(highlight=True)
+        yield RichLog(markup=True, wrap=True)
 
     def run_user_code(self):
-        user_code = self.code.strip()
+        user_code = self.user_code.strip()
         output_log = self.query_one(RichLog)
-        full_code = f"{user_code}\n\n{self.TEST_CODE}"
+        test_cases = questions.get(self.problem_id, {}).get("test_cases", [])
+        full_code = f"{user_code}\n\ntest_cases={test_cases}\n\n{self.TEST_CODE}"
         with tempfile.NamedTemporaryFile(
             delete=False, suffix=".py", mode="w"
         ) as tmp_file:
@@ -75,7 +73,7 @@ if __name__ == "__main__":
             if result.stdout:
                 output_log.write(result.stdout, animate=True)
             if result.stderr:
-                output_log.write(f"[red]{result.stderr}[/red]")
+                output_log.write(result.stderr, animate=True)
         except subprocess.TimeoutExpired:
             output_log.write("Execution timed out")
         except Exception as e:
