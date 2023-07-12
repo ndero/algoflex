@@ -67,7 +67,8 @@ class HomeScreen(App):
         }
     }
     """
-    problem_id = Reactive(-1)
+    problem_id = Reactive(0)
+    PROBLEMS_COUNT = len(questions.keys())
 
     def compose(self):
         problem = questions.get(id, {}).get("markdown", "")
@@ -77,7 +78,7 @@ class HomeScreen(App):
         yield Footer()
 
     def on_mount(self):
-        self.problem_id = randint(0, 2)
+        self.problem_id = randint(1, self.PROBLEMS_COUNT)
 
     def watch_problem_id(self, id):
         problem = questions.get(id, {}).get("markdown", "")
@@ -87,7 +88,7 @@ class HomeScreen(App):
         self.push_screen(AttemptScreen(self.problem_id))
 
     def action_next(self):
-        self.problem_id = randint(0, 2)
+        self.problem_id = randint(1, self.PROBLEMS_COUNT)
 
     def check_action(self, action, parameters):
         if not self.screen.id == "_default":
