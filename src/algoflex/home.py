@@ -15,7 +15,7 @@ from textual.reactive import Reactive
 from _data import questions
 from random import randint
 from attempt import AttemptScreen
-from custom_widgets import TitleScreen, ProblemScreen
+from custom_widgets import Title, Problem
 
 
 class StatScreen(Vertical):
@@ -55,7 +55,7 @@ class HomeScreen(App):
     ]
     DEFAULT_CSS = """
     HomeScreen {
-        ProblemScreen {
+        Problem {
             height: 70vh;
             &>*{ max-width: 100; }
             align: center middle;
@@ -71,8 +71,8 @@ class HomeScreen(App):
 
     def compose(self):
         problem = questions.get(id, {}).get("markdown", "")
-        yield TitleScreen()
-        yield ProblemScreen(problem)
+        yield Title()
+        yield Problem(problem)
         yield StatScreen()
         yield Footer()
 
@@ -80,13 +80,11 @@ class HomeScreen(App):
         self.problem_id = randint(0, 2)
 
     def watch_problem_id(self, id):
-        problem = questions[id].get("markdown", "")
-        self.query_one(ProblemScreen).query_one(Markdown).update(markdown=problem)
+        problem = questions.get(id, {}).get("markdown", "")
+        self.query_one(Problem).query_one(Markdown).update(markdown=problem)
 
     def action_attempt(self):
-        problem = questions[self.problem_id].get("markdown", "")
-        attempt = AttemptScreen(problem)
-        self.push_screen(attempt)
+        self.push_screen(AttemptScreen(self.problem_id))
 
     def action_next(self):
         self.problem_id = randint(0, 2)

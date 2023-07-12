@@ -1,10 +1,11 @@
 from textual.app import App
 from textual.widgets import TextArea, Button, Markdown, Footer
-from custom_widgets import TitleScreen, ProblemScreen
+from custom_widgets import Title, Problem
 from result import ResultModal
 from textual.containers import Vertical, Horizontal
 from textual.screen import ModalScreen, Screen
 from textual.binding import Binding
+from _data import questions
 
 
 class AttemptScreen(Screen):
@@ -13,8 +14,11 @@ class AttemptScreen(Screen):
         Binding("c", "cancel", "cancel", tooltip="Go to home"),
     ]
     DEFAULT_CSS = """
-    ProblemScreen {
-        margin: 0 1;
+    Horizontal {
+        Problem {
+            margin: 0 1;
+            height: 1fr;
+        }
     }
     TextArea {
         margin-right: 1;
@@ -29,22 +33,22 @@ def solution(nums, target):
         lookup[num] = i
 """
 
-    def __init__(self, problem):
+    def __init__(self, problem_id):
         super().__init__()
-        self.problem = problem
+        self.problem_id = problem_id
 
     def compose(self):
-        yield TitleScreen()
+        problem = questions.get(self.problem_id, {}).get("markdown", "")
+        yield Title()
         with Horizontal():
-            yield ProblemScreen(self.problem)
-            with Vertical():
-                yield TextArea(
-                    self.DEFAULT_CODE,
-                    show_line_numbers=True,
-                    language="python",
-                    compact=True,
-                    tab_behavior="indent",
-                )
+            yield Problem(problem)
+            yield TextArea(
+                self.DEFAULT_CODE,
+                show_line_numbers=True,
+                language="python",
+                compact=True,
+                tab_behavior="indent",
+            )
         yield Footer()
 
     def action_submit(self):

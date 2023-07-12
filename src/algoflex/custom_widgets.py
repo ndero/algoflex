@@ -2,11 +2,11 @@ from textual.containers import VerticalScroll, Center
 from textual.widgets import Markdown, Static
 
 
-class ProblemScreen(VerticalScroll):
+class Problem(VerticalScroll):
     DEFAULT_CSS = """
     VerticalScroll {
         Markdown {
-            height: 100%;
+            height: 1fr;
             padding: 0 1;
         }
     }
@@ -18,15 +18,15 @@ class ProblemScreen(VerticalScroll):
 
     def compose(self):
         with VerticalScroll():
-            yield Markdown(markdown=self.problem)
+            yield Markdown(self.problem)
 
 
-class TitleScreen(Center):
+class Title(Center):
     DEFAULT_CSS = """
-    TitleScreen {
+    Title {
         height: 3;
         Static {
-            height: 100%;
+            height: 1fr;
             color: $markdown-h1-color;
             background: $boost;
             content-align: center middle;
