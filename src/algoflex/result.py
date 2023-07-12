@@ -8,7 +8,7 @@ import os
 
 
 class ResultModal(ModalScreen):
-    BINDINGS = [("q", "dismiss", "dismiss")]
+    BINDINGS = [("escape", "dismiss", "dismiss")]
     DEFAULT_CSS = """
     ResultModal {
         &>* {
