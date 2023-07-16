@@ -77,4 +77,29 @@ Output: [[3,5], [6,9], [12,14]]
             [["abcdefffghijkl"], [[5, 7]]],
         ],
     },
+    3: {
+        "markdown": """
+### Majority element
+Given an array nums of size n, return the majority element.
+The majority element is the element that appears more than
+⌊n / 2⌋ times.
+You may assume that the majority element always
+exists in the array.
+### Example
+```
+Input: [3, 2, 3]
+Output: 3
+```""",
+        "title": "Majority element",
+        "difficulty": "Easy",
+        "test_cases": [
+            [[[3, 2, 3]], 3],
+            [[[6] * 20], 6],
+            [[[7] * 20 + [9] * 21], 9],
+            [[[2]], 2],
+            [[[]], None],
+            [[[9] * 1_001 + [6] * 1_000], 9],
+            [[[-2, -2, -4, -2, -4, -4, -4]], -4],
+        ],
+    },
 }
