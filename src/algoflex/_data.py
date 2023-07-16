@@ -28,4 +28,53 @@ output: 30
             [[["1", "D", "D", "D", "D", "D"]], 63],
         ],
     },
+    2: {
+        "markdown": """
+### Repeated letters
+Given a string k of lower-case letters. the letters can be repeated and
+exist consecutively. A substring from k is considered valld if it contains
+at least three consecutive identical letters.
+An example: k = abcdddeeeeaabbbed has three valid substrings: "ddd",
+"eeee" and "bbb".
+You must order the pairs by the start index in ascending order
+### Example
+```
+Input: k = "abcdddeeeeaabbbcd"
+Output: [[3,5], [6,9], [12,14]]
+```
+""",
+        "title": "Repeated letters",
+        "difficulty": "Easy",
+        "test_cases": [
+            [["abcdddeeeeaabbbb"], [[3, 5], [6, 9], [12, 15]]],
+            [["xxxcyyyyydkkkkkk"], [[0, 2], [4, 8], [10, 15]]],
+            [
+                ["abcdddeeeeaabbbb" * 6],
+                [
+                    [3, 5],
+                    [6, 9],
+                    [12, 15],
+                    [19, 21],
+                    [22, 25],
+                    [28, 31],
+                    [35, 37],
+                    [38, 41],
+                    [44, 47],
+                    [51, 53],
+                    [54, 57],
+                    [60, 63],
+                    [67, 69],
+                    [70, 73],
+                    [76, 79],
+                    [83, 85],
+                    [86, 89],
+                    [92, 95],
+                ],
+            ],
+            [["abcd"], []],
+            [["aabbccdd"], []],
+            [[""], []],
+            [["abcdefffghijkl"], [[5, 7]]],
+        ],
+    },
 }
