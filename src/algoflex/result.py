@@ -35,12 +35,12 @@ def run_tests():
                 print(f"[green]✔ test case {i+1} passed![/]")
                 passed += 1
             else:
-                print(f"[red][b]x[/] test case {i+1} failed![/] \\n\\tinputs: {inputs}\\n\\tgot: [red]{result}[/]\\n\\texpected: [green]{expected}[/]")
+                print(f"[red][b]x[/] test case {i+1} failed![/] \\n\\t[b]inputs[/]: {inputs}\\n\\t[b]got[/]: [red]{result}[/]\\n\\t[b]expected[/]: [green]{expected}[/]")
                 return
         except Exception as e:
-            print(f"[red]test case {i+1} error - {e}[/]")
+            print(f"[red]test case {i+1} error![/]\\n\\[b]terror[/]: {e} \\n\\t[b]inputs[/]: {inputs}")
             return
-    print(f"\\n🚀 passed [b]{passed}/{passed}[/] test cases!")
+    print(f"\\n🚀 [b]{passed}/{passed} passed![/]")
 
 if __name__ == "__main__":
     run_tests()
