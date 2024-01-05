@@ -102,4 +102,31 @@ Output: 3
             [[[-2, -2, -4, -2, -4, -4, -4]], -4],
         ],
     },
+    4: {
+        "markdown": """
+### Max profit
+You are given an array `prices` where `prices[i]` is the price of a given stock on the ith day. You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
+Return the maximum profit you can achieve from this transaction.
+If you cannot achieve any profit, return 0.
+### Example
+```
+input: [7, 1, 5, 3, 6, 4]
+output: 5
+
+input: [7, 6, 4, 3, 1]
+output: 0
+```
+""",
+        "title": "Max profit",
+        "difficulty": "Easy",
+        "test_cases": [
+            [[[7, 1, 5, 3, 6, 4]], 5],
+            [[[7, 6, 4, 3, 1]], 0],
+            [[[0, 0, 0, 0]], 0],
+            [[[4] * 2_000 + [15] * 1_000], 11],
+            [[[90] * 1_000 + [50] * 2_000], 0],
+            [[[]], 0],
+            [[[i for i in range(1, 100)]], 98],
+        ],
+    },
 }
