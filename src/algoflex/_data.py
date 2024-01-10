@@ -166,4 +166,31 @@ output: True
             [["[" + "()" * 100_000 + "]"], True],
         ],
     },
+    6: {
+        "markdown": """
+### Max sum sub array
+Given an integer array nums, find a contiguous non-empty subarray within the array that has the largest sum,
+and return the sum.
+
+### Example
+```
+input: [-2, 0, -1]
+output: 0
+
+input: [2, 3, -2, 4]
+output: 7
+```
+```
+""",
+        "title": "Max sum sub array",
+        "difficulty": "Easy",
+        "test_cases": [
+            [[[-2, 0, -1]], 0],
+            [[[2, 3, -2, 4]], 7],
+            [[[-2]], -2],
+            [[[i for i in range(100_000)]], 4_999_950_000],
+            [[[2] * 50_000 + [-2] * 50_000], 100_000],
+            [[[2, -4, 8, 6, 9, -1, 3, -4, 12]], 33],
+        ],
+    },
 }
