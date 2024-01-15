@@ -193,4 +193,31 @@ output: 7
             [[[2, -4, 8, 6, 9, -1, 3, -4, 12]], 33],
         ],
     },
+    7: {
+        "markdown": """
+### Max product sub array
+Given an integer array nums, find a contiguous non-empty subarray within the array that has the largest product,
+and return the product.
+
+### Example
+```
+input: [-2, 0, -1]
+output: 0
+
+input: [2, 3, -2, 4]
+output: 6
+```
+```
+""",
+        "title": "Max product sub array",
+        "difficulty": "Easy",
+        "test_cases": [
+            [[[-2, 0, -1]], 0],
+            [[[2, 3, -2, 4]], 6],
+            [[[-2, 0, -1, -3]], 3],
+            [[[-2]], -2],
+            [[[1 for _ in range(200_000)]], 1],
+            [[[2, -4, 8, 6, 9, -1, 3, -4, 12]], 497664],
+        ],
+    },
 }

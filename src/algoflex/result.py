@@ -68,7 +68,7 @@ if __name__ == "__main__":
             tmp_file.write(full_code)
         try:
             result = subprocess.run(
-                ["python3", tmp_file.name], capture_output=True, text=True, timeout=10
+                ["python3", tmp_file.name], capture_output=True, text=True, timeout=5
             )
             if result.stdout:
                 output_log.write(result.stdout, animate=True)
