@@ -220,4 +220,42 @@ output: 6
             [[[2, -4, 8, 6, 9, -1, 3, -4, 12]], 497664],
         ],
     },
+    8: {
+        "markdown": """
+### Symmetric difference
+Create a function that takes two or more arrays and returns an array of their symmetric difference. The returned array must contain only unique values (no duplicates).
+The mathematical term symmetric difference (△ or ⊕) of two sets is the set of elements which are in either of the two sets but not in both.
+Return the elements in order of appearance from left to right.
+
+### Example
+```
+input: [[1, 2, 3], [2, 3, 4]]
+output: [1, 4]
+```
+""",
+        "title": "Symmetric difference",
+        "difficulty": "Easy",
+        "test_cases": [
+            [[[1, 2, 3], [2, 3, 4]], [1, 4]],
+            [[[1, 2, 4, 4], [0, 1, 6], [0, 1]], [2, 4, 6]],
+            [[[i] for i in range(6)], [0, 1, 2, 3, 4, 5]],
+            [[[-1], [], [], [0], [1]], [-1, 0, 1]],
+            [
+                [
+                    [9, -4, 8, 3, 12, 0, -4, 8],
+                    [3, 3, 8, 6, 7, 10],
+                    [11, 12, 10, 13],
+                    [5, 15, 3],
+                    [11, 15, 11, 11, 6, -2],
+                ],
+                [9, -4, 0, 7, 13, 5, -2],
+            ],
+            [[[2] * 50_000 + [-2] * 50_000], [2, -2]],
+            [[[i for i in range(100_000)], [i for i in range(100_000)]], []],
+            [
+                [[i for i in range(100_000)], [i for i in range(10, 100_000)]],
+                [i for i in range(10)],
+            ],
+        ],
+    },
 }
