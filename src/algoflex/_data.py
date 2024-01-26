@@ -14,6 +14,15 @@ You're always guaranteed to have the last two scores for `+` and the previous sc
 ```
 input: [ '5', '2', 'C', 'D', '+', '+', 'C' ]
 output: 30
+explanation:
+    '5' - add 5 -> [5]
+    '2' - add 2 -> [5, 2]
+    'C' - cancel last score -> [5]
+    'D' - double last score -> [5, 10]
+    '+' - sum last two scores -> [5, 10, 15]
+    '+' - sum last two scores -> [5, 10, 15, 25]
+    'C' - cancel last score -> [5, 10, 15]
+    return sum -> 30
 ```
 """,
         "title": "Score tally",
@@ -112,6 +121,7 @@ If you cannot achieve any profit, return 0.
 ```
 input: [7, 1, 5, 3, 6, 4]
 output: 5
+explanation: buy at price = 1 sell at price = 6
 
 input: [7, 6, 4, 3, 1]
 output: 0
@@ -256,6 +266,35 @@ output: [1, 4]
                 [[i for i in range(100_000)], [i for i in range(10, 100_000)]],
                 [i for i in range(10)],
             ],
+        ],
+    },
+    9: {
+        "markdown": """
+### Pairwise
+Given an array `arr`, find element pairs whose sum equal the second argument `target` and return the sum of their indices.
+e.g pairwise([7, 9, 11, 13, 15], 20) returns 6 and pairwise([0, 0, 0, 0, 1, 1], 1) returns 10.
+Each element can only construct a single pair.
+
+### Example
+```
+input: arr: [7, 9, 11, 13, 15], target: 20
+output: 6
+explanation: pairs 7 + 13 and 9 + 11, indices 0 + 3 and 1 + 2, total 6
+
+input: arr: [0, 0, 0, 0, 1, 1], target: 1
+output: 10
+explanation: pairs 0 + 1 and 0 + 1, indices 0 + 4 and 1 + 5, total 10
+```
+""",
+        "title": "Symmetric difference",
+        "difficulty": "Easy",
+        "test_cases": [
+            [[[7, 9, 11, 13, 15], 20], 6],
+            [[[0, 0, 0, 0, 1, 1], 1], 10],
+            [[[-1, 6, 3, 2, 4, 1, 3, 3], 5], 15],
+            [[[1, 6, 5], 6], 2],
+            [[[1, 6, 5, 15, 13, 2, 11], 10], 0],
+            [[[i for i in range(0, 100_000, 10)], 10], 1],
         ],
     },
 }
