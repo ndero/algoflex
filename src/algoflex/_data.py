@@ -324,4 +324,30 @@ explanation: 2 + 4, indices 1 and 2
             [[[i for i in range(-10, 10)], -10], [1, 11]],
         ],
     },
+    11: {
+        "markdown": """
+### Min length sub array
+Given an array of positive integers nums and a positive integer target, return the minimal length of a subarray whose sum is greater than or equal to target.
+If there is no such subarray, return 0 instead.
+
+### Example
+```
+input: arr: [2, 3, 1, 2, 4, 3], target: 7
+output: 2
+explanation: sub array [4, 3] has sum >= 7
+
+input: arr: [1, 3, 6, 2, 1], target: 4
+output: 1
+explanation: sub array [6] has sum >= 4
+```
+""",
+        "title": "Min length sub array",
+        "difficulty": "Medium",
+        "test_cases": [
+            [[[2, 3, 1, 2, 4, 3], 7], 2],
+            [[[1, 3, 6, 2, 1], 4], 1],
+            [[[i for i in range(500_000)], 3_000_000], 7],
+            [[[i for i in range(-10, 10)], 60], 0],
+        ],
+    },
 }
