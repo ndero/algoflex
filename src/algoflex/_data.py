@@ -286,7 +286,7 @@ output: 10
 explanation: pairs 0 + 1 and 0 + 1, indices 0 + 4 and 1 + 5, total 10
 ```
 """,
-        "title": "Symmetric difference",
+        "title": "Pairwise",
         "difficulty": "Easy",
         "test_cases": [
             [[[7, 9, 11, 13, 15], 20], 6],
@@ -295,6 +295,33 @@ explanation: pairs 0 + 1 and 0 + 1, indices 0 + 4 and 1 + 5, total 10
             [[[1, 6, 5], 6], 2],
             [[[1, 6, 5, 15, 13, 2, 11], 10], 0],
             [[[i for i in range(0, 100_000, 10)], 10], 1],
+        ],
+    },
+    10: {
+        "markdown": """
+### Single pair sum
+Given a 1-indexed array of integers numbers that is already sorted in non-decreasing order, find two numbers such that they add up to a specific target number.
+Return the indices of the two numbers as an array.
+The tests are generated such that there is exactly one solution. You may not use the same element twice.
+
+### Example
+```
+input: arr: [2, 7, 11, 15], target: 13
+output: [1, 3]
+explanation: 2 + 11 one-based indices: 1 and 3
+
+input: arr: [2, 4, 7, 14], target: 6
+output: [1, 2]
+explanation: 2 + 4, indices 1 and 2
+```
+""",
+        "title": "Single pair sum sorted list",
+        "difficulty": "Easy",
+        "test_cases": [
+            [[[2, 7, 11, 15], 13], [1, 3]],
+            [[[2, 4, 7, 14], 6], [1, 2]],
+            [[[i for i in range(400_000)], 5], [1, 6]],
+            [[[i for i in range(-10, 10)], -10], [1, 11]],
         ],
     },
 }
