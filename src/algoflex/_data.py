@@ -350,4 +350,32 @@ explanation: sub array [6] has sum >= 4
             [[[i for i in range(-10, 10)], 60], 0],
         ],
     },
+    12: {
+        "markdown": """
+### Min in rotated array
+Suppose an array of length n sorted in ascending order is rotated between 1 and n times.
+For example, the array nums = [0, 1, 2, 4, 5, 6, 7] becomes [4, 5, 6, 7, 0, 1, 2] if it was rotated 4 times. [0, 1, 2, 4, 5, 6, 7] if it was rotated 7 times.
+Given the sorted rotated array nums of unique elements, return the minimum element of this array.
+You must write an algorithm that runs in O(log n) time.
+### Example
+```
+input: arr: [4, 5, 6, 7, 0, 1, 2]
+output: 0
+```
+""",
+        "title": "Min in rotated array",
+        "difficulty": "Medium",
+        "test_cases": [
+            [[[4, 5, 6, 7, 0, 1, 2]], 0],
+            [[[16, 23, 43, 55, -7, -4, 3, 5, 9, 15]], -7],
+            [[[i for i in range(36, 1_000_000, 10)]], 36],
+            [
+                [
+                    [i for i in range(-10, 1_000_000, 10)]
+                    + [i for i in range(-1_000_000, -10, 10)]
+                ],
+                -1_000_000,
+            ],
+        ],
+    },
 }
