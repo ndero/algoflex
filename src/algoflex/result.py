@@ -26,6 +26,15 @@ class ResultModal(ModalScreen):
     }
     """
     TEST_CODE = """
+def truncate(param):
+    s = str(param)
+    if len(s) > 60:
+        return f'{s[:50]}... (truncated)'
+    return param
+
+def display(params):
+    return [truncate(param) for param in params]
+
 def run_tests():
     passed = 0
     for i, [inputs, expected] in enumerate(test_cases):
@@ -35,10 +44,10 @@ def run_tests():
                 print(f"[green]✔ test case {i+1} passed![/]")
                 passed += 1
             else:
-                print(f"[red][b]x[/] test case {i+1} failed![/] \\n\\t[b]inputs[/]: {inputs}\\n\\t[b]got[/]: [red]{result}[/]\\n\\t[b]expected[/]: [green]{expected}[/]")
+                print(f"[red][b]x[/] test case {i+1} failed![/] \\n\\t[b]inputs[/]: {display(inputs)}\\n\\t[b]got[/]: [red]{result}[/]\\n\\t[b]expected[/]: [green]{expected}[/]")
                 return
         except Exception as e:
-            print(f"[red]test case {i+1} error![/]\\n\\t[b]error[/]: {e}\\n\\t[b]inputs[/]: {inputs}")
+            print(f"[red]test case {i+1} error![/]\\n\\t[b]error[/]: {e}\\n\\t[b]inputs[/]: {display(inputs)}")
             return
     print(f"\\nPassed! 🚀 ")
 
@@ -55,7 +64,7 @@ if __name__ == "__main__":
         self.run_user_code()
 
     def compose(self):
-        yield RichLog(markup=True, wrap=True)
+        yield RichLog(markup=True, wrap=True, max_lines=1_000)
 
     def run_user_code(self):
         user_code = self.user_code.strip()
