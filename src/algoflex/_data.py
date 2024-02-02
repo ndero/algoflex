@@ -376,6 +376,31 @@ output: 0
                 ],
                 -1_000_000,
             ],
+            [[[2]], 2],
+        ],
+    },
+    13: {
+        "markdown": """
+### Count primes
+Given a positive integer `n`, write an algorithm to return the number of prime numbers in [0, n]
+### Example
+```
+input: 1000
+output: 168
+explanation: There are 168 prime numbers between 0 and 1000 inclusive.
+```
+""",
+        "title": "Count primes",
+        "difficulty": "Medium",
+        "test_cases": [
+            [[100], 25],
+            [[1_000], 168],
+            [[10_000], 1229],
+            [[100_000], 9592],
+            [[2], 1],
+            [[3], 2],
+            [[1], 0],
+            [[1_000_000], 78498],
         ],
     },
 }
