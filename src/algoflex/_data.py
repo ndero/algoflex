@@ -403,4 +403,53 @@ explanation: There are 168 prime numbers between 0 and 1000 inclusive.
             [[1_000_000], 78498],
         ],
     },
+    14: {
+        "markdown": """
+### Permutations
+Given an array nums of distinct integers, return all the possible permutations.
+You can return the permutations in any order.
+Can you do it without python's itertools?
+
+### Example
+```
+input: [1, 2]
+output: [[1, 2], [2, 1]]
+```
+""",
+        "title": "Permutations",
+        "difficulty": "Medium",
+        "test_cases": [
+            [[[1, 2]], [[1, 2], [2, 1]]],
+            [
+                [[i for i in range(1, 5)]],
+                [
+                    [1, 2, 3, 4],
+                    [1, 2, 4, 3],
+                    [1, 3, 2, 4],
+                    [1, 3, 4, 2],
+                    [1, 4, 2, 3],
+                    [1, 4, 3, 2],
+                    [2, 1, 3, 4],
+                    [2, 1, 4, 3],
+                    [2, 3, 1, 4],
+                    [2, 3, 4, 1],
+                    [2, 4, 1, 3],
+                    [2, 4, 3, 1],
+                    [3, 1, 2, 4],
+                    [3, 1, 4, 2],
+                    [3, 2, 1, 4],
+                    [3, 2, 4, 1],
+                    [3, 4, 1, 2],
+                    [3, 4, 2, 1],
+                    [4, 1, 2, 3],
+                    [4, 1, 3, 2],
+                    [4, 2, 1, 3],
+                    [4, 2, 3, 1],
+                    [4, 3, 1, 2],
+                    [4, 3, 2, 1],
+                ],
+            ],
+            [[[1]], [[1]]],
+        ],
+    },
 }
