@@ -545,4 +545,24 @@ output: 'abc', 'abd', 'acd', 'bcd'
             [["rat", 0], []],
         ],
     },
+    16: {
+        "markdown": """
+### Single number
+Given a non-empty array of integers `nums`, every element appears twice except for one. Find that single one.
+You must implement a solution with a linear runtime complexity and use only constant extra space.
+
+### Example
+```
+input: [4, 1, 2, 1, 2]
+output: 4
+```
+""",
+        "title": "Combinations",
+        "difficulty": "Medium",
+        "test_cases": [
+            [[[4, 1, 2, 1, 2]], 4],
+            [[[2]], 2],
+            [[[i for i in range(1, 500_000)] + [i for i in range(500_000)]], 0],
+        ],
+    },
 }
