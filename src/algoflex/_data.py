@@ -557,12 +557,39 @@ input: [4, 1, 2, 1, 2]
 output: 4
 ```
 """,
-        "title": "Combinations",
-        "difficulty": "Medium",
+        "title": "Single number",
+        "difficulty": "Easy",
         "test_cases": [
             [[[4, 1, 2, 1, 2]], 4],
             [[[2]], 2],
             [[[i for i in range(1, 500_000)] + [i for i in range(500_000)]], 0],
+        ],
+    },
+    17: {
+        "markdown": """
+### Powers of 2
+Given an integer `n`, find whether it is a power of `2`.
+
+### Example
+```
+input: 64
+output: True
+
+input: 20
+output: False
+```
+""",
+        "title": "Powers of 2",
+        "difficulty": "Easy",
+        "test_cases": [
+            [[64], True],
+            [[20], False],
+            [[1024], True],
+            [[2], True],
+            [[0], False],
+            [[1267650600228229401496703205376], True],
+            [[1267650600228229401496703205377], False],
+            [[-64], False],
         ],
     },
 }
