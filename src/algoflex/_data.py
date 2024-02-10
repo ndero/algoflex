@@ -592,4 +592,32 @@ output: False
             [[-64], False],
         ],
     },
+    18: {
+        "markdown": """
+### Reverse Polish Notation
+Evaluate the value of an arithmetic opression in Reverse Polish Notation. Valid operators are +, -, *, and /. Each operand may be an integer or another opression.
+Note that division between two integers should truncate toward zero. It is guaranteed that the given RPN opression is always valid. That means the expression will always evaluate to a result, and there will not be any division by zero operation.
+
+### Example
+```
+input: ["2", "1", "+", "3", "*"]
+output: 9
+explanation: ((2 + 1) * 3) = 9
+
+input: ["4", "13", "5", "/", "+"]
+output: 6
+explanation: (4 + (13 / 5)) = 6
+```
+""",
+        "title": "Reverse polish notation",
+        "difficulty": "Easy",
+        "test_cases": [
+            [[["2", "1", "+", "3", "*"]], 9],
+            [[["4", "13", "5", "/", "+"]], 6],
+            [
+                [["10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"]],
+                12,
+            ],
+        ],
+    },
 }
