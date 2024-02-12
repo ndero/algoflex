@@ -662,4 +662,28 @@ output: 'XXIII'
             [[999], "CMXCIX"],
         ],
     },
+    20: {
+        "markdown": """
+### Longest common subsequence (LCS)
+Given two strings text1 and text2, return their longest common subsequence. If there is no common subsequence, return ''.
+A subsequence of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the remaining characters.
+For example, ‘ace’ is a subsequence of ‘abcde’. A common subsequence of two strings is a subsequence that is common to both strings.
+
+### Example
+```
+input: text1: "math", text2: 'arithmetic'
+output: 'ath'
+```
+""",
+        "title": "Longest common subsequence",
+        "difficulty": "Medium",
+        "test_cases": [
+            [["math", "arithmetic"], "ath"],
+            [["original", "origin"], "origin"],
+            [["foo", "bar"], ""],
+            [["", "arithmetic"], ""],
+            [["shesellsseashellsattheseashore", "isawyouyesterday"], "saester"],
+            [["@work3r", "m@rxkd35rt"], "@rk3r"],
+        ],
+    },
 }
