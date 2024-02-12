@@ -620,4 +620,46 @@ explanation: (4 + (13 / 5)) = 6
             ],
         ],
     },
+    19: {
+        "markdown": """
+### Roman numerals
+Convert a given integer, `n`,  to its equivalent roman numerals for 0 < `n` < 4000
+
+|'M' | 1000|
+|'CM'|  900|
+|'CD'|  400|
+|'C' |  100|
+|'XC'|   90|
+|'L' |   50|
+|'XL'|   40|
+|'X' |   10|
+|'IX'|    9|
+|'V' |    5|
+|'IV'|    4|
+|'I' |    1|
+
+### Example
+```
+input: 4
+output: 'IV'
+
+input: 23
+output: 'XXIII'
+```
+""",
+        "title": "Roman numerals",
+        "difficulty": "Medium",
+        "test_cases": [
+            [[4], "IV"],
+            [[23], "XXIII"],
+            [[768], "DCCLXVIII"],
+            [[1], "I"],
+            [[3999], "MMMCMXCIX"],
+            [[369], "CCCLXIX"],
+            [[1318], "MCCCXVIII"],
+            [[1089], "MLXXXIX"],
+            [[2424], "MMCDXXIV"],
+            [[999], "CMXCIX"],
+        ],
+    },
 }
