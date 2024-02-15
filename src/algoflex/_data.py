@@ -686,4 +686,29 @@ output: 'ath'
             [["@work3r", "m@rxkd35rt"], "@rk3r"],
         ],
     },
+    21: {
+        "markdown": """
+### Longest common substring (LCS)
+Given two strings text1 and text2, return their longest common substring. If there is no common substring, return ''.
+A substring of a string is a new string generated from the original string with adjacent characters.
+For example, "rain" is a substring of "grain". A common substring of two strings is a substring that is common to both strings.
+
+### Example
+```
+input: text1: "brain", text2: 'drain'
+output: 'rain'
+```
+""",
+        "title": "Longest common substring",
+        "difficulty": "Medium",
+        "test_cases": [
+            [["brain", "drain"], "rain"],
+            [["math", "arithmetic"], "th"],
+            [["blackmarket", "stagemarket"], "market"],
+            [
+                ["theoldmanoftheseaissowise", "sowisetheoldmanoftheseais"],
+                "theoldmanoftheseais",
+            ],
+        ],
+    },
 }
