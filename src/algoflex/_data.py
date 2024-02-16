@@ -711,4 +711,32 @@ output: 'rain'
             ],
         ],
     },
+    22: {
+        "markdown": """
+### Happy number
+Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1.
+Those numbers for which this process ends in 1 are happy numbers, while those that do not end in 1 are unhappy numbers.
+Implement a function that returns true if the number is happy, or false if not.
+### Example
+```
+input: 2
+output: False
+
+input: 7
+output: True
+```
+""",
+        "title": "Happy number",
+        "difficulty": "Easy",
+        "test_cases": [
+            [[2], False],
+            [[7], True],
+            [[17], False],
+            [[19], True],
+            [[300_003], False],
+            [[20_345_329], False],
+            [[0], False],
+            [[1], True],
+        ],
+    },
 }
