@@ -739,4 +739,28 @@ output: True
             [[1], True],
         ],
     },
+    23: {
+        "markdown": """
+### Jump game I
+You are given an integer array nums. You are initially positioned at the array's first index, and each element in the array represents your maximum jump length at that position. Return true if you can reach the last index, or false otherwise.
+
+### Example
+```
+input: [2, 3, 1, 1, 4]
+output: True
+```
+Jump 1 step to index 1. jump 3 steps from index 1 to get to the end of array
+""",
+        "title": "Jump game I",
+        "difficulty": "Easy",
+        "test_cases": [
+            [[[2, 3, 1, 1, 4]], True],
+            [[[0]], True],
+            [[[2, 1, 1, 0, 4]], False],
+            [[[i for i in range(200_000)]], False],
+            [[[1 for _ in range(200_000)]], True],
+            [[[0, 0]], False],
+            [[[200_000] + [0] * 200_000], True],
+        ],
+    },
 }
