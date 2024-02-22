@@ -763,4 +763,26 @@ Jump 1 step to index 1. jump 3 steps from index 1 to get to the end of array
             [[[200_000] + [0] * 200_000], True],
         ],
     },
+    24: {
+        "markdown": """
+### Jump game II
+Given an array of non-negative integers nums, you are initially positioned at the first index of the array. Each element in the array represents your maximum jump length at that position. Your goal is to reach the last index in the minimum number of jumps. You can assume that you can always reach the last index. return the number of jumps
+
+### Example
+```
+input: [2, 3, 1, 1, 4]
+output: 2
+```
+Jump 1 step to index 1. jump 3 steps from index 1 to get to the end of array. Total 2 jumps
+""",
+        "title": "Jump game II",
+        "difficulty": "Easy",
+        "test_cases": [
+            [[[2, 3, 1, 1, 4]], 2],
+            [[[1]], 0],
+            [[[1, 5]], 1],
+            [[[1 for _ in range(200_000)]], 199_999],
+            [[[200_000] + [0] * 200_000], 1],
+        ],
+    },
 }
