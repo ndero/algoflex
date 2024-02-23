@@ -785,4 +785,23 @@ Jump 1 step to index 1. jump 3 steps from index 1 to get to the end of array. To
             [[[200_000] + [0] * 200_000], 1],
         ],
     },
+    25: {
+        "markdown": """
+### Jump game III
+Given an array of non-negative integers arr, you are initially positioned at a start index of the array. When you are at index i, you can jump to i + arr[i] or i — arr[i], check if you can reach to any index with value 0. Notice that you can not jump outside of the array at any time.
+
+### Example
+```
+input: arr: [4, 2, 3, 0, 3, 1, 2], start: 0
+output: True
+```
+""",
+        "title": "Jump game III",
+        "difficulty": "Medium",
+        "test_cases": [
+            [[[4, 2, 3, 0, 3, 1, 2], 0], True],
+            [[[3, 0, 2, 1, 2], 2], False],
+            [[[4, 2, 3, 0, 3, 1, 2], 5], True],
+        ],
+    },
 }
