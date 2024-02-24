@@ -804,4 +804,27 @@ output: True
             [[[4, 2, 3, 0, 3, 1, 2], 5], True],
         ],
     },
+    26: {
+        "markdown": """
+### House robber I
+You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and it will automatically contact the police if two adjacent houses were broken into on the same night.
+Given an integer array `nums` representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
+
+### Example
+```
+input: [1, 2, 3, 1]
+output: 4
+explanation: rob the first and the third house.
+```
+""",
+        "title": "House robber I",
+        "difficulty": "Medium",
+        "test_cases": [
+            [[[1, 2, 3, 1]], 4],
+            [[[1, 7, 2, 1, 6]], 13],
+            [[[1, 2]], 2],
+            [[[3]], 3],
+            [[[i for i in range(0, 100_000, 100)]], 25_000_000],
+        ],
+    },
 }
