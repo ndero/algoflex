@@ -827,4 +827,27 @@ explanation: rob the first and the third house.
             [[[i for i in range(0, 100_000, 100)]], 25_000_000],
         ],
     },
+    27: {
+        "markdown": """
+### House robber II
+You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed. All houses at this place are arranged in a circle.
+That means the first house is the neighbor of the last one. Meanwhile, adjacent houses have a security system connected, and it will automatically contact the police if two adjacent houses were broken into on the same night.
+Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
+
+### Example
+```
+input: [1, 2, 3, 1]
+output: 4
+explanation: rob houses at indices 0 and 2
+```
+""",
+        "title": "House robber II",
+        "difficulty": "Medium",
+        "test_cases": [
+            [[[1, 2, 3, 1]], 4],
+            [[[1, 7, 2, 1, 6]], 13],
+            [[[1, 2, 3]], 3],
+            [[[i for i in range(0, 100_000, 100)]], 25_000_000],
+        ],
+    },
 }
