@@ -29,7 +29,7 @@ class ResultModal(ModalScreen):
 def truncate(param):
     s = str(param)
     if len(s) > 60:
-        return f'{s[:50]}... (truncated)'
+        return f'{s[:32]}... (truncated {type(param)})'
     return param
 
 def display(params):
