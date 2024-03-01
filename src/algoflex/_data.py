@@ -43,8 +43,10 @@ explanation:
 Given a string k of lower-case letters. the letters can be repeated and
 exist consecutively. A substring from k is considered valld if it contains
 at least three consecutive identical letters.
+
 An example: k = abcdddeeeeaabbbed has three valid substrings: "ddd",
 "eeee" and "bbb".
+
 You must order the pairs by the start index in ascending order
 ### Example
 ```
@@ -92,6 +94,7 @@ Output: [[3,5], [6,9], [12,14]]
 Given an array nums of size n, return the majority element.
 The majority element is the element that appears more than
 ⌊n / 2⌋ times.
+
 You may assume that the majority element always
 exists in the array.
 ### Example
@@ -115,6 +118,7 @@ Output: 3
         "markdown": """
 ### Max profit
 You are given an array `prices` where `prices[i]` is the price of a given stock on the ith day. You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
+
 Return the maximum profit you can achieve from this transaction.
 If you cannot achieve any profit, return 0.
 ### Example
@@ -144,6 +148,7 @@ output: 0
 ### Valid matching brackets
 Given a string of brackets that can either be `[]`, `()` or `{}`.
 Check if the brackets are valid.
+
 There no other characters in the string apart from '[', ']', '(', ')', '{'and '}'.
 
 ### Example
@@ -234,7 +239,9 @@ output: 6
         "markdown": """
 ### Symmetric difference
 Create a function that takes two or more arrays and returns an array of their symmetric difference. The returned array must contain only unique values (no duplicates).
+
 The mathematical term symmetric difference (△ or ⊕) of two sets is the set of elements which are in either of the two sets but not in both.
+
 Return the elements in order of appearance from left to right.
 
 ### Example
@@ -273,6 +280,7 @@ output: [1, 4]
 ### Pairwise
 Given an array `arr`, find element pairs whose sum equal the second argument `target` and return the sum of their indices.
 e.g pairwise([7, 9, 11, 13, 15], 20) returns 6 and pairwise([0, 0, 0, 0, 1, 1], 1) returns 10.
+
 Each element can only construct a single pair.
 
 ### Example
@@ -302,6 +310,7 @@ explanation: pairs 0 + 1 and 0 + 1, indices 0 + 4 and 1 + 5, total 10
 ### Single pair sum
 Given a 1-indexed array of integers numbers that is already sorted in non-decreasing order, find two numbers such that they add up to a specific target number.
 Return the indices of the two numbers as an array.
+
 The tests are generated such that there is exactly one solution. You may not use the same element twice.
 
 ### Example
@@ -328,6 +337,7 @@ explanation: 2 + 4, indices 1 and 2
         "markdown": """
 ### Min length sub array
 Given an array of positive integers nums and a positive integer target, return the minimal length of a subarray whose sum is greater than or equal to target.
+
 If there is no such subarray, return 0 instead.
 
 ### Example
@@ -355,6 +365,7 @@ explanation: sub array [6] has sum >= 4
 ### Min in rotated array
 Suppose an array of length n sorted in ascending order is rotated between 1 and n times.
 For example, the array nums = [0, 1, 2, 4, 5, 6, 7] becomes [4, 5, 6, 7, 0, 1, 2] if it was rotated 4 times. [0, 1, 2, 4, 5, 6, 7] if it was rotated 7 times.
+
 Given the sorted rotated array nums of unique elements, return the minimum element of this array.
 You must write an algorithm that runs in O(log n) time.
 ### Example
@@ -408,6 +419,7 @@ explanation: There are 168 prime numbers between 0 and 1000 inclusive.
 ### Permutations
 Given an array nums of distinct integers, return all the possible permutations.
 You can return the permutations in any order.
+
 Can you do it without python's itertools?
 
 ### Example
@@ -457,6 +469,7 @@ output: [[1, 2], [2, 1]]
 ### Combinations
 Given a string and a positive integer k, return all possible combinations of characters of size k.
 You can return the combinations in any order.
+
 Are your hands tied without python's itertools 😅?
 
 ### Example
@@ -549,6 +562,7 @@ output: 'abc', 'abd', 'acd', 'bcd'
         "markdown": """
 ### Single number
 Given a non-empty array of integers `nums`, every element appears twice except for one. Find that single one.
+
 You must implement a solution with a linear runtime complexity and use only constant extra space.
 
 ### Example
@@ -596,6 +610,7 @@ output: False
         "markdown": """
 ### Reverse Polish Notation
 Evaluate the value of an arithmetic opression in Reverse Polish Notation. Valid operators are +, -, *, and /. Each operand may be an integer or another opression.
+
 Note that division between two integers should truncate toward zero. It is guaranteed that the given RPN opression is always valid. That means the expression will always evaluate to a result, and there will not be any division by zero operation.
 
 ### Example
@@ -623,20 +638,23 @@ explanation: (4 + (13 / 5)) = 6
     19: {
         "markdown": """
 ### Roman numerals
-Convert a given integer, `n`,  to its equivalent roman numerals for 0 < `n` < 4000
+Convert a given integer, `n`,  to its equivalent roman numerals for 0 < `n` < 4000.
 
-|'M' | 1000|
-|'CM'|  900|
-|'CD'|  400|
-|'C' |  100|
-|'XC'|   90|
-|'L' |   50|
-|'XL'|   40|
-|'X' |   10|
-|'IX'|    9|
-|'V' |    5|
-|'IV'|    4|
-|'I' |    1|
+
+|Roman      | Decimal. |
+|-----------|----------|
+|'M'        |      1000|
+|'CM'       |       900|
+|'CD'       |       400|
+|'C'        |       100|
+|'XC'       |        90|
+|'L'        |        50|
+|'XL'       |        40|
+|'X'        |        10|
+|'IX'       |         9|
+|'V'        |         5|
+|'IV'       |         4|
+|'I'        |         1|
 
 ### Example
 ```
@@ -666,6 +684,7 @@ output: 'XXIII'
         "markdown": """
 ### Longest common subsequence (LCS)
 Given two strings text1 and text2, return their longest common subsequence. If there is no common subsequence, return ''.
+
 A subsequence of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the remaining characters.
 For example, ‘ace’ is a subsequence of ‘abcde’. A common subsequence of two strings is a subsequence that is common to both strings.
 
@@ -690,6 +709,7 @@ output: 'ath'
         "markdown": """
 ### Longest common substring (LCS)
 Given two strings text1 and text2, return their longest common substring. If there is no common substring, return ''.
+
 A substring of a string is a new string generated from the original string with adjacent characters.
 For example, "rain" is a substring of "grain". A common substring of two strings is a substring that is common to both strings.
 
@@ -715,7 +735,9 @@ output: 'rain'
         "markdown": """
 ### Happy number
 Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1.
+
 Those numbers for which this process ends in 1 are happy numbers, while those that do not end in 1 are unhappy numbers.
+
 Implement a function that returns true if the number is happy, or false if not.
 ### Example
 ```
@@ -742,7 +764,9 @@ output: True
     23: {
         "markdown": """
 ### Jump game I
-You are given an integer array nums. You are initially positioned at the array's first index, and each element in the array represents your maximum jump length at that position. Return true if you can reach the last index, or false otherwise.
+You are given an integer array nums. You are initially positioned at the array's first index, and each element in the array represents your maximum jump length at that position.
+
+Return true if you can reach the last index, or false otherwise.
 
 ### Example
 ```
@@ -766,7 +790,9 @@ Jump 1 step to index 1. jump 3 steps from index 1 to get to the end of array
     24: {
         "markdown": """
 ### Jump game II
-Given an array of non-negative integers nums, you are initially positioned at the first index of the array. Each element in the array represents your maximum jump length at that position. Your goal is to reach the last index in the minimum number of jumps. You can assume that you can always reach the last index. return the number of jumps
+Given an array of non-negative integers nums, you are initially positioned at the first index of the array. Each element in the array represents your maximum jump length at that position. Your goal is to reach the last index in the minimum number of jumps. You can assume that you can always reach the last index.
+
+Return the number of jumps
 
 ### Example
 ```
@@ -788,7 +814,9 @@ Jump 1 step to index 1. jump 3 steps from index 1 to get to the end of array. To
     25: {
         "markdown": """
 ### Jump game III
-Given an array of non-negative integers arr, you are initially positioned at a start index of the array. When you are at index i, you can jump to i + arr[i] or i — arr[i], check if you can reach to any index with value 0. Notice that you can not jump outside of the array at any time.
+Given an array of non-negative integers arr, you are initially positioned at a start index of the array. When you are at index i, you can jump to i + arr[i] or i — arr[i], check if you can reach to any index with value 0.
+
+Notice that you can not jump outside of the array at any time.
 
 ### Example
 ```
@@ -808,6 +836,7 @@ output: True
         "markdown": """
 ### House robber I
 You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and it will automatically contact the police if two adjacent houses were broken into on the same night.
+
 Given an integer array `nums` representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
 
 ### Example
@@ -832,6 +861,7 @@ explanation: rob the first and the third house.
 ### House robber II
 You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed. All houses at this place are arranged in a circle.
 That means the first house is the neighbor of the last one. Meanwhile, adjacent houses have a security system connected, and it will automatically contact the police if two adjacent houses were broken into on the same night.
+
 Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
 
 ### Example
