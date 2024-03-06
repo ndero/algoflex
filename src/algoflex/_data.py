@@ -933,4 +933,32 @@ output: [3, 4]
             [[6, [[3, 0], [3, 1], [3, 2], [3, 4], [5, 4]]], [3, 4]],
         ],
     },
+    30: {
+        "markdown": """
+### Tries / Prefix trees
+In English, we have a concept called root, which can be followed by some other word to form another longer word - let's call this word derivative. For example, when the root "help" is followed by the word "ful", we can form a derivative "helpful".
+
+Given a dictionary consisting of many roots and a sentence consisting of words separated by spaces, replace all the derivatives in the sentence with the root forming it. If a derivative can be replaced by more than one root, replace it with the root that has the shortest length.
+
+Return the sentence after the replacement.
+
+### Example
+```
+input: dictionary = ["cat", "bat", "rat"], sentence = "the cattle was rattled by the battery"
+output: "the cat was rat by the bat"
+
+input: dictionary = ["a", "b", "c"], sentence = "aadsfasf absbs bbab cadsfafs"
+output: "a a b c"
+```
+""",
+        "title": "Tries / Prefix trees",
+        "difficulty": "Medium",
+        "test_cases": [
+            [
+                [["cat", "bat", "rat"], "the cattle was rattled by the battery"],
+                "the cat was rat by the bat",
+            ],
+            [[["a", "b", "c"], "aadsfasf absbs bbab cadsfafs"], "a a b c"],
+        ],
+    },
 }
