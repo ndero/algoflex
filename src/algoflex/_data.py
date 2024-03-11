@@ -935,7 +935,7 @@ output: [3, 4]
     },
     30: {
         "markdown": """
-### Tries / Prefix trees
+### Trie/Prefix tree
 In English, we have a concept called root, which can be followed by some other word to form another longer word - let's call this word derivative. For example, when the root "help" is followed by the word "ful", we can form a derivative "helpful".
 
 Given a dictionary consisting of many roots and a sentence consisting of words separated by spaces, replace all the derivatives in the sentence with the root forming it. If a derivative can be replaced by more than one root, replace it with the root that has the shortest length.
@@ -951,7 +951,7 @@ input: dictionary = ["a", "b", "c"], sentence = "aadsfasf absbs bbab cadsfafs"
 output: "a a b c"
 ```
 """,
-        "title": "Tries / Prefix trees",
+        "title": "Trie/Prefix tree",
         "difficulty": "Medium",
         "test_cases": [
             [
@@ -959,6 +959,67 @@ output: "a a b c"
                 "the cat was rat by the bat",
             ],
             [[["a", "b", "c"], "aadsfasf absbs bbab cadsfafs"], "a a b c"],
+        ],
+    },
+    31: {
+        "markdown": """
+### Longest common prefix
+Write a function to find the longest common prefix string amongst an array of strings.
+
+If there is no common prefix, return an empty string "".
+
+### Example
+```
+input: dictionary = ["flower", "flow", "flight"]
+output: "fl"
+
+input: dictionary = ["dog", "racecar", "car"]
+output: ""
+```
+""",
+        "title": "Longest common prefix",
+        "difficulty": "Medium",
+        "test_cases": [
+            [[["flower", "flow", "flight"]], "fl"],
+            [[["dog", "racecar", "car"]], ""],
+            [
+                [
+                    [
+                        "algology",
+                        "algologies",
+                        "algologists",
+                        "algometer",
+                        "algometric",
+                        "algometry",
+                        "algophobia",
+                        "algologically",
+                        "algorithm",
+                        "algorism",
+                    ]
+                ],
+                "algo",
+            ],
+            [[["ORGANOMETALLICS", "ORGANOPHOSPHATE", "ORGANOTHERAPY "]], "ORGANO"],
+            [[["lower", "low", "light"]], "l"],
+            [
+                [
+                    [
+                        "SYSTEMATISE",
+                        "SYSTEMATISED",
+                        "SYSTEMATISER",
+                        "SYSTEMATISERS",
+                        "SYSTEMATISES",
+                        "SYSTEMATISING",
+                        "SYSTEMATISM",
+                        "SYSTEMATISMS",
+                        "SYSTEMATIST",
+                    ]
+                ],
+                "SYSTEMATIS",
+            ],
+            [[["garden", "gardener", "gardened", "gardenful", "gardenia"]], "garden"],
+            [[["flytrap", "flyway", "flyweight", "flywheel"]], "fly"],
+            [[["flower", "flow", ""]], ""],
         ],
     },
 }
