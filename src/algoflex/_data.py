@@ -1086,7 +1086,7 @@ Total cost 700
     },
     33: {
         "markdown": """
-### Network delay time I
+### Network delay time
 You are given a network of n nodes, labeled from 1 to n. You are also given times, a list of travel times as directed edges times[i] = (ui, vi, wi), where ui is the source node, vi is the target node, and wi is the time it takes for a signal to travel from source to target. We will send a signal from a given node k.
 
 Return the minimum time it takes for all the n nodes to receive the signal. If it is impossible for all the n nodes to receive the signal, return -1.
@@ -1097,12 +1097,41 @@ inputs: times = [[2, 1, 1], [2, 3, 1], [3, 4, 1]], n = 4, src = 2
 output: 2
 ```
 """,
-        "title": "Network delay time I",
+        "title": "Network delay time",
         "difficulty": "Medium",
         "test_cases": [
             [[[[2, 1, 1], [2, 3, 1], [3, 4, 1]], 4, 2], 2],
             [[[[1, 2, 1]], 2, 1], 1],
             [[[[1, 2, 1]], 4, 2], -1],
+        ],
+    },
+    34: {
+        "markdown": """
+### Reachable cities
+There are n cities numbered from 0 to n-1. Given the array edges where edges[i] = [fromi, toi, weighti] represents a bidirectional and weighted edge between cities fromi and toi, and given the integer distanceThreshold.
+
+Return the city with the smallest number of cities that are reachable through some path and whose distance is at most distanceThreshold, If there are multiple such cities, return the city with the greatest number.
+
+Notice that the distance of a path connecting cities i and j is equal to the sum of the edges' weights along that path.
+
+### Example
+```
+inputs: n = 4, edges = [[0, 1, 3], [1, 2, 1], [1, 3, 4], [2, 3, 1]], threshold = 4
+output: 3
+```
+""",
+        "title": "Network delay time I",
+        "difficulty": "Medium",
+        "test_cases": [
+            [[4, [[0, 1, 3], [1, 2, 1], [1, 3, 4], [2, 3, 1]], 4], 3],
+            [
+                [
+                    5,
+                    [[0, 1, 2], [0, 4, 8], [1, 2, 3], [1, 4, 2], [2, 3, 1], [3, 4, 1]],
+                    2,
+                ],
+                0,
+            ],
         ],
     },
 }
