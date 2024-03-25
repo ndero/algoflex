@@ -44,13 +44,13 @@ Given a string k of lower-case letters. the letters can be repeated and
 exist consecutively. A substring from k is considered valld if it contains
 at least three consecutive identical letters.
 
-An example: k = abcdddeeeeaabbbed has three valid substrings: "ddd",
+An example: k = "abcdddeeeeaabbbed" has three valid substrings: "ddd",
 "eeee" and "bbb".
 
 You must order the pairs by the start index in ascending order
 ### Example
 ```
-Input: k = "abcdddeeeeaabbbcd"
+Input: "abcdddeeeeaabbbcd"
 Output: [[3,5], [6,9], [12,14]]
 ```
 """,
@@ -101,7 +101,8 @@ exists in the array.
 ```
 Input: [3, 2, 3]
 Output: 3
-```""",
+```
+""",
         "title": "Majority element",
         "difficulty": "Easy",
         "test_cases": [
@@ -285,11 +286,16 @@ Each element can only construct a single pair.
 
 ### Example
 ```
-input: arr: [7, 9, 11, 13, 15], target: 20
+inputs:
+    arr: [7, 9, 11, 13, 15]
+    target: 20
 output: 6
-explanation: pairs 7 + 13 and 9 + 11, indices 0 + 3 and 1 + 2, total 6
+explanation:
+    pairs 7 + 13 and 9 + 11, indices 0 + 3 and 1 + 2, total 6
 
-input: arr: [0, 0, 0, 0, 1, 1], target: 1
+inputs:
+    arr: [0, 0, 0, 0, 1, 1]
+    target: 1
 output: 10
 explanation: pairs 0 + 1 and 0 + 1, indices 0 + 4 and 1 + 5, total 10
 ```
@@ -315,11 +321,15 @@ The tests are generated such that there is exactly one solution. You may not use
 
 ### Example
 ```
-input: arr: [2, 7, 11, 15], target: 13
+inputs:
+    arr: [2, 7, 11, 15],
+    target: 13
 output: [1, 3]
 explanation: 2 + 11 one-based indices: 1 and 3
 
-input: arr: [2, 4, 7, 14], target: 6
+inputs:
+    arr: [2, 4, 7, 14],
+    target: 6
 output: [1, 2]
 explanation: 2 + 4, indices 1 and 2
 ```
@@ -342,11 +352,15 @@ If there is no such subarray, return 0 instead.
 
 ### Example
 ```
-input: arr: [2, 3, 1, 2, 4, 3], target: 7
+inputs:
+    arr: [2, 3, 1, 2, 4, 3],
+    target: 7
 output: 2
 explanation: sub array [4, 3] has sum >= 7
 
-input: arr: [1, 3, 6, 2, 1], target: 4
+inputs:
+    arr: [1, 3, 6, 2, 1],
+    target: 4
 output: 1
 explanation: sub array [6] has sum >= 4
 ```
@@ -398,7 +412,8 @@ Given a positive integer `n`, write an algorithm to return the number of prime n
 ```
 input: 1000
 output: 168
-explanation: There are 168 prime numbers between 0 and 1000 inclusive.
+explanation:
+    There are 168 prime numbers between 0 and 1000 inclusive.
 ```
 """,
         "title": "Count primes",
@@ -474,7 +489,9 @@ Are your hands tied without python's itertools 😅?
 
 ### Example
 ```
-input: string: "abcd", k: 3
+input:
+    string: "abcd",
+    k: 3
 output: 'abc', 'abd', 'acd', 'bcd'
 ```
 """,
@@ -690,7 +707,9 @@ For example, ‘ace’ is a subsequence of ‘abcde’. A common subsequence of 
 
 ### Example
 ```
-input: text1: "math", text2: 'arithmetic'
+input:
+    text1: "math"
+    text2: 'arithmetic'
 output: 'ath'
 ```
 """,
@@ -715,7 +734,9 @@ For example, "rain" is a substring of "grain". A common substring of two strings
 
 ### Example
 ```
-input: text1: "brain", text2: 'drain'
+input:
+    text1: "brain"
+    text2: 'drain'
 output: 'rain'
 ```
 """,
@@ -820,7 +841,9 @@ Notice that you can not jump outside of the array at any time.
 
 ### Example
 ```
-input: arr: [4, 2, 3, 0, 3, 1, 2], start: 0
+input:
+    arr: [4, 2, 3, 0, 3, 1, 2],
+    start: 0
 output: True
 ```
 """,
@@ -893,10 +916,14 @@ If there are many valid answers, return any of them. If it is impossible to fini
 
 ### Example
 ```
-input: n = 2, prerequisites = [[1, 0]]
+input:
+    n = 2,
+    prerequisites = [[1, 0]]
 output: [0, 1]
 
-input: n = 4, prerequisites = [[1, 0], [2, 0], [3, 1], [3, 2]]
+input:
+    n = 4,
+    prerequisites = [[1, 0], [2, 0], [3, 1], [3, 2]]
 output: [0, 1, 2, 3] or [0, 2, 1, 3]
 ```
 """,
@@ -919,10 +946,14 @@ Return a list of all MHTs' root labels. You can return the answer in any order. 
 
 ### Example
 ```
-input: n = 4, edges = [[1, 0], [1, 2], [1, 3]]
+input:
+    n = 4,
+    edges = [[1, 0], [1, 2], [1, 3]]
 output: [1]
 
-input: n = 6, prerequisites = [[3, 0], [3, 1], [3, 2], [3, 4], [5, 4]]
+input:
+    n = 6,
+    edges = [[3, 0], [3, 1], [3, 2], [3, 4], [5, 4]]
 output: [3, 4]
 ```
 """,
@@ -944,10 +975,14 @@ Return the sentence after the replacement.
 
 ### Example
 ```
-input: dictionary = ["cat", "bat", "rat"], sentence = "the cattle was rattled by the battery"
+input:
+    dictionary = ["cat", "bat", "rat"],
+    sentence = "the cattle was rattled by the battery"
 output: "the cat was rat by the bat"
 
-input: dictionary = ["a", "b", "c"], sentence = "aadsfasf absbs bbab cadsfafs"
+input:
+    dictionary = ["a", "b", "c"],
+    sentence = "aadsfasf absbs bbab cadsfafs"
 output: "a a b c"
 ```
 """,
@@ -1031,7 +1066,12 @@ Return the cheapest price from src to dst with at most k stops. If there is no s
 
 ### Example
 ```
-inputs: n = 4, flights = [[0, 1, 100], [1, 2, 100], [2, 0, 100], [1, 3, 600], [2, 3, 200]], src = 0, dest = 3, k = 1
+inputs:
+    n = 4,
+    flights = [[0, 1, 100], [1, 2, 100], [2, 0, 100], [1, 3, 600], [2, 3, 200]],
+    src = 0,
+    dest = 3,
+    k = 1
 output: 700
 explanation: the cheapest flight from city 0 to 3 with at most one stop is:
 0 -> 1 at a cost of 100
@@ -1093,7 +1133,10 @@ Return the minimum time it takes for all the n nodes to receive the signal. If i
 
 ### Example
 ```
-inputs: times = [[2, 1, 1], [2, 3, 1], [3, 4, 1]], n = 4, src = 2
+inputs:
+    times = [[2, 1, 1], [2, 3, 1], [3, 4, 1]],
+    n = 4,
+    src = 2
 output: 2
 ```
 """,
@@ -1116,7 +1159,10 @@ Notice that the distance of a path connecting cities i and j is equal to the sum
 
 ### Example
 ```
-inputs: n = 4, edges = [[0, 1, 3], [1, 2, 1], [1, 3, 4], [2, 3, 1]], threshold = 4
+inputs:
+    n = 4,
+    edges = [[0, 1, 3], [1, 2, 1], [1, 3, 4], [2, 3, 1]],
+    threshold = 4
 output: 3
 ```
 """,
@@ -1145,10 +1191,14 @@ The cost is the sum of the connections’ costs used.
 
 ### Example
 ```
-inputs: n = 3, connections = [[1, 2, 5], [1, 3, 6], [2, 3, 1]]
+inputs:
+    n = 3,
+    connections = [[1, 2, 5], [1, 3, 6], [2, 3, 1]]
 output: 6
 
-inputs: n = 4, connections = [[1, 2, 3], [3, 4, 4]]
+inputs:
+    n = 4,
+    connections = [[1, 2, 3], [3, 4, 4]]
 output: -1
 ```
 """,
