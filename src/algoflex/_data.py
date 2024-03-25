@@ -1120,7 +1120,7 @@ inputs: n = 4, edges = [[0, 1, 3], [1, 2, 1], [1, 3, 4], [2, 3, 1]], threshold =
 output: 3
 ```
 """,
-        "title": "Network delay time I",
+        "title": "Reachable cities",
         "difficulty": "Medium",
         "test_cases": [
             [[4, [[0, 1, 3], [1, 2, 1], [1, 3, 4], [2, 3, 1]], 4], 3],
@@ -1132,6 +1132,31 @@ output: 3
                 ],
                 0,
             ],
+        ],
+    },
+    35: {
+        "markdown": """
+### Minimum spanning trees
+There are n cities labeled from 1 to n. You are given the integer n and an array connections where connections[i] = [xi, yi, costi] indicates that the cost of connecting city xi and city yi (bidirectional connection) is costi.
+
+Return the minimum cost to connect all the n cities such that there is at least one path between each pair of cities. If it is impossible to connect all the n cities, return -1.
+
+The cost is the sum of the connections’ costs used.
+
+### Example
+```
+inputs: n = 3, connections = [[1, 2, 5], [1, 3, 6], [2, 3, 1]]
+output: 6
+
+inputs: n = 4, connections = [[1, 2, 3], [3, 4, 4]]
+output: -1
+```
+""",
+        "title": "Minimum spanning trees",
+        "difficulty": "Medium",
+        "test_cases": [
+            [[3, [[1, 2, 5], [1, 3, 6], [2, 3, 1]]], 6],
+            [[4, [[1, 2, 3], [3, 4, 4]]], -1],
         ],
     },
 }
