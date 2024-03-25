@@ -1209,4 +1209,35 @@ output: -1
             [[4, [[1, 2, 3], [3, 4, 4]]], -1],
         ],
     },
+    36: {
+        "markdown": """
+### Critical connections
+There are n servers numbered from 0 to n - 1 connected by undirected server-to-server connections forming a network where connections[i] = [ai, bi] represents a connection between servers ai and bi. Any server can reach other servers directly or indirectly through the network.
+
+A critical connection is a connection that, if removed, will make some servers unable to reach some other server.
+
+Given integer `n` and `connections` arr, return all critical connections in the network in any order.
+
+### Example
+```
+inputs:
+    n = 4,
+    connections = [[0, 1], [1, 2], [2, 0], [1, 3]]
+output: [[1, 3]]
+```
+""",
+        "title": "Critical connections",
+        "difficulty": "Hard",
+        "test_cases": [
+            [[4, [[0, 1], [1, 2], [2, 0], [1, 3]]], [[1, 3]]],
+            [
+                [7, [[0, 1], [1, 2], [2, 0], [1, 3], [1, 4], [4, 5], [5, 6]]],
+                [[1, 3], [5, 6], [4, 5], [1, 4]],
+            ],
+            [
+                [7, [[0, 1], [1, 2], [2, 0], [1, 3], [1, 4], [4, 5], [5, 6], [2, 6]]],
+                [[1, 3]],
+            ],
+        ],
+    },
 }
