@@ -657,21 +657,10 @@ explanation: (4 + (13 / 5)) = 6
 ### Roman numerals
 Convert a given integer, `n`,  to its equivalent roman numerals for 0 < `n` < 4000.
 
+|Decimal | 1000 | 900 | 400 | 100 | 90 | 50 | 40 | 10 | 9 | 5 | 4 | 1 |
+|--------|------|-----|-----|-----|----|----|----|----|---|---|---|---|
+|Roman | M | CM | CD | C | XC | L | XL | X | IX | V | IV | I|
 
-|Roman      | Decimal. |
-|-----------|----------|
-|'M'        |      1000|
-|'CM'       |       900|
-|'CD'       |       400|
-|'C'        |       100|
-|'XC'       |        90|
-|'L'        |        50|
-|'XL'       |        40|
-|'X'        |        10|
-|'IX'       |         9|
-|'V'        |         5|
-|'IV'       |         4|
-|'I'        |         1|
 
 ### Example
 ```
