@@ -1251,4 +1251,29 @@ output: 240
             [[5, [10, 20, 30], [60, 100, 120]], 30],
         ],
     },
+    38: {
+        "markdown": """
+### Subarrays with target sum
+Given an array and targetSum, return the total number of contigous subarrays inside the array whose sum is equal to targetSum
+
+### Example
+```
+inputs:
+  arr = [13, -1, 8, 12, 3, 9]
+  target = 12
+output: 3
+explanation: [13, -1], [12] and [3, 9]
+```
+""",
+        "title": "Subarrays with target sum",
+        "difficulty": "Easy",
+        "test_cases": [
+            [[[13, -1, 8, 12, 3, 9], 12], 3],
+            [[[13, -1, 8, 12, 3, 9], 2], 0],
+            [[[13, -1, 8, 12, 3, 9], 10], 0],
+            [[[13, -1, 8, 12, 3, 9, 7, 5, 9, 10], 75], 1],
+            [[[13, -1, 8, 12, 3, 9] * 20_000, 12], 60_000],
+            [[[13, -1, 8, 12, 3, 9, 7, 5, 9, 10] * 10_000, 24], 30_000],
+        ],
+    },
 }
