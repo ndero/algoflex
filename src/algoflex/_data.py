@@ -1253,7 +1253,7 @@ output: 240
     },
     38: {
         "markdown": """
-### Subarrays with target sum
+### Subarrays with sum
 Given an array and targetSum, return the total number of contigous subarrays inside the array whose sum is equal to targetSum
 
 ### Example
@@ -1265,7 +1265,7 @@ output: 3
 explanation: [13, -1], [12] and [3, 9]
 ```
 """,
-        "title": "Subarrays with target sum",
+        "title": "Subarrays with sum",
         "difficulty": "Easy",
         "test_cases": [
             [[[13, -1, 8, 12, 3, 9], 12], 3],
@@ -1274,6 +1274,54 @@ explanation: [13, -1], [12] and [3, 9]
             [[[13, -1, 8, 12, 3, 9, 7, 5, 9, 10], 75], 1],
             [[[13, -1, 8, 12, 3, 9] * 20_000, 12], 60_000],
             [[[13, -1, 8, 12, 3, 9, 7, 5, 9, 10] * 10_000, 24], 30_000],
+        ],
+    },
+    "_39": {
+        "markdown": """
+### Paths with sum
+> TODO: fix root input
+Given the root of a binary tree and an integer targetSum, return the number of paths where the sum of the values along the path equals targetSum.
+
+The path does not need to start or end at the root or a leaf, but it must go downwards (i.e., traveling only from parent nodes to child nodes).
+### Example
+```
+inputs:
+  root = [10, 5, -3, 3, 2, None, 11, 3, -2, None, 1]
+  target = 8
+output: 3
+```
+""",
+        "title": "Paths with sum",
+        "difficulty": "Medium",
+        "test_cases": [
+            [[6, 8], 3],
+            [[8, 22], 3],
+            [[9, 20], 1],
+        ],
+    },
+    40: {
+        "markdown": """
+### Remove occurence
+Given two strings s and part, perform the following operation on s until all occurrences of the substring part are removed:
+
+Find the leftmost occurrence of the substring part and remove it from s. Return s after removing all occurrences of part.
+
+A substring is a contiguous sequence of characters in a string.
+### Example
+```
+inputs:
+  s = "axeaxae"
+  part = "ax"
+output: 'eae'
+```
+""",
+        "title": "Paths with sum",
+        "difficulty": "Medium",
+        "test_cases": [
+            [["axeaxae", "ax"], "eae"],
+            [["axxxxyyyyb", "xy"], "ab"],
+            [["daa-cbaa-c-c", "a-c"], "dab"],
+            [["shesellsseashellsattheseashore", "sh"], "esellsseaellsattheseaore"],
         ],
     },
 }
