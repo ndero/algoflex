@@ -1315,13 +1315,35 @@ inputs:
 output: 'eae'
 ```
 """,
-        "title": "Paths with sum",
-        "difficulty": "Medium",
+        "title": "Remove occurence",
+        "difficulty": "Easy",
         "test_cases": [
             [["axeaxae", "ax"], "eae"],
             [["axxxxyyyyb", "xy"], "ab"],
             [["daa-cbaa-c-c", "a-c"], "dab"],
             [["shesellsseashellsattheseashore", "sh"], "esellsseaellsattheseaore"],
+        ],
+    },
+    41: {
+        "markdown": """
+### Spinal case
+Given a string. Convert it to spinal case
+
+Spinal case is all-lowercase-words-joined-by-dashes.
+
+### Example
+```
+input: "Hello World!"
+output: "hello-world"
+```
+""",
+        "title": "Spinal case",
+        "difficulty": "Easy",
+        "test_cases": [
+            [["Hello World!"], "hello-world"],
+            [["The Greatest of All Time."], "the-greatest-of-all-time"],
+            [["yes/no"], "yes-no"],
+            [["...I-am_here lookingFor  You.See!!"], "i-am-here-looking-for-you-see"],
         ],
     },
 }
