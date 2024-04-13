@@ -1234,6 +1234,8 @@ output: [[1, 3]]
 ### Fractional knapsack
 Given a knapsack capacity and two arrays, the first one for weights and the second one for values. Add items to the knapsack to maximize the sum of the values of the items that can be added so that the sum of the weights is less than or equal to the knapsack capacity.
 
+You are allowed to add a fraction of an item.
+
 ### Example
 ```
 inputs:
@@ -1344,6 +1346,33 @@ output: "hello-world"
             [["The Greatest of All Time."], "the-greatest-of-all-time"],
             [["yes/no"], "yes-no"],
             [["...I-am_here lookingFor  You.See!!"], "i-am-here-looking-for-you-see"],
+        ],
+    },
+    42: {
+        "markdown": """
+### 0/1 knapsack
+Given a knapsack capacity and two arrays, the first one for weights and the second one for values. Add items to the knapsack to maximize the sum of the values of the items that can be added so that the sum of the weights is less than or equal to the knapsack capacity.
+
+You can only either include or not include an item. i.e you can't add a part of it.
+
+Return a tuple of maximum value and selected items
+
+### Example
+```
+inputs:
+  capacity = 50
+  weights = [10, 20, 30]
+  values = [60, 100, 120]
+
+output: (220, [0, 1, 1])
+```
+""",
+        "title": "0/1 knapsack",
+        "difficulty": "Easy",
+        "test_cases": [
+            [[50, [10, 20, 30], [60, 100, 120]], (220, [0, 1, 1])],
+            [[60, [10, 20, 30], [60, 100, 120]], (280, [1, 1, 1])],
+            [[5, [10, 20, 30], [60, 100, 120]], (0, [0, 0, 0])],
         ],
     },
 }
