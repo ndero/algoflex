@@ -1394,11 +1394,35 @@ inputs:
 output: 120
 ```
 """,
-        "title": "0/1 knapsack",
+        "title": "Job scheduling",
         "difficulty": "Easy",
         "test_cases": [
             [[[1, 2, 3, 3], [3, 4, 5, 6], [50, 10, 40, 70]], 120],
             [[[1, 1, 1], [2, 3, 4], [5, 6, 4]], 6],
+        ],
+    },
+    44: {
+        "markdown": """
+### Equal array partitions
+Given an integer array nums, return true if you can partition the array into two subsets such that the sum of the elements in both subsets is equal or false otherwise.
+
+### Example
+```
+input: [1, 5, 11, 5]
+output: True
+explanation: [1, 5, 5] and [11]
+```
+""",
+        "title": "Equal array partitions",
+        "difficulty": "Medium",
+        "test_cases": [
+            [[[1, 5, 11, 5]], True],
+            [[[6]], False],
+            [[[i for i in range(300)]], True],
+            [[[1, 5, 13, 5]], False],
+            [[[1, 5, 11, 5] * 100], True],
+            [[[1, 5, 13, 5, 35, 92, 11, 17, 13, 53]], False],
+            [[[i for i in range(1, 330, 2)]], False],
         ],
     },
 }
