@@ -84,8 +84,10 @@ if __name__ == "__main__":
             if result.stderr:
                 output_log.write(result.stderr, animate=True)
         except subprocess.TimeoutExpired:
-            output_log.write("Execution timed out")
+            output_log.write(
+                "[red]Execution timed out[/]\\n\\tYour solution must run within 10 seconds"
+            )
         except Exception as e:
-            output_log.write("Error running code")
+            output_log.write(f"[red]Error running code[/]\\n\\t{e}")
         finally:
             os.remove(tmp_file.name)
