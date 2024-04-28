@@ -1425,4 +1425,31 @@ explanation: [1, 5, 5] and [11]
             [[[i for i in range(1, 330, 2)]], False],
         ],
     },
+    45: {
+        "markdown": """
+### Coin change I
+You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money. Return the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1. You may assume that you have an infinite number of each kind of coin.
+
+### Example
+```
+input:
+  coins = [1, 2, 5]
+  amount = 11
+output: 3
+explanation: two 5 coins and one 1 coin.
+```
+""",
+        "title": "Coin change I",
+        "difficulty": "Medium",
+        "test_cases": [
+            [[[1, 2, 5], 11], 3],
+            [[[1, 2, 5, 10], 11], 2],
+            [[[1, 2, 5, 10, 20], 11], 2],
+            [[[1, 2, 5, 10, 20], 110], 6],
+            [[[1, 2, 5, 10, 20], 63], 5],
+            [[[1, 2, 5, 10, 20, 50], 16], 3],
+            [[[1, 2, 5, 10, 20, 50], 28], 4],
+            [[[1, 2, 5, 10, 20, 50], 77], 4],
+        ],
+    },
 }
