@@ -1484,4 +1484,35 @@ output: 11
             [[[i for i in range(1, 366)], [2, 7, 15]], 190],
         ],
     },
+    46: {
+        "markdown": """
+### Fibonacci numbers
+Given a positive interger `n`, return the n<sup>th</sup> fibonacci numbers
+
+The first 6 fibonacci numbers are:
+[0, 1, 1, 2, 3, 5]
+### Example
+```
+input: 0
+output: 0
+
+input: 1
+output: 1
+
+input: 5
+output: 5
+```
+""",
+        "title": "Fibonacci numbers",
+        "difficulty": "Easy",
+        "test_cases": [
+            [[0], 0],
+            [[1], 1],
+            [[5], 5],
+            [[10], 55],
+            [[23], 28657],
+            [[50], 12586269025],
+            [[100], 354224848179261915075],
+        ],
+    },
 }
