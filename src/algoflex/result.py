@@ -45,7 +45,6 @@ def run_tests():
                 passed += 1
             else:
                 print(f"[red][b]x[/] test case {i+1} failed![/] \\n\\t[b]inputs[/]: {display(inputs)}\\n\\t[b]got[/]: [red]{result}[/]\\n\\t[b]expected[/]: [green]{expected}[/]")
-                return
         except Exception as e:
             print(f"[red]test case {i+1} error![/]\\n\\t[b]error[/]: {e}\\n\\t[b]inputs[/]: {display(inputs)}")
             return
