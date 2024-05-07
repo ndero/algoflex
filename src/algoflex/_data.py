@@ -1487,7 +1487,7 @@ output: 11
     46: {
         "markdown": """
 ### Fibonacci numbers
-Given a positive interger `n`, return the n<sup>th</sup> fibonacci numbers
+Given a positive interger `n`, return the n<sup>th</sup> fibonacci number
 
 The first 6 fibonacci numbers are:
 [0, 1, 1, 2, 3, 5]
@@ -1513,6 +1513,39 @@ output: 5
             [[23], 28657],
             [[50], 12586269025],
             [[100], 354224848179261915075],
+        ],
+    },
+    47: {
+        "markdown": """
+### Climb stairs
+You are climbing a staircase. It takes n steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+
+### Example
+```
+input: 0
+output: 0
+explanation: no stairs, no way to get to the top
+
+input: 1
+output: 1
+explanation: 1 stair, one way to get to the top
+
+input: 2
+output: 2
+explanation:
+  2 ways to get to the top
+    - climb stair 1 then stair 2
+    - climb 2 steps to stair 2
+```
+""",
+        "title": "Climb stairs",
+        "difficulty": "Easy",
+        "test_cases": [
+            [[0], 0],
+            [[1], 1],
+            [[2], 2],
+            [[10], 89],
+            [[36], 24157817],
         ],
     },
 }
