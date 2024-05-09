@@ -1548,4 +1548,40 @@ explanation:
             [[36], 24157817],
         ],
     },
+    48: {
+        "markdown": """
+### Ways to make change
+There are four types of common coins in US currency:
+  - quarters (25 cents)
+  - dimes (10 cents)
+  - nickels (5 cents)
+  - pennies (1 cent)
+
+  There are six ways to make change for 15 cents:
+    - A dime and a nickel
+    - A dime and 5 pennies
+    - 3 nickels
+    - 2 nickels and 5 pennies
+    - A nickel and 10 pennies
+    - 15 pennies
+
+Implement a function to determine how many ways there are to make change for a given input, `cents`, that represents an amount of US pennies using these common coins.
+
+### Example
+```
+input: 15
+output: 6
+```
+""",
+        "title": "Ways to make change",
+        "difficulty": "Medium",
+        "test_cases": [
+            [[15], 6],
+            [[10], 4],
+            [[5], 2],
+            [[55], 60],
+            [[1000], 142511],
+            [[10_000], 134235101],
+        ],
+    },
 }
