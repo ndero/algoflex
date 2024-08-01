@@ -13,7 +13,7 @@ from textual.widgets import Footer, Label, Markdown, Button, Static
 from textual.binding import Binding
 from textual.reactive import Reactive
 from _data import questions
-from random import randint
+from random import shuffle
 from attempt import AttemptScreen
 from custom_widgets import Title, Problem
 
@@ -52,6 +52,7 @@ class HomeScreen(App):
     BINDINGS = [
         Binding("a", "attempt", "attempt", tooltip="Attempt this question"),
         Binding("n", "next", "next", tooltip="Next question"),
+        Binding("p", "previous", "previous", tooltip="Previous question"),
     ]
     DEFAULT_CSS = """
     HomeScreen {
@@ -68,7 +69,9 @@ class HomeScreen(App):
     }
     """
     problem_id = Reactive(0)
+    index = 0
     PROBLEMS_COUNT = len(questions.keys())
+    PROBLEMS = [i for i in range(PROBLEMS_COUNT)]
 
     def compose(self):
         problem = questions.get(id, {}).get("markdown", "")
@@ -78,7 +81,8 @@ class HomeScreen(App):
         yield Footer()
 
     def on_mount(self):
-        self.problem_id = randint(1, self.PROBLEMS_COUNT)
+        shuffle(self.PROBLEMS)
+        self.problem_id = self.PROBLEMS[self.index]
 
     def watch_problem_id(self, id):
         problem = questions.get(id, {}).get("markdown", "")
@@ -88,7 +92,14 @@ class HomeScreen(App):
         self.push_screen(AttemptScreen(self.problem_id))
 
     def action_next(self):
-        self.problem_id = randint(1, self.PROBLEMS_COUNT)
+        if self.index + 1 < self.PROBLEMS_COUNT:
+            self.index += 1
+        self.problem_id = self.PROBLEMS[self.index]
+
+    def action_previous(self):
+        if self.index > 0:
+            self.index -= 1
+        self.problem_id = self.PROBLEMS[self.index]
 
     def check_action(self, action, parameters):
         if not self.screen.id == "_default":
