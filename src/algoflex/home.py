@@ -103,6 +103,6 @@ class HomeScreen(App):
 
     def check_action(self, action, parameters):
         if not self.screen.id == "_default":
-            if action == "attempt" or action == "next":
+            if action == "attempt" or action == "next" or action == "previous":
                 return False
         return True
