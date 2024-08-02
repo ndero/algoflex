@@ -69,7 +69,7 @@ class HomeScreen(App):
     }
     """
     problem_id = Reactive(0)
-    index = 0
+    index = Reactive(0, bindings=True)
     PROBLEMS_COUNT = len(questions.keys())
     PROBLEMS = [i for i in range(PROBLEMS_COUNT)]
 
@@ -105,4 +105,8 @@ class HomeScreen(App):
         if not self.screen.id == "_default":
             if action == "attempt" or action == "next" or action == "previous":
                 return False
+        if self.index == self.PROBLEMS_COUNT - 1 and action == "next":
+            return
+        if self.index == 0 and action == "previous":
+            return
         return True
