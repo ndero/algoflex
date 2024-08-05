@@ -13,6 +13,7 @@ from textual.widgets import Footer, Label, Markdown, Button, Static
 from textual.binding import Binding
 from textual.reactive import Reactive
 from _data import questions
+from _stats import stats
 from random import shuffle
 from attempt import AttemptScreen
 from custom_widgets import Title, Problem
@@ -35,17 +36,17 @@ class StatScreen(Vertical):
     def compose(self):
         with Horizontal():
             with Vertical():
-                yield Static("[b]Attempts[/]", id="first")
-                yield Static("2")
+                yield Static("[b]Passed[/]")
+                yield Static("0", id="passed")
             with Vertical():
-                yield Static("[b]Skips[/]", id="first")
-                yield Static("5")
+                yield Static("[b]Attempts[/]")
+                yield Static("0", id="attempts")
             with Vertical():
-                yield Static("[b]Best time[/]", id="first")
-                yield Static("...")
+                yield Static("[b]Best time[/]")
+                yield Static("...", id="best")
             with Vertical():
-                yield Static("[b]Difficulty[/]", id="first")
-                yield Static("[b green]Easy[/]")
+                yield Static("[b]Difficulty[/]")
+                yield Static("[$primary]Easy[/]", id="difficulty")
 
 
 class HomeScreen(App):
@@ -85,8 +86,22 @@ class HomeScreen(App):
         self.problem_id = self.PROBLEMS[self.index]
 
     def watch_problem_id(self, id):
-        problem = questions.get(id, {}).get("markdown", "")
+        s = stats.get(id, {})
+        p = questions.get(id, {})
+
+        problem, difficulty = p.get("markdown", ""), p.get("difficulty", "Easy")
+        passed, attempts, best = (
+            s.get("passed", "0"),
+            s.get("attempts", "0"),
+            s.get("best", "..."),
+        )
+
         self.query_one(Problem).query_one(Markdown).update(markdown=problem)
+        s_widget = self.query_one(StatScreen)
+        s_widget.query_one("#difficulty").update(f"[$primary]{difficulty}[/]")
+        s_widget.query_one("#passed").update(passed)
+        s_widget.query_one("#attempts").update(attempts)
+        s_widget.query_one("#best").update(best)
 
     def action_attempt(self):
         self.push_screen(AttemptScreen(self.problem_id))
