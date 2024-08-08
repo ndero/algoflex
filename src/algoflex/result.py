@@ -5,6 +5,10 @@ from _data import questions
 import tempfile
 import subprocess
 import os
+from tinydb import TinyDB, Query
+
+stats = TinyDB("stats.json")
+KV = Query()
 
 
 class ResultModal(ModalScreen):
@@ -47,7 +51,7 @@ def run_tests():
         except Exception as e:
             print(f"[red]test case {i+1} error![/]\\n\\t[b]error[/]: {e}\\n\\t[b]inputs[/]: {display(inputs)}")
             return
-    print(f"\\nPassed! 🚀 ")
+    print(f"\\nPassed! 🚀")
 
 if __name__ == "__main__":
     run_tests()
@@ -65,6 +69,10 @@ if __name__ == "__main__":
         yield RichLog(markup=True, wrap=True, max_lines=1_000)
 
     def run_user_code(self):
+        s = stats.get(KV.id == self.problem_id) or {}
+        attempts = s.get("attempts", 0) + 1
+        passed = s.get("passed", 0)
+        stats.upsert({"attempts": attempts}, KV.id == self.problem_id)
         user_code = self.user_code.strip()
         output_log = self.query_one(RichLog)
         test_cases = questions.get(self.problem_id, {}).get("test_cases", [])

@@ -13,10 +13,12 @@ from textual.widgets import Footer, Label, Markdown, Button, Static
 from textual.binding import Binding
 from textual.reactive import Reactive
 from _data import questions
-from _stats import stats
 from random import shuffle
 from attempt import AttemptScreen
 from custom_widgets import Title, Problem
+from tinydb import TinyDB, Query
+
+stats = TinyDB("stats.json")
 
 
 class StatScreen(Vertical):
@@ -86,7 +88,7 @@ class HomeScreen(App):
         self.problem_id = self.PROBLEMS[self.index]
 
     def watch_problem_id(self, id):
-        s = stats.get(id, {})
+        s = stats.get(doc_id=id) or {}
         p = questions.get(id, {})
 
         problem, difficulty = p.get("markdown", ""), p.get("difficulty", "Easy")
@@ -99,8 +101,8 @@ class HomeScreen(App):
         self.query_one(Problem).query_one(Markdown).update(markdown=problem)
         s_widget = self.query_one(StatScreen)
         s_widget.query_one("#difficulty").update(f"[$primary]{difficulty}[/]")
-        s_widget.query_one("#passed").update(passed)
-        s_widget.query_one("#attempts").update(attempts)
+        s_widget.query_one("#passed").update(str(passed))
+        s_widget.query_one("#attempts").update(str(attempts))
         s_widget.query_one("#best").update(best)
 
     def action_attempt(self):
