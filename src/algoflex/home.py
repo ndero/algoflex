@@ -19,6 +19,7 @@ from custom_widgets import Title, Problem
 from tinydb import TinyDB, Query
 
 stats = TinyDB("stats.json")
+KV = Query()
 
 
 class StatScreen(Vertical):
@@ -88,7 +89,7 @@ class HomeScreen(App):
         self.problem_id = self.PROBLEMS[self.index]
 
     def watch_problem_id(self, id):
-        s = stats.get(doc_id=id) or {}
+        s = stats.get(KV.problem_id == id) or {}
         p = questions.get(id, {})
 
         problem, difficulty = p.get("markdown", ""), p.get("difficulty", "Easy")

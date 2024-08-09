@@ -69,10 +69,9 @@ if __name__ == "__main__":
         yield RichLog(markup=True, wrap=True, max_lines=1_000)
 
     def run_user_code(self):
-        s = stats.get(KV.id == self.problem_id) or {}
+        s = stats.get(KV.problem_id == self.problem_id) or {}
         attempts = s.get("attempts", 0) + 1
         passed = s.get("passed", 0)
-        stats.upsert({"attempts": attempts}, KV.id == self.problem_id)
         user_code = self.user_code.strip()
         output_log = self.query_one(RichLog)
         test_cases = questions.get(self.problem_id, {}).get("test_cases", [])
@@ -97,3 +96,7 @@ if __name__ == "__main__":
             output_log.write(f"[red]Error running code[/]\\n\\t{e}")
         finally:
             os.remove(tmp_file.name)
+        stats.upsert(
+            {"attempts": attempts, "passed": passed, "problem_id": self.problem_id},
+            KV.problem_id == self.problem_id,
+        )
