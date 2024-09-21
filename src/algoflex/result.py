@@ -86,6 +86,8 @@ if __name__ == "__main__":
             )
             if result.stdout:
                 output_log.write(result.stdout, animate=True)
+                if result.stdout[-2] == "🚀":
+                    passed += 1
             if result.stderr:
                 output_log.write(result.stderr, animate=True)
         except subprocess.TimeoutExpired:
