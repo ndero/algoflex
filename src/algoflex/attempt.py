@@ -11,7 +11,7 @@ from _data import questions
 class AttemptScreen(Screen):
     BINDINGS = [
         Binding("s", "submit", "submit", tooltip="submit your solution"),
-        Binding("c", "cancel", "cancel", tooltip="Go to home"),
+        Binding("b", "back", "back", tooltip="Go to home"),
     ]
     DEFAULT_CSS = """
     Horizontal {
@@ -51,5 +51,5 @@ def solution():
         code = self.query_one(TextArea)
         self.app.push_screen(ResultModal(self.problem_id, code.text))
 
-    def action_cancel(self):
+    def action_back(self):
         self.dismiss()
