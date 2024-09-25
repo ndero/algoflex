@@ -57,10 +57,11 @@ if __name__ == "__main__":
     run_tests()
     """
 
-    def __init__(self, problem_id, user_code):
+    def __init__(self, problem_id, user_code, elapsed):
         super().__init__()
         self.problem_id = problem_id
         self.user_code = user_code
+        self.elapsed = elapsed
 
     def on_mount(self):
         self.run_user_code()
@@ -70,8 +71,8 @@ if __name__ == "__main__":
 
     def run_user_code(self):
         s = stats.get(KV.problem_id == self.problem_id) or {}
-        attempts = s.get("attempts", 0) + 1
-        passed = s.get("passed", 0)
+        success, attempts = False, s.get("attempts", 0) + 1
+        passed, best = s.get("passed", 0), s.get("best", 0)
         user_code = self.user_code.strip()
         output_log = self.query_one(RichLog)
         test_cases = questions.get(self.problem_id, {}).get("test_cases", [])
@@ -88,6 +89,7 @@ if __name__ == "__main__":
                 output_log.write(result.stdout, animate=True)
                 if result.stdout[-2] == "🚀":
                     passed += 1
+                    success == True
             if result.stderr:
                 output_log.write(result.stderr, animate=True)
         except subprocess.TimeoutExpired:
@@ -98,7 +100,14 @@ if __name__ == "__main__":
             output_log.write(f"[red]Error running code[/]\\n\\t{e}")
         finally:
             os.remove(tmp_file.name)
+
         stats.upsert(
-            {"attempts": attempts, "passed": passed, "problem_id": self.problem_id},
+            {
+                "attempts": attempts,
+                "passed": passed,
+                "problem_id": self.problem_id,
+            },
             KV.problem_id == self.problem_id,
         )
+        if success and (not best or elapsed < best):
+            stats.upsert({"best": self.elapsed}, KV.problem_id == self.problem_id)
