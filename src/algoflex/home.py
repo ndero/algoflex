@@ -30,8 +30,8 @@ class StatScreen(Vertical):
             padding: 1;
             margin: 1 0;
         }
-        #first {
-            padding-bottom: 1;
+        #passed, #attempts, #best, #difficulty {
+            padding-top: 1;
         }
     }
     """
@@ -91,7 +91,6 @@ class HomeScreen(App):
     def watch_problem_id(self, id):
         s = stats.get(KV.problem_id == id) or {}
         p = questions.get(id, {})
-
         problem, difficulty = p.get("markdown", ""), p.get("difficulty", "Easy")
         passed, attempts, best = (
             s.get("passed", "0"),
@@ -99,12 +98,17 @@ class HomeScreen(App):
             s.get("best", "..."),
         )
 
+        if best != "...":
+            mins, secs = divmod(best, 60)
+            hrs, mins = divmod(mins, 60)
+            best = f"{hrs:02,.0f}:{mins:02.0f}:{secs:02.0f}"
+
         self.query_one(Problem).query_one(Markdown).update(markdown=problem)
         s_widget = self.query_one(StatScreen)
         s_widget.query_one("#difficulty").update(f"[$primary]{difficulty}[/]")
-        s_widget.query_one("#passed").update(str(passed))
-        s_widget.query_one("#attempts").update(str(attempts))
-        s_widget.query_one("#best").update(best)
+        s_widget.query_one("#passed").update(f"[$primary]{str(passed)}[/]")
+        s_widget.query_one("#attempts").update(f"[$primary]{str(attempts)}[/]")
+        s_widget.query_one("#best").update(f"[$primary]{best}[/]")
 
     def action_attempt(self):
         self.push_screen(AttemptScreen(self.problem_id))
