@@ -6,6 +6,7 @@ from textual.containers import Vertical, Horizontal
 from textual.screen import ModalScreen, Screen
 from textual.binding import Binding
 from _data import questions
+from time import monotonic
 
 
 class AttemptScreen(Screen):
@@ -32,6 +33,7 @@ def solution():
     def __init__(self, problem_id):
         super().__init__()
         self.problem_id = problem_id
+        self.test_time = monotonic()
 
     def compose(self):
         problem = questions.get(self.problem_id, {}).get("markdown", "")
@@ -49,7 +51,8 @@ def solution():
 
     def action_submit(self):
         code = self.query_one(TextArea)
-        self.app.push_screen(ResultModal(self.problem_id, code.text))
+        elapsed = monotonic() - self.test_time
+        self.app.push_screen(ResultModal(self.problem_id, code.text, elapsed))
 
     def action_back(self):
         self.dismiss()
