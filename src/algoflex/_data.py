@@ -1,5 +1,5 @@
 questions = {
-    1: {
+    0: {
         "markdown": """
 ### Score tally
 Given an array of scores e.g `[ '5', '2', 'C', 'D', '+', '+', 'C' ]`, calculate the total points where:
@@ -37,7 +37,7 @@ explanation:
             [[["1", "D", "D", "D", "D", "D"]], 63],
         ],
     },
-    2: {
+    1: {
         "markdown": """
 ### Repeated letters
 Given a string k of lower-case letters. the letters can be repeated and
@@ -88,7 +88,7 @@ Output: [[3,5], [6,9], [12,14]]
             [["abcdefffghijkl"], [[5, 7]]],
         ],
     },
-    3: {
+    2: {
         "markdown": """
 ### Majority element
 Given an array nums of size n, return the majority element.
@@ -115,7 +115,7 @@ Output: 3
             [[[-2, -2, -4, -2, -4, -4, -4]], -4],
         ],
     },
-    4: {
+    3: {
         "markdown": """
 ### Max profit
 You are given an array `prices` where `prices[i]` is the price of a given stock on the ith day. You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
@@ -144,7 +144,7 @@ output: 0
             [[[i for i in range(1, 100_000)]], 99_998],
         ],
     },
-    5: {
+    4: {
         "markdown": """
 ### Valid matching brackets
 Given a string of brackets that can either be `[]`, `()` or `{}`.
@@ -182,7 +182,7 @@ output: True
             [["[" + "()" * 100_000 + "]"], True],
         ],
     },
-    6: {
+    5: {
         "markdown": """
 ### Max sum sub array
 Given an integer array nums, find a contiguous non-empty subarray within the array that has the largest sum,
@@ -209,7 +209,7 @@ output: 7
             [[[2, -4, 8, 6, 9, -1, 3, -4, 12]], 33],
         ],
     },
-    7: {
+    6: {
         "markdown": """
 ### Max product sub array
 Given an integer array nums, find a contiguous non-empty subarray within the array that has the largest product,
@@ -236,7 +236,7 @@ output: 6
             [[[2, -4, 8, 6, 9, -1, 3, -4, 12]], 497664],
         ],
     },
-    8: {
+    7: {
         "markdown": """
 ### Symmetric difference
 Create a function that takes two or more arrays and returns an array of their symmetric difference. The returned array must contain only unique values (no duplicates).
@@ -276,7 +276,7 @@ output: [1, 4]
             ],
         ],
     },
-    9: {
+    8: {
         "markdown": """
 ### Pairwise
 Given an array `arr`, find element pairs whose sum equal the second argument `target` and return the sum of their indices.
@@ -311,7 +311,7 @@ explanation: pairs 0 + 1 and 0 + 1, indices 0 + 4 and 1 + 5, total 10
             [[[i for i in range(0, 100_000, 10)], 10], 1],
         ],
     },
-    10: {
+    9: {
         "markdown": """
 ### Single pair sum
 Given a 1-indexed array of integers numbers that is already sorted in non-decreasing order, find two numbers such that they add up to a specific target number.
@@ -343,7 +343,7 @@ explanation: 2 + 4, indices 1 and 2
             [[[i for i in range(-10, 10)], -10], [1, 11]],
         ],
     },
-    11: {
+    10: {
         "markdown": """
 ### Min length sub array
 Given an array of positive integers nums and a positive integer target, return the minimal length of a subarray whose sum is greater than or equal to target.
@@ -374,7 +374,7 @@ explanation: sub array [6] has sum >= 4
             [[[i for i in range(-10, 10)], 60], 0],
         ],
     },
-    12: {
+    11: {
         "markdown": """
 ### Min in rotated array
 Suppose an array of length n sorted in ascending order is rotated between 1 and n times.
@@ -404,7 +404,7 @@ output: 0
             [[[2]], 2],
         ],
     },
-    13: {
+    12: {
         "markdown": """
 ### Count primes
 Given a positive integer `n`, write an algorithm to return the number of prime numbers in [0, n]
@@ -429,7 +429,7 @@ explanation:
             [[1_000_000], 78498],
         ],
     },
-    14: {
+    13: {
         "markdown": """
 ### Permutations
 Given an array nums of distinct integers, return all the possible permutations.
@@ -479,7 +479,7 @@ output: [[1, 2], [2, 1]]
             [[[1]], [[1]]],
         ],
     },
-    15: {
+    14: {
         "markdown": """
 ### Combinations
 Given a string and a positive integer k, return all possible combinations of characters of size k.
@@ -575,7 +575,7 @@ output: 'abc', 'abd', 'acd', 'bcd'
             [["rat", 0], []],
         ],
     },
-    16: {
+    15: {
         "markdown": """
 ### Single number
 Given a non-empty array of integers `nums`, every element appears twice except for one. Find that single one.
@@ -596,7 +596,7 @@ output: 4
             [[[i for i in range(1, 500_000)] + [i for i in range(500_000)]], 0],
         ],
     },
-    17: {
+    16: {
         "markdown": """
 ### Powers of 2
 Given an integer `n`, find whether it is a power of `2`.
@@ -623,7 +623,7 @@ output: False
             [[-64], False],
         ],
     },
-    18: {
+    17: {
         "markdown": """
 ### Reverse Polish Notation
 Evaluate the value of an arithmetic opression in Reverse Polish Notation. Valid operators are +, -, *, and /. Each operand may be an integer or another opression.
@@ -652,7 +652,7 @@ explanation: (4 + (13 / 5)) = 6
             ],
         ],
     },
-    19: {
+    18: {
         "markdown": """
 ### Roman numerals
 Convert a given integer, `n`,  to its equivalent roman numerals for 0 < `n` < 4000.
@@ -686,7 +686,7 @@ output: 'XXIII'
             [[999], "CMXCIX"],
         ],
     },
-    20: {
+    19: {
         "markdown": """
 ### Longest common subsequence (LCS)
 Given two strings text1 and text2, return their longest common subsequence. If there is no common subsequence, return ''.
@@ -713,7 +713,7 @@ output: 'ath'
             [["@work3r", "m@rxkd35rt"], "@rk3r"],
         ],
     },
-    21: {
+    20: {
         "markdown": """
 ### Longest common substring (LCS)
 Given two strings text1 and text2, return their longest common substring. If there is no common substring, return ''.
@@ -741,7 +741,7 @@ output: 'rain'
             ],
         ],
     },
-    22: {
+    21: {
         "markdown": """
 ### Happy number
 Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1.
@@ -771,7 +771,7 @@ output: True
             [[1], True],
         ],
     },
-    23: {
+    22: {
         "markdown": """
 ### Jump game I
 You are given an integer array nums. You are initially positioned at the array's first index, and each element in the array represents your maximum jump length at that position.
@@ -797,7 +797,7 @@ Jump 1 step to index 1. jump 3 steps from index 1 to get to the end of array
             [[[200_000] + [0] * 200_000], True],
         ],
     },
-    24: {
+    23: {
         "markdown": """
 ### Jump game II
 Given an array of non-negative integers nums, you are initially positioned at the first index of the array. Each element in the array represents your maximum jump length at that position. Your goal is to reach the last index in the minimum number of jumps. You can assume that you can always reach the last index.
@@ -821,7 +821,7 @@ Jump 1 step to index 1. jump 3 steps from index 1 to get to the end of array. To
             [[[200_000] + [0] * 200_000], 1],
         ],
     },
-    25: {
+    24: {
         "markdown": """
 ### Jump game III
 Given an array of non-negative integers arr, you are initially positioned at a start index of the array. When you are at index i, you can jump to i + arr[i] or i — arr[i], check if you can reach to any index with value 0.
@@ -844,7 +844,7 @@ output: True
             [[[4, 2, 3, 0, 3, 1, 2], 5], True],
         ],
     },
-    26: {
+    25: {
         "markdown": """
 ### House robber I
 You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and it will automatically contact the police if two adjacent houses were broken into on the same night.
@@ -868,7 +868,7 @@ explanation: rob the first and the third house.
             [[[i for i in range(0, 100_000, 100)]], 25_000_000],
         ],
     },
-    27: {
+    26: {
         "markdown": """
 ### House robber II
 You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed. All houses at this place are arranged in a circle.
@@ -892,7 +892,7 @@ explanation: rob houses at indices 0 and 2
             [[[i for i in range(0, 100_000, 100)]], 25_000_000],
         ],
     },
-    28: {
+    27: {
         "markdown": """
 ### Course schedule
 There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.
@@ -924,7 +924,7 @@ output: [0, 1, 2, 3] or [0, 2, 1, 3]
             [[1, []], [0]],
         ],
     },
-    29: {
+    28: {
         "markdown": """
 ### Minimum height trees (MHTs)
 A tree is an undirected graph in which any two vertices are connected by exactly one path. In other words, any connected graph without simple cycles is a tree.
@@ -953,7 +953,7 @@ output: [3, 4]
             [[6, [[3, 0], [3, 1], [3, 2], [3, 4], [5, 4]]], [3, 4]],
         ],
     },
-    30: {
+    29: {
         "markdown": """
 ### Trie/Prefix tree
 In English, we have a concept called root, which can be followed by some other word to form another longer word - let's call this word derivative. For example, when the root "help" is followed by the word "ful", we can form a derivative "helpful".
@@ -985,7 +985,7 @@ output: "a a b c"
             [[["a", "b", "c"], "aadsfasf absbs bbab cadsfafs"], "a a b c"],
         ],
     },
-    31: {
+    30: {
         "markdown": """
 ### Longest common prefix
 Write a function to find the longest common prefix string amongst an array of strings.
@@ -1046,7 +1046,7 @@ output: ""
             [[["flower", "flow", ""]], ""],
         ],
     },
-    32: {
+    31: {
         "markdown": """
 ### Cheapest flight with at most k stops
 There are n cities connected by some number of flights. You are given an array flights where flights[i] = [fromi, toi, pricei] indicates that there is a flight from city fromi to city toi with cost pricei. You are also given three integers src, dest, and k.
@@ -1113,7 +1113,7 @@ Total cost 700
             ],
         ],
     },
-    33: {
+    32: {
         "markdown": """
 ### Network delay time
 You are given a network of n nodes, labeled from 1 to n. You are also given times, a list of travel times as directed edges times[i] = (ui, vi, wi), where ui is the source node, vi is the target node, and wi is the time it takes for a signal to travel from source to target. We will send a signal from a given node k.
@@ -1137,7 +1137,7 @@ output: 2
             [[[[1, 2, 1]], 4, 2], -1],
         ],
     },
-    34: {
+    33: {
         "markdown": """
 ### Reachable cities
 There are n cities numbered from 0 to n-1. Given the array edges where edges[i] = [fromi, toi, weighti] represents a bidirectional and weighted edge between cities fromi and toi, and given the integer distanceThreshold.
@@ -1169,7 +1169,7 @@ output: 3
             ],
         ],
     },
-    35: {
+    34: {
         "markdown": """
 ### Minimum spanning trees
 There are n cities labeled from 1 to n. You are given the integer n and an array connections where connections[i] = [xi, yi, costi] indicates that the cost of connecting city xi and city yi (bidirectional connection) is costi.
@@ -1198,7 +1198,7 @@ output: -1
             [[4, [[1, 2, 3], [3, 4, 4]]], -1],
         ],
     },
-    36: {
+    35: {
         "markdown": """
 ### Critical connections
 There are n servers numbered from 0 to n - 1 connected by undirected server-to-server connections forming a network where connections[i] = [ai, bi] represents a connection between servers ai and bi. Any server can reach other servers directly or indirectly through the network.
@@ -1229,7 +1229,7 @@ output: [[1, 3]]
             ],
         ],
     },
-    37: {
+    36: {
         "markdown": """
 ### Fractional knapsack
 Given a knapsack capacity and two arrays, the first one for weights and the second one for values. Add items to the knapsack to maximize the sum of the values of the items that can be added so that the sum of the weights is less than or equal to the knapsack capacity.
@@ -1253,7 +1253,7 @@ output: 240
             [[5, [10, 20, 30], [60, 100, 120]], 30],
         ],
     },
-    38: {
+    37: {
         "markdown": """
 ### Subarrays with sum
 Given an array and targetSum, return the total number of contigous subarrays inside the array whose sum is equal to targetSum
@@ -1278,7 +1278,7 @@ explanation: [13, -1], [12] and [3, 9]
             [[[13, -1, 8, 12, 3, 9, 7, 5, 9, 10] * 10_000, 24], 30_000],
         ],
     },
-    "_39": {
+    38: {
         "markdown": """
 ### Paths with sum
 > TODO: fix root input
@@ -1301,7 +1301,7 @@ output: 3
             [[9, 20], 1],
         ],
     },
-    40: {
+    39: {
         "markdown": """
 ### Remove occurence
 Given two strings s and part, perform the following operation on s until all occurrences of the substring part are removed:
@@ -1326,7 +1326,7 @@ output: 'eae'
             [["shesellsseashellsattheseashore", "sh"], "esellsseaellsattheseaore"],
         ],
     },
-    41: {
+    40: {
         "markdown": """
 ### Spinal case
 Given a string. Convert it to spinal case
@@ -1348,7 +1348,7 @@ output: "hello-world"
             [["...I-am_here lookingFor  You.See!!"], "i-am-here-looking-for-you-see"],
         ],
     },
-    42: {
+    41: {
         "markdown": """
 ### 0/1 knapsack
 Given a knapsack capacity and two arrays, the first one for weights and the second one for values. Add items to the knapsack to maximize the sum of the values of the items that can be added so that the sum of the weights is less than or equal to the knapsack capacity.
@@ -1375,7 +1375,7 @@ output: (220, [0, 1, 1])
             [[5, [10, 20, 30], [60, 100, 120]], (0, [0, 0, 0])],
         ],
     },
-    43: {
+    42: {
         "markdown": """
 ### Job scheduling
 You have n jobs, where every job is scheduled to be done from startTime[i] to endTime[i], obtaining a profit of profit[i].
@@ -1401,7 +1401,7 @@ output: 120
             [[[1, 1, 1], [2, 3, 4], [5, 6, 4]], 6],
         ],
     },
-    44: {
+    43: {
         "markdown": """
 ### Equal array partitions
 Given an integer array nums, return true if you can partition the array into two subsets such that the sum of the elements in both subsets is equal or false otherwise.
@@ -1425,7 +1425,7 @@ explanation: [1, 5, 5] and [11]
             [[[i for i in range(1, 330, 2)]], False],
         ],
     },
-    45: {
+    44: {
         "markdown": """
 ### Coin change I
 You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money. Return the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1. You may assume that you have an infinite number of each kind of coin.
@@ -1452,7 +1452,7 @@ explanation: two 5 coins and one 1 coin.
             [[[1, 2, 5, 10, 20, 50], 77], 4],
         ],
     },
-    46: {
+    45: {
         "markdown": """
 ### Min cost tickets
 You have planned some train traveling one year in advance. The days of the year in which you will travel are given as an integer array days. Each day is an integer from 1 to 365. Train tickets are sold in three different ways:
