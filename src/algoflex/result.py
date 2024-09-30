@@ -76,7 +76,7 @@ if __name__ == "__main__":
         user_code = self.user_code.strip()
         output_log = self.query_one(RichLog)
         test_cases = questions.get(self.problem_id, {}).get("test_cases", [])
-        full_code = f"{user_code}\n\ntest_cases={test_cases}\n\n{self.TEST_CODE}"
+        full_code = f"{user_code}\n\n{test_cases}\n\n{self.TEST_CODE}"
         with tempfile.NamedTemporaryFile(
             delete=False, suffix=".py", mode="w"
         ) as tmp_file:
