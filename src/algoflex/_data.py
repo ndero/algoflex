@@ -1,4 +1,4 @@
-tree_code = """
+binary_tree = """
 class TreeNode:
     def __init__(self, value):
         self.val = value
@@ -13,6 +13,21 @@ def array_to_tree(arr, index=0):
     root.left = array_to_tree(arr, index * 2 + 1)
     root.right = array_to_tree(arr, index * 2 + 2)
     return root
+"""
+linked_list = """
+class ListNode:
+    def __init__(self, val):
+        self.val = val
+        self.next = None
+
+
+def array_to_list(arr, i=0):
+    if i >= len(arr):
+        return None
+    head = ListNode(arr[i])
+    head.next = array_to_list(arr, i + 1)
+    return head
+
 """
 questions = {
     0: {
@@ -1330,7 +1345,7 @@ output: 3
 ```
 """,
         "test_cases": f"""
-{tree_code}
+{binary_tree}
 root1 = array_to_tree([10, 5, -3, 3, 2, None, 11, 3, -2, None, 1])
 root2 = array_to_tree([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, 5, 1])
 test_cases = [
@@ -1641,7 +1656,7 @@ output: 24
 ```
 """,
         "test_cases": f"""
-{tree_code}
+{binary_tree}
 root = array_to_tree([6, 3, 9, None, 5, 4, 9])
 test_cases = [
     [[root], 24],
@@ -1665,7 +1680,7 @@ output: 3
 ```
 """,
         "test_cases": f"""
-{tree_code}
+{binary_tree}
 root1 = array_to_tree([3, 5, 1, 6, 2, 0, 8, None, None, 7, 4])
 root2 = array_to_tree([1, 2])
 test_cases = [
@@ -1675,6 +1690,38 @@ test_cases = [
 ]
 """,
         "title": "Lowest common ancestor",
+        "difficulty": "Medium",
+    },
+    51: {
+        "markdown": """
+### Sum linked lists
+You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit.
+
+Add the two numbers and return the sum as a linked list. You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+
+### Example
+```
+input:
+  l1 = [2, 4, 3]
+  l2 = [5, 6, 4]
+output: [7, 0, 8]
+explanation: 342 + 465 = 807
+```
+""",
+        "test_cases": f"""
+{linked_list}
+l1 = array_to_list([2, 4, 3])
+l2 = array_to_list([5, 6, 4])
+l3 = array_to_list([9, 9, 9, 9, 9, 9, 9])
+l4 = array_to_list([9, 9, 9, 9])
+l12 = array_to_list([7, 0, 8])
+l34 = array_to_list([8, 9, 9, 9, 0, 0, 0, 1])
+test_cases = [
+    [[l1, l2], l12],
+    [[l3, l4], l34],
+]
+""",
+        "title": "Sum linked lists",
         "difficulty": "Medium",
     },
 }
