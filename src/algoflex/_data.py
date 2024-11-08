@@ -1650,4 +1650,31 @@ test_cases = [
         "title": "House robber III",
         "difficulty": "Medium",
     },
+    50: {
+        "markdown": """
+### Lowest common ancestor
+Given a binary tree, find the lowest common ancestor (LCA) of two given nodes, x and y, in the tree.
+
+### Example
+```
+input:
+  root = [3, 5, 1, 6, 2, 0, 8, None, None, 7, 4]
+  x = 5
+  y = 1
+output: 3
+```
+""",
+        "test_cases": f"""
+{tree_code}
+root1 = array_to_tree([3, 5, 1, 6, 2, 0, 8, None, None, 7, 4])
+root2 = array_to_tree([1, 2])
+test_cases = [
+    [[root1, 5, 1], 3],
+    [[root1, 5, 4], 5],
+    [[root2, 1, 2], 1],
+]
+""",
+        "title": "Lowest common ancestor",
+        "difficulty": "Medium",
+    },
 }
