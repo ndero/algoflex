@@ -1724,4 +1724,38 @@ test_cases = [
         "title": "Sum linked lists",
         "difficulty": "Medium",
     },
+    52: {
+        "markdown": """
+### Same binary tree
+Given the roots of two binary trees p and q, write a function to check if they are the same or not.
+
+### Example
+```
+input:
+  p = [6, 3, 9, None, 5, 4, 9]
+  q = [6, 3, 9, None, 5, 4, 9]
+output: True
+
+input:
+  p = [6, 3, 9, None, 5, 4, 9]
+  q = [6, 3, 9, 6, 5, 4, 9]
+output: False
+```
+""",
+        "test_cases": f"""
+{binary_tree}
+t1 = array_to_tree([6, 3, 9, None, 5, 4, 9])
+t2 = array_to_tree([6, 3, 9, None, 5, 4, 9])
+t3 = array_to_tree([6, 3, 9, 6, 5, 4, 9])
+t4 = array_to_tree([])
+t5 = array_to_tree([])
+test_cases = [
+    [[t1, t2], True],
+    [[t2, t3], False],
+    [[t4, t5], True],
+]
+""",
+        "title": "Same binary tree",
+        "difficulty": "Medium",
+    },
 }
