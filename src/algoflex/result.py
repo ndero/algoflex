@@ -109,5 +109,5 @@ if __name__ == "__main__":
             },
             KV.problem_id == self.problem_id,
         )
-        if success and (not best or elapsed < best):
+        if success and (not best or self.elapsed < best):
             stats.upsert({"best": self.elapsed}, KV.problem_id == self.problem_id)
