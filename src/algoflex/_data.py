@@ -1798,6 +1798,32 @@ test_cases = [
     },
     54: {
         "markdown": """
+### Has path sum
+Given the root of a binary tree and an integer targetSum, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.
+
+A leaf is a node with no children.
+
+### Example
+```
+input:
+  root = [5, 4, 8, 11, None, 13, 4, 7, 2, None, None, None, None, None, 1]
+  target = 18
+output: True
+```
+""",
+        "test_cases": f"""
+{binary_tree}
+t1 = array_to_tree([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, None, None, None, 1])
+t2 = array_to_tree([1, 2, 3, None, 4])
+test_cases = [
+    [[t1, 18], True],
+]
+""",
+        "title": "Has path sum",
+        "difficulty": "Medium",
+    },
+    55: {
+        "markdown": """
 ### Cousins
 Given the root of a binary tree with unique values and the values of two different nodes of the tree x and y, return true if the nodes corresponding to the values x and y in the tree are cousins, or false otherwise.
 
