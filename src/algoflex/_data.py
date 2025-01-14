@@ -1796,4 +1796,42 @@ test_cases = [
         "title": "Boolean binary tree",
         "difficulty": "Medium",
     },
+    54: {
+        "markdown": """
+### Cousins
+Given the root of a binary tree with unique values and the values of two different nodes of the tree x and y, return true if the nodes corresponding to the values x and y in the tree are cousins, or false otherwise.
+
+Two nodes of a binary tree are cousins if they have the same depth with different parents.
+
+Note that in a binary tree, the root node is at the depth 0, and children of each depth k node are at the depth k + 1.
+
+x != y and x and y exists in the tree.
+
+### Example
+```
+input:
+  root = [1, 2, 3, None, 4, None, 5]
+  x = 5
+  y = 4
+output: True
+
+input:
+  root = [1, 2, 3, None, 4]
+  x = 2
+  y = 3
+output: False
+```
+""",
+        "test_cases": f"""
+{binary_tree}
+t1 = array_to_tree([1, 2, 3, None, 4, None, 5])
+t2 = array_to_tree([1, 2, 3, None, 4])
+test_cases = [
+    [[t1, 5, 4], True],
+    [[t2, 2, 3], False],
+]
+""",
+        "title": "Cousins",
+        "difficulty": "Medium",
+    },
 }
