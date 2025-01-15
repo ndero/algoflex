@@ -1860,4 +1860,27 @@ test_cases = [
         "title": "Cousins",
         "difficulty": "Medium",
     },
+    56: {
+        "markdown": """
+### Invert binary tree
+Given the root of a binary tree, invert the
+tree, and return its root.
+
+### Example
+```
+input: [4, 2, 7, 1, 3, 6, 9]
+output: [4, 7, 2, 9, 6, 3, 1]
+```
+""",
+        "test_cases": f"""
+{binary_tree}
+t1 = array_to_tree([4, 2, 7, 1, 3, 6, 9])
+t2 = array_to_tree([4, 7, 2, 9, 6, 3, 1])
+test_cases = [
+    [[t1], t2],
+]
+""",
+        "title": "Invert binary tree",
+        "difficulty": "Medium",
+    },
 }
