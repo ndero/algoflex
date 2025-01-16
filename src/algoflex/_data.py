@@ -1883,4 +1883,26 @@ test_cases = [
         "title": "Invert binary tree",
         "difficulty": "Medium",
     },
+    57: {
+        "markdown": """
+### Reverse a linked list
+Given the head of a linked list, reverse the list, and return its head
+
+### Example
+```
+input: [1, 2, 3, 4, 5, 6]
+output: [6, 5, 4, 3, 2, 1]
+```
+""",
+        "test_cases": f"""
+{linked_list}
+l1 = array_to_list([1, 2, 3, 4, 5, 6])
+l2 = array_to_list([6, 5, 4, 3, 2, 1])
+test_cases = [
+    [[l1], l2],
+]
+""",
+        "title": "Reverse linked list",
+        "difficulty": "Medium",
+    },
 }
