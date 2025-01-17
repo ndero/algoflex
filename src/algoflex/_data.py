@@ -1905,4 +1905,29 @@ test_cases = [
         "title": "Reverse linked list",
         "difficulty": "Medium",
     },
+    58: {
+        "markdown": """
+### Merge sorted linked lists
+Given two sorted linked lists, head1 and head2. Merge them into one sorted linked list.
+
+### Example
+```
+input:
+  l1 = [2, 4, 6, 6, 12, 22]
+  l2 = [3, 7, 8, 9]
+output: [2, 3, 4, 6, 6, 7, 8, 9, 12, 22]
+```
+""",
+        "test_cases": f"""
+{linked_list}
+l1 = array_to_list([2, 4, 6, 6, 12, 22])
+l2 = array_to_list([3, 7, 8, 9])
+l3 = array_to_list([2, 3, 4, 6, 6, 7, 8, 9, 12, 22])
+test_cases = [
+    [[l1, l2], l3],
+]
+""",
+        "title": "Merge sorted linked lists",
+        "difficulty": "Medium",
+    },
 }
