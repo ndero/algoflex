@@ -1930,4 +1930,39 @@ test_cases = [
         "title": "Merge sorted linked lists",
         "difficulty": "Medium",
     },
+    59: {
+        "markdown": """
+### Add node to BST
+Given the root of a binary search tree and a value x, add x to the tree and return the root
+
+Make sure to not add duplicate values
+
+### Example
+```
+input:
+  root = [9, 8, 16]
+  x = 4
+output: [9, 8, 16, 4]
+
+input:
+  root = [12, 3, 20]
+  x = 5
+  output: [12, 3, 20, None, 5]
+```
+""",
+        "test_cases": f"""
+{binary_tree}
+t1 = array_to_tree([9, 8, 16])
+t2 = array_to_tree([9, 8, 16, 4])
+t3 = array_to_tree([12, 3, 20])
+t4 = array_to_tree([12, 3, 20, None, 5])
+test_cases = [
+    [[t1, 4], t2],
+    [[t3, 5], t4],
+    [[t4, 5], t4]
+]
+""",
+        "title": "Add node to BST",
+        "difficulty": "Medium",
+    },
 }
