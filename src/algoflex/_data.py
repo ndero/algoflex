@@ -1947,7 +1947,7 @@ output: [9, 8, 16, 4]
 input:
   root = [12, 3, 20]
   x = 5
-  output: [12, 3, 20, None, 5]
+output: [12, 3, 20, None, 5]
 ```
 """,
         "test_cases": f"""
@@ -1979,7 +1979,7 @@ output: False
 input:
   root = [12, 3, 20]
   x = 3
-  output: True
+output: True
 ```
 """,
         "test_cases": f"""
@@ -1996,6 +1996,32 @@ test_cases = [
 ]
 """,
         "title": "Has node BST",
+        "difficulty": "Medium",
+    },
+    60: {
+        "markdown": """
+### BST min
+Given the root of a binary search tree find the minimum value and return it
+### Example
+```
+input: [12, 3, 20]
+output: 3
+```
+""",
+        "test_cases": f"""
+{binary_tree}
+t1 = array_to_tree([9, 8, 16])
+t2 = array_to_tree([9, 8, 16, 4])
+t3 = array_to_tree([12, 3, 20])
+t4 = array_to_tree([12, 3, 20, None, 5])
+test_cases = [
+    [[t3], 3],
+    [[t1], 8],
+    [[t2], 4],
+    [[t4], 3],
+]
+""",
+        "title": "BST min",
         "difficulty": "Medium",
     },
 }
