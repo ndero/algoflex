@@ -1965,4 +1965,37 @@ test_cases = [
         "title": "Add node to BST",
         "difficulty": "Medium",
     },
+    60: {
+        "markdown": """
+### Has node BST
+Given the root of a binary search tree and a value x, check whether x is in the tree and return `True` or `False`
+### Example
+```
+input:
+  root = [9, 8, 16]
+  x = 5
+output: False
+
+input:
+  root = [12, 3, 20]
+  x = 3
+  output: True
+```
+""",
+        "test_cases": f"""
+{binary_tree}
+t1 = array_to_tree([9, 8, 16])
+t2 = array_to_tree([9, 8, 16, 4])
+t3 = array_to_tree([12, 3, 20])
+t4 = array_to_tree([12, 3, 20, None, 5])
+test_cases = [
+    [[t1, 5], False],
+    [[t3, 3], True],
+    [[t2, 4], True],
+    [[t4, 21], False],
+]
+""",
+        "title": "Has node BST",
+        "difficulty": "Medium",
+    },
 }
