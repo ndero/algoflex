@@ -2024,4 +2024,34 @@ test_cases = [
         "title": "BST min",
         "difficulty": "Medium",
     },
+    61: {
+        "markdown": """
+### Balanced tree
+Given the root of a binary search tree, return `True` if it is balanced or `False` otherwise
+
+A balanced tree is one whose difference between maximum height and minimum height is less than 2
+
+### Example
+```
+input: [4, 8, 9, 11, 12, 13, 16, 18]
+output: True
+
+input: [4, None, 9, None, None, None, 12]
+output: False
+```
+""",
+        "test_cases": f"""
+{binary_tree}
+t1 = array_to_tree([4, 8, 9, 11, 12, 13, 16, 18])
+t2 = array_to_tree([4, None, 9, None, None, None, 12])
+t3 = array_to_tree([12, 3, 20, None, 5])
+test_cases = [
+    [[t1], True],
+    [[t2], False],
+    [[t3], True],
+]
+""",
+        "title": "Balanced tree",
+        "difficulty": "Medium",
+    },
 }
