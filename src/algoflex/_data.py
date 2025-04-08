@@ -2075,4 +2075,25 @@ test_cases = [
         "title": "tree in-order traversal",
         "difficulty": "Medium",
     },
+    63: {
+        "markdown": """
+### Tree pre-order traversal
+Given the root of a binary search tree, traverse the tree using pre order traversal and return the values as an array.
+
+### Example
+```
+input: [12, 8, 16, 4, 9, 13, 18, 11]
+output: [12, 8, 4, 9, 11, 16, 13, 18]
+```
+""",
+        "test_cases": f"""
+{binary_tree}
+t1 = array_to_tree([12, 8, 16, 4, 9, 13, 18, 11])
+test_cases = [
+    [[t1], [12, 8, 4, 9, 11, 16, 13, 18]],
+]
+""",
+        "title": "tree pre-order traversal",
+        "difficulty": "Medium",
+    },
 }
