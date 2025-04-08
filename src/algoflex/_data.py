@@ -2033,7 +2033,7 @@ A balanced tree is one whose difference between maximum height and minimum heigh
 
 ### Example
 ```
-input: [4, 8, 9, 11, 12, 13, 16, 18]
+input: [12, 8, 16, 4, 9, 13, 18, 11]
 output: True
 
 input: [4, None, 9, None, None, None, 12]
@@ -2042,7 +2042,7 @@ output: False
 """,
         "test_cases": f"""
 {binary_tree}
-t1 = array_to_tree([4, 8, 9, 11, 12, 13, 16, 18])
+t1 = array_to_tree([12, 8, 16, 4, 9, 13, 18, 11])
 t2 = array_to_tree([4, None, 9, None, None, None, 12])
 t3 = array_to_tree([12, 3, 20, None, 5])
 test_cases = [
@@ -2052,6 +2052,27 @@ test_cases = [
 ]
 """,
         "title": "Balanced tree",
+        "difficulty": "Medium",
+    },
+    62: {
+        "markdown": """
+### Tree in-order traversal
+Given the root of a binary search tree, traverse the tree in order and return the values as an array.
+
+### Example
+```
+input: [12, 8, 16, 4, 9, 13, 18, 11]
+output: [4, 8, 9, 11, 12, 13, 16, 18]
+```
+""",
+        "test_cases": f"""
+{binary_tree}
+t1 = array_to_tree([12, 8, 16, 4, 9, 13, 18, 11])
+test_cases = [
+    [[t1], [4, 8, 9, 11, 12, 13, 16, 18]],
+]
+""",
+        "title": "tree in-order traversal",
         "difficulty": "Medium",
     },
 }
