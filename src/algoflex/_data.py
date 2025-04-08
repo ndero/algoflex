@@ -2096,4 +2096,25 @@ test_cases = [
         "title": "tree pre-order traversal",
         "difficulty": "Medium",
     },
+    64: {
+        "markdown": """
+### Tree post-order traversal
+Given the root of a binary search tree, traverse the tree using post order traversal and return the values as an array.
+
+### Example
+```
+input: [12, 8, 16, 4, 9, 13, 18, 11]
+output: [4, 11, 9, 8, 13, 18, 16, 12]
+```
+""",
+        "test_cases": f"""
+{binary_tree}
+t1 = array_to_tree([12, 8, 16, 4, 9, 13, 18, 11])
+test_cases = [
+    [[t1], [4, 11, 9, 8, 13, 18, 16, 12]],
+]
+""",
+        "title": "tree post-order traversal",
+        "difficulty": "Medium",
+    },
 }
