@@ -2072,7 +2072,7 @@ test_cases = [
     [[t1], [4, 8, 9, 11, 12, 13, 16, 18]],
 ]
 """,
-        "title": "tree in-order traversal",
+        "title": "Tree in-order traversal",
         "difficulty": "Medium",
     },
     63: {
@@ -2093,7 +2093,7 @@ test_cases = [
     [[t1], [12, 8, 4, 9, 11, 16, 13, 18]],
 ]
 """,
-        "title": "tree pre-order traversal",
+        "title": "Tree pre-order traversal",
         "difficulty": "Medium",
     },
     64: {
@@ -2114,7 +2114,7 @@ test_cases = [
     [[t1], [4, 11, 9, 8, 13, 18, 16, 12]],
 ]
 """,
-        "title": "tree post-order traversal",
+        "title": "Tree post-order traversal",
         "difficulty": "Medium",
     },
     65: {
@@ -2135,7 +2135,28 @@ test_cases = [
     [[t1], [12, 8, 16, 4, 9, 13, 18, 11]],
 ]
 """,
-        "title": "tree level-order traversal",
+        "title": "Tree level-order traversal",
+        "difficulty": "Medium",
+    },
+    66: {
+        "markdown": """
+### Tree leaves
+Given the root of a binary search tree, return all the leaves as an array ordered from left to right.
+
+### Example
+```
+input: [12, 8, 16, 4, 9, 13, 18, 11]
+output: [4, 11, 13, 18]
+```
+""",
+        "test_cases": f"""
+{binary_tree}
+t1 = array_to_tree([12, 8, 16, 4, 9, 13, 18, 11])
+test_cases = [
+    [[t1], [4, 11, 13, 18]],
+]
+""",
+        "title": "Tree leaves",
         "difficulty": "Medium",
     },
 }
