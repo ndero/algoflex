@@ -2159,4 +2159,25 @@ test_cases = [
         "title": "Tree leaves",
         "difficulty": "Medium",
     },
+    67: {
+        "markdown": """
+### Sum right nodes
+Given the root of a binary search tree, return the sum of all the right nodes
+
+### Example
+```
+input: [12, 8, 16, 4, 9, 13, 18, 11]
+output: 25
+```
+""",
+        "test_cases": f"""
+{binary_tree}
+t1 = array_to_tree([12, 8, 16, 4, 9, 13, 18, 11])
+test_cases = [
+    [[t1], 25],
+]
+""",
+        "title": "Sum right nodes",
+        "difficulty": "Medium",
+    },
 }
