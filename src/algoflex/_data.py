@@ -2180,4 +2180,39 @@ test_cases = [
         "title": "Sum right nodes",
         "difficulty": "Medium",
     },
+    68: {
+        "markdown": """
+### Delete tree node
+Given the root of a binary search tree and a value `x`. Remove the node with value `x` from the tree and return the root
+
+
+### Example
+```
+input:
+  root = [12, 8, 16, 4, 9, 13, 18, 2]
+  x = 2
+output: [12, 8, 16, 4, 9, 13, 18]
+
+input:
+  root = [12, 8, 16, 4, 9, 13, 18, 2]
+  x = 4
+output: [12, 8, 16, 2, 9, 13, 18]
+```
+""",
+        "test_cases": f"""
+{binary_tree}
+t1 = array_to_tree([12, 8, 16, 4, 9, 13, 18, 2])
+t2 = array_to_tree([12, 8, 16, 4, 9, 13, 18])
+t3 = array_to_tree([12, 8, 16, 2, 9, 13, 18])
+t4 = array_to_tree([12, 4, 16, 2, 9, 13, 18])
+t5 = array_to_tree([12, 9, 16, 4, None, 13, 18, 2])
+test_cases = [
+    [[t1, 2], t2],
+    [[t1, 4], t3],
+    [[t1, 8], t4], # or t5
+]
+""",
+        "title": "Delete tree node",
+        "difficulty": "Medium",
+    },
 }
