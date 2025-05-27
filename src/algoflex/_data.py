@@ -2215,4 +2215,27 @@ test_cases = [
         "title": "Delete tree node",
         "difficulty": "Medium",
     },
+    69: {
+        "markdown": """
+### Value in array
+Given an array of values sorted in a non decreasing order, and a target `y`. Return `True` if y is in the array or `False` otherwise
+
+### Example
+```
+input:
+  arr = [2, 4, 8, 9, 12, 13, 16, 18]
+  y = 18
+output: True
+```
+""",
+        "test_cases": """
+test_cases = [
+    [[[2, 4, 8, 9, 12, 13, 16, 18], 18], True],
+    [[[i for i in range(5_000_000)], 45], True],
+    [[[i for i in range(5_000_000)], 5_000_000], False],
+]
+""",
+        "title": "Value in array",
+        "difficulty": "Easy",
+    },
 }
