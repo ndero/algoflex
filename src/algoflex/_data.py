@@ -2238,4 +2238,24 @@ test_cases = [
         "title": "Value in array",
         "difficulty": "Easy",
     },
+    70: {
+        "markdown": """
+### Merge sort
+Given an array of integers, use merge sort algorithm to return an array of all the integers sorted in non decreasing order.
+
+### Example
+```
+input: [8, 2, 4, 9, 12, 18, 16]
+output: [2, 4, 8, 9, 12, 13, 16, 18]
+```
+""",
+        "test_cases": """
+test_cases = [
+    [[[8, 2, 4, 9, 12, 18, 16]], [2, 4, 8, 9, 12, 13, 16, 18]],
+    [[[i for i in range(100_000, -1, -1)]], [i for i in range(100_001)]],
+]
+""",
+        "title": "Merge sort",
+        "difficulty": "Easy",
+    },
 }
