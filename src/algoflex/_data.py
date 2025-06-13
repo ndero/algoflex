@@ -2278,4 +2278,24 @@ test_cases = [
         "title": "Heap sort",
         "difficulty": "Easy",
     },
+    72: {
+        "markdown": """
+### Quick sort
+Given an array of integers, use quick sort algorithm to return an array of all the integers sorted in non decreasing order.
+
+### Example
+```
+input: [8, 2, 4, 9, 12, 18, 16]
+output: [2, 4, 8, 9, 12, 13, 16, 18]
+```
+""",
+        "test_cases": """
+test_cases = [
+    [[[8, 2, 4, 9, 12, 18, 16]], [2, 4, 8, 9, 12, 13, 16, 18]],
+    [[[i for i in range(100_000, -1, -1)]], [i for i in range(100_001)]],
+]
+""",
+        "title": "Quick sort",
+        "difficulty": "Easy",
+    },
 }
