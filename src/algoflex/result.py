@@ -89,7 +89,7 @@ if __name__ == "__main__":
                 output_log.write(result.stdout, animate=True)
                 if result.stdout[-2] == "🚀":
                     passed += 1
-                    success == True
+                    success = True
             if result.stderr:
                 output_log.write(result.stderr, animate=True)
         except subprocess.TimeoutExpired:
@@ -109,5 +109,5 @@ if __name__ == "__main__":
             },
             KV.problem_id == self.problem_id,
         )
-        if success and (not best or self.elapsed < best):
+        if (success and not best) or (success and self.elapsed < best):
             stats.upsert({"best": self.elapsed}, KV.problem_id == self.problem_id)
