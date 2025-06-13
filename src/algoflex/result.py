@@ -30,6 +30,8 @@ class ResultModal(ModalScreen):
     }
     """
     TEST_CODE = """
+import sys
+
 def truncate(param):
     s = str(param)
     if len(s) > 60:
@@ -47,14 +49,15 @@ def run_tests():
                 print(f"[green]✔ test case {i+1} passed![/]")
             else:
                 print(f"[red][b]x[/] test case {i+1} failed![/] \\n\\t[b]inputs[/]: {display(inputs)}\\n\\t[b]got[/]: [red]{result}[/]\\n\\t[b]expected[/]: [green]{expected}[/]")
-                return
+                return 1
         except Exception as e:
             print(f"[red]test case {i+1} error![/]\\n\\t[b]error[/]: {e}\\n\\t[b]inputs[/]: {display(inputs)}")
-            return
+            return 1
     print(f"\\nPassed! 🚀")
+    return 0
 
 if __name__ == "__main__":
-    run_tests()
+    sys.exit(run_tests())
     """
 
     def __init__(self, problem_id, user_code, elapsed):
@@ -87,11 +90,11 @@ if __name__ == "__main__":
             )
             if result.stdout:
                 output_log.write(result.stdout, animate=True)
-                if result.stdout[-2] == "🚀":
-                    passed += 1
-                    success = True
             if result.stderr:
                 output_log.write(result.stderr, animate=True)
+            if result.returncode == 0:
+                passed += 1
+                success = True
         except subprocess.TimeoutExpired:
             output_log.write(
                 "[red]Execution timed out[/]\\n\\tYour solution must run within 10 seconds"
