@@ -2298,4 +2298,29 @@ test_cases = [
         "title": "Quick sort",
         "difficulty": "Easy",
     },
+    73: {
+        "markdown": """
+### Smaller to the right
+Given an integer array nums, return an integer array counts where counts[i] is the number of smaller elements to the right of nums[i].
+
+### Example
+```
+input: [5, 2, 2, 6, 1]
+output: [3, 1, 1, 1, 0]
+
+input: [-1, -1]
+output: [0, 0]
+```
+""",
+        "test_cases": """
+test_cases = [
+    [[[5, 2, 2, 6, 1]], [3, 1, 1, 1, 0]],
+    [[[-1, -1]], [0, 0]],
+    [[[8, 2, 4, 9, 12, 18, 16]], [2, 0, 0, 0, 0, 1, 0]],
+    [[[i for i in range(100_000, -1, -1)]], [0 for i in range(100_001)]],
+]
+""",
+        "title": "Smaller to the right",
+        "difficulty": "Hard",
+    },
 }
