@@ -124,66 +124,6 @@ test_cases = [
     },
     2: {
         "markdown": """
-### Majority element
-Given an array nums of size n, return the majority element.
-The majority element is the element that appears more than
-⌊n / 2⌋ times.
-
-You may assume that the majority element always
-exists in the array.
-### Example
-```
-Input: [3, 2, 3]
-Output: 3
-```
-""",
-        "test_cases": """
-test_cases = [
-    [[[3, 2, 3]], 3],
-    [[[6] * 20], 6],
-    [[[9] * 21 + [7] * 20], 9],
-    [[[2]], 2],
-    [[[]], None],
-    [[[6] * 100_000 + [9] * 100_001], 9],
-    [[[-2, -2, -4, -2, -4, -4, -4]], -4],
-
-]""",
-        "title": "Majority element",
-        "difficulty": "Easy",
-    },
-    3: {
-        "markdown": """
-### Max profit
-You are given an array `prices` where `prices[i]` is the price of a given stock on the ith day. You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
-
-Return the maximum profit you can achieve from this transaction.
-If you cannot achieve any profit, return 0.
-### Example
-```
-input: [7, 1, 5, 3, 6, 4]
-output: 5
-explanation: buy at price = 1 sell at price = 6
-
-input: [7, 6, 4, 3, 1]
-output: 0
-```
-""",
-        "test_cases": """
-test_cases = [
-    [[[7, 1, 5, 3, 6, 4]], 5],
-    [[[7, 6, 4, 3, 1]], 0],
-    [[[0, 0, 0, 0]], 0],
-    [[[4] * 2_000 + [15] * 1_000], 11],
-    [[[90] * 10_000 + [50] * 20_000], 0],
-    [[[]], 0],
-    [[[i for i in range(1, 100_000)]], 99_998],
-]
-""",
-        "title": "Max profit",
-        "difficulty": "Easy",
-    },
-    4: {
-        "markdown": """
 ### Valid matching brackets
 Given a string of brackets that can either be `[]`, `()` or `{}`.
 Check if the brackets are valid.
@@ -222,7 +162,7 @@ test_cases = [
         "title": "Valid matching brackets",
         "difficulty": "Easy",
     },
-    5: {
+    3: {
         "markdown": """
 ### Max sum sub array
 Given an integer array nums, find a contiguous non-empty subarray within the array that has the largest sum,
@@ -251,7 +191,7 @@ test_cases = [
         "title": "Max sum sub array",
         "difficulty": "Easy",
     },
-    6: {
+    4: {
         "markdown": """
 ### Max product sub array
 Given an integer array nums, find a contiguous non-empty subarray within the array that has the largest product,
@@ -280,7 +220,7 @@ test_cases = [
         "title": "Max product sub array",
         "difficulty": "Easy",
     },
-    7: {
+    5: {
         "markdown": """
 ### Symmetric difference
 Create a function that takes two or more arrays and returns an array of their symmetric difference. The returned array must contain only unique values (no duplicates).
@@ -322,7 +262,7 @@ test_cases = [
         "title": "Symmetric difference",
         "difficulty": "Easy",
     },
-    8: {
+    6: {
         "markdown": """
 ### Pairwise
 Given an array `arr`, find element pairs whose sum equal the second argument `target` and return the sum of their indices.
@@ -359,41 +299,7 @@ test_cases = [
         "title": "Pairwise",
         "difficulty": "Easy",
     },
-    9: {
-        "markdown": """
-### Single pair sum
-Given a 1-indexed array of integers numbers that is already sorted in non-decreasing order, find two numbers such that they add up to a specific target number.
-Return the indices of the two numbers as an array.
-
-The tests are generated such that there is exactly one solution. You may not use the same element twice.
-
-### Example
-```
-inputs:
-    arr: [2, 7, 11, 15],
-    target: 13
-output: [1, 3]
-explanation: 2 + 11 one-based indices: 1 and 3
-
-inputs:
-    arr: [2, 4, 7, 14],
-    target: 6
-output: [1, 2]
-explanation: 2 + 4, indices 1 and 2
-```
-""",
-        "test_cases": """
-test_cases = [
-    [[[2, 7, 11, 15], 13], [1, 3]],
-    [[[2, 4, 7, 14], 6], [1, 2]],
-    [[[i for i in range(400_000)], 5], [1, 6]],
-    [[[i for i in range(-10, 10)], -10], [1, 11]],
-],
-""",
-        "title": "Single pair sum sorted list",
-        "difficulty": "Easy",
-    },
-    10: {
+    7: {
         "markdown": """
 ### Min length sub array
 Given an array of positive integers nums and a positive integer target, return the minimal length of a subarray whose sum is greater than or equal to target.
@@ -426,7 +332,7 @@ test_cases = [
         "title": "Min length sub array",
         "difficulty": "Medium",
     },
-    11: {
+    8: {
         "markdown": """
 ### Min in rotated array
 Suppose an array of length n sorted in ascending order is rotated between 1 and n times.
@@ -456,7 +362,7 @@ output: 0
             [[[2]], 2],
         ],
     },
-    12: {
+    9: {
         "markdown": """
 ### Count primes
 Given a positive integer `n`, write an algorithm to return the number of prime numbers in [0, n]
@@ -481,7 +387,7 @@ explanation:
             [[1_000_000], 78498],
         ],
     },
-    13: {
+    10: {
         "markdown": """
 ### Permutations
 Given an array nums of distinct integers, return all the possible permutations.
@@ -531,7 +437,7 @@ output: [[1, 2], [2, 1]]
             [[[1]], [[1]]],
         ],
     },
-    14: {
+    11: {
         "markdown": """
 ### Combinations
 Given a string and a positive integer k, return all possible combinations of characters of size k.
@@ -627,12 +533,12 @@ output: 'abc', 'abd', 'acd', 'bcd'
             [["rat", 0], []],
         ],
     },
-    15: {
+    12: {
         "markdown": """
 ### Single number
-Given a non-empty array of integers `nums`, every element appears twice except for one. Find that single one.
+Given a non-empty array of integers `nums`, every element appears twice except for one.
 
-You must implement a solution with a linear runtime complexity and use only constant extra space.
+Find that single one.
 
 ### Example
 ```
@@ -648,7 +554,7 @@ output: 4
             [[[i for i in range(1, 500_000)] + [i for i in range(500_000)]], 0],
         ],
     },
-    16: {
+    13: {
         "markdown": """
 ### Powers of 2
 Given an integer `n`, find whether it is a power of `2`.
@@ -675,12 +581,14 @@ output: False
             [[-64], False],
         ],
     },
-    17: {
+    14: {
         "markdown": """
 ### Reverse Polish Notation
 Evaluate the value of an arithmetic opression in Reverse Polish Notation. Valid operators are +, -, *, and /. Each operand may be an integer or another opression.
 
-Note that division between two integers should truncate toward zero. It is guaranteed that the given RPN opression is always valid. That means the expression will always evaluate to a result, and there will not be any division by zero operation.
+Note that division between two integers should truncate toward zero.
+It is guaranteed that the given RPN opression is always valid.
+That means the expression will always evaluate to a result, and there will not be any division by zero operation.
 
 ### Example
 ```
@@ -704,7 +612,7 @@ explanation: (4 + (13 / 5)) = 6
             ],
         ],
     },
-    18: {
+    15: {
         "markdown": """
 ### Roman numerals
 Convert a given integer, `n`,  to its equivalent roman numerals for 0 < `n` < 4000.
@@ -738,34 +646,7 @@ output: 'XXIII'
             [[999], "CMXCIX"],
         ],
     },
-    19: {
-        "markdown": """
-### Longest common subsequence (LCS)
-Given two strings text1 and text2, return their longest common subsequence. If there is no common subsequence, return ''.
-
-A subsequence of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the remaining characters.
-For example, ‘ace’ is a subsequence of ‘abcde’. A common subsequence of two strings is a subsequence that is common to both strings.
-
-### Example
-```
-input:
-    text1: "math"
-    text2: 'arithmetic'
-output: 'ath'
-```
-""",
-        "title": "Longest common subsequence",
-        "difficulty": "Medium",
-        "test_cases": [
-            [["math", "arithmetic"], "ath"],
-            [["original", "origin"], "origin"],
-            [["foo", "bar"], ""],
-            [["", "arithmetic"], ""],
-            [["shesellsseashellsattheseashore", "isawyouyesterday"], "saester"],
-            [["@work3r", "m@rxkd35rt"], "@rk3r"],
-        ],
-    },
-    20: {
+    16: {
         "markdown": """
 ### Longest common substring (LCS)
 Given two strings text1 and text2, return their longest common substring. If there is no common substring, return ''.
@@ -793,7 +674,7 @@ output: 'rain'
             ],
         ],
     },
-    21: {
+    17: {
         "markdown": """
 ### Happy number
 Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1.
@@ -823,189 +704,7 @@ output: True
             [[1], True],
         ],
     },
-    22: {
-        "markdown": """
-### Jump game I
-You are given an integer array nums. You are initially positioned at the array's first index, and each element in the array represents your maximum jump length at that position.
-
-Return true if you can reach the last index, or false otherwise.
-
-### Example
-```
-input: [2, 3, 1, 1, 4]
-output: True
-```
-Jump 1 step to index 1. jump 3 steps from index 1 to get to the end of array
-""",
-        "title": "Jump game I",
-        "difficulty": "Easy",
-        "test_cases": [
-            [[[2, 3, 1, 1, 4]], True],
-            [[[0]], True],
-            [[[2, 1, 1, 0, 4]], False],
-            [[[i for i in range(200_000)]], False],
-            [[[1 for _ in range(200_000)]], True],
-            [[[0, 0]], False],
-            [[[200_000] + [0] * 200_000], True],
-        ],
-    },
-    23: {
-        "markdown": """
-### Jump game II
-Given an array of non-negative integers nums, you are initially positioned at the first index of the array. Each element in the array represents your maximum jump length at that position. Your goal is to reach the last index in the minimum number of jumps. You can assume that you can always reach the last index.
-
-Return the number of jumps
-
-### Example
-```
-input: [2, 3, 1, 1, 4]
-output: 2
-```
-Jump 1 step to index 1. jump 3 steps from index 1 to get to the end of array. Total 2 jumps
-""",
-        "title": "Jump game II",
-        "difficulty": "Easy",
-        "test_cases": [
-            [[[2, 3, 1, 1, 4]], 2],
-            [[[1]], 0],
-            [[[1, 5]], 1],
-            [[[1 for _ in range(200_000)]], 199_999],
-            [[[200_000] + [0] * 200_000], 1],
-        ],
-    },
-    24: {
-        "markdown": """
-### Jump game III
-Given an array of non-negative integers arr, you are initially positioned at a start index of the array. When you are at index i, you can jump to i + arr[i] or i — arr[i], check if you can reach to any index with value 0.
-
-Notice that you can not jump outside of the array at any time.
-
-### Example
-```
-input:
-    arr: [4, 2, 3, 0, 3, 1, 2],
-    start: 0
-output: True
-```
-""",
-        "title": "Jump game III",
-        "difficulty": "Medium",
-        "test_cases": [
-            [[[4, 2, 3, 0, 3, 1, 2], 0], True],
-            [[[3, 0, 2, 1, 2], 2], False],
-            [[[4, 2, 3, 0, 3, 1, 2], 5], True],
-        ],
-    },
-    25: {
-        "markdown": """
-### House robber I
-You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and it will automatically contact the police if two adjacent houses were broken into on the same night.
-
-Given an integer array `nums` representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
-
-### Example
-```
-input: [1, 2, 3, 1]
-output: 4
-explanation: rob the first and the third house.
-```
-""",
-        "title": "House robber I",
-        "difficulty": "Medium",
-        "test_cases": [
-            [[[1, 2, 3, 1]], 4],
-            [[[1, 7, 2, 1, 6]], 13],
-            [[[1, 2]], 2],
-            [[[3]], 3],
-            [[[i for i in range(0, 100_000, 100)]], 25_000_000],
-        ],
-    },
-    26: {
-        "markdown": """
-### House robber II
-You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed. All houses at this place are arranged in a circle.
-That means the first house is the neighbor of the last one. Meanwhile, adjacent houses have a security system connected, and it will automatically contact the police if two adjacent houses were broken into on the same night.
-
-Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
-
-### Example
-```
-input: [1, 2, 3, 1]
-output: 4
-explanation: rob houses at indices 0 and 2
-```
-""",
-        "title": "House robber II",
-        "difficulty": "Medium",
-        "test_cases": [
-            [[[1, 2, 3, 1]], 4],
-            [[[1, 7, 2, 1, 6]], 13],
-            [[[1, 2, 3]], 3],
-            [[[i for i in range(0, 100_000, 100)]], 25_000_000],
-        ],
-    },
-    27: {
-        "markdown": """
-### Course schedule
-There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.
-
-For example, the pair [0, 1], indicates that to take course 0 you have to first take course 1.
-
-Given the number of courses `n` and  a `prerequisites` array, return the ordering of courses you should take to finish all courses.
-
-If there are many valid answers, return any of them. If it is impossible to finish all courses, return an empty array.
-
-### Example
-```
-input:
-    n = 2,
-    prerequisites = [[1, 0]]
-output: [0, 1]
-
-input:
-    n = 4,
-    prerequisites = [[1, 0], [2, 0], [3, 1], [3, 2]]
-output: [0, 1, 2, 3] or [0, 2, 1, 3]
-```
-""",
-        "title": "Course schedule",
-        "difficulty": "Medium",
-        "test_cases": [
-            [[2, [[1, 0]]], [0, 1]],
-            [[4, [[1, 0], [2, 0], [3, 1], [3, 2]]], [0, 1, 2, 3]],
-            [[1, []], [0]],
-        ],
-    },
-    28: {
-        "markdown": """
-### Minimum height trees (MHTs)
-A tree is an undirected graph in which any two vertices are connected by exactly one path. In other words, any connected graph without simple cycles is a tree.
-
-Given a tree of `n` nodes labelled from 0 to n - 1, and an array of n - 1 edges where edges[i] = [ai, bi] indicates that there is an undirected edge between the two nodes ai and bi in the tree, you can choose any node of the tree as the root. When you select a node x as the root, the result tree has height h. Among all possible rooted trees, those with minimum height (i.e. min(h)) are called minimum height trees (MHTs).
-
-Return a list of all MHTs' root labels. You can return the answer in any order. The height of a rooted tree is the number of edges on the longest downward path between the root and a leaf.
-
-### Example
-```
-input:
-    n = 4,
-    edges = [[1, 0], [1, 2], [1, 3]]
-output: [1]
-
-input:
-    n = 6,
-    edges = [[3, 0], [3, 1], [3, 2], [3, 4], [5, 4]]
-output: [3, 4]
-```
-""",
-        "title": "Minimum height trees",
-        "difficulty": "Medium",
-        "test_cases": [
-            [[4, [[1, 0], [1, 2], [1, 3]]], [1]],
-            [[6, [[3, 0], [3, 1], [3, 2], [3, 4], [5, 4]]], [3, 4]],
-        ],
-    },
-    29: {
+    18: {
         "markdown": """
 ### Trie/Prefix tree
 In English, we have a concept called root, which can be followed by some other word to form another longer word - let's call this word derivative. For example, when the root "help" is followed by the word "ful", we can form a derivative "helpful".
@@ -1037,251 +736,7 @@ output: "a a b c"
             [[["a", "b", "c"], "aadsfasf absbs bbab cadsfafs"], "a a b c"],
         ],
     },
-    30: {
-        "markdown": """
-### Longest common prefix
-Write a function to find the longest common prefix string amongst an array of strings.
-
-If there is no common prefix, return an empty string "".
-
-### Example
-```
-input: dictionary = ["flower", "flow", "flight"]
-output: "fl"
-
-input: dictionary = ["dog", "racecar", "car"]
-output: ""
-```
-""",
-        "title": "Longest common prefix",
-        "difficulty": "Medium",
-        "test_cases": [
-            [[["flower", "flow", "flight"]], "fl"],
-            [[["dog", "racecar", "car"]], ""],
-            [
-                [
-                    [
-                        "algology",
-                        "algologies",
-                        "algologists",
-                        "algometer",
-                        "algometric",
-                        "algometry",
-                        "algophobia",
-                        "algologically",
-                        "algorithm",
-                        "algorism",
-                    ]
-                ],
-                "algo",
-            ],
-            [[["ORGANOMETALLICS", "ORGANOPHOSPHATE", "ORGANOTHERAPY "]], "ORGANO"],
-            [[["lower", "low", "light"]], "l"],
-            [
-                [
-                    [
-                        "SYSTEMATISE",
-                        "SYSTEMATISED",
-                        "SYSTEMATISER",
-                        "SYSTEMATISERS",
-                        "SYSTEMATISES",
-                        "SYSTEMATISING",
-                        "SYSTEMATISM",
-                        "SYSTEMATISMS",
-                        "SYSTEMATIST",
-                    ]
-                ],
-                "SYSTEMATIS",
-            ],
-            [[["garden", "gardener", "gardened", "gardenful", "gardenia"]], "garden"],
-            [[["flytrap", "flyway", "flyweight", "flywheel"]], "fly"],
-            [[["flower", "flow", ""]], ""],
-        ],
-    },
-    31: {
-        "markdown": """
-### Cheapest flight with at most k stops
-There are n cities connected by some number of flights. You are given an array flights where flights[i] = [fromi, toi, pricei] indicates that there is a flight from city fromi to city toi with cost pricei. You are also given three integers src, dest, and k.
-
-Return the cheapest price from src to dst with at most k stops. If there is no such route, return -1.
-
-### Example
-```
-inputs:
-    n = 4,
-    flights = [[0, 1, 100], [1, 2, 100], [2, 0, 100], [1, 3, 600], [2, 3, 200]],
-    src = 0,
-    dest = 3,
-    k = 1
-output: 700
-explanation: the cheapest flight from city 0 to 3 with at most one stop is:
-0 -> 1 at a cost of 100
-1 -> 3 at a cost of 600
-Total cost 700
-```
-""",
-        "title": "Cheapest flight with at most k stops",
-        "difficulty": "Medium",
-        "test_cases": [
-            [
-                [
-                    4,
-                    [[0, 1, 100], [1, 2, 100], [2, 0, 100], [1, 3, 600], [2, 3, 200]],
-                    0,
-                    3,
-                    1,
-                ],
-                700,
-            ],
-            [
-                [
-                    4,
-                    [[0, 1, 100], [1, 2, 100], [2, 0, 100], [1, 3, 600], [2, 3, 200]],
-                    0,
-                    3,
-                    2,
-                ],
-                400,
-            ],
-            [
-                [
-                    3,
-                    [[0, 1, 100], [1, 2, 100], [0, 2, 500]],
-                    0,
-                    2,
-                    1,
-                ],
-                200,
-            ],
-            [
-                [
-                    3,
-                    [[0, 1, 100], [1, 2, 100], [0, 2, 500]],
-                    0,
-                    2,
-                    0,
-                ],
-                500,
-            ],
-        ],
-    },
-    32: {
-        "markdown": """
-### Network delay time
-You are given a network of n nodes, labeled from 1 to n. You are also given times, a list of travel times as directed edges times[i] = (ui, vi, wi), where ui is the source node, vi is the target node, and wi is the time it takes for a signal to travel from source to target. We will send a signal from a given node k.
-
-Return the minimum time it takes for all the n nodes to receive the signal. If it is impossible for all the n nodes to receive the signal, return -1.
-
-### Example
-```
-inputs:
-    times = [[2, 1, 1], [2, 3, 1], [3, 4, 1]],
-    n = 4,
-    src = 2
-output: 2
-```
-""",
-        "title": "Network delay time",
-        "difficulty": "Medium",
-        "test_cases": [
-            [[[[2, 1, 1], [2, 3, 1], [3, 4, 1]], 4, 2], 2],
-            [[[[1, 2, 1]], 2, 1], 1],
-            [[[[1, 2, 1]], 4, 2], -1],
-        ],
-    },
-    33: {
-        "markdown": """
-### Reachable cities
-There are n cities numbered from 0 to n-1. Given the array edges where edges[i] = [fromi, toi, weighti] represents a bidirectional and weighted edge between cities fromi and toi, and given the integer distanceThreshold.
-
-Return the city with the smallest number of cities that are reachable through some path and whose distance is at most distanceThreshold, If there are multiple such cities, return the city with the greatest number.
-
-Notice that the distance of a path connecting cities i and j is equal to the sum of the edges' weights along that path.
-
-### Example
-```
-inputs:
-    n = 4,
-    edges = [[0, 1, 3], [1, 2, 1], [1, 3, 4], [2, 3, 1]],
-    threshold = 4
-output: 3
-```
-""",
-        "title": "Reachable cities",
-        "difficulty": "Medium",
-        "test_cases": [
-            [[4, [[0, 1, 3], [1, 2, 1], [1, 3, 4], [2, 3, 1]], 4], 3],
-            [
-                [
-                    5,
-                    [[0, 1, 2], [0, 4, 8], [1, 2, 3], [1, 4, 2], [2, 3, 1], [3, 4, 1]],
-                    2,
-                ],
-                0,
-            ],
-        ],
-    },
-    34: {
-        "markdown": """
-### Minimum spanning trees
-There are n cities labeled from 1 to n. You are given the integer n and an array connections where connections[i] = [xi, yi, costi] indicates that the cost of connecting city xi and city yi (bidirectional connection) is costi.
-
-Return the minimum cost to connect all the n cities such that there is at least one path between each pair of cities. If it is impossible to connect all the n cities, return -1.
-
-The cost is the sum of the connections’ costs used.
-
-### Example
-```
-inputs:
-    n = 3,
-    connections = [[1, 2, 5], [1, 3, 6], [2, 3, 1]]
-output: 6
-
-inputs:
-    n = 4,
-    connections = [[1, 2, 3], [3, 4, 4]]
-output: -1
-```
-""",
-        "title": "Minimum spanning trees",
-        "difficulty": "Medium",
-        "test_cases": [
-            [[3, [[1, 2, 5], [1, 3, 6], [2, 3, 1]]], 6],
-            [[4, [[1, 2, 3], [3, 4, 4]]], -1],
-        ],
-    },
-    35: {
-        "markdown": """
-### Critical connections
-There are n servers numbered from 0 to n - 1 connected by undirected server-to-server connections forming a network where connections[i] = [ai, bi] represents a connection between servers ai and bi. Any server can reach other servers directly or indirectly through the network.
-
-A critical connection is a connection that, if removed, will make some servers unable to reach some other server.
-
-Given integer `n` and `connections` arr, return all critical connections in the network in any order.
-
-### Example
-```
-inputs:
-    n = 4,
-    connections = [[0, 1], [1, 2], [2, 0], [1, 3]]
-output: [[1, 3]]
-```
-""",
-        "title": "Critical connections",
-        "difficulty": "Hard",
-        "test_cases": [
-            [[4, [[0, 1], [1, 2], [2, 0], [1, 3]]], [[1, 3]]],
-            [
-                [7, [[0, 1], [1, 2], [2, 0], [1, 3], [1, 4], [4, 5], [5, 6]]],
-                [[1, 3], [5, 6], [4, 5], [1, 4]],
-            ],
-            [
-                [7, [[0, 1], [1, 2], [2, 0], [1, 3], [1, 4], [4, 5], [5, 6], [2, 6]]],
-                [[1, 3]],
-            ],
-        ],
-    },
-    36: {
+    19: {
         "markdown": """
 ### Fractional knapsack
 Given a knapsack capacity and two arrays, the first one for weights and the second one for values. Add items to the knapsack to maximize the sum of the values of the items that can be added so that the sum of the weights is less than or equal to the knapsack capacity.
@@ -1305,7 +760,7 @@ output: 240
             [[5, [10, 20, 30], [60, 100, 120]], 30],
         ],
     },
-    37: {
+    20: {
         "markdown": """
 ### Subarrays with sum
 Given an array and targetSum, return the total number of contigous subarrays inside the array whose sum is equal to targetSum
@@ -1330,7 +785,7 @@ explanation: [13, -1], [12] and [3, 9]
             [[[13, -1, 8, 12, 3, 9, 7, 5, 9, 10] * 10_000, 24], 30_000],
         ],
     },
-    38: {
+    21: {
         "markdown": """
 ### Paths with sum
 Given the root of a binary tree and an integer targetSum, return the number of paths where the sum of the values along the path equals targetSum.
@@ -1357,7 +812,7 @@ test_cases = [
         "title": "Paths with sum",
         "difficulty": "Medium",
     },
-    39: {
+    22: {
         "markdown": """
 ### Remove occurence
 Given two strings s and part, perform the following operation on s until all occurrences of the substring part are removed:
@@ -1382,7 +837,7 @@ output: 'eae'
             [["shesellsseashellsattheseashore", "sh"], "esellsseaellsattheseaore"],
         ],
     },
-    40: {
+    23: {
         "markdown": """
 ### Spinal case
 Given a string. Convert it to spinal case
@@ -1404,7 +859,7 @@ output: "hello-world"
             [["...I-am_here lookingFor  You.See!!"], "i-am-here-looking-for-you-see"],
         ],
     },
-    41: {
+    24: {
         "markdown": """
 ### 0/1 knapsack
 Given a knapsack capacity and two arrays, the first one for weights and the second one for values. Add items to the knapsack to maximize the sum of the values of the items that can be added so that the sum of the weights is less than or equal to the knapsack capacity.
@@ -1431,33 +886,7 @@ output: (220, [0, 1, 1])
             [[5, [10, 20, 30], [60, 100, 120]], (0, [0, 0, 0])],
         ],
     },
-    42: {
-        "markdown": """
-### Job scheduling
-You have n jobs, where every job is scheduled to be done from startTime[i] to endTime[i], obtaining a profit of profit[i].
-
-You're given the startTime, endTime and profit arrays, return the maximum profit you can take such that there are no two jobs in the subset with overlapping time range.
-
-If you choose a job that ends at time X you will be able to start another job that starts at time X.
-
-### Example
-```
-inputs:
-    start_time = [1, 2, 3, 3],
-    end_time = [3, 4, 5, 6],
-    profit = [50, 10, 40, 70]
-
-output: 120
-```
-""",
-        "title": "Job scheduling",
-        "difficulty": "Easy",
-        "test_cases": [
-            [[[1, 2, 3, 3], [3, 4, 5, 6], [50, 10, 40, 70]], 120],
-            [[[1, 1, 1], [2, 3, 4], [5, 6, 4]], 6],
-        ],
-    },
-    43: {
+    25: {
         "markdown": """
 ### Equal array partitions
 Given an integer array nums, return true if you can partition the array into two subsets such that the sum of the elements in both subsets is equal or false otherwise.
@@ -1481,66 +910,7 @@ explanation: [1, 5, 5] and [11]
             [[[i for i in range(1, 330, 2)]], False],
         ],
     },
-    44: {
-        "markdown": """
-### Coin change I
-You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money. Return the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1. You may assume that you have an infinite number of each kind of coin.
-
-### Example
-```
-input:
-  coins = [1, 2, 5]
-  amount = 11
-output: 3
-explanation: two 5 coins and one 1 coin.
-```
-""",
-        "title": "Coin change I",
-        "difficulty": "Medium",
-        "test_cases": [
-            [[[1, 2, 5], 11], 3],
-            [[[1, 2, 5, 10], 11], 2],
-            [[[1, 2, 5, 10, 20], 11], 2],
-            [[[1, 2, 5, 10, 20], 110], 6],
-            [[[1, 2, 5, 10, 20], 63], 5],
-            [[[1, 2, 5, 10, 20, 50], 16], 3],
-            [[[1, 2, 5, 10, 20, 50], 28], 4],
-            [[[1, 2, 5, 10, 20, 50], 77], 4],
-        ],
-    },
-    45: {
-        "markdown": """
-### Min cost tickets
-You have planned some train traveling one year in advance. The days of the year in which you will travel are given as an integer array days. Each day is an integer from 1 to 365. Train tickets are sold in three different ways:
-
-- a 1-day pass is sold for costs[0] dollars,
-- a 7-day pass is sold for costs[1] dollars
-- a 30-day pass is sold for costs[2] dollars.
-
-The passes allow that many days of consecutive travel. Return the minimum number of dollars you need to travel every day in the given list of days.
-
-### Example
-```
-inputs:
-  days = [1, 4, 6, 7, 8, 20]
-  costs = [2, 7, 15]
-
-output: 11
-```
-""",
-        "title": "Min cost tickets",
-        "difficulty": "Medium",
-        "test_cases": [
-            [[[1, 4, 6, 7, 8, 20], [2, 7, 15]], 11],
-            [[[1, 2, 3, 4, 5, 6, 7], [2, 7, 15]], 7],
-            [[[i for i in range(1, 31)], [2, 7, 15]], 15],
-            [[[1, 4, 6], [2, 7, 15]], 6],
-            [[[5, 6, 7, 8, 9, 10, 11], [2, 7, 15]], 7],
-            [[[5, 6, 7, 8, 9, 10, 11, 210, 211, 212, 213, 365], [2, 7, 15]], 16],
-            [[[i for i in range(1, 366)], [2, 7, 15]], 190],
-        ],
-    },
-    46: {
+    26: {
         "markdown": """
 ### Fibonacci numbers
 Given a positive interger `n`, return the n<sup>th</sup> fibonacci number
@@ -1571,7 +941,7 @@ output: 5
             [[100], 354224848179261915075],
         ],
     },
-    47: {
+    27: {
         "markdown": """
 ### Climb stairs
 You are climbing a staircase. It takes n steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
@@ -1604,7 +974,7 @@ explanation:
             [[36], 24157817],
         ],
     },
-    48: {
+    28: {
         "markdown": """
 ### Ways to make change
 There are four types of common coins in US currency:
@@ -1640,59 +1010,7 @@ output: 6
             [[10_000], 134235101],
         ],
     },
-    49: {
-        "markdown": """
-### House robber III
-The thief has found himself a new place for his thievery again. There is only one entrance to this area, called root. Besides the root, each house has one and only one parent house.
-
-After a tour, the smart thief realized that all houses in this place form a binary tree. It will automatically contact the police if two directly-linked houses were broken into on the same night.
-
-Given the root of the binary tree, return the maximum amount of money the thief can rob without alerting the police.
-
-### Example
-```
-input: [6, 3, 9, None, 5, 4, 9]
-output: 24
-```
-""",
-        "test_cases": f"""
-{binary_tree}
-root = array_to_tree([6, 3, 9, None, 5, 4, 9])
-test_cases = [
-    [[root], 24],
-]
-""",
-        "title": "House robber III",
-        "difficulty": "Medium",
-    },
-    50: {
-        "markdown": """
-### Lowest common ancestor
-Given a binary tree, find the lowest common ancestor (LCA) of two given nodes, x and y, in the tree.
-
-### Example
-```
-input:
-  root = [3, 5, 1, 6, 2, 0, 8, None, None, 7, 4]
-  x = 5
-  y = 1
-output: 3
-```
-""",
-        "test_cases": f"""
-{binary_tree}
-root1 = array_to_tree([3, 5, 1, 6, 2, 0, 8, None, None, 7, 4])
-root2 = array_to_tree([1, 2])
-test_cases = [
-    [[root1, 5, 1], 3],
-    [[root1, 5, 4], 5],
-    [[root2, 1, 2], 1],
-]
-""",
-        "title": "Lowest common ancestor",
-        "difficulty": "Medium",
-    },
-    51: {
+    29: {
         "markdown": """
 ### Sum linked lists
 You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit.
@@ -1724,79 +1042,7 @@ test_cases = [
         "title": "Sum linked lists",
         "difficulty": "Medium",
     },
-    52: {
-        "markdown": """
-### Same binary tree
-Given the roots of two binary trees p and q, write a function to check if they are the same or not.
-
-### Example
-```
-input:
-  p = [6, 3, 9, None, 5, 4, 9]
-  q = [6, 3, 9, None, 5, 4, 9]
-output: True
-
-input:
-  p = [6, 3, 9, None, 5, 4, 9]
-  q = [6, 3, 9, 6, 5, 4, 9]
-output: False
-```
-""",
-        "test_cases": f"""
-{binary_tree}
-t1 = array_to_tree([6, 3, 9, None, 5, 4, 9])
-t2 = array_to_tree([6, 3, 9, None, 5, 4, 9])
-t3 = array_to_tree([6, 3, 9, 6, 5, 4, 9])
-t4 = array_to_tree([])
-t5 = array_to_tree([])
-test_cases = [
-    [[t1, t2], True],
-    [[t2, t3], False],
-    [[t4, t5], True],
-]
-""",
-        "title": "Same binary tree",
-        "difficulty": "Medium",
-    },
-    53: {
-        "markdown": """
-### Boolean tree
-You are given the root of a full binary tree with the following properties:
-- Leaf nodes have either the value 0 or 1, where 0 represents False and 1 represents True.
-- Non-leaf nodes have either the value 2 or 3, where 2 represents the boolean OR and 3 represents the boolean AND.
-
-The evaluation of a node is as follows:
-- If the node is a leaf node, the evaluation is the value of the node, i.e. True or False.
-- Otherwise, evaluate the node's two children and apply the boolean operation of its value with the children's evaluations.
-
-Return the boolean result of evaluating the root node.
-
-A full binary tree is a binary tree where each node has either 0 or 2 children.
-
-A leaf node is a node that has zero children.
-
-### Example
-```
-input: [2, 1, 3, None, None, 0, 1]
-output: True
-
-input: [0]
-output: False
-```
-""",
-        "test_cases": f"""
-{binary_tree}
-t1 = array_to_tree([2, 1, 3, None, None, 0, 1])
-t2 = array_to_tree([0])
-test_cases = [
-    [[t1], True],
-    [[t2], False],
-]
-""",
-        "title": "Boolean binary tree",
-        "difficulty": "Medium",
-    },
-    54: {
+    30: {
         "markdown": """
 ### Has path sum
 Given the root of a binary tree and an integer targetSum, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.
@@ -1822,68 +1068,7 @@ test_cases = [
         "title": "Has path sum",
         "difficulty": "Medium",
     },
-    55: {
-        "markdown": """
-### Cousins
-Given the root of a binary tree with unique values and the values of two different nodes of the tree x and y, return true if the nodes corresponding to the values x and y in the tree are cousins, or false otherwise.
-
-Two nodes of a binary tree are cousins if they have the same depth with different parents.
-
-Note that in a binary tree, the root node is at the depth 0, and children of each depth k node are at the depth k + 1.
-
-x != y and x and y exists in the tree.
-
-### Example
-```
-input:
-  root = [1, 2, 3, None, 4, None, 5]
-  x = 5
-  y = 4
-output: True
-
-input:
-  root = [1, 2, 3, None, 4]
-  x = 2
-  y = 3
-output: False
-```
-""",
-        "test_cases": f"""
-{binary_tree}
-t1 = array_to_tree([1, 2, 3, None, 4, None, 5])
-t2 = array_to_tree([1, 2, 3, None, 4])
-test_cases = [
-    [[t1, 5, 4], True],
-    [[t2, 2, 3], False],
-]
-""",
-        "title": "Cousins",
-        "difficulty": "Medium",
-    },
-    56: {
-        "markdown": """
-### Invert binary tree
-Given the root of a binary tree, invert the
-tree, and return its root.
-
-### Example
-```
-input: [4, 2, 7, 1, 3, 6, 9]
-output: [4, 7, 2, 9, 6, 3, 1]
-```
-""",
-        "test_cases": f"""
-{binary_tree}
-t1 = array_to_tree([4, 2, 7, 1, 3, 6, 9])
-t2 = array_to_tree([4, 7, 2, 9, 6, 3, 1])
-test_cases = [
-    [[t1], t2],
-]
-""",
-        "title": "Invert binary tree",
-        "difficulty": "Medium",
-    },
-    57: {
+    31: {
         "markdown": """
 ### Reverse a linked list
 Given the head of a linked list, reverse the list, and return its head
@@ -1905,7 +1090,7 @@ test_cases = [
         "title": "Reverse linked list",
         "difficulty": "Medium",
     },
-    58: {
+    32: {
         "markdown": """
 ### Merge sorted linked lists
 Given two sorted linked lists, head1 and head2. Merge them into one sorted linked list.
@@ -1930,7 +1115,7 @@ test_cases = [
         "title": "Merge sorted linked lists",
         "difficulty": "Medium",
     },
-    59: {
+    33: {
         "markdown": """
 ### Add node to BST
 Given the root of a binary search tree and a value x, add x to the tree and return the root
@@ -1965,7 +1150,7 @@ test_cases = [
         "title": "Add node to BST",
         "difficulty": "Medium",
     },
-    60: {
+    34: {
         "markdown": """
 ### Has node BST
 Given the root of a binary search tree and a value x, check whether x is in the tree and return `True` or `False`
@@ -1998,7 +1183,7 @@ test_cases = [
         "title": "Has node BST",
         "difficulty": "Medium",
     },
-    60: {
+    35: {
         "markdown": """
 ### BST min
 Given the root of a binary search tree find the minimum value and return it
@@ -2024,7 +1209,7 @@ test_cases = [
         "title": "BST min",
         "difficulty": "Medium",
     },
-    61: {
+    36: {
         "markdown": """
 ### Balanced tree
 Given the root of a binary search tree, return `True` if it is balanced or `False` otherwise
@@ -2054,7 +1239,7 @@ test_cases = [
         "title": "Balanced tree",
         "difficulty": "Medium",
     },
-    62: {
+    37: {
         "markdown": """
 ### Tree in-order traversal
 Given the root of a binary search tree, traverse the tree in order and return the values as an array.
@@ -2075,7 +1260,7 @@ test_cases = [
         "title": "Tree in-order traversal",
         "difficulty": "Medium",
     },
-    63: {
+    38: {
         "markdown": """
 ### Tree pre-order traversal
 Given the root of a binary search tree, traverse the tree using pre order traversal and return the values as an array.
@@ -2096,7 +1281,7 @@ test_cases = [
         "title": "Tree pre-order traversal",
         "difficulty": "Medium",
     },
-    64: {
+    39: {
         "markdown": """
 ### Tree post-order traversal
 Given the root of a binary search tree, traverse the tree using post order traversal and return the values as an array.
@@ -2117,7 +1302,7 @@ test_cases = [
         "title": "Tree post-order traversal",
         "difficulty": "Medium",
     },
-    65: {
+    40: {
         "markdown": """
 ### Tree level-order traversal
 Given the root of a binary search tree, traverse the tree using level order traversal and return the values as an array.
@@ -2138,7 +1323,7 @@ test_cases = [
         "title": "Tree level-order traversal",
         "difficulty": "Medium",
     },
-    66: {
+    41: {
         "markdown": """
 ### Tree leaves
 Given the root of a binary search tree, return all the leaves as an array ordered from left to right.
@@ -2159,7 +1344,7 @@ test_cases = [
         "title": "Tree leaves",
         "difficulty": "Medium",
     },
-    67: {
+    42: {
         "markdown": """
 ### Sum right nodes
 Given the root of a binary search tree, return the sum of all the right nodes
@@ -2180,7 +1365,7 @@ test_cases = [
         "title": "Sum right nodes",
         "difficulty": "Medium",
     },
-    68: {
+    43: {
         "markdown": """
 ### Delete tree node
 Given the root of a binary search tree and a value `x`. Remove the node with value `x` from the tree and return the root
@@ -2215,7 +1400,7 @@ test_cases = [
         "title": "Delete tree node",
         "difficulty": "Medium",
     },
-    69: {
+    44: {
         "markdown": """
 ### Value in array
 Given an array of values sorted in a non decreasing order, and a target `y`. Return `True` if y is in the array or `False` otherwise
@@ -2238,7 +1423,7 @@ test_cases = [
         "title": "Value in array",
         "difficulty": "Easy",
     },
-    70: {
+    45: {
         "markdown": """
 ### Merge sort
 Given an array of integers, use merge sort algorithm to return an array of all the integers sorted in non decreasing order.
@@ -2258,7 +1443,7 @@ test_cases = [
         "title": "Merge sort",
         "difficulty": "Easy",
     },
-    71: {
+    46: {
         "markdown": """
 ### Heap sort
 Given an array of integers, use heap sort algorithm to return an array of all the integers sorted in non decreasing order.
@@ -2278,7 +1463,7 @@ test_cases = [
         "title": "Heap sort",
         "difficulty": "Easy",
     },
-    72: {
+    47: {
         "markdown": """
 ### Quick sort
 Given an array of integers, use quick sort algorithm to return an array of all the integers sorted in non decreasing order.
@@ -2298,7 +1483,7 @@ test_cases = [
         "title": "Quick sort",
         "difficulty": "Easy",
     },
-    73: {
+    48: {
         "markdown": """
 ### Smaller to the right
 Given an integer array nums, return an integer array counts where counts[i] is the number of smaller elements to the right of nums[i].
