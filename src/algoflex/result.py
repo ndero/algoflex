@@ -1,7 +1,7 @@
 from textual.screen import ModalScreen
 from textual.widgets import Log, Button, TextArea, RichLog
 from textual.containers import VerticalScroll, Center
-from _data import questions
+from algoflex._data import questions
 import tempfile
 import subprocess
 import os

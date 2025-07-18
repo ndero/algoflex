@@ -12,10 +12,10 @@ from textual.containers import (
 from textual.widgets import Footer, Label, Markdown, Button, Static
 from textual.binding import Binding
 from textual.reactive import Reactive
-from _data import questions
+from algoflex._data import questions
 from random import shuffle
-from attempt import AttemptScreen
-from custom_widgets import Title, Problem
+from algoflex.attempt import AttemptScreen
+from algoflex.custom_widgets import Title, Problem
 from tinydb import TinyDB, Query
 
 stats = TinyDB("stats.json")
