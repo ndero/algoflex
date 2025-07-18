@@ -346,21 +346,23 @@ input: arr: [4, 5, 6, 7, 0, 1, 2]
 output: 0
 ```
 """,
+        "test_cases": """
+test_cases = [
+    [[[4, 5, 6, 7, 0, 1, 2]], 0],
+    [[[16, 23, 43, 55, -7, -4, 3, 5, 9, 15]], -7],
+    [[[i for i in range(36, 1_000_000, 10)]], 36],
+    [
+        [
+            [i for i in range(-10, 1_000_000, 10)]
+            + [i for i in range(-1_000_000, -10, 10)]
+        ],
+        -1_000_000,
+    ],
+    [[[2]], 2],
+]
+""",
         "title": "Min in rotated array",
         "difficulty": "Medium",
-        "test_cases": [
-            [[[4, 5, 6, 7, 0, 1, 2]], 0],
-            [[[16, 23, 43, 55, -7, -4, 3, 5, 9, 15]], -7],
-            [[[i for i in range(36, 1_000_000, 10)]], 36],
-            [
-                [
-                    [i for i in range(-10, 1_000_000, 10)]
-                    + [i for i in range(-1_000_000, -10, 10)]
-                ],
-                -1_000_000,
-            ],
-            [[[2]], 2],
-        ],
     },
     9: {
         "markdown": """
@@ -374,18 +376,20 @@ explanation:
     There are 168 prime numbers between 0 and 1000 inclusive.
 ```
 """,
+        "test_cases": """
+test_cases = [
+    [[100], 25],
+    [[1_000], 168],
+    [[10_000], 1229],
+    [[100_000], 9592],
+    [[2], 1],
+    [[3], 2],
+    [[1], 0],
+    [[1_000_000], 78498],
+],
+""",
         "title": "Count primes",
         "difficulty": "Medium",
-        "test_cases": [
-            [[100], 25],
-            [[1_000], 168],
-            [[10_000], 1229],
-            [[100_000], 9592],
-            [[2], 1],
-            [[3], 2],
-            [[1], 0],
-            [[1_000_000], 78498],
-        ],
     },
     10: {
         "markdown": """
@@ -401,41 +405,43 @@ input: [1, 2]
 output: [[1, 2], [2, 1]]
 ```
 """,
+        "test_cases": """
+test_cases = [
+    [[[1, 2]], [[1, 2], [2, 1]]],
+    [
+        [[i for i in range(1, 5)]],
+        [
+            [1, 2, 3, 4],
+            [1, 2, 4, 3],
+            [1, 3, 2, 4],
+            [1, 3, 4, 2],
+            [1, 4, 2, 3],
+            [1, 4, 3, 2],
+            [2, 1, 3, 4],
+            [2, 1, 4, 3],
+            [2, 3, 1, 4],
+            [2, 3, 4, 1],
+            [2, 4, 1, 3],
+            [2, 4, 3, 1],
+            [3, 1, 2, 4],
+            [3, 1, 4, 2],
+            [3, 2, 1, 4],
+            [3, 2, 4, 1],
+            [3, 4, 1, 2],
+            [3, 4, 2, 1],
+            [4, 1, 2, 3],
+            [4, 1, 3, 2],
+            [4, 2, 1, 3],
+            [4, 2, 3, 1],
+            [4, 3, 1, 2],
+            [4, 3, 2, 1],
+        ],
+    ],
+    [[[1]], [[1]]],
+]
+""",
         "title": "Permutations",
         "difficulty": "Medium",
-        "test_cases": [
-            [[[1, 2]], [[1, 2], [2, 1]]],
-            [
-                [[i for i in range(1, 5)]],
-                [
-                    [1, 2, 3, 4],
-                    [1, 2, 4, 3],
-                    [1, 3, 2, 4],
-                    [1, 3, 4, 2],
-                    [1, 4, 2, 3],
-                    [1, 4, 3, 2],
-                    [2, 1, 3, 4],
-                    [2, 1, 4, 3],
-                    [2, 3, 1, 4],
-                    [2, 3, 4, 1],
-                    [2, 4, 1, 3],
-                    [2, 4, 3, 1],
-                    [3, 1, 2, 4],
-                    [3, 1, 4, 2],
-                    [3, 2, 1, 4],
-                    [3, 2, 4, 1],
-                    [3, 4, 1, 2],
-                    [3, 4, 2, 1],
-                    [4, 1, 2, 3],
-                    [4, 1, 3, 2],
-                    [4, 2, 1, 3],
-                    [4, 2, 3, 1],
-                    [4, 3, 1, 2],
-                    [4, 3, 2, 1],
-                ],
-            ],
-            [[[1]], [[1]]],
-        ],
     },
     11: {
         "markdown": """
@@ -453,85 +459,87 @@ input:
 output: 'abc', 'abd', 'acd', 'bcd'
 ```
 """,
+        "test_cases": """
+test_cases = [
+    [["abcd", 3], ["abc", "abd", "acd", "bcd"]],
+    [
+        ["combinations", 2],
+        [
+            "co",
+            "cm",
+            "cb",
+            "ci",
+            "cn",
+            "ca",
+            "ct",
+            "ci",
+            "co",
+            "cn",
+            "cs",
+            "om",
+            "ob",
+            "oi",
+            "on",
+            "oa",
+            "ot",
+            "oi",
+            "oo",
+            "on",
+            "os",
+            "mb",
+            "mi",
+            "mn",
+            "ma",
+            "mt",
+            "mi",
+            "mo",
+            "mn",
+            "ms",
+            "bi",
+            "bn",
+            "ba",
+            "bt",
+            "bi",
+            "bo",
+            "bn",
+            "bs",
+            "in",
+            "ia",
+            "it",
+            "ii",
+            "io",
+            "in",
+            "is",
+            "na",
+            "nt",
+            "ni",
+            "no",
+            "nn",
+            "ns",
+            "at",
+            "ai",
+            "ao",
+            "an",
+            "as",
+            "ti",
+            "to",
+            "tn",
+            "ts",
+            "io",
+            "in",
+            "is",
+            "on",
+            "os",
+            "ns",
+        ],
+    ],
+    [["rat", 3], ["rat"]],
+    [["rat", 1], ["r", "a", "t"]],
+    [["rat", 0], []],
+]
+""",
         "title": "Combinations",
         "difficulty": "Medium",
-        "test_cases": [
-            [["abcd", 3], ["abc", "abd", "acd", "bcd"]],
-            [
-                ["combinations", 2],
-                [
-                    "co",
-                    "cm",
-                    "cb",
-                    "ci",
-                    "cn",
-                    "ca",
-                    "ct",
-                    "ci",
-                    "co",
-                    "cn",
-                    "cs",
-                    "om",
-                    "ob",
-                    "oi",
-                    "on",
-                    "oa",
-                    "ot",
-                    "oi",
-                    "oo",
-                    "on",
-                    "os",
-                    "mb",
-                    "mi",
-                    "mn",
-                    "ma",
-                    "mt",
-                    "mi",
-                    "mo",
-                    "mn",
-                    "ms",
-                    "bi",
-                    "bn",
-                    "ba",
-                    "bt",
-                    "bi",
-                    "bo",
-                    "bn",
-                    "bs",
-                    "in",
-                    "ia",
-                    "it",
-                    "ii",
-                    "io",
-                    "in",
-                    "is",
-                    "na",
-                    "nt",
-                    "ni",
-                    "no",
-                    "nn",
-                    "ns",
-                    "at",
-                    "ai",
-                    "ao",
-                    "an",
-                    "as",
-                    "ti",
-                    "to",
-                    "tn",
-                    "ts",
-                    "io",
-                    "in",
-                    "is",
-                    "on",
-                    "os",
-                    "ns",
-                ],
-            ],
-            [["rat", 3], ["rat"]],
-            [["rat", 1], ["r", "a", "t"]],
-            [["rat", 0], []],
-        ],
     },
     12: {
         "markdown": """
@@ -546,13 +554,15 @@ input: [4, 1, 2, 1, 2]
 output: 4
 ```
 """,
+        "test_cases": """
+test_cases =  [
+    [[[4, 1, 2, 1, 2]], 4],
+    [[[2]], 2],
+    [[[i for i in range(1, 500_000)] + [i for i in range(500_000)]], 0],
+]
+""",
         "title": "Single number",
         "difficulty": "Easy",
-        "test_cases": [
-            [[[4, 1, 2, 1, 2]], 4],
-            [[[2]], 2],
-            [[[i for i in range(1, 500_000)] + [i for i in range(500_000)]], 0],
-        ],
     },
     13: {
         "markdown": """
@@ -568,18 +578,20 @@ input: 20
 output: False
 ```
 """,
+        "test_cases": """
+test_cases = [
+    [[64], True],
+    [[20], False],
+    [[1024], True],
+    [[2], True],
+    [[0], False],
+    [[1267650600228229401496703205376], True],
+    [[1267650600228229401496703205377], False],
+    [[-64], False],
+]
+""",
         "title": "Powers of 2",
         "difficulty": "Easy",
-        "test_cases": [
-            [[64], True],
-            [[20], False],
-            [[1024], True],
-            [[2], True],
-            [[0], False],
-            [[1267650600228229401496703205376], True],
-            [[1267650600228229401496703205377], False],
-            [[-64], False],
-        ],
     },
     14: {
         "markdown": """
@@ -601,16 +613,18 @@ output: 6
 explanation: (4 + (13 / 5)) = 6
 ```
 """,
+        "test_cases": """
+test_cases = [
+    [[["2", "1", "+", "3", "*"]], 9],
+    [[["4", "13", "5", "/", "+"]], 6],
+    [
+        [["10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"]],
+        12,
+    ],
+]
+""",
         "title": "Reverse polish notation",
         "difficulty": "Easy",
-        "test_cases": [
-            [[["2", "1", "+", "3", "*"]], 9],
-            [[["4", "13", "5", "/", "+"]], 6],
-            [
-                [["10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"]],
-                12,
-            ],
-        ],
     },
     15: {
         "markdown": """
@@ -633,18 +647,20 @@ output: 'XXIII'
 """,
         "title": "Roman numerals",
         "difficulty": "Medium",
-        "test_cases": [
-            [[4], "IV"],
-            [[23], "XXIII"],
-            [[768], "DCCLXVIII"],
-            [[1], "I"],
-            [[3999], "MMMCMXCIX"],
-            [[369], "CCCLXIX"],
-            [[1318], "MCCCXVIII"],
-            [[1089], "MLXXXIX"],
-            [[2424], "MMCDXXIV"],
-            [[999], "CMXCIX"],
-        ],
+        "test_cases": """
+test_cases = [
+    [[4], "IV"],
+    [[23], "XXIII"],
+    [[768], "DCCLXVIII"],
+    [[1], "I"],
+    [[3999], "MMMCMXCIX"],
+    [[369], "CCCLXIX"],
+    [[1318], "MCCCXVIII"],
+    [[1089], "MLXXXIX"],
+    [[2424], "MMCDXXIV"],
+    [[999], "CMXCIX"],
+]
+""",
     },
     16: {
         "markdown": """
@@ -664,15 +680,17 @@ output: 'rain'
 """,
         "title": "Longest common substring",
         "difficulty": "Medium",
-        "test_cases": [
-            [["brain", "drain"], "rain"],
-            [["math", "arithmetic"], "th"],
-            [["blackmarket", "stagemarket"], "market"],
-            [
-                ["theoldmanoftheseaissowise", "sowisetheoldmanoftheseais"],
-                "theoldmanoftheseais",
-            ],
-        ],
+        "test_cases": """
+test_cases = [
+    [["brain", "drain"], "rain"],
+    [["math", "arithmetic"], "th"],
+    [["blackmarket", "stagemarket"], "market"],
+    [
+        ["theoldmanoftheseaissowise", "sowisetheoldmanoftheseais"],
+        "theoldmanoftheseais",
+    ],
+],
+""",
     },
     17: {
         "markdown": """
@@ -693,16 +711,17 @@ output: True
 """,
         "title": "Happy number",
         "difficulty": "Easy",
-        "test_cases": [
-            [[2], False],
-            [[7], True],
-            [[17], False],
-            [[19], True],
-            [[300_003], False],
-            [[20_345_329], False],
-            [[0], False],
-            [[1], True],
-        ],
+        "test_cases": """
+test_cases = [
+    [["brain", "drain"], "rain"],
+    [["math", "arithmetic"], "th"],
+    [["blackmarket", "stagemarket"], "market"],
+    [
+        ["theoldmanoftheseaissowise", "sowisetheoldmanoftheseais"],
+        "theoldmanoftheseais",
+    ],
+],
+""",
     },
     18: {
         "markdown": """
@@ -728,13 +747,15 @@ output: "a a b c"
 """,
         "title": "Trie/Prefix tree",
         "difficulty": "Medium",
-        "test_cases": [
-            [
-                [["cat", "bat", "rat"], "the cattle was rattled by the battery"],
-                "the cat was rat by the bat",
-            ],
-            [[["a", "b", "c"], "aadsfasf absbs bbab cadsfafs"], "a a b c"],
-        ],
+        "test_cases": """
+test_cases = [
+    [
+        [["cat", "bat", "rat"], "the cattle was rattled by the battery"],
+        "the cat was rat by the bat",
+    ],
+    [[["a", "b", "c"], "aadsfasf absbs bbab cadsfafs"], "a a b c"],
+]
+""",
     },
     19: {
         "markdown": """
@@ -754,11 +775,13 @@ output: 240
 """,
         "title": "Fractional knapsack",
         "difficulty": "Easy",
-        "test_cases": [
-            [[50, [10, 20, 30], [60, 100, 120]], 240],
-            [[60, [10, 20, 30], [60, 100, 120]], 280],
-            [[5, [10, 20, 30], [60, 100, 120]], 30],
-        ],
+        "test_cases": """
+test_cases = [
+    [[50, [10, 20, 30], [60, 100, 120]], 240],
+    [[60, [10, 20, 30], [60, 100, 120]], 280],
+    [[5, [10, 20, 30], [60, 100, 120]], 30],
+],
+""",
     },
     20: {
         "markdown": """
@@ -776,14 +799,16 @@ explanation: [13, -1], [12] and [3, 9]
 """,
         "title": "Subarrays with sum",
         "difficulty": "Easy",
-        "test_cases": [
-            [[[13, -1, 8, 12, 3, 9], 12], 3],
-            [[[13, -1, 8, 12, 3, 9], 2], 0],
-            [[[13, -1, 8, 12, 3, 9], 10], 0],
-            [[[13, -1, 8, 12, 3, 9, 7, 5, 9, 10], 75], 1],
-            [[[13, -1, 8, 12, 3, 9] * 20_000, 12], 60_000],
-            [[[13, -1, 8, 12, 3, 9, 7, 5, 9, 10] * 10_000, 24], 30_000],
-        ],
+        "test_cases": """
+test_cases = [
+    [[[13, -1, 8, 12, 3, 9], 12], 3],
+    [[[13, -1, 8, 12, 3, 9], 2], 0],
+    [[[13, -1, 8, 12, 3, 9], 10], 0],
+    [[[13, -1, 8, 12, 3, 9, 7, 5, 9, 10], 75], 1],
+    [[[13, -1, 8, 12, 3, 9] * 20_000, 12], 60_000],
+    [[[13, -1, 8, 12, 3, 9, 7, 5, 9, 10] * 10_000, 24], 30_000],
+],
+""",
     },
     21: {
         "markdown": """
@@ -830,12 +855,14 @@ output: 'eae'
 """,
         "title": "Remove occurence",
         "difficulty": "Easy",
-        "test_cases": [
-            [["axeaxae", "ax"], "eae"],
-            [["axxxxyyyyb", "xy"], "ab"],
-            [["daa-cbaa-c-c", "a-c"], "dab"],
-            [["shesellsseashellsattheseashore", "sh"], "esellsseaellsattheseaore"],
-        ],
+        "test_cases": """
+test_cases = [
+    [["axeaxae", "ax"], "eae"],
+    [["axxxxyyyyb", "xy"], "ab"],
+    [["daa-cbaa-c-c", "a-c"], "dab"],
+    [["shesellsseashellsattheseashore", "sh"], "esellsseaellsattheseaore"],
+]
+""",
     },
     23: {
         "markdown": """
@@ -852,12 +879,14 @@ output: "hello-world"
 """,
         "title": "Spinal case",
         "difficulty": "Easy",
-        "test_cases": [
-            [["Hello World!"], "hello-world"],
-            [["The Greatest of All Time."], "the-greatest-of-all-time"],
-            [["yes/no"], "yes-no"],
-            [["...I-am_here lookingFor  You.See!!"], "i-am-here-looking-for-you-see"],
-        ],
+        "test_cases": """
+test_cases = [
+    [["Hello World!"], "hello-world"],
+    [["The Greatest of All Time."], "the-greatest-of-all-time"],
+    [["yes/no"], "yes-no"],
+    [["...I-am_here lookingFor  You.See!!"], "i-am-here-looking-for-you-see"],
+]
+""",
     },
     24: {
         "markdown": """
@@ -880,11 +909,13 @@ output: (220, [0, 1, 1])
 """,
         "title": "0/1 knapsack",
         "difficulty": "Easy",
-        "test_cases": [
-            [[50, [10, 20, 30], [60, 100, 120]], (220, [0, 1, 1])],
-            [[60, [10, 20, 30], [60, 100, 120]], (280, [1, 1, 1])],
-            [[5, [10, 20, 30], [60, 100, 120]], (0, [0, 0, 0])],
-        ],
+        "test_cases": """
+test_cases = [
+    [[50, [10, 20, 30], [60, 100, 120]], (220, [0, 1, 1])],
+    [[60, [10, 20, 30], [60, 100, 120]], (280, [1, 1, 1])],
+    [[5, [10, 20, 30], [60, 100, 120]], (0, [0, 0, 0])],
+]
+""",
     },
     25: {
         "markdown": """
@@ -900,15 +931,17 @@ explanation: [1, 5, 5] and [11]
 """,
         "title": "Equal array partitions",
         "difficulty": "Medium",
-        "test_cases": [
-            [[[1, 5, 11, 5]], True],
-            [[[6]], False],
-            [[[i for i in range(300)]], True],
-            [[[1, 5, 13, 5]], False],
-            [[[1, 5, 11, 5] * 100], True],
-            [[[1, 5, 13, 5, 35, 92, 11, 17, 13, 53]], False],
-            [[[i for i in range(1, 330, 2)]], False],
-        ],
+        "test_cases": """
+test_cases = [
+    [[[1, 5, 11, 5]], True],
+    [[[6]], False],
+    [[[i for i in range(300)]], True],
+    [[[1, 5, 13, 5]], False],
+    [[[1, 5, 11, 5] * 100], True],
+    [[[1, 5, 13, 5, 35, 92, 11, 17, 13, 53]], False],
+    [[[i for i in range(1, 330, 2)]], False],
+]
+""",
     },
     26: {
         "markdown": """
@@ -931,15 +964,17 @@ output: 5
 """,
         "title": "Fibonacci numbers",
         "difficulty": "Easy",
-        "test_cases": [
-            [[0], 0],
-            [[1], 1],
-            [[5], 5],
-            [[10], 55],
-            [[23], 28657],
-            [[50], 12586269025],
-            [[100], 354224848179261915075],
-        ],
+        "test_cases": """
+test_cases = [
+    [[0], 0],
+    [[1], 1],
+    [[5], 5],
+    [[10], 55],
+    [[23], 28657],
+    [[50], 12586269025],
+    [[100], 354224848179261915075],
+],
+""",
     },
     27: {
         "markdown": """
@@ -966,13 +1001,15 @@ explanation:
 """,
         "title": "Climb stairs",
         "difficulty": "Easy",
-        "test_cases": [
-            [[0], 0],
-            [[1], 1],
-            [[2], 2],
-            [[10], 89],
-            [[36], 24157817],
-        ],
+        "test_cases": """
+test_cases = [
+    [[0], 0],
+    [[1], 1],
+    [[2], 2],
+    [[10], 89],
+    [[36], 24157817],
+],
+""",
     },
     28: {
         "markdown": """
@@ -1001,48 +1038,18 @@ output: 6
 """,
         "title": "Ways to make change",
         "difficulty": "Medium",
-        "test_cases": [
-            [[15], 6],
-            [[10], 4],
-            [[5], 2],
-            [[55], 60],
-            [[1000], 142511],
-            [[10_000], 134235101],
-        ],
+        "test_cases": """
+test_cases = [
+    [[15], 6],
+    [[10], 4],
+    [[5], 2],
+    [[55], 60],
+    [[1000], 142511],
+    [[10_000], 134235101],
+],
+""",
     },
     29: {
-        "markdown": """
-### Sum linked lists
-You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit.
-
-Add the two numbers and return the sum as a linked list. You may assume the two numbers do not contain any leading zero, except the number 0 itself.
-
-### Example
-```
-input:
-  l1 = [2, 4, 3]
-  l2 = [5, 6, 4]
-output: [7, 0, 8]
-explanation: 342 + 465 = 807
-```
-""",
-        "test_cases": f"""
-{linked_list}
-l1 = array_to_list([2, 4, 3])
-l2 = array_to_list([5, 6, 4])
-l3 = array_to_list([9, 9, 9, 9, 9, 9, 9])
-l4 = array_to_list([9, 9, 9, 9])
-l12 = array_to_list([7, 0, 8])
-l34 = array_to_list([8, 9, 9, 9, 0, 0, 0, 1])
-test_cases = [
-    [[l1, l2], l12],
-    [[l3, l4], l34],
-]
-""",
-        "title": "Sum linked lists",
-        "difficulty": "Medium",
-    },
-    30: {
         "markdown": """
 ### Has path sum
 Given the root of a binary tree and an integer targetSum, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.
@@ -1068,29 +1075,7 @@ test_cases = [
         "title": "Has path sum",
         "difficulty": "Medium",
     },
-    31: {
-        "markdown": """
-### Reverse a linked list
-Given the head of a linked list, reverse the list, and return its head
-
-### Example
-```
-input: [1, 2, 3, 4, 5, 6]
-output: [6, 5, 4, 3, 2, 1]
-```
-""",
-        "test_cases": f"""
-{linked_list}
-l1 = array_to_list([1, 2, 3, 4, 5, 6])
-l2 = array_to_list([6, 5, 4, 3, 2, 1])
-test_cases = [
-    [[l1], l2],
-]
-""",
-        "title": "Reverse linked list",
-        "difficulty": "Medium",
-    },
-    32: {
+    30: {
         "markdown": """
 ### Merge sorted linked lists
 Given two sorted linked lists, head1 and head2. Merge them into one sorted linked list.
@@ -1115,42 +1100,7 @@ test_cases = [
         "title": "Merge sorted linked lists",
         "difficulty": "Medium",
     },
-    33: {
-        "markdown": """
-### Add node to BST
-Given the root of a binary search tree and a value x, add x to the tree and return the root
-
-Make sure to not add duplicate values
-
-### Example
-```
-input:
-  root = [9, 8, 16]
-  x = 4
-output: [9, 8, 16, 4]
-
-input:
-  root = [12, 3, 20]
-  x = 5
-output: [12, 3, 20, None, 5]
-```
-""",
-        "test_cases": f"""
-{binary_tree}
-t1 = array_to_tree([9, 8, 16])
-t2 = array_to_tree([9, 8, 16, 4])
-t3 = array_to_tree([12, 3, 20])
-t4 = array_to_tree([12, 3, 20, None, 5])
-test_cases = [
-    [[t1, 4], t2],
-    [[t3, 5], t4],
-    [[t4, 5], t4]
-]
-""",
-        "title": "Add node to BST",
-        "difficulty": "Medium",
-    },
-    34: {
+    31: {
         "markdown": """
 ### Has node BST
 Given the root of a binary search tree and a value x, check whether x is in the tree and return `True` or `False`
@@ -1183,7 +1133,7 @@ test_cases = [
         "title": "Has node BST",
         "difficulty": "Medium",
     },
-    35: {
+    32: {
         "markdown": """
 ### BST min
 Given the root of a binary search tree find the minimum value and return it
@@ -1209,7 +1159,7 @@ test_cases = [
         "title": "BST min",
         "difficulty": "Medium",
     },
-    36: {
+    33: {
         "markdown": """
 ### Balanced tree
 Given the root of a binary search tree, return `True` if it is balanced or `False` otherwise
@@ -1239,7 +1189,7 @@ test_cases = [
         "title": "Balanced tree",
         "difficulty": "Medium",
     },
-    37: {
+    34: {
         "markdown": """
 ### Tree in-order traversal
 Given the root of a binary search tree, traverse the tree in order and return the values as an array.
@@ -1260,7 +1210,7 @@ test_cases = [
         "title": "Tree in-order traversal",
         "difficulty": "Medium",
     },
-    38: {
+    35: {
         "markdown": """
 ### Tree pre-order traversal
 Given the root of a binary search tree, traverse the tree using pre order traversal and return the values as an array.
@@ -1281,7 +1231,7 @@ test_cases = [
         "title": "Tree pre-order traversal",
         "difficulty": "Medium",
     },
-    39: {
+    36: {
         "markdown": """
 ### Tree post-order traversal
 Given the root of a binary search tree, traverse the tree using post order traversal and return the values as an array.
@@ -1302,7 +1252,7 @@ test_cases = [
         "title": "Tree post-order traversal",
         "difficulty": "Medium",
     },
-    40: {
+    37: {
         "markdown": """
 ### Tree level-order traversal
 Given the root of a binary search tree, traverse the tree using level order traversal and return the values as an array.
@@ -1323,7 +1273,7 @@ test_cases = [
         "title": "Tree level-order traversal",
         "difficulty": "Medium",
     },
-    41: {
+    38: {
         "markdown": """
 ### Tree leaves
 Given the root of a binary search tree, return all the leaves as an array ordered from left to right.
@@ -1344,7 +1294,7 @@ test_cases = [
         "title": "Tree leaves",
         "difficulty": "Medium",
     },
-    42: {
+    39: {
         "markdown": """
 ### Sum right nodes
 Given the root of a binary search tree, return the sum of all the right nodes
@@ -1365,42 +1315,7 @@ test_cases = [
         "title": "Sum right nodes",
         "difficulty": "Medium",
     },
-    43: {
-        "markdown": """
-### Delete tree node
-Given the root of a binary search tree and a value `x`. Remove the node with value `x` from the tree and return the root
-
-
-### Example
-```
-input:
-  root = [12, 8, 16, 4, 9, 13, 18, 2]
-  x = 2
-output: [12, 8, 16, 4, 9, 13, 18]
-
-input:
-  root = [12, 8, 16, 4, 9, 13, 18, 2]
-  x = 4
-output: [12, 8, 16, 2, 9, 13, 18]
-```
-""",
-        "test_cases": f"""
-{binary_tree}
-t1 = array_to_tree([12, 8, 16, 4, 9, 13, 18, 2])
-t2 = array_to_tree([12, 8, 16, 4, 9, 13, 18])
-t3 = array_to_tree([12, 8, 16, 2, 9, 13, 18])
-t4 = array_to_tree([12, 4, 16, 2, 9, 13, 18])
-t5 = array_to_tree([12, 9, 16, 4, None, 13, 18, 2])
-test_cases = [
-    [[t1, 2], t2],
-    [[t1, 4], t3],
-    [[t1, 8], t4], # or t5
-]
-""",
-        "title": "Delete tree node",
-        "difficulty": "Medium",
-    },
-    44: {
+    40: {
         "markdown": """
 ### Value in array
 Given an array of values sorted in a non decreasing order, and a target `y`. Return `True` if y is in the array or `False` otherwise
@@ -1423,7 +1338,7 @@ test_cases = [
         "title": "Value in array",
         "difficulty": "Easy",
     },
-    45: {
+    41: {
         "markdown": """
 ### Merge sort
 Given an array of integers, use merge sort algorithm to return an array of all the integers sorted in non decreasing order.
@@ -1443,7 +1358,7 @@ test_cases = [
         "title": "Merge sort",
         "difficulty": "Easy",
     },
-    46: {
+    42: {
         "markdown": """
 ### Heap sort
 Given an array of integers, use heap sort algorithm to return an array of all the integers sorted in non decreasing order.
@@ -1463,7 +1378,7 @@ test_cases = [
         "title": "Heap sort",
         "difficulty": "Easy",
     },
-    47: {
+    43: {
         "markdown": """
 ### Quick sort
 Given an array of integers, use quick sort algorithm to return an array of all the integers sorted in non decreasing order.
@@ -1483,7 +1398,7 @@ test_cases = [
         "title": "Quick sort",
         "difficulty": "Easy",
     },
-    48: {
+    44: {
         "markdown": """
 ### Smaller to the right
 Given an integer array nums, return an integer array counts where counts[i] is the number of smaller elements to the right of nums[i].
