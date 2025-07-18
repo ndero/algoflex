@@ -3,3 +3,5 @@ env/
 __pycache__/
 stats.json
 _questions.py
+dist/
+*.egg-info
