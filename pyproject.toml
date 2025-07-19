@@ -12,6 +12,7 @@ license = "MIT"
 authors = [{name = "ndero", email = "jnderoh@gmail.com"}]
 dependencies = [
   "textual>=3.5.0",
+  "textual[syntax]",
   "tinydb>=4.8.2",
 ]
 
