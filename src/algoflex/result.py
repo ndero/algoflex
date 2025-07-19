@@ -46,14 +46,17 @@ def run_tests():
         try:
             result = solution(*inputs)
             if result == expected:
-                print(f"[green]✔ test case {i+1} passed![/]")
+                if sys.stdout.encoding and sys.stdout.encoding.lower().startswith("utf"):
+                    print(f"[green]✔ test case {i+1} passed![/]")
+                else:
+                    print("[green] test case {i+1}passed![/]")
             else:
                 print(f"[red][b]x[/] test case {i+1} failed![/] \\n\\t[b]inputs[/]: {display(inputs)}\\n\\t[b]got[/]: [red]{result}[/]\\n\\t[b]expected[/]: [green]{expected}[/]")
                 return 1
         except Exception as e:
-            print(f"[red]test case {i+1} error![/]\\n\\t[b]error[/]: {e}\\n\\t[b]inputs[/]: {display(inputs)}")
+            print(f"[red][b]x[/] test case {i+1} error![/]\\n\\t[b]error[/]: {e}\\n\\t[b]inputs[/]: {display(inputs)}")
             return 1
-    print(f"\\nPassed! 🚀")
+    print(f"\\nPassed!")
     return 0
 
 if __name__ == "__main__":
