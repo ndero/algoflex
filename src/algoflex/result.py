@@ -84,7 +84,7 @@ if __name__ == "__main__":
         test_cases = questions.get(self.problem_id, {}).get("test_cases", [])
         full_code = f"{user_code}\n\n{test_cases}\n\n{self.TEST_CODE}"
         with tempfile.NamedTemporaryFile(
-            delete=False, suffix=".py", mode="w"
+            delete=False, suffix=".py", mode="w+", encoding="utf-8"
         ) as tmp_file:
             tmp_file.write(full_code)
         try:

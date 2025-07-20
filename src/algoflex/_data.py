@@ -84,7 +84,7 @@ You must order the pairs by the start index in ascending order
 ### Example
 ```
 Input: "abcdddeeeeaabbbcd"
-Output: [[3,5], [6,9], [12,14]]
+Output: [[3,5], [6,9], [12,15]]
 ```
 """,
         "test_cases": """
