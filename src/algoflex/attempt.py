@@ -1,10 +1,10 @@
 from textual.app import App
-from textual.widgets import TextArea, Button, Markdown, Footer
+from textual.widgets import TextArea, Markdown, Footer
+from textual.containers import Horizontal
+from textual.screen import Screen
+from textual.binding import Binding
 from algoflex.custom_widgets import Title, Problem
 from algoflex.result import ResultModal
-from textual.containers import Vertical, Horizontal
-from textual.screen import ModalScreen, Screen
-from textual.binding import Binding
 from algoflex._data import questions
 from time import monotonic
 

@@ -4,21 +4,17 @@ from textual.containers import (
     Horizontal,
     Vertical,
     VerticalScroll,
-    ItemGrid,
-    VerticalGroup,
-    HorizontalGroup,
-    Center,
 )
-from textual.widgets import Footer, Label, Markdown, Button, Static
+from textual.widgets import Footer, Markdown, Static
 from textual.binding import Binding
 from textual.reactive import Reactive
 from algoflex._data import questions
-from random import shuffle
 from algoflex.attempt import AttemptScreen
 from algoflex.custom_widgets import Title, Problem
-from tinydb import TinyDB, Query
+from algoflex.db import get_db
+from random import shuffle
+from tinydb import Query
 
-stats = TinyDB("stats.json")
 KV = Query()
 
 
@@ -61,12 +57,12 @@ class HomeScreen(App):
     DEFAULT_CSS = """
     HomeScreen {
         Problem {
-            height: 70vh;
             &>*{ max-width: 100; }
             align: center middle;
             margin-top: 1;
         }
         StatScreen {
+            height: 7;
             &>* {max-width: 100; }
             align: center middle;
         }
@@ -80,8 +76,9 @@ class HomeScreen(App):
     def compose(self):
         problem = questions.get(id, {}).get("markdown", "")
         yield Title()
-        yield Problem(problem)
-        yield StatScreen()
+        with VerticalScroll():
+            yield Problem(problem)
+            yield StatScreen()
         yield Footer()
 
     def on_mount(self):
@@ -89,6 +86,7 @@ class HomeScreen(App):
         self.problem_id = self.PROBLEMS[self.index]
 
     def watch_problem_id(self, id):
+        stats = get_db()
         s = stats.get(KV.problem_id == id) or {}
         p = questions.get(id, {})
         problem, difficulty = p.get("markdown", ""), p.get("difficulty", "Easy")

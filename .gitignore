@@ -1,7 +1,6 @@
 env/
 .DS_Store
 __pycache__/
-stats.json
 _questions.py
 dist/
 *.egg-info

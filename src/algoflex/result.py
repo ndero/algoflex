@@ -1,13 +1,12 @@
 from textual.screen import ModalScreen
-from textual.widgets import Log, Button, TextArea, RichLog
-from textual.containers import VerticalScroll, Center
+from textual.widgets import RichLog
 from algoflex._data import questions
+from algoflex.db import get_db
+from tinydb import Query
 import tempfile
 import subprocess
 import os
-from tinydb import TinyDB, Query
 
-stats = TinyDB("stats.json")
 KV = Query()
 
 
@@ -76,6 +75,7 @@ if __name__ == "__main__":
         yield RichLog(markup=True, wrap=True, max_lines=1_000)
 
     def run_user_code(self):
+        stats = get_db()
         s = stats.get(KV.problem_id == self.problem_id) or {}
         success, attempts = False, s.get("attempts", 0) + 1
         passed, best = s.get("passed", 0), s.get("best", 0)
