@@ -235,10 +235,10 @@ output: [1, 4]
 """,
         "test_cases": """
 test_cases = [
-    [[[1, 2, 3], [2, 3, 4]], set([1, 4])],
-    [[[1, 2, 4, 4], [0, 1, 6], [0, 1]], set([2, 4, 6])],
-    [[[i] for i in range(6)], set([0, 1, 2, 3, 4, 5])],
-    [[[-1], [], [], [0], [1]], set([-1, 0, 1])],
+    [[[1, 2, 3], [2, 3, 4]], {1, 4}],
+    [[[1, 2, 4, 4], [0, 1, 6], [0, 1]], {2, 4, 6}],
+    [[[i] for i in range(6)], {0, 1, 2, 3, 4, 5}],
+    [[[-1], [], [], [0], [1]], {-1, 0, 1}],
     [
         [
             [9, -4, 8, 3, 12, 0, -4, 8],
@@ -247,13 +247,13 @@ test_cases = [
             [5, 15, 3],
             [11, 15, 11, 11, 6, -2],
         ],
-        set([9, -4, 0, 7, 13, 5, -2]),
+        {9, -4, 0, 7, 13, 5, -2},
     ],
-    [[[2] * 50_000 + [-2] * 50_000], set([2, -2])],
-    [[[i for i in range(100_000)], [i for i in range(100_000)]], set([])],
+    [[[2] * 50_000 + [-2] * 50_000], {2, -2}],
+    [[[i for i in range(100_000)], [i for i in range(100_000)]], {}],
     [
         [[i for i in range(100_000)], [i for i in range(10, 100_000)]],
-        set([i for i in range(10)]),
+        {i for i in range(10)},
     ],
 ]
 """,
@@ -594,10 +594,10 @@ test_cases = [
     14: {
         "markdown": """
 ### Reverse Polish Notation
-Evaluate the value of an arithmetic opression in Reverse Polish Notation. Valid operators are +, -, *, and /. Each operand may be an integer or another opression.
+Evaluate the value of an arithmetic expression in Reverse Polish Notation. Valid operators are +, -, *, and /. Each operand may be an integer or another expression.
 
 Note that division between two integers should truncate toward zero.
-It is guaranteed that the given RPN opression is always valid.
+It is guaranteed that the given RPN expression is always valid.
 That means the expression will always evaluate to a result, and there will not be any division by zero operation.
 
 ### Example
