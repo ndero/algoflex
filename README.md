@@ -1,6 +1,6 @@
 # ⚡️ Algoflex
 
-Sharpen your algorithm skills — right from your terminal.
+Sharpen your algorithm skills — right from the terminal.
 
 ![Algoflex Home Screen](assets/homepage.png)
 
