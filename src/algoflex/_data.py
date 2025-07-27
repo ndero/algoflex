@@ -1425,6 +1425,7 @@ test_cases = [
         "markdown": """
 ### Majority element 
 > Leetcode #169
+
 Given an array nums of size n, return the majority element.
 The majority element is the element that appears more than
 ⌊n / 2⌋ times.
@@ -1455,6 +1456,7 @@ test_cases = [
         "markdown": """
 ### Max profit
 > Leetcode 121
+
 You are given an array prices where prices[i] is the price of a given stock on the ith day.
 
 You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
@@ -1503,6 +1505,7 @@ test_cases = [
         "markdown": """
 ### Two sum 
 > Leetcode #1
+
 Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
 
 You may assume that each input would have exactly one solution, and you may not use the same element twice.
@@ -1548,6 +1551,7 @@ test_cases = [
         "markdown": """
 ### Longest common subsequence (LCS) 
 > Leetcode #1143
+
 Given two strings text1 and text2, return the length of their longest common subsequence. If there is no common subsequence, return 0.
 
 A subsequence of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the remaining characters.
@@ -1598,6 +1602,7 @@ Constraints:
         "markdown": """
 ### Jump game I 
 > Leetcode #55
+
 You are given an integer array nums. You are initially positioned at the array's first index, and each element in the array represents your maximum jump length at that position.
 
 Return true if you can reach the last index, or false otherwise.
@@ -1636,6 +1641,7 @@ Constraints:
         "markdown": """
 ### Jump game II 
 > Leetcode #45
+
 You are given a 0-indexed array of integers nums of length n. You are initially positioned at nums[0].
 
 Each element nums[i] represents the maximum length of a forward jump from index i. In other words, if you are at nums[i], you can jump to any nums[i + j] where:
@@ -1677,6 +1683,7 @@ Constraints:
         "markdown": """
 ### Jump game III
 > Leetcode #1306
+
 Given an array of non-negative integers arr, you are initially positioned at start index of the array. When you are at index i, you can jump to i + arr[i] or i - arr[i], check if you can reach any index with value 0.
 
 Notice that you can not jump outside of the array at any time.
@@ -1723,6 +1730,7 @@ Constraints:
         "markdown": """
 ### House robber I 
 > Leetcode #198
+
 You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and it will automatically contact the police if two adjacent houses were broken into on the same night.
 
 Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
@@ -1761,6 +1769,7 @@ Constraints:
         "markdown": """
 ### House robber II
 > Leetcode #213
+
 ou are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed. All houses at this place are arranged in a circle. That means the first house is the neighbor of the last one. Meanwhile, adjacent houses have a security system connected, and it will automatically contact the police if two adjacent houses were broken into on the same night.
 
 Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
@@ -1802,6 +1811,7 @@ Constraints:
         "markdown": """
 ### Course schedule 
 > Leetcode #207
+
 here are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.
 
     For example, the pair [0, 1], indicates that to take course 0 you have to first take course 1.
@@ -1843,6 +1853,7 @@ Constraints:
         "markdown": """
 ### Minimum height trees (MHTs) 
 > Leetcode #310
+
 A tree is an undirected graph in which any two vertices are connected by exactly one path. In other words, any connected graph without simple cycles is a tree.
 
 Given a tree of n nodes labelled from 0 to n - 1, and an array of n - 1 edges where edges[i] = [ai, bi] indicates that there is an undirected edge between the two nodes ai and bi in the tree, you can choose any node of the tree as the root. When you select a node x as the root, the result tree has height h. Among all possible rooted trees, those with minimum height (i.e. min(h))  are called minimum height trees (MHTs).
@@ -1883,6 +1894,7 @@ Constraints:
         "markdown": """
 ### Longest common prefix
 > Leetcode #14
+
 Write a function to find the longest common prefix string amongst an array of strings.
 
 If there is no common prefix, return an empty string "".
@@ -1954,6 +1966,7 @@ Constraints:
         "markdown": """
 ### Cheapest flight within k stops
 > Leetcode #787
+
 There are n cities connected by some number of flights. You are given an array flights where flights[i] = [fromi, toi, pricei] indicates that there is a flight from city fromi to city toi with cost pricei.
 
 You are also given three integers src, dst, and k, return the cheapest price from src to dst with at most k stops. If there is no such route, return -1.
@@ -2045,6 +2058,7 @@ Constraints:
         "markdown": """
 ### Network delay time 
 > Leetcode #743
+
 You are given a network of n nodes, labeled from 1 to n. You are also given times, a list of travel times as directed edges times[i] = (ui, vi, wi), where ui is the source node, vi is the target node, and wi is the time it takes for a signal to travel from source to target.
 
 We will send a signal from a given node k. Return the minimum time it takes for all the n nodes to receive the signal. If it is impossible for all the n nodes to receive the signal, return -1.
@@ -2087,6 +2101,7 @@ Constraints:
         "markdown": """
 ### Reachable cities
 > Leetcode #1334
+
 There are n cities numbered from 0 to n-1. Given the array edges where edges[i] = [fromi, toi, weighti] represents a bidirectional and weighted edge between cities fromi and toi, and given the integer distanceThreshold.
 
 Return the city with the smallest number of cities that are reachable through some path and whose distance is at most distanceThreshold, If there are multiple such cities, return the city with the greatest number.
@@ -2146,6 +2161,7 @@ Constraints:
         "markdown": """
 ### Minimum spanning trees 
 > Leetcode #1135
+
 There are n cities labeled from 1 to n. You are given the integer n and an array connections where connections[i] = [xi, yi, costi] indicates that the cost of connecting city xi and city yi (bidirectional connection) is costi.
 
 Return the minimum cost to connect all the n cities such that there is at least one path between each pair of cities. If it is impossible to connect all the n cities, return -1.
@@ -2176,6 +2192,7 @@ output: -1
         "markdown": """
 ### Critical connections
 > Leetcode #1192
+
 There are n servers numbered from 0 to n - 1 connected by undirected server-to-server connections forming a network where connections[i] = [ai, bi] represents a connection between servers ai and bi. Any server can reach other servers directly or indirectly through the network.
 
 A critical connection is a connection that, if removed, will make some servers unable to reach some other server.
@@ -2221,6 +2238,7 @@ Constraints:
         "markdown": """
 ### Job scheduling
 > Leetcode #1235
+
 We have n jobs, where every job is scheduled to be done from startTime[i] to endTime[i], obtaining a profit of profit[i].
 
 You're given the startTime, endTime and profit arrays, return the maximum profit you can take such that there are no two jobs in the subset with overlapping time range.
@@ -2264,6 +2282,7 @@ Constraints:
         "markdown": """
 ### Coin change I 
 > Leetcode #322
+
 You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money.
 
 Return the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1.
@@ -2310,6 +2329,7 @@ Constraints:
         "markdown": """
 ### Min cost tickets
 > Leetcode #983
+
 You have planned some train traveling one year in advance. The days of the year in which you will travel are given as an integer array days. Each day is an integer from 1 to 365.
 
 Train tickets are sold in three different ways:
@@ -2368,6 +2388,7 @@ Constraints:
         "markdown": """
 ### House robber III 
 > Leetcode #337
+
 The thief has found himself a new place for his thievery again. There is only one entrance to this area, called root.
 
 Besides the root, each house has one and only one parent house. After a tour, the smart thief realized that all houses in this place form a binary tree. It will automatically contact the police if two directly-linked houses were broken into on the same night.
@@ -2406,6 +2427,7 @@ test_cases = [
         "markdown": """
 ### Lowest common ancestor 
 > Leetcode #236
+
 Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
 
 According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”
@@ -2485,6 +2507,7 @@ test_cases = [
         "markdown": """
 ### Same binary tree 
 > Leetcode #100
+
 Given the roots of two binary trees p and q, write a function to check if they are the same or not.
 
 Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
@@ -2530,6 +2553,7 @@ test_cases = [
         "markdown": """
 ### Boolean tree 
 > Leetcode #2331
+
 You are given the root of a full binary tree with the following properties:
 
     Leaf nodes have either the value 0 or 1, where 0 represents False and 1 represents True.
@@ -2586,6 +2610,7 @@ test_cases = [
         "markdown": """
 ### Cousins in a binary tree 
 > Leetcode #993
+
 Given the root of a binary tree with unique values and the values of two different nodes of the tree x and y, return true if the nodes corresponding to the values x and y in the tree are cousins, or false otherwise.
 
 Two nodes of a binary tree are cousins if they have the same depth with different parents.
@@ -2632,6 +2657,7 @@ test_cases = [
         "markdown": """
 ### Invert binary tree
 > Leetcode #226
+
 Given the root of a binary tree, invert the
 tree, and return its root.
 
