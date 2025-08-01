@@ -26,7 +26,7 @@ class StatScreen(Vertical):
             padding: 1;
             margin: 1 0;
         }
-        #passed, #attempts, #best, #difficulty {
+        #passed, #last_attempt, #best, #difficulty {
             padding-top: 1;
         }
     }
@@ -36,12 +36,12 @@ class StatScreen(Vertical):
         with Horizontal():
             with Vertical():
                 yield Static("[b]Passed[/]")
-                yield Static("0", id="passed")
+                yield Static("0/0", id="passed")
             with Vertical():
-                yield Static("[b]Attempts[/]")
-                yield Static("0", id="attempts")
+                yield Static("[b]Last[/]")
+                yield Static("...", id="last_attempt")
             with Vertical():
-                yield Static("[b]Best time[/]")
+                yield Static("[b]Best[/]")
                 yield Static("...", id="best")
             with Vertical():
                 yield Static("[b]Difficulty[/]")
@@ -85,28 +85,45 @@ class HomeScreen(App):
         shuffle(self.PROBLEMS)
         self.problem_id = self.PROBLEMS[self.index]
 
+    def hrs_mins_secs(self, tm):
+        if isinstance(tm, str):
+            return tm
+        mins, secs = divmod(tm, 60)
+        hrs, mins = divmod(mins, 60)
+        return f"{hrs:02,.0f}:{mins:02.0f}:{secs:02.0f}"
+
+    def time_markup(self, tm, color):
+        tm = self.hrs_mins_secs(tm)
+        if tm == "..." or color == "primary":
+            return f"[$primary]{tm}[/]"
+        if tm == "Failed" or color == "red":
+            return f"[red]{tm}[/]"
+        return f"[green]{tm}[/]"
+
     def watch_problem_id(self, id):
         stats = get_db()
         s = stats.get(KV.problem_id == id) or {}
         p = questions.get(id, {})
         problem, difficulty = p.get("markdown", ""), p.get("difficulty", "Easy")
-        passed, attempts, best = (
+        passed, attempts, last, best = (
             s.get("passed", "0"),
             s.get("attempts", "0"),
+            s.get("last_attempt", "..."),
             s.get("best", "..."),
         )
 
-        if best != "...":
-            mins, secs = divmod(best, 60)
-            hrs, mins = divmod(mins, 60)
-            best = f"{hrs:02,.0f}:{mins:02.0f}:{secs:02.0f}"
+        last_color = "red" if (isinstance(last, float) and last > best) else ""
+        best = self.time_markup(best, color="primary")
+        last = self.time_markup(last, last_color)
 
         self.query_one(Problem).query_one(Markdown).update(markdown=problem)
         s_widget = self.query_one(StatScreen)
+        s_widget.query_one("#passed").update(
+            f"[$primary]{str(passed)}/{str(attempts)}[/]"
+        )
+        s_widget.query_one("#last_attempt").update(last)
+        s_widget.query_one("#best").update(best)
         s_widget.query_one("#difficulty").update(f"[$primary]{difficulty}[/]")
-        s_widget.query_one("#passed").update(f"[$primary]{str(passed)}[/]")
-        s_widget.query_one("#attempts").update(f"[$primary]{str(attempts)}[/]")
-        s_widget.query_one("#best").update(f"[$primary]{best}[/]")
 
     def action_attempt(self):
         def update(_id):

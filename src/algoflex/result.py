@@ -45,7 +45,7 @@ def run_tests():
         try:
             result = solution(*inputs)
             if result == expected:
-                print(f"[green]✔ test case {i+1} passed![/]")
+                print(f"[green][b]~[/] test case {i+1} passed![/]")
             else:
                 print(f"[red][b]x[/] test case {i+1} failed![/] \\n\\t[b]inputs[/]: {display(inputs)}\\n\\t[b]got[/]: [red]{result}[/]\\n\\t[b]expected[/]: [green]{expected}[/]")
                 return 1
@@ -112,5 +112,13 @@ if __name__ == "__main__":
             },
             KV.problem_id == self.problem_id,
         )
-        if (success and not best) or (success and self.elapsed < best):
-            stats.upsert({"best": self.elapsed}, KV.problem_id == self.problem_id)
+
+        if not success:
+            stats.upsert({"last_attempt": "Failed"}, KV.problem_id == self.problem_id)
+
+        if success:
+            stats.upsert(
+                {"last_attempt": self.elapsed}, KV.problem_id == self.problem_id
+            )
+            if not best or self.elapsed < best:
+                stats.upsert({"best": self.elapsed}, KV.problem_id == self.problem_id)
