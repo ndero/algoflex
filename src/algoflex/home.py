@@ -68,7 +68,7 @@ class HomeScreen(App):
         }
     }
     """
-    problem_id = Reactive(0)
+    problem_id = Reactive(0, always_update=True)
     index = Reactive(0, bindings=True)
     PROBLEMS_COUNT = len(questions.keys())
     PROBLEMS = [i for i in range(PROBLEMS_COUNT)]
@@ -109,7 +109,10 @@ class HomeScreen(App):
         s_widget.query_one("#best").update(f"[$primary]{best}[/]")
 
     def action_attempt(self):
-        self.push_screen(AttemptScreen(self.problem_id))
+        def update(_id):
+            self.problem_id = self.PROBLEMS[self.index]
+
+        self.push_screen(AttemptScreen(self.problem_id), update)
 
     def action_next(self):
         if self.index + 1 < self.PROBLEMS_COUNT:
