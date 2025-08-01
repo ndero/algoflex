@@ -13,6 +13,21 @@ def array_to_tree(arr, index=0):
     root.left = array_to_tree(arr, index * 2 + 1)
     root.right = array_to_tree(arr, index * 2 + 2)
     return root
+
+def tree_to_array(root):
+    # BFS
+    result = []
+    queue = [root]
+    while queue:
+        node = queue.pop(0)
+        if node:
+            queue.append(node.left)
+            queue.append(node.right)
+            result.append(node.val)
+        else:
+            result.append(None)
+    return result
+
 """
 linked_list = """
 class ListNode:
@@ -28,6 +43,12 @@ def array_to_list(arr, i=0):
     head.next = array_to_list(arr, i + 1)
     return head
 
+def list_to_array(head):
+    arr = []
+    while head:
+        arr.append(head.val)
+        head = head.next
+    return arr
 """
 questions = {
     0: {
@@ -89,7 +110,7 @@ Output: [[3,5], [6,9], [12,15]]
 """,
         "test_cases": """
 test_cases = [
-    [["abcdddeeeeaabbbb"], [[3, 5], [6, 9], [12, 15]]],
+    [["abcdddeeeeaabbbb"], [[3, 5], [6, 9], [1azqa  1qwv                                         b2, 15]]],
     [["xxxcyyyyydkkkkkk"], [[0, 2], [4, 8], [10, 15]]],
     [
         ["abcdddeeeeaabbbb" * 6],
@@ -1343,13 +1364,13 @@ Given an array of integers, use merge sort algorithm to return an array of all t
 
 ### Example
 ```
-input: [8, 2, 4, 9, 12, 18, 16]
+input: [8, 2, 4, 9, 12, 18, 16, 13]
 output: [2, 4, 8, 9, 12, 13, 16, 18]
 ```
 """,
         "test_cases": """
 test_cases = [
-    [[[8, 2, 4, 9, 12, 18, 16]], [2, 4, 8, 9, 12, 13, 16, 18]],
+    [[[8, 2, 4, 9, 12, 18, 16, 13]], [2, 4, 8, 9, 12, 13, 16, 18]],
     [[[i for i in range(100_000, -1, -1)]], [i for i in range(100_001)]],
 ]
 """,
@@ -1363,13 +1384,13 @@ Given an array of integers, use heap sort algorithm to return an array of all th
 
 ### Example
 ```
-input: [8, 2, 4, 9, 12, 18, 16]
+input: [8, 2, 4, 9, 12, 18, 16, 13]
 output: [2, 4, 8, 9, 12, 13, 16, 18]
 ```
 """,
         "test_cases": """
 test_cases = [
-    [[[8, 2, 4, 9, 12, 18, 16]], [2, 4, 8, 9, 12, 13, 16, 18]],
+    [[[8, 2, 4, 9, 12, 18, 16, 13]], [2, 4, 8, 9, 12, 13, 16, 18]],
     [[[i for i in range(100_000, -1, -1)]], [i for i in range(100_001)]],
 ]
 """,
@@ -1383,13 +1404,13 @@ Given an array of integers, use quick sort algorithm to return an array of all t
 
 ### Example
 ```
-input: [8, 2, 4, 9, 12, 18, 16]
+input: [8, 2, 4, 9, 12, 18, 16, 13]
 output: [2, 4, 8, 9, 12, 13, 16, 18]
 ```
 """,
         "test_cases": """
 test_cases = [
-    [[[8, 2, 4, 9, 12, 18, 16]], [2, 4, 8, 9, 12, 13, 16, 18]],
+    [[[8, 2, 4, 9, 12, 18, 16, 13]], [2, 4, 8, 9, 12, 13, 16, 18]],
     [[[i for i in range(100_000, -1, -1)]], [i for i in range(100_001)]],
 ]
 """,
