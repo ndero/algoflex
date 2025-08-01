@@ -45,10 +45,7 @@ def run_tests():
         try:
             result = solution(*inputs)
             if result == expected:
-                if sys.stdout.encoding and sys.stdout.encoding.lower().startswith("utf"):
-                    print(f"[green]✔ test case {i+1} passed![/]")
-                else:
-                    print(f"[green] test case {i+1}passed![/]")
+                print(f"[green]✔ test case {i+1} passed![/]")
             else:
                 print(f"[red][b]x[/] test case {i+1} failed![/] \\n\\t[b]inputs[/]: {display(inputs)}\\n\\t[b]got[/]: [red]{result}[/]\\n\\t[b]expected[/]: [green]{expected}[/]")
                 return 1
