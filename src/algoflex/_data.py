@@ -1457,7 +1457,27 @@ test_cases = [
         "title": "Insertion sort",
         "difficulty": "Easy",
     },
-    44: {
+    46: {
+        "markdown": """
+### Selection sort
+Given an array of integers, use selection sort algorithm to return an array of all the integers sorted in non decreasing order.
+
+### Example
+```
+input: [8, 2, 4, 9, 12, 18, 16, 13]
+output: [2, 4, 8, 9, 12, 13, 16, 18]
+```
+""",
+        "test_cases": """
+test_cases = [
+    [[[8, 2, 4, 9, 12, 18, 16, 13]], [2, 4, 8, 9, 12, 13, 16, 18]],
+    [[[i for i in range(100_000, -1, -1)]], [i for i in range(100_001)]],
+]
+""",
+        "title": "Selection sort",
+        "difficulty": "Easy",
+    },
+    47: {
         "markdown": """
 ### Smaller to the right
 Given an integer array nums, return an integer array counts where counts[i] is the number of smaller elements to the right of nums[i].
@@ -1482,7 +1502,7 @@ test_cases = [
         "title": "Smaller to the right",
         "difficulty": "Hard",
     },
-    45: {
+    48: {
         "markdown": """
 ### Majority element 
 > Leetcode #169
@@ -1513,7 +1533,7 @@ test_cases = [
         "title": "Majority element",
         "difficulty": "Easy",
     },
-    46: {
+    49: {
         "markdown": """
 ### Max profit
 > Leetcode 121
@@ -1562,7 +1582,7 @@ test_cases = [
         "title": "Max profit",
         "difficulty": "Easy",
     },
-    47: {
+    50: {
         "markdown": """
 ### Two sum 
 > Leetcode #1
@@ -1608,7 +1628,7 @@ test_cases = [
         "title": "Single pair sum sorted list",
         "difficulty": "Easy",
     },
-    48: {
+    51: {
         "markdown": """
 ### Longest common subsequence (LCS) 
 > Leetcode #1143
@@ -1659,7 +1679,7 @@ Constraints:
             [["@work3r", "m@rxkd35rt"], "@rk3r"],
         ],
     },
-    49: {
+    52: {
         "markdown": """
 ### Jump game I 
 > Leetcode #55
@@ -1698,7 +1718,7 @@ Constraints:
             [[[200_000] + [0] * 200_000], True],
         ],
     },
-    50: {
+    53: {
         "markdown": """
 ### Jump game II 
 > Leetcode #45
@@ -1740,7 +1760,7 @@ Constraints:
             [[[200_000] + [0] * 200_000], 1],
         ],
     },
-    51: {
+    54: {
         "markdown": """
 ### Jump game III
 > Leetcode #1306
@@ -1787,7 +1807,7 @@ Constraints:
             [[[4, 2, 3, 0, 3, 1, 2], 5], True],
         ],
     },
-    52: {
+    55: {
         "markdown": """
 ### House robber I 
 > Leetcode #198
@@ -1826,7 +1846,7 @@ Constraints:
             [[[i for i in range(0, 100_000, 100)]], 25_000_000],
         ],
     },
-    53: {
+    56: {
         "markdown": """
 ### House robber II
 > Leetcode #213
@@ -1868,7 +1888,7 @@ Constraints:
             [[[i for i in range(0, 100_000, 100)]], 25_000_000],
         ],
     },
-    54: {
+    57: {
         "markdown": """
 ### Course schedule 
 > Leetcode #207
@@ -1910,7 +1930,7 @@ Constraints:
             [[1, []], [0]],
         ],
     },
-    55: {
+    58: {
         "markdown": """
 ### Minimum height trees (MHTs) 
 > Leetcode #310
@@ -1951,7 +1971,7 @@ Constraints:
             [[6, [[3, 0], [3, 1], [3, 2], [3, 4], [5, 4]]], [3, 4]],
         ],
     },
-    56: {
+    59: {
         "markdown": """
 ### Longest common prefix
 > Leetcode #14
@@ -2023,7 +2043,7 @@ Constraints:
             [[["flower", "flow", ""]], ""],
         ],
     },
-    57: {
+    60: {
         "markdown": """
 ### Cheapest flight within k stops
 > Leetcode #787
@@ -2115,7 +2135,7 @@ Constraints:
             ],
         ],
     },
-    58: {
+    61: {
         "markdown": """
 ### Network delay time 
 > Leetcode #743
@@ -2158,7 +2178,7 @@ Constraints:
             [[[[1, 2, 1]], 4, 2], -1],
         ],
     },
-    59: {
+    62: {
         "markdown": """
 ### Reachable cities
 > Leetcode #1334
@@ -2218,7 +2238,7 @@ Constraints:
             ],
         ],
     },
-    60: {
+    63: {
         "markdown": """
 ### Minimum spanning trees 
 > Leetcode #1135
@@ -2249,7 +2269,7 @@ output: -1
             [[4, [[1, 2, 3], [3, 4, 4]]], -1],
         ],
     },
-    61: {
+    64: {
         "markdown": """
 ### Critical connections
 > Leetcode #1192
@@ -2295,7 +2315,7 @@ Constraints:
             ],
         ],
     },
-    62: {
+    65: {
         "markdown": """
 ### Job scheduling
 > Leetcode #1235
@@ -2339,7 +2359,7 @@ Constraints:
             [[[1, 1, 1], [2, 3, 4], [5, 6, 4]], 6],
         ],
     },
-    63: {
+    66: {
         "markdown": """
 ### Coin change I 
 > Leetcode #322
@@ -2386,7 +2406,7 @@ Constraints:
             [[[1, 2, 5, 10, 20, 50], 77], 4],
         ],
     },
-    64: {
+    67: {
         "markdown": """
 ### Min cost tickets
 > Leetcode #983
@@ -2445,7 +2465,7 @@ Constraints:
             [[[i for i in range(1, 366)], [2, 7, 15]], 190],
         ],
     },
-    65: {
+    68: {
         "markdown": """
 ### House robber III 
 > Leetcode #337
@@ -2484,7 +2504,7 @@ test_cases = [
         "title": "House robber III",
         "difficulty": "Medium",
     },
-    66: {
+    69: {
         "markdown": """
 ### Lowest common ancestor 
 > Leetcode #236
@@ -2532,7 +2552,7 @@ test_cases = [
         "title": "Lowest common ancestor",
         "difficulty": "Medium",
     },
-    67: {
+    70: {
         "markdown": """
 ### Sum linked lists
 You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit.
@@ -2564,7 +2584,7 @@ test_cases = [
         "title": "Sum linked lists",
         "difficulty": "Medium",
     },
-    68: {
+    71: {
         "markdown": """
 ### Same binary tree 
 > Leetcode #100
@@ -2610,7 +2630,7 @@ test_cases = [
         "title": "Same binary tree",
         "difficulty": "Easy",
     },
-    69: {
+    72: {
         "markdown": """
 ### Boolean tree 
 > Leetcode #2331
@@ -2667,7 +2687,7 @@ test_cases = [
         "title": "Boolean binary tree",
         "difficulty": "Easy",
     },
-    70: {
+    73: {
         "markdown": """
 ### Cousins in a binary tree 
 > Leetcode #993
@@ -2714,7 +2734,7 @@ test_cases = [
         "title": "Cousins",
         "difficulty": "Medium",
     },
-    71: {
+    74: {
         "markdown": """
 ### Invert binary tree
 > Leetcode #226
@@ -2754,7 +2774,7 @@ test_cases = [
         "title": "Invert binary tree",
         "difficulty": "Medium",
     },
-    72: {
+    75: {
         "markdown": """
 ### Reverse a linked list
 Given the head of a linked list, reverse the list, and return its head
