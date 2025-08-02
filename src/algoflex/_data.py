@@ -2796,4 +2796,55 @@ test_cases = [
         "title": "Reverse linked list",
         "rank": "Medium",
     },
+    75: {
+        "markdown": """
+### Calendar book event
+> Leetcode 
+You are implementing a program to use as your calendar. We can add a new event if adding the event will not cause a double booking. A double booking happens when two events have some non-empty intersection (i.e., some moment is common to both events.).
+
+The event can be represented as a pair of integers start and end that represents a booking on the half-open interval [start, end), the range of real numbers x such that start <= x < end.
+
+Implement the MyCalendar class:
+
+> MyCalendar() Initializes the calendar object.
+> boolean book(int start, int end) Returns true if the event can be added to the calendar successfully without causing a double booking. Otherwise, return false and do not add the event to the calendar.
+
+### Example
+```python
+calendar = MyCalendar()
+calendar.book(10, 20)  # True
+calendar.book(10, 20)  # False - already booked
+calendar.book(15, 25)  # False - overlapping with [10, 20)
+calendar.book(20, 30)  # True  
+```
+""",
+        "test_cases": f"""
+calendar = MyCalendar()
+test_cases = [
+    [[calendar.book(10, 20)], True],
+    [[calendar.book(10, 20)], False],
+    [[calendar.book(15, 25)], False],
+    [[calendar.book(20, 30)], True],
+    [[calendar.book(30, 31)], True],
+    [[calendar.book(100, 2000)], True],
+    [[calendar.book(2_000, 6_000_000)], True],
+    [[calendar.book(3_000, 50_000)], False],
+    [[calendar.book(10_000, 20_000)], False],
+    [[calendar.book(0, 6_000_000)], False],
+    [[calendar.book(55_556, 3_000_000)], False],
+    [[calendar.book(2000, 2020)], False],
+    [[calendar.book(5_999_999, 6_000_001)], False],
+    [[calendar.book(100_000, 200_000)], False],
+    [[calendar.book(31, 41)], True],
+    [[calendar.book(42, 50)], True],
+    [[calendar.book(50, 60)], True],
+    [[calendar.book(60, 70)], True],
+    [[calendar.book(70, 80)], True],
+    [[calendar.book(80, 90)], True],
+    [[calendar.book(90, 100)], True],
+]
+""",
+        "title": "Calendar book event",
+        "rank": "Medium",
+    },
 }
