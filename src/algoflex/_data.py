@@ -2796,7 +2796,7 @@ test_cases = [
         "title": "Reverse linked list",
         "rank": "Medium",
     },
-    75: {
+    76: {
         "markdown": """
 ### Calendar book event
 > Leetcode 
@@ -2845,6 +2845,66 @@ test_cases = [
 ]
 """,
         "title": "Calendar book event",
+        "rank": "Medium",
+    },
+    77: {
+        "markdown": """
+### Range frequency query 
+> Leetcode 
+Design a data structure to find the frequency of a given value in a given subarray. The frequency of a value in a subarray is the number of occurrences of that value in the subarray. Implement the RangeFreqQuery class
+```
+# Constructs an instance of the classwith the given 0-indexed integer array arr. 
+RangeFreqQuery(int[] arr)      
+# Returns the frequency of value in the subarray arr[left...right]. 
+int query(int left, int right, int value)  
+```
+A subarray is a contiguous sequence of elements within an array. arr[left...right] denotes the subarray that contains the elements of nums between indices left and right (inclusive).
+
+### Example
+```
+arr = [1, 3, 7, 7, 7, 3, 4, 1, 7]
+rf = RangeFreq(arr)
+
+input: 
+  left = 2, right = 5, value = 7
+  rf.query(2, 5, 7) 
+output:
+  3
+explanation:
+  7 appears 3 times between indices 1 and 6
+
+
+rf.query(2, 4, 7)  # 3
+rf.query(0, 8, 1)  # 2
+rf.query(4, 7, 4)  # 1
+```
+""",
+        "test_cases": f"""
+arr = [1, 3, 7, 7, 7, 3, 4, 1, 7]
+rf1 = RangeFreq(arr)
+arr2 = [i for i in range(100_000)]
+rf2 = RangeFreq(arr2)
+arr3 = [i for i in range(1, 100_000)] + [22] * 50_000 + [-15] * 100_000
+rf3 = RangeFreq(arr3)
+test_cases = [
+    [[rf1.query(2, 4, 7)], 3],
+    [[rf1.query(0, 8, 1)], 2],
+    [[rf1.query(4, 7, 4)], 1],
+    [[rf1.query(2, 4, 9)], 0],
+    [[rf1.query(8, 8, 7)], 1],
+    [[rf2.query(0, 100_000, 897)], 1],
+    [[rf2.query(0, 100_000, 0)], 1],
+    [[rf2.query(0, 100_000, 99_999)], 1],
+    [[rf2.query(0, 10, 7)], 1],
+    [[rf2.query(50_000, 50_000, 50_000)], 1],
+    [[rf3.query(0, 250_000, 0)], 1],
+    [[rf3.query(0, 250_000, 22)], 50_001],
+    [[rf3.query(0, 250_000, -5)], 100_000],
+    [[rf3.query(100_000, 150_000, 22)], 50_000],
+    [[rf3.query(100_000, 150_005, -15)], 5],
+]
+""",
+        "title": "Range frequency query",
         "rank": "Medium",
     },
 }
