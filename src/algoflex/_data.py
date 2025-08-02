@@ -89,7 +89,7 @@ test_cases = [
 ]
 """,
         "title": "Score tally",
-        "difficulty": "Easy",
+        "rank": "Easy",
     },
     1: {
         "markdown": """
@@ -141,7 +141,7 @@ test_cases = [
     [["abcdefffghijkl"], [[5, 7]]],
 ]""",
         "title": "Repeated letters",
-        "difficulty": "Easy",
+        "rank": "Easy",
     },
     2: {
         "markdown": """
@@ -181,7 +181,7 @@ test_cases = [
 ]
 """,
         "title": "Valid matching brackets",
-        "difficulty": "Easy",
+        "rank": "Easy",
     },
     3: {
         "markdown": """
@@ -210,7 +210,7 @@ test_cases = [
 ]
 """,
         "title": "Max sum sub array",
-        "difficulty": "Easy",
+        "rank": "Easy",
     },
     4: {
         "markdown": """
@@ -239,7 +239,7 @@ test_cases = [
 ]
 """,
         "title": "Max product sub array",
-        "difficulty": "Easy",
+        "rank": "Easy",
     },
     5: {
         "markdown": """
@@ -279,7 +279,7 @@ test_cases = [
 ]
 """,
         "title": "Symmetric difference",
-        "difficulty": "Easy",
+        "rank": "Easy",
     },
     6: {
         "markdown": """
@@ -316,7 +316,7 @@ test_cases = [
 ]
 """,
         "title": "Pairwise",
-        "difficulty": "Easy",
+        "rank": "Easy",
     },
     7: {
         "markdown": """
@@ -349,7 +349,7 @@ test_cases = [
 ]
 """,
         "title": "Min length sub array",
-        "difficulty": "Medium",
+        "rank": "Medium",
     },
     8: {
         "markdown": """
@@ -381,7 +381,7 @@ test_cases = [
 ]
 """,
         "title": "Min in rotated array",
-        "difficulty": "Medium",
+        "rank": "Medium",
     },
     9: {
         "markdown": """
@@ -408,7 +408,7 @@ test_cases = [
 ],
 """,
         "title": "Count primes",
-        "difficulty": "Medium",
+        "rank": "Medium",
     },
     10: {
         "markdown": """
@@ -460,7 +460,7 @@ test_cases = [
 ]
 """,
         "title": "Permutations",
-        "difficulty": "Medium",
+        "rank": "Medium",
     },
     11: {
         "markdown": """
@@ -558,7 +558,7 @@ test_cases = [
 ]
 """,
         "title": "Combinations",
-        "difficulty": "Medium",
+        "rank": "Medium",
     },
     12: {
         "markdown": """
@@ -581,7 +581,7 @@ test_cases =  [
 ]
 """,
         "title": "Single number",
-        "difficulty": "Easy",
+        "rank": "Easy",
     },
     13: {
         "markdown": """
@@ -610,7 +610,7 @@ test_cases = [
 ]
 """,
         "title": "Powers of 2",
-        "difficulty": "Easy",
+        "rank": "Easy",
     },
     14: {
         "markdown": """
@@ -643,7 +643,7 @@ test_cases = [
 ]
 """,
         "title": "Reverse polish notation",
-        "difficulty": "Easy",
+        "rank": "Easy",
     },
     15: {
         "markdown": """
@@ -665,7 +665,7 @@ output: 'XXIII'
 ```
 """,
         "title": "Roman numerals",
-        "difficulty": "Medium",
+        "rank": "Medium",
         "test_cases": """
 test_cases = [
     [[4], "IV"],
@@ -698,7 +698,7 @@ output: 'rain'
 ```
 """,
         "title": "Longest common substring",
-        "difficulty": "Medium",
+        "rank": "Medium",
         "test_cases": """
 test_cases = [
     [["brain", "drain"], "rain"],
@@ -729,7 +729,7 @@ output: True
 ```
 """,
         "title": "Happy number",
-        "difficulty": "Easy",
+        "rank": "Easy",
         "test_cases": """
 test_cases = [
     [["brain", "drain"], "rain"],
@@ -765,7 +765,7 @@ output: "a a b c"
 ```
 """,
         "title": "Trie/Prefix tree",
-        "difficulty": "Medium",
+        "rank": "Medium",
         "test_cases": """
 test_cases = [
     [
@@ -793,7 +793,7 @@ output: 240
 ```
 """,
         "title": "Fractional knapsack",
-        "difficulty": "Easy",
+        "rank": "Easy",
         "test_cases": """
 test_cases = [
     [[50, [10, 20, 30], [60, 100, 120]], 240],
@@ -817,7 +817,7 @@ explanation: [13, -1], [12] and [3, 9]
 ```
 """,
         "title": "Subarrays with sum",
-        "difficulty": "Easy",
+        "rank": "Easy",
         "test_cases": """
 test_cases = [
     [[[13, -1, 8, 12, 3, 9], 12], 3],
@@ -854,7 +854,7 @@ test_cases = [
 ]
 """,
         "title": "Paths with sum",
-        "difficulty": "Medium",
+        "rank": "Medium",
     },
     22: {
         "markdown": """
@@ -873,7 +873,7 @@ output: 'eae'
 ```
 """,
         "title": "Remove occurence",
-        "difficulty": "Easy",
+        "rank": "Easy",
         "test_cases": """
 test_cases = [
     [["axeaxae", "ax"], "eae"],
@@ -897,7 +897,7 @@ output: "hello-world"
 ```
 """,
         "title": "Spinal case",
-        "difficulty": "Easy",
+        "rank": "Easy",
         "test_cases": """
 test_cases = [
     [["Hello World!"], "hello-world"],
@@ -927,7 +927,7 @@ output: (220, [0, 1, 1])
 ```
 """,
         "title": "0/1 knapsack",
-        "difficulty": "Easy",
+        "rank": "Easy",
         "test_cases": """
 test_cases = [
     [[50, [10, 20, 30], [60, 100, 120]], (220, [0, 1, 1])],
@@ -949,7 +949,7 @@ explanation: [1, 5, 5] and [11]
 ```
 """,
         "title": "Equal array partitions",
-        "difficulty": "Medium",
+        "rank": "Medium",
         "test_cases": """
 test_cases = [
     [[[1, 5, 11, 5]], True],
@@ -982,7 +982,7 @@ output: 5
 ```
 """,
         "title": "Fibonacci numbers",
-        "difficulty": "Easy",
+        "rank": "Easy",
         "test_cases": """
 test_cases = [
     [[0], 0],
@@ -1019,7 +1019,7 @@ explanation:
 ```
 """,
         "title": "Climb stairs",
-        "difficulty": "Easy",
+        "rank": "Easy",
         "test_cases": """
 test_cases = [
     [[0], 0],
@@ -1056,7 +1056,7 @@ output: 6
 ```
 """,
         "title": "Ways to make change",
-        "difficulty": "Medium",
+        "rank": "Medium",
         "test_cases": """
 test_cases = [
     [[15], 6],
@@ -1092,7 +1092,7 @@ test_cases = [
 ]
 """,
         "title": "Has path sum",
-        "difficulty": "Medium",
+        "rank": "Medium",
     },
     30: {
         "markdown": """
@@ -1117,7 +1117,7 @@ test_cases = [
 ]
 """,
         "title": "Merge sorted linked lists",
-        "difficulty": "Medium",
+        "rank": "Medium",
     },
     31: {
         "markdown": """
@@ -1150,7 +1150,7 @@ test_cases = [
 ]
 """,
         "title": "Has node BST",
-        "difficulty": "Medium",
+        "rank": "Medium",
     },
     32: {
         "markdown": """
@@ -1176,7 +1176,7 @@ test_cases = [
 ]
 """,
         "title": "BST min",
-        "difficulty": "Medium",
+        "rank": "Medium",
     },
     33: {
         "markdown": """
@@ -1206,7 +1206,7 @@ test_cases = [
 ]
 """,
         "title": "Balanced tree",
-        "difficulty": "Medium",
+        "rank": "Medium",
     },
     34: {
         "markdown": """
@@ -1227,7 +1227,7 @@ test_cases = [
 ]
 """,
         "title": "Tree in-order traversal",
-        "difficulty": "Medium",
+        "rank": "Medium",
     },
     35: {
         "markdown": """
@@ -1248,7 +1248,7 @@ test_cases = [
 ]
 """,
         "title": "Tree pre-order traversal",
-        "difficulty": "Medium",
+        "rank": "Medium",
     },
     36: {
         "markdown": """
@@ -1269,7 +1269,7 @@ test_cases = [
 ]
 """,
         "title": "Tree post-order traversal",
-        "difficulty": "Medium",
+        "rank": "Medium",
     },
     37: {
         "markdown": """
@@ -1290,7 +1290,7 @@ test_cases = [
 ]
 """,
         "title": "Tree level-order traversal",
-        "difficulty": "Medium",
+        "rank": "Medium",
     },
     38: {
         "markdown": """
@@ -1311,7 +1311,7 @@ test_cases = [
 ]
 """,
         "title": "Tree leaves",
-        "difficulty": "Medium",
+        "rank": "Medium",
     },
     39: {
         "markdown": """
@@ -1332,7 +1332,7 @@ test_cases = [
 ]
 """,
         "title": "Sum right nodes",
-        "difficulty": "Medium",
+        "rank": "Medium",
     },
     40: {
         "markdown": """
@@ -1355,7 +1355,7 @@ test_cases = [
 ]
 """,
         "title": "Value in array",
-        "difficulty": "Easy",
+        "rank": "Easy",
     },
     41: {
         "markdown": """
@@ -1375,7 +1375,7 @@ test_cases = [
 ]
 """,
         "title": "Merge sort",
-        "difficulty": "Easy",
+        "rank": "Easy",
     },
     42: {
         "markdown": """
@@ -1395,7 +1395,7 @@ test_cases = [
 ]
 """,
         "title": "Heap sort",
-        "difficulty": "Easy",
+        "rank": "Easy",
     },
     43: {
         "markdown": """
@@ -1415,7 +1415,7 @@ test_cases = [
 ]
 """,
         "title": "Quick sort",
-        "difficulty": "Easy",
+        "rank": "Easy",
     },
     44: {
         "markdown": """
@@ -1435,7 +1435,7 @@ test_cases = [
 ]
 """,
         "title": "Bubble sort",
-        "difficulty": "Easy",
+        "rank": "Easy",
     },
     45: {
         "markdown": """
@@ -1455,7 +1455,7 @@ test_cases = [
 ]
 """,
         "title": "Insertion sort",
-        "difficulty": "Easy",
+        "rank": "Easy",
     },
     46: {
         "markdown": """
@@ -1475,7 +1475,7 @@ test_cases = [
 ]
 """,
         "title": "Selection sort",
-        "difficulty": "Easy",
+        "rank": "Easy",
     },
     47: {
         "markdown": """
@@ -1500,7 +1500,7 @@ test_cases = [
 ]
 """,
         "title": "Smaller to the right",
-        "difficulty": "Hard",
+        "rank": "Hard",
     },
     48: {
         "markdown": """
@@ -1531,7 +1531,7 @@ test_cases = [
 
 ]""",
         "title": "Majority element",
-        "difficulty": "Easy",
+        "rank": "Easy",
     },
     49: {
         "markdown": """
@@ -1580,7 +1580,7 @@ test_cases = [
 ]
 """,
         "title": "Max profit",
-        "difficulty": "Easy",
+        "rank": "Easy",
     },
     50: {
         "markdown": """
@@ -1626,7 +1626,7 @@ test_cases = [
 ],
 """,
         "title": "Single pair sum sorted list",
-        "difficulty": "Easy",
+        "rank": "Easy",
     },
     51: {
         "markdown": """
@@ -1669,7 +1669,7 @@ Constraints:
     text1 and text2 consist of only lowercase English characters.
 """,
         "title": "Longest common subsequence",
-        "difficulty": "Medium",
+        "rank": "Medium",
         "test_cases": [
             [["math", "arithmetic"], "ath"],
             [["original", "origin"], "origin"],
@@ -1707,7 +1707,7 @@ Constraints:
     0 <= nums[i] <= 105
 """,
         "title": "Jump game I",
-        "difficulty": "Medium",
+        "rank": "Medium",
         "test_cases": [
             [[[2, 3, 1, 1, 4]], True],
             [[[0]], True],
@@ -1751,7 +1751,7 @@ Constraints:
     It's guaranteed that you can reach nums[n - 1]
 """,
         "title": "Jump game II",
-        "difficulty": "Medium",
+        "rank": "Medium",
         "test_cases": [
             [[[2, 3, 1, 1, 4]], 2],
             [[[1]], 0],
@@ -1800,7 +1800,7 @@ Constraints:
     0 <= start < arr.length
 """,
         "title": "Jump game III",
-        "difficulty": "Medium",
+        "rank": "Medium",
         "test_cases": [
             [[[4, 2, 3, 0, 3, 1, 2], 0], True],
             [[[3, 0, 2, 1, 2], 2], False],
@@ -1837,7 +1837,7 @@ Constraints:
     0 <= nums[i] <= 400
 """,
         "title": "House robber I",
-        "difficulty": "Medium",
+        "rank": "Medium",
         "test_cases": [
             [[[1, 2, 3, 1]], 4],
             [[[1, 7, 2, 1, 6]], 13],
@@ -1880,7 +1880,7 @@ Constraints:
     0 <= nums[i] <= 1000
 """,
         "title": "House robber II",
-        "difficulty": "Medium",
+        "rank": "Medium",
         "test_cases": [
             [[[1, 2, 3, 1]], 4],
             [[[1, 7, 2, 1, 6]], 13],
@@ -1923,7 +1923,7 @@ Constraints:
     All the pairs prerequisites[i] are unique.
 """,
         "title": "Course schedule",
-        "difficulty": "Medium",
+        "rank": "Medium",
         "test_cases": [
             [[2, [[1, 0]]], [0, 1]],
             [[4, [[1, 0], [2, 0], [3, 1], [3, 2]]], [0, 1, 2, 3]],
@@ -1965,7 +1965,7 @@ Constraints:
     The given input is guaranteed to be a tree and there will be no repeated edges.
 """,
         "title": "Minimum height trees",
-        "difficulty": "Medium",
+        "rank": "Medium",
         "test_cases": [
             [[4, [[1, 0], [1, 2], [1, 3]]], [1]],
             [[6, [[3, 0], [3, 1], [3, 2], [3, 4], [5, 4]]], [3, 4]],
@@ -1999,7 +1999,7 @@ Constraints:
     strs[i] consists of only lowercase English letters if it is non-empty.
 """,
         "title": "Longest common prefix",
-        "difficulty": "Medium",
+        "rank": "Medium",
         "test_cases": [
             [[["flower", "flow", "flight"]], "fl"],
             [[["dog", "racecar", "car"]], ""],
@@ -2091,7 +2091,7 @@ Constraints:
     src != dst
 """,
         "title": "Cheapest flight with at most k stops",
-        "difficulty": "Medium",
+        "rank": "Medium",
         "test_cases": [
             [
                 [
@@ -2171,7 +2171,7 @@ Constraints:
     All the pairs (ui, vi) are unique. (i.e., no multiple edges.)
 """,
         "title": "Network delay time",
-        "difficulty": "Medium",
+        "rank": "Medium",
         "test_cases": [
             [[[[2, 1, 1], [2, 3, 1], [3, 4, 1]], 4, 2], 2],
             [[[[1, 2, 1]], 2, 1], 1],
@@ -2225,7 +2225,7 @@ Constraints:
     All pairs (fromi, toi) are distinct.
 """,
         "title": "Reachable cities",
-        "difficulty": "Medium",
+        "rank": "Medium",
         "test_cases": [
             [[4, [[0, 1, 3], [1, 2, 1], [1, 3, 4], [2, 3, 1]], 4], 3],
             [
@@ -2263,7 +2263,7 @@ output: -1
 ```
 """,
         "title": "Minimum spanning trees",
-        "difficulty": "Medium",
+        "rank": "Medium",
         "test_cases": [
             [[3, [[1, 2, 5], [1, 3, 6], [2, 3, 1]]], 6],
             [[4, [[1, 2, 3], [3, 4, 4]]], -1],
@@ -2302,7 +2302,7 @@ Constraints:
     There are no repeated connections.
 """,
         "title": "Critical connections",
-        "difficulty": "Hard",
+        "rank": "Hard",
         "test_cases": [
             [[4, [[0, 1], [1, 2], [2, 0], [1, 3]]], [[1, 3]]],
             [
@@ -2353,7 +2353,7 @@ Constraints:
     1 <= profit[i] <= 104
 """,
         "title": "Job scheduling",
-        "difficulty": "Easy",
+        "rank": "Easy",
         "test_cases": [
             [[[1, 2, 3, 3], [3, 4, 5, 6], [50, 10, 40, 70]], 120],
             [[[1, 1, 1], [2, 3, 4], [5, 6, 4]], 6],
@@ -2394,7 +2394,7 @@ Constraints:
     0 <= amount <= 104
 """,
         "title": "Coin change I",
-        "difficulty": "Medium",
+        "rank": "Medium",
         "test_cases": [
             [[[1, 2, 5], 11], 3],
             [[[1, 2, 5, 10], 11], 2],
@@ -2454,7 +2454,7 @@ Constraints:
     1 <= costs[i] <= 1000
 """,
         "title": "Min cost tickets",
-        "difficulty": "Medium",
+        "rank": "Medium",
         "test_cases": [
             [[[1, 4, 6, 7, 8, 20], [2, 7, 15]], 11],
             [[[1, 2, 3, 4, 5, 6, 7], [2, 7, 15]], 7],
@@ -2502,7 +2502,7 @@ test_cases = [
 ]
 """,
         "title": "House robber III",
-        "difficulty": "Medium",
+        "rank": "Medium",
     },
     69: {
         "markdown": """
@@ -2550,7 +2550,7 @@ test_cases = [
 ]
 """,
         "title": "Lowest common ancestor",
-        "difficulty": "Medium",
+        "rank": "Medium",
     },
     70: {
         "markdown": """
@@ -2582,7 +2582,7 @@ test_cases = [
 ]
 """,
         "title": "Sum linked lists",
-        "difficulty": "Medium",
+        "rank": "Medium",
     },
     71: {
         "markdown": """
@@ -2628,7 +2628,7 @@ test_cases = [
 ]
 """,
         "title": "Same binary tree",
-        "difficulty": "Easy",
+        "rank": "Easy",
     },
     72: {
         "markdown": """
@@ -2685,7 +2685,7 @@ test_cases = [
 ]
 """,
         "title": "Boolean binary tree",
-        "difficulty": "Easy",
+        "rank": "Easy",
     },
     73: {
         "markdown": """
@@ -2732,7 +2732,7 @@ test_cases = [
 ]
 """,
         "title": "Cousins",
-        "difficulty": "Medium",
+        "rank": "Medium",
     },
     74: {
         "markdown": """
@@ -2772,7 +2772,7 @@ test_cases = [
 ]
 """,
         "title": "Invert binary tree",
-        "difficulty": "Medium",
+        "rank": "Medium",
     },
     75: {
         "markdown": """
@@ -2794,6 +2794,6 @@ test_cases = [
 ]
 """,
         "title": "Reverse linked list",
-        "difficulty": "Medium",
+        "rank": "Medium",
     },
 }

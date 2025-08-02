@@ -26,7 +26,7 @@ class StatScreen(Vertical):
             padding: 1;
             margin: 1 0;
         }
-        #passed, #last_attempt, #best, #difficulty {
+        #passed, #last_attempt, #best, #rank {
             padding-top: 1;
         }
     }
@@ -36,7 +36,7 @@ class StatScreen(Vertical):
         with Horizontal():
             with Vertical():
                 yield Static("[b]Passed[/]")
-                yield Static("0/0", id="passed")
+                yield Static("...", id="passed")
             with Vertical():
                 yield Static("[b]Last[/]")
                 yield Static("...", id="last_attempt")
@@ -44,8 +44,8 @@ class StatScreen(Vertical):
                 yield Static("[b]Best[/]")
                 yield Static("...", id="best")
             with Vertical():
-                yield Static("[b]Difficulty[/]")
-                yield Static("[$primary]Easy[/]", id="difficulty")
+                yield Static("[b]Rank[/]")
+                yield Static("...", id="rank")
 
 
 class HomeScreen(App):
@@ -104,7 +104,7 @@ class HomeScreen(App):
         stats = get_db()
         s = stats.get(KV.problem_id == id) or {}
         p = questions.get(id, {})
-        problem, difficulty = p.get("markdown", ""), p.get("difficulty", "Easy")
+        problem, rank = p.get("markdown", ""), p.get("rank", "Easy")
         passed, attempts, last, best = (
             s.get("passed", "0"),
             s.get("attempts", "0"),
@@ -112,8 +112,8 @@ class HomeScreen(App):
             s.get("best", "..."),
         )
 
-        last_color = "red" if (isinstance(last, float) and last > best) else ""
-        best = self.time_markup(best, color="primary")
+        last_color = "primary" if (isinstance(last, float) and last > best) else ""
+        best = self.time_markup(best, color="green")
         last = self.time_markup(last, last_color)
 
         self.query_one(Problem).query_one(Markdown).update(markdown=problem)
@@ -123,7 +123,7 @@ class HomeScreen(App):
         )
         s_widget.query_one("#last_attempt").update(last)
         s_widget.query_one("#best").update(best)
-        s_widget.query_one("#difficulty").update(f"[$primary]{difficulty}[/]")
+        s_widget.query_one("#rank").update(f"[$primary]{rank}[/]")
 
     def action_attempt(self):
         def update(_id):
