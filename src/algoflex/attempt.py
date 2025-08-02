@@ -5,7 +5,7 @@ from textual.screen import Screen
 from textual.binding import Binding
 from algoflex.custom_widgets import Title, Problem
 from algoflex.result import ResultModal
-from algoflex._data import questions
+from algoflex.questions import questions
 from time import monotonic
 
 

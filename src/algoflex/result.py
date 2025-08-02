@@ -1,6 +1,6 @@
 from textual.screen import ModalScreen
 from textual.widgets import RichLog
-from algoflex._data import questions
+from algoflex.questions import questions
 from algoflex.db import get_db
 from tinydb import Query
 import tempfile

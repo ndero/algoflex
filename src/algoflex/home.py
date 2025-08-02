@@ -8,7 +8,7 @@ from textual.containers import (
 from textual.widgets import Footer, Markdown, Static
 from textual.binding import Binding
 from textual.reactive import Reactive
-from algoflex._data import questions
+from algoflex.questions import questions
 from algoflex.attempt import AttemptScreen
 from algoflex.custom_widgets import Title, Problem
 from algoflex.db import get_db
