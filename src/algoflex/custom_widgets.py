@@ -17,8 +17,7 @@ class Problem(VerticalScroll):
         self.problem = problem
 
     def compose(self):
-        with VerticalScroll():
-            yield Markdown(self.problem)
+        yield Markdown(self.problem)
 
 
 class Title(Center):
