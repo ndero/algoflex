@@ -116,7 +116,9 @@ class HomeScreen(App):
         best = self.time_markup(best, color="green")
         last = self.time_markup(last, last_color)
 
-        self.query_one(Problem).query_one(Markdown).update(markdown=problem)
+        problem_widget = self.query_one(Problem)
+        problem_widget.query_one(Markdown).update(markdown=problem)
+        problem_widget.scroll_home()
         s_widget = self.query_one(StatScreen)
         s_widget.query_one("#passed").update(
             f"[$primary]{str(passed)}/{str(attempts)}[/]"
