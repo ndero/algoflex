@@ -46,7 +46,7 @@ def run_tests():
         try:
             result = solution(*inputs)
             if result == expected:
-                print(f"[green][b]~[/] test case {i+1} passed![/]")
+                print(f"[green][b]✓[/] test case {i+1} passed![/]")
                 passed += 1
             else:
                 print(f"[red][b]x[/] test case {i+1} failed![/] \\n\\t[b]inputs[/]: {display(inputs)}\\n\\t[b]got[/]: [red]{result}[/]\\n\\t[b]expected[/]: [green]{expected}[/]")
