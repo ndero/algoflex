@@ -26,7 +26,7 @@ class StatScreen(Vertical):
             padding: 1;
             margin: 1 0;
         }
-        #passed, #last_attempt, #best, #rank {
+        #passed, #last_attempt, #best, #level {
             padding-top: 1;
         }
     }
@@ -44,8 +44,8 @@ class StatScreen(Vertical):
                 yield Static("[b]Best[/]")
                 yield Static("...", id="best")
             with Vertical():
-                yield Static("[b]Rank[/]")
-                yield Static("...", id="rank")
+                yield Static("[b]Level[/]")
+                yield Static("...", id="level")
 
 
 class HomeScreen(App):
@@ -104,7 +104,7 @@ class HomeScreen(App):
         stats = get_db()
         s = stats.get(KV.problem_id == id) or {}
         p = questions.get(id, {})
-        problem, rank = p.get("markdown", ""), p.get("rank", "Easy")
+        problem, level = p.get("markdown", ""), p.get("level", "Breezy")
         passed, attempts, last, best = (
             s.get("passed", "0"),
             s.get("attempts", "0"),
@@ -123,7 +123,7 @@ class HomeScreen(App):
         )
         s_widget.query_one("#last_attempt").update(last)
         s_widget.query_one("#best").update(best)
-        s_widget.query_one("#rank").update(f"[$primary]{rank}[/]")
+        s_widget.query_one("#level").update(f"[$primary]{level}[/]")
 
     def action_attempt(self):
         def update(_id):
