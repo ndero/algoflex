@@ -62,6 +62,7 @@ C  cancel the last score and remove it.
 x  add the score
 ```
 You're always guaranteed to have the last two scores for `+` and the previous score for `D`.
+
 ### Example
 ```
 input: [ '5', '2', 'C', 'D', '+', '+', 'C' ]
@@ -388,6 +389,7 @@ For example, the array nums = [0, 1, 2, 4, 5, 6, 7] becomes [4, 5, 6, 7, 0, 1, 2
 
 Given the sorted rotated array nums of unique elements, return the minimum element of this array.
 You must write an algorithm that runs in O(log n) time.
+
 ### Example
 ```
 input: arr: [4, 5, 6, 7, 0, 1, 2]
@@ -416,6 +418,7 @@ test_cases = [
         "markdown": """
 ### Count primes
 Given a positive integer `n`, write an algorithm to return the number of prime numbers in [0, n]
+
 ### Example
 ```
 input: 1000
@@ -648,7 +651,6 @@ Evaluate the value of an arithmetic expression in Reverse Polish Notation. Valid
 
 Note that division between two integers should truncate toward zero.
 It is guaranteed that the given RPN expression is always valid.
-That means the expression will always evaluate to a result, and there will not be any division by zero operation.
 
 ### Example
 ```
@@ -748,6 +750,7 @@ Starting with any positive integer, replace the number by the sum of the squares
 Those numbers for which this process ends in 1 are happy numbers, while those that do not end in 1 are unhappy numbers.
 
 Implement a function that returns true if the number is happy, or false if not.
+
 ### Example
 ```
 input: 2
@@ -864,6 +867,7 @@ test_cases = [
 Given the root of a binary tree and an integer targetSum, return the number of paths where the sum of the values along the path equals targetSum.
 
 The path does not need to start or end at the root or a leaf, but it must go downwards (i.e., traveling only from parent nodes to child nodes).
+
 ### Example
 ```
 inputs:
@@ -893,6 +897,7 @@ Given two strings s and part, perform the following operation on s until all occ
 Find the leftmost occurrence of the substring part and remove it from s. Return s after removing all occurrences of part.
 
 A substring is a contiguous sequence of characters in a string.
+
 ### Example
 ```
 inputs:
@@ -998,6 +1003,7 @@ Given a positive interger `n`, return the n<sup>th</sup> fibonacci number
 
 The first 6 fibonacci numbers are:
 [0, 1, 1, 2, 3, 5]
+
 ### Example
 ```
 input: 0
@@ -1152,6 +1158,7 @@ test_cases = [
         "markdown": """
 ### Has node BST
 Given the root of a binary search tree and a value x, check whether x is in the tree and return `True` or `False`
+
 ### Example
 ```
 input:
@@ -1185,6 +1192,7 @@ test_cases = [
         "markdown": """
 ### BST min
 Given the root of a binary search tree find the minimum value and return it
+
 ### Example
 ```
 input: [12, 3, 20]
@@ -1534,14 +1542,12 @@ test_cases = [
     48: {
         "markdown": """
 ### Majority element 
-> Leetcode #169
-
 Given an array nums of size n, return the majority element.
 The majority element is the element that appears more than
 ⌊n / 2⌋ times.
 
-You may assume that the majority element always
-exists in the array.
+The majority element is guaranteed to exist in the array. 
+
 ### Example
 ```
 Input: [3, 2, 3]
@@ -1565,37 +1571,20 @@ test_cases = [
     49: {
         "markdown": """
 ### Max profit
-> Leetcode 121
-
-You are given an array prices where prices[i] is the price of a given stock on the ith day.
-
-You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
-
-Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
-
-### Examples
-Example 1:
-
-Input: prices = [7,1,5,3,6,4]
-Output: 5
-Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
-Note that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell.
-
-Example 2:
-
-Input: prices = [7,6,4,3,1]
-Output: 0
-Explanation: In this case, no transactions are done and the max profit = 0.
-
-Constraints:
-
-    1 <= prices.length <= 10^5
-    0 <= prices[i] <= 10^4
-
-You are given an array `prices` where `prices[i]` is the price of a given stock on the ith day. You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
+Given an array `prices` where `prices[i]` is the price of a given stock on the ith day. You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
 
 Return the maximum profit you can achieve from this transaction.
 If you cannot achieve any profit, return 0.
+
+### Example
+```
+Input: prices = [7,1,5,3,6,4]
+Output: 5
+Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+
+Input: prices = [7,6,4,3,1]
+Output: 0
+```
 """,
         "test_cases": """
 test_cases = [
@@ -1622,29 +1611,18 @@ You may assume that each input would have exactly one solution, and you may not 
 
 You can return the answer in any order.
 
-### Examples
-Example 1:
-
+### Example
+```
 Input: nums = [2,7,11,15], target = 9
 Output: [0,1]
 Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
 
-Example 2:
-
 Input: nums = [3,2,4], target = 6
 Output: [1,2]
 
-Example 3:
-
 Input: nums = [3,3], target = 6
 Output: [0,1]
-
-Constraints:
-
-    2 <= nums.length <= 104
-    -109 <= nums[i] <= 109
-    -109 <= target <= 109
-    Only one valid answer exists.
+```
 """,
         "test_cases": """
 test_cases = [
