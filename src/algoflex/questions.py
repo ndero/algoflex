@@ -1602,26 +1602,14 @@ test_cases = [
     },
     50: {
         "markdown": """
-### Two sum 
-> Leetcode #1
+### **1. Pair sum equal target**
 
-Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+Find two numbers in an array that add up to a specific target. Return the indices `[i, j]` such that `nums[i] + nums[j] = target`. Each input has exactly one solution.
 
-You may assume that each input would have exactly one solution, and you may not use the same element twice.
+**Example:**
 
-You can return the answer in any order.
-
-### Example
-```
-Input: nums = [2,7,11,15], target = 9
-Output: [0,1]
-Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
-
-Input: nums = [3,2,4], target = 6
-Output: [1,2]
-
-Input: nums = [3,3], target = 6
-Output: [0,1]
+- Input → `nums = [2, 7, 11, 15], target = 9`
+- Output → `[0, 1]` (because `2 + 7 = 9`)
 ```
 """,
         "test_cases": """
@@ -1632,7 +1620,7 @@ test_cases = [
     [[[i for i in range(-10, 10)], -10], [1, 11]],
 ],
 """,
-        "title": "Single pair sum sorted list",
+        "title": "Pair sum equal target",
         "level": "Breezy",
     },
     51: {
