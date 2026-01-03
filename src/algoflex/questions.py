@@ -442,7 +442,7 @@ test_cases = [
         "title": "Count primes",
         "level": "Steady",
     },
-    12: {
+    10: {
         "markdown": """
 ### Single number
 Given a non-empty array of integers `nums`, every element appears twice except for one.
@@ -465,7 +465,7 @@ test_cases =  [
         "title": "Single number",
         "level": "Breezy",
     },
-    13: {
+    11: {
         "markdown": """
 ### Powers of 2
 Given an integer `n`, find whether it is a power of `2`.
@@ -494,7 +494,7 @@ test_cases = [
         "title": "Powers of 2",
         "level": "Breezy",
     },
-    14: {
+    12: {
         "markdown": """
 ### Reverse Polish Notation
 Evaluate the value of an arithmetic expression in Reverse Polish Notation. Valid operators are +, -, *, and /. Each operand may be an integer or another expression.
@@ -526,7 +526,7 @@ test_cases = [
         "title": "Reverse polish notation",
         "level": "Breezy",
     },
-    15: {
+    13: {
         "markdown": """
 ### Roman numerals
 Convert a given integer, `n`,  to its equivalent roman numerals for 0 < `n` < 4000.
@@ -562,7 +562,7 @@ test_cases = [
 ]
 """,
     },
-    16: {
+    14: {
         "markdown": """
 ### Longest common substring (LCS)
 Given two strings text1 and text2, return their longest common substring. If there is no common substring, return ''.
@@ -592,7 +592,7 @@ test_cases = [
 ],
 """,
     },
-    17: {
+    15: {
         "markdown": """
 ### Happy number
 Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1.
@@ -624,7 +624,7 @@ test_cases = [
 ],
 """,
     },
-    18: {
+    16: {
         "markdown": """
 ### Trie/Prefix tree
 In English, we have a concept called root, which can be followed by some other word to form another longer word - let's call this word derivative. For example, when the root "help" is followed by the word "ful", we can form a derivative "helpful".
@@ -658,7 +658,7 @@ test_cases = [
 ]
 """,
     },
-    19: {
+    17: {
         "markdown": """
 ### Fractional knapsack
 Given a knapsack capacity and two arrays, the first one for weights and the second one for values. Add items to the knapsack to maximize the sum of the values of the items that can be added so that the sum of the weights is less than or equal to the knapsack capacity.
@@ -684,7 +684,7 @@ test_cases = [
 ],
 """,
     },
-    20: {
+    18: {
         "markdown": """
 ### Subarrays with sum
 Given an array and targetSum, return the total number of contigous subarrays inside the array whose sum is equal to targetSum
@@ -711,7 +711,7 @@ test_cases = [
 ],
 """,
     },
-    21: {
+    19: {
         "markdown": """
 ### Paths with sum
 Given the root of a binary tree and an integer targetSum, return the number of paths where the sum of the values along the path equals targetSum.
@@ -739,7 +739,7 @@ test_cases = [
         "title": "Paths with sum",
         "level": "Steady",
     },
-    22: {
+    20: {
         "markdown": """
 ### Remove occurence
 Given two strings s and part, perform the following operation on s until all occurrences of the substring part are removed:
@@ -767,7 +767,7 @@ test_cases = [
 ]
 """,
     },
-    23: {
+    21: {
         "markdown": """
 ### Spinal case
 Given a string. Convert it to spinal case
@@ -791,7 +791,7 @@ test_cases = [
 ]
 """,
     },
-    24: {
+    22: {
         "markdown": """
 ### 0/1 knapsack
 Given a knapsack capacity and two arrays, the first one for weights and the second one for values. Add items to the knapsack to maximize the sum of the values of the items that can be added so that the sum of the weights is less than or equal to the knapsack capacity.
@@ -820,7 +820,7 @@ test_cases = [
 ]
 """,
     },
-    25: {
+    23: {
         "markdown": """
 ### Equal array partitions
 Given an integer array nums, return true if you can partition the array into two subsets such that the sum of the elements in both subsets is equal or false otherwise.
@@ -846,7 +846,7 @@ test_cases = [
 ]
 """,
     },
-    26: {
+    24: {
         "markdown": """
 ### Fibonacci numbers
 Given a positive interger `n`, return the n<sup>th</sup> fibonacci number
@@ -880,7 +880,7 @@ test_cases = [
 ],
 """,
     },
-    27: {
+    25: {
         "markdown": """
 ### Climb stairs
 You are climbing a staircase. It takes n steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
@@ -915,7 +915,7 @@ test_cases = [
 ],
 """,
     },
-    28: {
+    26: {
         "markdown": """
 ### Ways to make change
 There are four types of common coins in US currency:
@@ -953,7 +953,7 @@ test_cases = [
 ],
 """,
     },
-    29: {
+    27: {
         "markdown": """
 ### Has path sum
 Given the root of a binary tree and an integer targetSum, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.
@@ -979,7 +979,7 @@ test_cases = [
         "title": "Has path sum",
         "level": "Steady",
     },
-    31: {
+    28: {
         "markdown": """
 ### Has node BST
 Given the root of a binary search tree and a value x, check whether x is in the tree and return `True` or `False`
@@ -1013,7 +1013,7 @@ test_cases = [
         "title": "Has node BST",
         "level": "Steady",
     },
-    32: {
+    29: {
         "markdown": """
 ### BST min
 Given the root of a binary search tree find the minimum value and return it
@@ -1040,7 +1040,7 @@ test_cases = [
         "title": "BST min",
         "level": "Steady",
     },
-    33: {
+    30: {
         "markdown": """
 ### Balanced tree
 Given the root of a binary search tree, return `True` if it is balanced or `False` otherwise
@@ -1070,7 +1070,7 @@ test_cases = [
         "title": "Balanced tree",
         "level": "Steady",
     },
-    34: {
+    31: {
         "markdown": """
 ### Tree in-order traversal
 Given the root of a binary search tree, traverse the tree in order and return the values as an array.
@@ -1091,7 +1091,7 @@ test_cases = [
         "title": "Tree in-order traversal",
         "level": "Steady",
     },
-    35: {
+    32: {
         "markdown": """
 ### Tree pre-order traversal
 Given the root of a binary search tree, traverse the tree using pre order traversal and return the values as an array.
@@ -1112,7 +1112,7 @@ test_cases = [
         "title": "Tree pre-order traversal",
         "level": "Steady",
     },
-    36: {
+    33: {
         "markdown": """
 ### Tree post-order traversal
 Given the root of a binary search tree, traverse the tree using post order traversal and return the values as an array.
@@ -1133,7 +1133,7 @@ test_cases = [
         "title": "Tree post-order traversal",
         "level": "Steady",
     },
-    37: {
+    34: {
         "markdown": """
 ### Tree level-order traversal
 Given the root of a binary search tree, traverse the tree using level order traversal and return the values as an array.
@@ -1154,7 +1154,7 @@ test_cases = [
         "title": "Tree level-order traversal",
         "level": "Steady",
     },
-    38: {
+    35: {
         "markdown": """
 ### Tree leaves
 Given the root of a binary search tree, return all the leaves as an array ordered from left to right.
@@ -1175,7 +1175,7 @@ test_cases = [
         "title": "Tree leaves",
         "level": "Steady",
     },
-    39: {
+    36: {
         "markdown": """
 ### Sum right nodes
 Given the root of a binary search tree, return the sum of all the right nodes
@@ -1196,7 +1196,7 @@ test_cases = [
         "title": "Sum right nodes",
         "level": "Steady",
     },
-    40: {
+    37: {
         "markdown": """
 ### Value in array
 Given an array of values sorted in a non decreasing order, and a target `y`. Return `True` if y is in the array or `False` otherwise
@@ -1219,7 +1219,7 @@ test_cases = [
         "title": "Value in array",
         "level": "Breezy",
     },
-    41: {
+    38: {
         "markdown": """
 ### Merge sort
 Given an array of integers, use merge sort algorithm to return an array of all the integers sorted in non decreasing order.
@@ -1239,7 +1239,7 @@ test_cases = [
         "title": "Merge sort",
         "level": "Breezy",
     },
-    42: {
+    39: {
         "markdown": """
 ### Heap sort
 Given an array of integers, use heap sort algorithm to return an array of all the integers sorted in non decreasing order.
@@ -1259,7 +1259,7 @@ test_cases = [
         "title": "Heap sort",
         "level": "Breezy",
     },
-    43: {
+    40: {
         "markdown": """
 ### Quick sort
 Given an array of integers, use quick sort algorithm to return an array of all the integers sorted in non decreasing order.
@@ -1279,7 +1279,7 @@ test_cases = [
         "title": "Quick sort",
         "level": "Breezy",
     },
-    44: {
+    41: {
         "markdown": """
 ### Bubble sort
 Given an array of integers, use bubble sort algorithm to return an array of all the integers sorted in non decreasing order.
@@ -1299,47 +1299,7 @@ test_cases = [
         "title": "Bubble sort",
         "level": "Breezy",
     },
-    45: {
-        "markdown": """
-### Insertion sort
-Given an array of integers, use insertion sort algorithm to return an array of all the integers sorted in non decreasing order.
-
-### Example
-```
-input: [8, 2, 4, 9, 12, 18, 16, 13]
-output: [2, 4, 8, 9, 12, 13, 16, 18]
-```
-""",
-        "test_cases": """
-test_cases = [
-    [[[8, 2, 4, 9, 12, 18, 16, 13]], [2, 4, 8, 9, 12, 13, 16, 18]],
-    [[[i for i in range(100_000, -1, -1)]], [i for i in range(100_001)]],
-]
-""",
-        "title": "Insertion sort",
-        "level": "Breezy",
-    },
-    46: {
-        "markdown": """
-### Selection sort
-Given an array of integers, use selection sort algorithm to return an array of all the integers sorted in non decreasing order.
-
-### Example
-```
-input: [8, 2, 4, 9, 12, 18, 16, 13]
-output: [2, 4, 8, 9, 12, 13, 16, 18]
-```
-""",
-        "test_cases": """
-test_cases = [
-    [[[8, 2, 4, 9, 12, 18, 16, 13]], [2, 4, 8, 9, 12, 13, 16, 18]],
-    [[[i for i in range(100_000, -1, -1)]], [i for i in range(100_001)]],
-]
-""",
-        "title": "Selection sort",
-        "level": "Breezy",
-    },
-    47: {
+    42: {
         "markdown": """
 ### Smaller to the right
 Given an integer array nums, return an integer array counts where counts[i] is the number of smaller elements to the right of nums[i].
@@ -1364,7 +1324,7 @@ test_cases = [
         "title": "Smaller to the right",
         "level": "Edgy",
     },
-    48: {
+    43: {
         "markdown": """
 ### Majority element 
 Given an array nums of size n, return the majority element.
@@ -1393,7 +1353,7 @@ test_cases = [
         "title": "Majority element",
         "level": "Breezy",
     },
-    49: {
+    44: {
         "markdown": """
 ### Max profit
 Given an array `prices` where `prices[i]` is the price of a given stock on the ith day. You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
@@ -1425,7 +1385,7 @@ test_cases = [
         "title": "Max profit",
         "level": "Breezy",
     },
-    50: {
+    45: {
         "markdown": """
 ### **Pair sum equal target**
 
@@ -1448,7 +1408,7 @@ test_cases = [
         "title": "Pair sum equal target",
         "level": "Breezy",
     },
-    51: {
+    46: {
         "markdown": """
 ### Longest common subsequence (LCS) 
 > Leetcode #1143
@@ -1499,7 +1459,7 @@ Constraints:
             [["@work3r", "m@rxkd35rt"], "@rk3r"],
         ],
     },
-    52: {
+    47: {
         "markdown": """
 ### Jump game I 
 > Leetcode #55
@@ -1538,7 +1498,7 @@ Constraints:
             [[[200_000] + [0] * 200_000], True],
         ],
     },
-    53: {
+    48: {
         "markdown": """
 ### Jump game II 
 > Leetcode #45
@@ -1580,7 +1540,7 @@ Constraints:
             [[[200_000] + [0] * 200_000], 1],
         ],
     },
-    54: {
+    49: {
         "markdown": """
 ### Jump game III
 > Leetcode #1306
@@ -1627,7 +1587,7 @@ Constraints:
             [[[4, 2, 3, 0, 3, 1, 2], 5], True],
         ],
     },
-    55: {
+    50: {
         "markdown": """
 ### House robber I 
 > Leetcode #198
@@ -1666,7 +1626,7 @@ Constraints:
             [[[i for i in range(0, 100_000, 100)]], 25_000_000],
         ],
     },
-    56: {
+    51: {
         "markdown": """
 ### House robber II
 > Leetcode #213
@@ -1708,7 +1668,7 @@ Constraints:
             [[[i for i in range(0, 100_000, 100)]], 25_000_000],
         ],
     },
-    57: {
+    52: {
         "markdown": """
 ### Course schedule 
 > Leetcode #207
@@ -1750,7 +1710,7 @@ Constraints:
             [[1, []], [0]],
         ],
     },
-    58: {
+    53: {
         "markdown": """
 ### Minimum height trees (MHTs) 
 > Leetcode #310
@@ -1791,7 +1751,7 @@ Constraints:
             [[6, [[3, 0], [3, 1], [3, 2], [3, 4], [5, 4]]], [3, 4]],
         ],
     },
-    59: {
+    54: {
         "markdown": """
 ### Longest common prefix
 > Leetcode #14
@@ -1863,7 +1823,7 @@ Constraints:
             [[["flower", "flow", ""]], ""],
         ],
     },
-    60: {
+    55: {
         "markdown": """
 ### Cheapest flight within k stops
 > Leetcode #787
@@ -1955,7 +1915,7 @@ Constraints:
             ],
         ],
     },
-    61: {
+    56: {
         "markdown": """
 ### Network delay time 
 > Leetcode #743
@@ -1998,7 +1958,7 @@ Constraints:
             [[[[1, 2, 1]], 4, 2], -1],
         ],
     },
-    62: {
+    57: {
         "markdown": """
 ### Reachable cities
 > Leetcode #1334
@@ -2058,7 +2018,7 @@ Constraints:
             ],
         ],
     },
-    63: {
+    58: {
         "markdown": """
 ### Minimum spanning trees 
 > Leetcode #1135
@@ -2089,7 +2049,7 @@ output: -1
             [[4, [[1, 2, 3], [3, 4, 4]]], -1],
         ],
     },
-    64: {
+    59: {
         "markdown": """
 ### Critical connections
 > Leetcode #1192
@@ -2135,7 +2095,7 @@ Constraints:
             ],
         ],
     },
-    65: {
+    60: {
         "markdown": """
 ### Job scheduling
 > Leetcode #1235
@@ -2179,7 +2139,7 @@ Constraints:
             [[[1, 1, 1], [2, 3, 4], [5, 6, 4]], 6],
         ],
     },
-    66: {
+    61: {
         "markdown": """
 ### Coin change I 
 > Leetcode #322
@@ -2226,7 +2186,7 @@ Constraints:
             [[[1, 2, 5, 10, 20, 50], 77], 4],
         ],
     },
-    67: {
+    62: {
         "markdown": """
 ### Min cost tickets
 > Leetcode #983
@@ -2285,7 +2245,7 @@ Constraints:
             [[[i for i in range(1, 366)], [2, 7, 15]], 190],
         ],
     },
-    68: {
+    63: {
         "markdown": """
 ### House robber III 
 > Leetcode #337
@@ -2324,7 +2284,7 @@ test_cases = [
         "title": "House robber III",
         "level": "Steady",
     },
-    69: {
+    64: {
         "markdown": """
 ### Lowest common ancestor 
 > Leetcode #236
@@ -2372,7 +2332,7 @@ test_cases = [
         "title": "Lowest common ancestor",
         "level": "Steady",
     },
-    71: {
+    65: {
         "markdown": """
 ### Same binary tree 
 > Leetcode #100
@@ -2418,7 +2378,7 @@ test_cases = [
         "title": "Same binary tree",
         "level": "Breezy",
     },
-    72: {
+    66: {
         "markdown": """
 ### Boolean tree 
 > Leetcode #2331
@@ -2475,7 +2435,7 @@ test_cases = [
         "title": "Boolean binary tree",
         "level": "Breezy",
     },
-    73: {
+    67: {
         "markdown": """
 ### Cousins in a binary tree 
 > Leetcode #993
