@@ -63,11 +63,11 @@ x  add the score
 ```
 You're always guaranteed to have the last two scores for `+` and the previous score for `D`.
 
-### Example
-```
+#### Example
+```markdown
 input: [ '5', '2', 'C', 'D', '+', '+', 'C' ]
 output: 30
-explanation:
+How:
     '5' - add 5 -> [5]
     '2' - add 2 -> [5, 2]
     'C' - cancel last score -> [5]
@@ -75,6 +75,7 @@ explanation:
     '+' - sum last two scores -> [5, 10, 15]
     '+' - sum last two scores -> [5, 10, 15, 25]
     'C' - cancel last score -> [5, 10, 15]
+    
     return sum -> 30
 ```
 """,
@@ -100,18 +101,15 @@ test_cases = [
     1: {
         "markdown": """
 ### Repeated letters
-Given a string k of lower-case letters. the letters can be repeated and
-exist consecutively. A substring from k is considered valld if it contains
-at least three consecutive identical letters.
+Given a string `s` of lower-case letters. Find all substrings of `s` that contains at least three consecutive identical letters. Return an array of the indices `[start, end]` of the substrings. Order the indices by the start index in ascending order.  
 
-An example: k = "abcdddeeeeaabbbed" has three valid substrings: "ddd",
-"eeee" and "bbb".
-
-You must order the pairs by the start index in ascending order
-### Example
+#### Example
 ```
 Input: "abcdddeeeeaabbbcd"
 Output: [[3,5], [6,9], [12,15]]
+How: "abcdddeeeeaabbbed" has three valid substrings: "ddd",
+"eeee" and "bbb".
+
 ```
 """,
         "test_cases": """
@@ -161,7 +159,7 @@ Check if the brackets are valid.
 
 There no other characters in the string apart from '[', ']', '(', ')', '{'and '}'.
 
-### Example
+#### Example
 ```
 input: "[](){}"
 output: True
@@ -201,10 +199,9 @@ test_cases = [
     3: {
         "markdown": """
 ### Max sum sub array
-Given an integer array nums, find a contiguous non-empty subarray within the array that has the largest sum,
-and return the sum.
+Given a non empty integer array `nums`, find a contiguous non-empty subarray within the array that has the largest sum and return the sum.
 
-### Example
+#### Example
 ```
 input: [-2, 0, -1]
 output: 0
@@ -234,10 +231,9 @@ test_cases = [
     4: {
         "markdown": """
 ### Max product sub array
-Given an integer array nums, find a contiguous non-empty subarray within the array that has the largest product,
-and return the product.
+Given a non empty integer array `nums`, find a contiguous non-empty subarray within the array that has the largest product and return the product.
 
-### Example
+#### Example
 ```
 input: [-2, 0, -1]
 output: 0
@@ -271,11 +267,11 @@ test_cases = [
     5: {
         "markdown": """
 ### Symmetric difference
-Create a function that takes two or more arrays and returns a set of their symmetric difference. The returned array must contain only unique values (no duplicates).
+Create a function that takes two or more arrays and returns a set of their symmetric difference. The returned array must contain only unique values.
 
-The mathematical term symmetric difference (△ or ⊕) of two sets is the set of elements which are in either of the two sets but not in both.
+> The mathematical term symmetric difference (△ or ⊕) of two sets is the set of elements which are in either of the two sets but not in both.
 
-### Example
+#### Example
 ```
 input: [[1, 2, 3], [2, 3, 4]]
 output: [1, 4]
@@ -315,24 +311,22 @@ test_cases = [
         "markdown": """
 ### Pairwise
 Given an array `arr`, find element pairs whose sum equal the second argument `target` and return the sum of their indices.
-e.g pairwise([7, 9, 11, 13, 15], 20) returns 6 and pairwise([0, 0, 0, 0, 1, 1], 1) returns 10.
 
 Each element can only construct a single pair.
 
-### Example
+#### Example
 ```
 inputs:
     arr: [7, 9, 11, 13, 15]
     target: 20
 output: 6
-explanation:
-    pairs 7 + 13 and 9 + 11, indices 0 + 3 and 1 + 2, total 6
+How: pairs 7 + 13 and 9 + 11, indices 0 + 3 and 1 + 2, total 6
 
 inputs:
     arr: [0, 0, 0, 0, 1, 1]
     target: 1
 output: 10
-explanation: pairs 0 + 1 and 0 + 1, indices 0 + 4 and 1 + 5, total 10
+How: pairs 0 + 1 and 0 + 1, indices 0 + 4 and 1 + 5, total 10
 ```
 """,
         "test_cases": """
@@ -351,23 +345,23 @@ test_cases = [
     7: {
         "markdown": """
 ### Min length sub array
-Given an array of positive integers nums and a positive integer target, return the minimal length of a subarray whose sum is greater than or equal to target.
+Given an array of positive integers `nums` and a positive integer `target`, return the minimal length of a subarray whose sum is greater than or equal to target.
 
-If there is no such subarray, return 0 instead.
+If there is no such subarray, return `0` instead.
 
-### Example
+#### Example
 ```
 inputs:
     arr: [2, 3, 1, 2, 4, 3],
     target: 7
 output: 2
-explanation: sub array [4, 3] has sum >= 7
+How: sub array [4, 3] has sum >= 7
 
 inputs:
     arr: [1, 3, 6, 2, 1],
     target: 4
 output: 1
-explanation: sub array [6] has sum >= 4
+How: sub array [6] has sum >= 4
 ```
 """,
         "test_cases": """
@@ -384,13 +378,11 @@ test_cases = [
     8: {
         "markdown": """
 ### Min in rotated array
-Suppose an array of length n sorted in ascending order is rotated between 1 and n times.
-For example, the array nums = [0, 1, 2, 4, 5, 6, 7] becomes [4, 5, 6, 7, 0, 1, 2] if it was rotated 4 times. [0, 1, 2, 4, 5, 6, 7] if it was rotated 7 times.
+Given a sorted (ascending order) but rotated array `nums`, return the minimum element of this array. You must write an algorithm that runs in **O(log n)** time. 
 
-Given the sorted rotated array nums of unique elements, return the minimum element of this array.
-You must write an algorithm that runs in O(log n) time.
+> an example of rotating an array. If `[0, 1, 2, 4, 5, 6, 7]` is rotated 4 times it becomes `[4, 5, 6, 7, 0, 1, 2]`.
 
-### Example
+#### Example
 ```
 input: arr: [4, 5, 6, 7, 0, 1, 2]
 output: 0
@@ -417,13 +409,13 @@ test_cases = [
     9: {
         "markdown": """
 ### Count primes
-Given a positive integer `n`, write an algorithm to return the number of prime numbers in [0, n]
+Given a positive integer `n`, write an algorithm to return the number of prime numbers in `[0, n]`.
 
-### Example
+#### Example
 ```
 input: 1000
 output: 168
-explanation:
+How:
     There are 168 prime numbers between 0 and 1000 inclusive.
 ```
 """,
@@ -445,11 +437,11 @@ test_cases = [
     10: {
         "markdown": """
 ### Single number
-Given a non-empty array of integers `nums`, every element appears twice except for one.
+Given a non-empty array of integers `nums` where every element appears twice except for one. Return the element that appears once.
 
-Find that single one.
+You must write an algorithm that runs in **O(n)** average time complexity and uses constant space.
 
-### Example
+#### Example
 ```
 input: [4, 1, 2, 1, 2]
 output: 4
@@ -470,7 +462,7 @@ test_cases =  [
 ### Powers of 2
 Given an integer `n`, find whether it is a power of `2`.
 
-### Example
+#### Example
 ```
 input: 64
 output: True
@@ -497,20 +489,19 @@ test_cases = [
     12: {
         "markdown": """
 ### Reverse Polish Notation
-Evaluate the value of an arithmetic expression in Reverse Polish Notation. Valid operators are +, -, *, and /. Each operand may be an integer or another expression.
+Evaluate the value of an arithmetic expression in Reverse Polish Notation. Valid operators are `+`, `-`, `*`, and `/`. Each operand may be an integer or another expression.
 
-Note that division between two integers should truncate toward zero.
-It is guaranteed that the given RPN expression is always valid.
+Division between two integers should truncate toward zero and it is guaranteed that the given RPN expression is always valid.
 
-### Example
+#### Example
 ```
 input: ["2", "1", "+", "3", "*"]
 output: 9
-explanation: ((2 + 1) * 3) = 9
+How: ((2 + 1) * 3) = 9
 
 input: ["4", "13", "5", "/", "+"]
 output: 6
-explanation: (4 + (13 / 5)) = 6
+How: (4 + (13 / 5)) = 6
 ```
 """,
         "test_cases": """
@@ -529,14 +520,14 @@ test_cases = [
     13: {
         "markdown": """
 ### Roman numerals
-Convert a given integer, `n`,  to its equivalent roman numerals for 0 < `n` < 4000.
+Convert a given integer, `n`,  to its equivalent roman numerals for `0 < n < 4000`.
 
 |Decimal | 1000 | 900 | 400 | 100 | 90 | 50 | 40 | 10 | 9 | 5 | 4 | 1 |
 |--------|------|-----|-----|-----|----|----|----|----|---|---|---|---|
 |Roman | M | CM | CD | C | XC | L | XL | X | IX | V | IV | I|
 
 
-### Example
+#### Example
 ```
 input: 4
 output: 'IV'
@@ -565,12 +556,11 @@ test_cases = [
     14: {
         "markdown": """
 ### Longest common substring (LCS)
-Given two strings text1 and text2, return their longest common substring. If there is no common substring, return ''.
+Given two strings `text1` and `text2`, return their longest common substring. If there is no common substring, return ''.
 
-A substring of a string is a new string generated from the original string with adjacent characters.
-For example, "rain" is a substring of "grain". A common substring of two strings is a substring that is common to both strings.
+> A substring of a string is a new string generated from the original string with adjacent characters. For example, "rain" is a substring of "grain". 
 
-### Example
+#### Example
 ```
 input:
     text1: "brain"
@@ -595,53 +585,52 @@ test_cases = [
     15: {
         "markdown": """
 ### Happy number
-Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1.
+Given a positive integer `n`, return whether it is a happy number or not. 
 
-Those numbers for which this process ends in 1 are happy numbers, while those that do not end in 1 are unhappy numbers.
-
-Implement a function that returns true if the number is happy, or false if not.
-
-### Example
+> A happy number is a number which if you repeatedly sum the squares of its digits the process will eventually lead to 1. For example, 19 → `1²+9²=82` → `8²+2²=68` → `6²+8²=100` → `1`.
+#### Example
 ```
+input: 19
+output: True
+
 input: 2
 output: False
-
-input: 7
-output: True
 ```
 """,
         "title": "Happy number",
         "level": "Breezy",
         "test_cases": """
 test_cases = [
-    [["brain", "drain"], "rain"],
-    [["math", "arithmetic"], "th"],
-    [["blackmarket", "stagemarket"], "market"],
-    [
-        ["theoldmanoftheseaissowise", "sowisetheoldmanoftheseais"],
-        "theoldmanoftheseais",
-    ],
+    [[19], True],
+    [[2], False],
+    [[17], False],
+    [[202], False],
+    [[711], False],
+    [[176], True],
+    [[19_345_672], False],
+    [[345_000_000], False],
+    [[1_703_932], False],
+    [[2_294_967_295], False],
+    [[1], True],
 ],
 """,
     },
     16: {
         "markdown": """
 ### Trie/Prefix tree
-In English, we have a concept called root, which can be followed by some other word to form another longer word - let's call this word derivative. For example, when the root "help" is followed by the word "ful", we can form a derivative "helpful".
-
-Given a dictionary consisting of many roots and a sentence consisting of words separated by spaces, replace all the derivatives in the sentence with the root forming it. If a derivative can be replaced by more than one root, replace it with the root that has the shortest length.
+Given an array `roots` of strings and a `sentence` of words separated by spaces. Replace all the words in the sentence with the root forming it. If a word can be replaced by more than one root, replace it with the shortest length root. 
 
 Return the sentence after the replacement.
 
-### Example
+#### Example
 ```
 input:
-    dictionary = ["cat", "bat", "rat"],
+    roots = ["cat", "bat", "rat"],
     sentence = "the cattle was rattled by the battery"
 output: "the cat was rat by the bat"
 
 input:
-    dictionary = ["a", "b", "c"],
+    roots = ["a", "b", "c"],
     sentence = "aadsfasf absbs bbab cadsfafs"
 output: "a a b c"
 ```
@@ -661,11 +650,11 @@ test_cases = [
     17: {
         "markdown": """
 ### Fractional knapsack
-Given a knapsack capacity and two arrays, the first one for weights and the second one for values. Add items to the knapsack to maximize the sum of the values of the items that can be added so that the sum of the weights is less than or equal to the knapsack capacity.
+Given a knapsack `capacity` and two arrays, the first one for `weights` and the second one for `values`. Add items to the knapsack to maximize the sum of the values of the items that can be added so that the sum of the weights is less than or equal to the knapsack capacity.
 
 You are allowed to add a fraction of an item.
 
-### Example
+#### Example
 ```
 inputs:
   capacity = 50
@@ -687,15 +676,15 @@ test_cases = [
     18: {
         "markdown": """
 ### Subarrays with sum
-Given an array and targetSum, return the total number of contigous subarrays inside the array whose sum is equal to targetSum
+Given an array `arr` and `target`, return the total number of contigous subarrays inside the array whose sum is equal to `target`
 
-### Example
+#### Example
 ```
 inputs:
   arr = [13, -1, 8, 12, 3, 9]
   target = 12
 output: 3
-explanation: [13, -1], [12] and [3, 9]
+How: [13, -1], [12] and [3, 9]
 ```
 """,
         "title": "Subarrays with sum",
@@ -714,11 +703,11 @@ test_cases = [
     19: {
         "markdown": """
 ### Paths with sum
-Given the root of a binary tree and an integer targetSum, return the number of paths where the sum of the values along the path equals targetSum.
+Given the `root` of a binary tree and an integer `target`, return the number of paths where the sum of the values along the path equals `target`.
 
 The path does not need to start or end at the root or a leaf, but it must go downwards (i.e., traveling only from parent nodes to child nodes).
 
-### Example
+#### Example
 ```
 inputs:
   root = [10, 5, -3, 3, 2, None, 11, 3, -2, None, 1]
@@ -742,13 +731,13 @@ test_cases = [
     20: {
         "markdown": """
 ### Remove occurence
-Given two strings s and part, perform the following operation on s until all occurrences of the substring part are removed:
+Given two strings `s` and `part`, perform the following operation on s until all occurrences of the substring part are removed:
 
 Find the leftmost occurrence of the substring part and remove it from s. Return s after removing all occurrences of part.
 
-A substring is a contiguous sequence of characters in a string.
+> A substring is a contiguous sequence of characters in a string.
 
-### Example
+#### Example
 ```
 inputs:
   s = "axeaxae"
@@ -772,9 +761,9 @@ test_cases = [
 ### Spinal case
 Given a string. Convert it to spinal case
 
-Spinal case is all-lowercase-words-joined-by-dashes.
+> Spinal case is all-lowercase-words-joined-by-dashes.
 
-### Example
+#### Example
 ```
 input: "Hello World!"
 output: "hello-world"
@@ -794,13 +783,13 @@ test_cases = [
     22: {
         "markdown": """
 ### 0/1 knapsack
-Given a knapsack capacity and two arrays, the first one for weights and the second one for values. Add items to the knapsack to maximize the sum of the values of the items that can be added so that the sum of the weights is less than or equal to the knapsack capacity.
+Given a knapsack `capacity` and two arrays, the first one for `weights` and the second one for `values`. Add items to the knapsack to maximize the sum of the values of the items that can be added so that the sum of the weights is less than or equal to the knapsack capacity.
 
-You can only either include or not include an item. i.e you can't add a part of it.
+You can only either include or not include an item. i.e you can't add a portion of it.
 
 Return a tuple of maximum value and selected items
 
-### Example
+#### Example
 ```
 inputs:
   capacity = 50
@@ -823,13 +812,13 @@ test_cases = [
     23: {
         "markdown": """
 ### Equal array partitions
-Given an integer array nums, return true if you can partition the array into two subsets such that the sum of the elements in both subsets is equal or false otherwise.
+Given an integer array `nums`, return true if you can partition the array into two subsets such that the sum of the elements in both subsets is equal or false otherwise.
 
-### Example
+#### Example
 ```
 input: [1, 5, 11, 5]
 output: True
-explanation: [1, 5, 5] and [11]
+How: [1, 5, 5] and [11]
 ```
 """,
         "title": "Equal array partitions",
@@ -849,12 +838,11 @@ test_cases = [
     24: {
         "markdown": """
 ### Fibonacci numbers
-Given a positive interger `n`, return the n<sup>th</sup> fibonacci number
+Given a positive interger `n`, return the nth fibonacci number
 
-The first 6 fibonacci numbers are:
-[0, 1, 1, 2, 3, 5]
+> The first 6 fibonacci numbers are: [0, 1, 1, 2, 3, 5]
 
-### Example
+#### Example
 ```
 input: 0
 output: 0
@@ -883,21 +871,21 @@ test_cases = [
     25: {
         "markdown": """
 ### Climb stairs
-You are climbing a staircase. It takes n steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+You are climbing a staircase. It takes `n` steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
 
-### Example
+#### Example
 ```
 input: 0
 output: 0
-explanation: no stairs, no way to get to the top
+How: no stairs, no way to get to the top
 
 input: 1
 output: 1
-explanation: 1 stair, one way to get to the top
+How: 1 stair, one way to get to the top
 
 input: 2
 output: 2
-explanation:
+How:
   2 ways to get to the top
     - climb stair 1 then stair 2
     - climb 2 steps to stair 2
@@ -918,26 +906,26 @@ test_cases = [
     26: {
         "markdown": """
 ### Ways to make change
+Write an algorithm to determine how many ways there are to make change for a given input, `cents` of US currency. 
+
 There are four types of common coins in US currency:
   - quarters (25 cents)
   - dimes (10 cents)
   - nickels (5 cents)
   - pennies (1 cent)
 
-  There are six ways to make change for 15 cents:
-    - A dime and a nickel
-    - A dime and 5 pennies
-    - 3 nickels
-    - 2 nickels and 5 pennies
-    - A nickel and 10 pennies
-    - 15 pennies
-
-Implement a function to determine how many ways there are to make change for a given input, `cents`, that represents an amount of US pennies using these common coins.
-
-### Example
+#### Example
 ```
 input: 15
 output: 6
+How: There are six ways to make change for 15 cents
+  - A dime and a nickel
+  - A dime and 5 pennies
+  - 3 nickels
+  - 2 nickels and 5 pennies
+  - A nickel and 10 pennies
+  - 15 pennies
+
 ```
 """,
         "title": "Ways to make change",
@@ -956,11 +944,11 @@ test_cases = [
     27: {
         "markdown": """
 ### Has path sum
-Given the root of a binary tree and an integer targetSum, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.
+Given the `root` of a binary tree and an integer `target`, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals `target`.
 
-A leaf is a node with no children.
+> A leaf is a node with no children.
 
-### Example
+#### Example
 ```
 input:
   root = [5, 4, 8, 11, None, 13, 4, 7, 2, None, None, None, None, None, 1]
@@ -982,9 +970,9 @@ test_cases = [
     28: {
         "markdown": """
 ### Has node BST
-Given the root of a binary search tree and a value x, check whether x is in the tree and return `True` or `False`
+Given the `root` of a binary search tree and a value `x`, check whether x is in the tree and return `True` or `False`
 
-### Example
+#### Example
 ```
 input:
   root = [9, 8, 16]
@@ -1016,9 +1004,9 @@ test_cases = [
     29: {
         "markdown": """
 ### BST min
-Given the root of a binary search tree find the minimum value and return it
+Given the `root` of a binary search tree find the minimum value and return it
 
-### Example
+#### Example
 ```
 input: [12, 3, 20]
 output: 3
@@ -1043,11 +1031,11 @@ test_cases = [
     30: {
         "markdown": """
 ### Balanced tree
-Given the root of a binary search tree, return `True` if it is balanced or `False` otherwise
+Given the `root` of a binary search tree, return `True` if it is balanced or `False` otherwise
 
-A balanced tree is one whose difference between maximum height and minimum height is less than 2
+> A balanced tree is one whose difference between maximum height and minimum height is less than 2
 
-### Example
+#### Example
 ```
 input: [12, 8, 16, 4, 9, 13, 18, 11]
 output: True
@@ -1073,9 +1061,9 @@ test_cases = [
     31: {
         "markdown": """
 ### Tree in-order traversal
-Given the root of a binary search tree, traverse the tree in order and return the values as an array.
+Given the `root` of a binary search tree, traverse the tree in order and return the values as an array.
 
-### Example
+#### Example
 ```
 input: [12, 8, 16, 4, 9, 13, 18, 11]
 output: [4, 8, 9, 11, 12, 13, 16, 18]
@@ -1094,9 +1082,9 @@ test_cases = [
     32: {
         "markdown": """
 ### Tree pre-order traversal
-Given the root of a binary search tree, traverse the tree using pre order traversal and return the values as an array.
+Given the `root` of a binary search tree, traverse the tree using pre order traversal and return the values as an array.
 
-### Example
+#### Example
 ```
 input: [12, 8, 16, 4, 9, 13, 18, 11]
 output: [12, 8, 4, 9, 11, 16, 13, 18]
@@ -1115,9 +1103,9 @@ test_cases = [
     33: {
         "markdown": """
 ### Tree post-order traversal
-Given the root of a binary search tree, traverse the tree using post order traversal and return the values as an array.
+Given the `root` of a binary search tree, traverse the tree using post order traversal and return the values as an array.
 
-### Example
+#### Example
 ```
 input: [12, 8, 16, 4, 9, 13, 18, 11]
 output: [4, 11, 9, 8, 13, 18, 16, 12]
@@ -1136,9 +1124,9 @@ test_cases = [
     34: {
         "markdown": """
 ### Tree level-order traversal
-Given the root of a binary search tree, traverse the tree using level order traversal and return the values as an array.
+Given the `root` of a binary search tree, traverse the tree using level order traversal and return the values as an array.
 
-### Example
+#### Example
 ```
 input: [12, 8, 16, 4, 9, 13, 18, 11]
 output: [12, 8, 16, 4, 9, 13, 18, 11]
@@ -1157,9 +1145,11 @@ test_cases = [
     35: {
         "markdown": """
 ### Tree leaves
-Given the root of a binary search tree, return all the leaves as an array ordered from left to right.
+Given the `root` of a binary search tree, return all the leaves as an array ordered from left to right.
 
-### Example
+> A leaf is tree node with no children. 
+
+#### Example
 ```
 input: [12, 8, 16, 4, 9, 13, 18, 11]
 output: [4, 11, 13, 18]
@@ -1178,9 +1168,9 @@ test_cases = [
     36: {
         "markdown": """
 ### Sum right nodes
-Given the root of a binary search tree, return the sum of all the right nodes
+Given the `root` of a binary search tree, return the sum of all the right nodes
 
-### Example
+#### Example
 ```
 input: [12, 8, 16, 4, 9, 13, 18, 11]
 output: 25
@@ -1199,9 +1189,11 @@ test_cases = [
     37: {
         "markdown": """
 ### Value in array
-Given an array of values sorted in a non decreasing order, and a target `y`. Return `True` if y is in the array or `False` otherwise
+Given an array of integers `arr` sorted in a non decreasing order, and a target `y`. Return `True` if y is in the array or `False` otherwise
 
-### Example
+You must write an algorithm that runs in **O(log n)** average time complexity. 
+
+#### Example
 ```
 input:
   arr = [2, 4, 8, 9, 12, 13, 16, 18]
@@ -1222,9 +1214,9 @@ test_cases = [
     38: {
         "markdown": """
 ### Merge sort
-Given an array of integers, use merge sort algorithm to return an array of all the integers sorted in non decreasing order.
+Given an array of integers `nums`, use merge sort algorithm to return an array of all the integers sorted in non decreasing order.
 
-### Example
+#### Example
 ```
 input: [8, 2, 4, 9, 12, 18, 16, 13]
 output: [2, 4, 8, 9, 12, 13, 16, 18]
@@ -1242,9 +1234,9 @@ test_cases = [
     39: {
         "markdown": """
 ### Heap sort
-Given an array of integers, use heap sort algorithm to return an array of all the integers sorted in non decreasing order.
+Given an array of integers `nums`, use heap sort algorithm to return an array of all the integers sorted in non decreasing order.
 
-### Example
+#### Example
 ```
 input: [8, 2, 4, 9, 12, 18, 16, 13]
 output: [2, 4, 8, 9, 12, 13, 16, 18]
@@ -1262,9 +1254,9 @@ test_cases = [
     40: {
         "markdown": """
 ### Quick sort
-Given an array of integers, use quick sort algorithm to return an array of all the integers sorted in non decreasing order.
+Given an array of integers `nums`, use quick sort algorithm to return an array of all the integers sorted in non decreasing order.
 
-### Example
+#### Example
 ```
 input: [8, 2, 4, 9, 12, 18, 16, 13]
 output: [2, 4, 8, 9, 12, 13, 16, 18]
@@ -1282,9 +1274,9 @@ test_cases = [
     41: {
         "markdown": """
 ### Bubble sort
-Given an array of integers, use bubble sort algorithm to return an array of all the integers sorted in non decreasing order.
+Given an array of integers `nums`, use bubble sort algorithm to return an array of all the integers sorted in non decreasing order.
 
-### Example
+#### Example
 ```
 input: [8, 2, 4, 9, 12, 18, 16, 13]
 output: [2, 4, 8, 9, 12, 13, 16, 18]
@@ -1302,9 +1294,9 @@ test_cases = [
     42: {
         "markdown": """
 ### Smaller to the right
-Given an integer array nums, return an integer array counts where counts[i] is the number of smaller elements to the right of nums[i].
+Given an integer array `nums`, return an integer array counts where counts[i] is the number of smaller elements to the right of nums[i].
 
-### Example
+#### Example
 ```
 input: [5, 2, 2, 6, 1]
 output: [3, 1, 1, 1, 0]
@@ -1328,12 +1320,13 @@ test_cases = [
         "markdown": """
 ### Majority element 
 Given an array nums of size n, return the majority element.
-The majority element is the element that appears more than
+
+> The majority element is the element that appears more than
 ⌊n / 2⌋ times.
 
 The majority element is guaranteed to exist in the array. 
 
-### Example
+#### Example
 ```
 Input: [3, 2, 3]
 Output: 3
@@ -1356,16 +1349,15 @@ test_cases = [
     44: {
         "markdown": """
 ### Max profit
-Given an array `prices` where `prices[i]` is the price of a given stock on the ith day. You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
+Given an array `prices` where `prices[i]` is the price of a given stock on the ith day. Return the maximum profit that can be made by choosing a single day to buy and choosing a different day in the future to sell that stock. 
 
-Return the maximum profit you can achieve from this transaction.
 If you cannot achieve any profit, return 0.
 
-### Example
+#### Example
 ```
 Input: prices = [7,1,5,3,6,4]
 Output: 5
-Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+How: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
 
 Input: prices = [7,6,4,3,1]
 Output: 0
@@ -1388,18 +1380,19 @@ test_cases = [
     45: {
         "markdown": """
 ### **Pair sum equal target**
+Find two numbers in an array `nums` that add up to a specific `target`. Return the indices `[i, j]` such that `nums[i] + nums[j] = target`. 
 
-Find two numbers in an array that add up to a specific target. Return the indices `[i, j]` such that `nums[i] + nums[j] = target`. Each input has exactly one solution.
+Each input has exactly one solution.
 
-**Example:**
-
-- Input → `nums = [2, 7, 11, 15], target = 9`
-- Output → `[0, 1]` (because `2 + 7 = 9`)
+#### Example
+```
+- Input → nums = [2, 7, 1, 15], target = 9
+- Output → [0, 1] (because 2 + 7 = 9)
 ```
 """,
         "test_cases": """
 test_cases = [
-    [[[2, 7, 11, 15], 13], [1, 3]],
+    [[[2, 7, 1, 15], 13], [1, 3]],
     [[[2, 4, 7, 14], 6], [1, 2]],
     [[[i for i in range(400_000)], 5], [1, 6]],
     [[[i for i in range(-10, 10)], -10], [1, 11]],
@@ -1411,42 +1404,18 @@ test_cases = [
     46: {
         "markdown": """
 ### Longest common subsequence (LCS) 
-> Leetcode #1143
+Given two strings `str1` and `str2`, both lowercase, return their longest common subsequence. 
 
-Given two strings text1 and text2, return the length of their longest common subsequence. If there is no common subsequence, return 0.
+> A subsequence of a string is generated by selecting some characters from the original string while maintaining the relative order of the original characters. e.g 'man' is a subsequence of 'mountain'
 
-A subsequence of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the remaining characters.
+#### Example
+```
+Input: str1 = "mountain", text2 = "man"
+Output: 'man'
 
-    For example, "ace" is a subsequence of "abcde".
-
-A common subsequence of two strings is a subsequence that is common to both strings.
-
-
-### Examples
-Example 1:
-
-Input: text1 = "abcde", text2 = "ace"
-Output: 3
-Explanation: The longest common subsequence is "ace" and its length is 3.
-
-Example 2:
-
-Input: text1 = "abc", text2 = "abc"
-Output: 3
-Explanation: The longest common subsequence is "abc" and its length is 3.
-
-Example 3:
-
-Input: text1 = "abc", text2 = "def"
-Output: 0
-Explanation: There is no such common subsequence, so the result is 0.
-
-
-
-Constraints:
-
-    1 <= text1.length, text2.length <= 1000
-    text1 and text2 consist of only lowercase English characters.
+Input: str1 = "dent", str2 = "crab"
+Output: ''
+```
 """,
         "title": "Longest common subsequence",
         "level": "Steady",
@@ -1461,32 +1430,19 @@ Constraints:
     },
     47: {
         "markdown": """
-### Jump game I 
-> Leetcode #55
+### Can you reach the last index?
+Given an integer array `nums` where `nums[i]` represents the maximum forward jump length from index `i`. Determine if, starting from the first index (0), you can reach the last index. 
 
-You are given an integer array nums. You are initially positioned at the array's first index, and each element in the array represents your maximum jump length at that position.
-
-Return true if you can reach the last index, or false otherwise.
-
-### Examples
-Example 1:
-
+#### Example
+```
 Input: nums = [2,3,1,1,4]
 Output: true
-Explanation: Jump 1 step from index 0 to 1, then 3 steps to the last index.
-
-Example 2:
 
 Input: nums = [3,2,1,0,4]
 Output: false
-Explanation: You will always arrive at index 3 no matter what. Its maximum jump length is 0, which makes it impossible to reach the last index.
-
-Constraints:
-
-    1 <= nums.length <= 104
-    0 <= nums[i] <= 105
+```
 """,
-        "title": "Jump game I",
+        "title": "Can you reach the last index?",
         "level": "Steady",
         "test_cases": [
             [[[2, 3, 1, 1, 4]], True],
@@ -1500,37 +1456,23 @@ Constraints:
     },
     48: {
         "markdown": """
-### Jump game II 
-> Leetcode #45
+### Min jumps to reach last index
+Given an integer array `nums` where `nums[i]` represents the maximum forward jump length from index `i`. Return the minimum jumps to get from the first index (0) to the last index. 
 
-You are given a 0-indexed array of integers nums of length n. You are initially positioned at nums[0].
+You are guaranteed to reach the last index. 
 
-Each element nums[i] represents the maximum length of a forward jump from index i. In other words, if you are at nums[i], you can jump to any nums[i + j] where:
-
-    0 <= j <= nums[i] and
-    i + j < n
-
-Return the minimum number of jumps to reach nums[n - 1]. The test cases are generated such that you can reach nums[n - 1].
-
-### Examples
-Example 1:
-
-Input: nums = [2,3,1,1,4]
+#### Example
+```
+Input: nums = [2,5,2,1,4]
 Output: 2
-Explanation: The minimum number of jumps to reach the last index is 2. Jump 1 step from index 0 to 1, then 3 steps to the last index.
+How: jump 1 step to index 1 then 3 steps to the last index. 
 
-Example 2:
-
-Input: nums = [2,3,0,1,4]
-Output: 2
-
-Constraints:
-
-    1 <= nums.length <= 104
-    0 <= nums[i] <= 1000
-    It's guaranteed that you can reach nums[n - 1]
+Input: nums = [2,3,0,1,4,0]
+Output: 3
+How: jump 1 step to index 1, 3 steps to index 4 then 1 step to the last index.
+```
 """,
-        "title": "Jump game II",
+        "title": "Min jumps to reach last index",
         "level": "Steady",
         "test_cases": [
             [[[2, 3, 1, 1, 4]], 2],
@@ -1542,44 +1484,21 @@ Constraints:
     },
     49: {
         "markdown": """
-### Jump game III
-> Leetcode #1306
+### Jump to zero
+Given an integer array `nums` where `nums[i]` represents the maximum forward or backward jump length from index `i` and a starting index `start'. Check if you can jump to an index where the value is 0.
 
-Given an array of non-negative integers arr, you are initially positioned at start index of the array. When you are at index i, you can jump to i + arr[i] or i - arr[i], check if you can reach any index with value 0.
-
-Notice that you can not jump outside of the array at any time.
-
-### Examples
-Example 1:
-
+#### Example
+```
 Input: arr = [4,2,3,0,3,1,2], start = 5
 Output: true
-Explanation:
-All possible ways to reach at index 3 with value 0 are:
-index 5 -> index 4 -> index 1 -> index 3
-index 5 -> index 6 -> index 4 -> index 1 -> index 3
-
-Example 2:
-
-Input: arr = [4,2,3,0,3,1,2], start = 0
-Output: true
-Explanation:
-One possible way to reach at index 3 with value 0 is:
-index 0 -> index 4 -> index 1 -> index 3
-
-Example 3:
+How: index 5 -> 4 -> 1 -> 3 or 5 -> 6 -> 4 -> 1 -> 3
 
 Input: arr = [3,0,2,1,2], start = 2
 Output: false
-Explanation: There is no way to reach at index 1 with value 0.
-
-Constraints:
-
-    1 <= arr.length <= 5 * 104
-    0 <= arr[i] < arr.length
-    0 <= start < arr.length
+How: There is no way to get to index 1 starting from index 2.
+```
 """,
-        "title": "Jump game III",
+        "title": "Jump to zero",
         "level": "Steady",
         "test_cases": [
             [[[4, 2, 3, 0, 3, 1, 2], 0], True],
@@ -1589,34 +1508,21 @@ Constraints:
     },
     50: {
         "markdown": """
-### House robber I 
-> Leetcode #198
+### Max loot 
+Given an integer array `nums` where each `nums[i]` represents the amount of cash stashed in a boat, return the maximum amount that you can steal from the boats given that you cannot steal from any two adjacent boats.  
 
-You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and it will automatically contact the police if two adjacent houses were broken into on the same night.
+#### Example
+```
+Input: nums = [2,2,5,1]
+Output: 7
+How: Rob boats 1 (2) and 3 (5) -> total loot 7 
 
-Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
-
-### Examples
-Example 1:
-
-Input: nums = [1,2,3,1]
-Output: 4
-Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3).
-Total amount you can rob = 1 + 3 = 4.
-
-Example 2:
-
-Input: nums = [2,7,9,3,1]
-Output: 12
-Explanation: Rob house 1 (money = 2), rob house 3 (money = 9) and rob house 5 (money = 1).
-Total amount you can rob = 2 + 9 + 1 = 12.
-
-Constraints:
-
-    1 <= nums.length <= 100
-    0 <= nums[i] <= 400
+Input: nums = [2]
+Output: 2
+How:  Only one boat, no adjacent boats to worry about. 
+```
 """,
-        "title": "House robber I",
+        "title": "Max loot",
         "level": "Steady",
         "test_cases": [
             [[[1, 2, 3, 1]], 4],
@@ -1628,38 +1534,17 @@ Constraints:
     },
     51: {
         "markdown": """
-### House robber II
-> Leetcode #213
+### Max loot circle
+Given an integer array `nums` where each `nums[i]` represents the amount of cash stashed in a boat, return the maximum amount that you can steal from the boats given that you cannot steal from any two adjacent boats and the boats are arranged in a circle i.e the last boat is adjacent to the first one. 
 
-ou are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed. All houses at this place are arranged in a circle. That means the first house is the neighbor of the last one. Meanwhile, adjacent houses have a security system connected, and it will automatically contact the police if two adjacent houses were broken into on the same night.
-
-Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
-
-### Examples
-Example 1:
-
-Input: nums = [2,3,2]
-Output: 3
-Explanation: You cannot rob house 1 (money = 2) and then rob house 3 (money = 2), because they are adjacent houses.
-
-Example 2:
-
-Input: nums = [1,2,3,1]
-Output: 4
-Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3).
-Total amount you can rob = 1 + 3 = 4.
-
-Example 3:
-
-Input: nums = [1,2,3]
-Output: 3
-
-Constraints:
-
-    1 <= nums.length <= 100
-    0 <= nums[i] <= 1000
+#### Example
+```
+Input: nums = [3,5,3]
+Output: 5
+How: Cannot rob boats 1 and 3 for total of 6 because they are adjacent. So rob boat 2. 
+```
 """,
-        "title": "House robber II",
+        "title": "Max loot circle",
         "level": "Steady",
         "test_cases": [
             [[[1, 2, 3, 1]], 4],
@@ -1671,36 +1556,16 @@ Constraints:
     52: {
         "markdown": """
 ### Course schedule 
-> Leetcode #207
+Given an array of `courses` representing the courses you have to take where courses[i] = [a, b] indicates that you must take course b in order to take course a. And an integer `n` representing the total number of courses with the courses being labelled from 0 to n - 1. Determine whether you can finish all the courses. 
 
-here are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.
-
-    For example, the pair [0, 1], indicates that to take course 0 you have to first take course 1.
-
-Return true if you can finish all courses. Otherwise, return false.
-
-### Examples
-Example 1:
-
-Input: numCourses = 2, prerequisites = [[1,0]]
+#### Example
+Input: n = 2, courses = [[1,0]]
 Output: true
-Explanation: There are a total of 2 courses to take.
-To take course 1 you should have finished course 0. So it is possible.
+How: Take course 0 then 1. 
 
-Example 2:
-
-Input: numCourses = 2, prerequisites = [[1,0],[0,1]]
+Input: n = 2, courses = [[1,0],[0,1]]
 Output: false
-Explanation: There are a total of 2 courses to take.
-To take course 1 you should have finished course 0, and to take course 0 you should also have finished course 1. So it is impossible.
-
-Constraints:
-
-    1 <= numCourses <= 2000
-    0 <= prerequisites.length <= 5000
-    prerequisites[i].length == 2
-    0 <= ai, bi < numCourses
-    All the pairs prerequisites[i] are unique.
+How: To take course 1 you first need to take course 0 but to take course 0 you need to first take course 1 so no way to take any of them. 
 """,
         "title": "Course schedule",
         "level": "Steady",
@@ -1713,36 +1578,24 @@ Constraints:
     53: {
         "markdown": """
 ### Minimum height trees (MHTs) 
-> Leetcode #310
+Given an integer `n` representing number of nodes in a tree and an array of `n-1` edges where edges[i] = [a, b] represent an undirected edge between nodes a and b. Return a list of minimum height trees root labels in any order. 
 
-A tree is an undirected graph in which any two vertices are connected by exactly one path. In other words, any connected graph without simple cycles is a tree.
+The nodes are labelled from 0 to n - 1. 
 
-Given a tree of n nodes labelled from 0 to n - 1, and an array of n - 1 edges where edges[i] = [ai, bi] indicates that there is an undirected edge between the two nodes ai and bi in the tree, you can choose any node of the tree as the root. When you select a node x as the root, the result tree has height h. Among all possible rooted trees, those with minimum height (i.e. min(h))  are called minimum height trees (MHTs).
+> A tree is an undirected graph in which any two vertices are connected by exactly one path. 
 
-Return a list of all MHTs' root labels. You can return the answer in any order.
+> The minimum height trees (MHTs) are nodes from a tree that if choosen as the root result to the minimum `height` of the tree. 
 
-The height of a rooted tree is the number of edges on the longest downward path between the root and a leaf.
+> The height of a tree is the number of edges on the path from the root to the the farthest leaf. 
 
-### Examples
-Example 1:
-
+#### Example
+```
 Input: n = 4, edges = [[1,0],[1,2],[1,3]]
 Output: [1]
-Explanation: As shown, the height of the tree is 1 when the root is the node with label 1 which is the only MHT.
-
-Example 2:
 
 Input: n = 6, edges = [[3,0],[3,1],[3,2],[3,4],[5,4]]
 Output: [3,4]
-
-Constraints:
-
-    1 <= n <= 2 * 104
-    edges.length == n - 1
-    0 <= ai, bi < n
-    ai != bi
-    All the pairs (ai, bi) are distinct.
-    The given input is guaranteed to be a tree and there will be no repeated edges.
+```
 """,
         "title": "Minimum height trees",
         "level": "Steady",
@@ -1754,29 +1607,16 @@ Constraints:
     54: {
         "markdown": """
 ### Longest common prefix
-> Leetcode #14
+Given an array of strings `strs`, all lowercase, return the longest common prefix of all the strings. 
 
-Write a function to find the longest common prefix string amongst an array of strings.
-
-If there is no common prefix, return an empty string "".
-
-### Examples
-Example 1:
-
+#### Example
+```
 Input: strs = ["flower","flow","flight"]
 Output: "fl"
 
-Example 2:
-
 Input: strs = ["dog","racecar","car"]
 Output: ""
-Explanation: There is no common prefix among the input strings.
-
-Constraints:
-
-    1 <= strs.length <= 200
-    0 <= strs[i].length <= 200
-    strs[i] consists of only lowercase English letters if it is non-empty.
+```
 """,
         "title": "Longest common prefix",
         "level": "Steady",
@@ -1825,50 +1665,18 @@ Constraints:
     },
     55: {
         "markdown": """
-### Cheapest flight within k stops
-> Leetcode #787
+### Cheapest flight with at most k stops
+You are given `n` cities connected by a number of `flights` represented as an array where flights[i] = [from, to, cost] indicate a flight from city `from` to city `to` that costs `cost`. 
 
-There are n cities connected by some number of flights. You are given an array flights where flights[i] = [fromi, toi, pricei] indicates that there is a flight from city fromi to city toi with cost pricei.
+You are also given three integers `src`, `dst` and `k`. Find the cheapest cost from `src` to `dst` with at most `k` stops. 
 
-You are also given three integers src, dst, and k, return the cheapest price from src to dst with at most k stops. If there is no such route, return -1.
+Return -1 if there's no such route.
 
-### Examples
-Example 1:
-
+#### Example
+```
 Input: n = 4, flights = [[0,1,100],[1,2,100],[2,0,100],[1,3,600],[2,3,200]], src = 0, dst = 3, k = 1
 Output: 700
-Explanation:
-The graph is shown above.
-The optimal path with at most 1 stop from city 0 to 3 is marked in red and has cost 100 + 600 = 700.
-Note that the path through cities [0,1,2,3] is cheaper but is invalid because it uses 2 stops.
-
-Example 2:
-
-Input: n = 3, flights = [[0,1,100],[1,2,100],[0,2,500]], src = 0, dst = 2, k = 1
-Output: 200
-Explanation:
-The graph is shown above.
-The optimal path with at most 1 stop from city 0 to 2 is marked in red and has cost 100 + 100 = 200.
-
-Example 3:
-
-Input: n = 3, flights = [[0,1,100],[1,2,100],[0,2,500]], src = 0, dst = 2, k = 0
-Output: 500
-Explanation:
-The graph is shown above.
-The optimal path with no stops from city 0 to 2 is marked in red and has cost 500.
-
-Constraints:
-
-    1 <= n <= 100
-    0 <= flights.length <= (n * (n - 1) / 2)
-    flights[i].length == 3
-    0 <= fromi, toi < n
-    fromi != toi
-    1 <= pricei <= 104
-    There will not be any multiple flights between two cities.
-    0 <= src, dst, k < n
-    src != dst
+```
 """,
         "title": "Cheapest flight with at most k stops",
         "level": "Steady",
@@ -1918,37 +1726,17 @@ Constraints:
     56: {
         "markdown": """
 ### Network delay time 
-> Leetcode #743
+Given a network of `n` nodes, labelled 1 to n and a list of travel `times` as directed edges where times[i] = (u, v, w) with u being the source, v the target and w the time it takes for a signal to travel from u to v. 
 
-You are given a network of n nodes, labeled from 1 to n. You are also given times, a list of travel times as directed edges times[i] = (ui, vi, wi), where ui is the source node, vi is the target node, and wi is the time it takes for a signal to travel from source to target.
+Find the minimum time it takes for a signal from a source node `k` to reach all the other nodes. 
 
-We will send a signal from a given node k. Return the minimum time it takes for all the n nodes to receive the signal. If it is impossible for all the n nodes to receive the signal, return -1.
+Return -1 if it's impossible for all the nodes to receive the signal. 
 
-### Examples
-Example 1:
-
+#### Example
+```
 Input: times = [[2,1,1],[2,3,1],[3,4,1]], n = 4, k = 2
 Output: 2
-
-Example 2:
-
-Input: times = [[1,2,1]], n = 2, k = 1
-Output: 1
-
-Example 3:
-
-Input: times = [[1,2,1]], n = 2, k = 2
-Output: -1
-
-Constraints:
-
-    1 <= k <= n <= 100
-    1 <= times.length <= 6000
-    times[i].length == 3
-    1 <= ui, vi <= n
-    ui != vi
-    0 <= wi <= 100
-    All the pairs (ui, vi) are unique. (i.e., no multiple edges.)
+```
 """,
         "title": "Network delay time",
         "level": "Steady",
@@ -1961,48 +1749,15 @@ Constraints:
     57: {
         "markdown": """
 ### Reachable cities
-> Leetcode #1334
+Given `n` cities labelled 0 to n - 1 and an array `edges` where edges[i] = [from, to, weight] represents a weighted bidirectional edge between cities `from` and `to`.  Return the smallest number of cities that are reachable and whose distance is at most `distanceThreshold`. 
 
-There are n cities numbered from 0 to n-1. Given the array edges where edges[i] = [fromi, toi, weighti] represents a bidirectional and weighted edge between cities fromi and toi, and given the integer distanceThreshold.
+If multiple such cities, return the one with the greatest number. 
 
-Return the city with the smallest number of cities that are reachable through some path and whose distance is at most distanceThreshold, If there are multiple such cities, return the city with the greatest number.
-
-Notice that the distance of a path connecting cities i and j is equal to the sum of the edges' weights along that path.
-
-### Examples
-Example 1:
-
+#### Examples
+```
 Input: n = 4, edges = [[0,1,3],[1,2,1],[1,3,4],[2,3,1]], distanceThreshold = 4
 Output: 3
-Explanation: The figure above describes the graph.
-The neighboring cities at a distanceThreshold = 4 for each city are:
-City 0 -> [City 1, City 2]
-City 1 -> [City 0, City 2, City 3]
-City 2 -> [City 0, City 1, City 3]
-City 3 -> [City 1, City 2]
-Cities 0 and 3 have 2 neighboring cities at a distanceThreshold = 4, but we have to return city 3 since it has the greatest number.
-
-Example 2:
-
-Input: n = 5, edges = [[0,1,2],[0,4,8],[1,2,3],[1,4,2],[2,3,1],[3,4,1]], distanceThreshold = 2
-Output: 0
-Explanation: The figure above describes the graph.
-The neighboring cities at a distanceThreshold = 2 for each city are:
-City 0 -> [City 1]
-City 1 -> [City 0, City 4]
-City 2 -> [City 3, City 4]
-City 3 -> [City 2, City 4]
-City 4 -> [City 1, City 2, City 3]
-The city 0 has 1 neighboring city at a distanceThreshold = 2.
-
-Constraints:
-
-    2 <= n <= 100
-    1 <= edges.length <= n * (n - 1) / 2
-    edges[i].length == 3
-    0 <= fromi < toi < n
-    1 <= weighti, distanceThreshold <= 10^4
-    All pairs (fromi, toi) are distinct.
+```
 """,
         "title": "Reachable cities",
         "level": "Steady",
@@ -2021,15 +1776,15 @@ Constraints:
     58: {
         "markdown": """
 ### Minimum spanning trees 
-> Leetcode #1135
+You are given `n` cities numbered from 1 to n and an array `connections` where connections[i] = [x, y, cost] indicates a weighted bidirectional connection between cities x and y. 
 
-There are n cities labeled from 1 to n. You are given the integer n and an array connections where connections[i] = [xi, yi, costi] indicates that the cost of connecting city xi and city yi (bidirectional connection) is costi.
+Return the minimum cost to connect all the n cities such that there is at least one path between each pair of cities. 
 
-Return the minimum cost to connect all the n cities such that there is at least one path between each pair of cities. If it is impossible to connect all the n cities, return -1.
+> The cost is the sum of the connections’ costs used.
 
-The cost is the sum of the connections’ costs used.
+Return -1 if it isn't possible to connect all n cities. 
 
-### Example
+#### Example
 ```
 inputs:
     n = 3,
@@ -2052,34 +1807,18 @@ output: -1
     59: {
         "markdown": """
 ### Critical connections
-> Leetcode #1192
+Given `n` servers labelled 0 to n - 1 connected by undirected `connections` where connections[i] = [a, b] indicates a connection between servers a and b. Return all the critical connections in the network in any order. 
 
-There are n servers numbered from 0 to n - 1 connected by undirected server-to-server connections forming a network where connections[i] = [ai, bi] represents a connection between servers ai and bi. Any server can reach other servers directly or indirectly through the network.
+> A critical connection is one that, if removed, will make some servers not be able to reach some other server. 
 
-A critical connection is a connection that, if removed, will make some servers unable to reach some other server.
-
-Return all critical connections in the network in any order.
-
-
-### Examples
-Example 1:
-
+#### Examples
+```
 Input: n = 4, connections = [[0,1],[1,2],[2,0],[1,3]]
 Output: [[1,3]]
-Explanation: [[3,1]] is also accepted.
-
-Example 2:
 
 Input: n = 2, connections = [[0,1]]
 Output: [[0,1]]
-
-Constraints:
-
-    2 <= n <= 105
-    n - 1 <= connections.length <= 105
-    0 <= ai, bi <= n - 1
-    ai != bi
-    There are no repeated connections.
+```
 """,
         "title": "Critical connections",
         "level": "Edgy",
@@ -2098,88 +1837,52 @@ Constraints:
     60: {
         "markdown": """
 ### Job scheduling
-> Leetcode #1235
+Given arrays `startTime`, `endTime` and `profit` representing `n` jobs with the ith job scheduled to be done from startTime[i] to endTime[i] generating profit[i]. Find the maximum profit you can make from the jobs
 
-We have n jobs, where every job is scheduled to be done from startTime[i] to endTime[i], obtaining a profit of profit[i].
+If you choose a job that ends at time x you can be able to choose another one that starts at time x. 
 
-You're given the startTime, endTime and profit arrays, return the maximum profit you can take such that there are no two jobs in the subset with overlapping time range.
-
-If you choose a job that ends at time X you will be able to start another job that starts at time X.
-
-### Examples
-Example 1:
-
+#### Example
+```
 Input: startTime = [1,2,3,3], endTime = [3,4,5,6], profit = [50,10,40,70]
 Output: 120
-Explanation: The subset chosen is the first and fourth job.
-Time range [1-3]+[3-6] , we get profit of 120 = 50 + 70.
-
-Example 2:
-
-Input: startTime = [1,2,3,4,6], endTime = [3,5,10,6,9], profit = [20,20,100,70,60]
-Output: 150
-Explanation: The subset chosen is the first, fourth and fifth job.
-Profit obtained 150 = 20 + 70 + 60.
-
-Example 3:
 
 Input: startTime = [1,1,1], endTime = [2,3,4], profit = [5,6,4]
 Output: 6
-
-Constraints:
-
-    1 <= startTime.length == endTime.length == profit.length <= 5 * 104
-    1 <= startTime[i] < endTime[i] <= 109
-    1 <= profit[i] <= 104
+```
 """,
         "title": "Job scheduling",
-        "level": "Breezy",
+        "level": "Steady",
         "test_cases": [
             [[[1, 2, 3, 3], [3, 4, 5, 6], [50, 10, 40, 70]], 120],
+            [[[1, 2, 3, 4, 6], [3, 5, 10, 6, 9], [20, 20, 100, 70, 60]], 150],
             [[[1, 1, 1], [2, 3, 4], [5, 6, 4]], 6],
         ],
     },
     61: {
         "markdown": """
-### Coin change I 
-> Leetcode #322
+### Fewest coins to make change
+Given an integer array `coins` representing coins of different denominations and an integer `amount` representing the total amount of money, return the minimum number of coints that you need to make up that amount. 
 
-You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money.
-
-Return the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1.
+Return -1 if `amount` cannot be made by any combination of the coins. 
 
 You may assume that you have an infinite number of each kind of coin.
 
-### Examples
-Example 1:
-
+#### Example
+```
 Input: coins = [1,2,5], amount = 11
 Output: 3
-Explanation: 11 = 5 + 5 + 1
-
-Example 2:
-
-Input: coins = [2], amount = 3
-Output: -1
-
-Example 3:
-
-Input: coins = [1], amount = 0
-Output: 0
-
-Constraints:
-
-    1 <= coins.length <= 12
-    1 <= coins[i] <= 231 - 1
-    0 <= amount <= 104
+How: 11 = 5 + 5 + 1
+```
 """,
         "title": "Coin change I",
         "level": "Steady",
         "test_cases": [
             [[[1, 2, 5], 11], 3],
             [[[1, 2, 5, 10], 11], 2],
+            [[[1], 0], 0],
             [[[1, 2, 5, 10, 20], 11], 2],
             [[[1, 2, 5, 10, 20], 110], 6],
+            [[[2, 5], 3], -1],
             [[[1, 2, 5, 10, 20], 63], 5],
             [[[1, 2, 5, 10, 20, 50], 16], 3],
             [[[1, 2, 5, 10, 20, 50], 28], 4],
@@ -2189,54 +1892,21 @@ Constraints:
     62: {
         "markdown": """
 ### Min cost tickets
-> Leetcode #983
+Given an array `days` representing planned annual train travalling days and `costs` where costs = [daily, weekly, monthly] indicating the daily (1 day), weekly (7 days) and monthly (30 days) ticket costs respectively, return the minimum cost for travelling every day in the given list of days. 
 
-You have planned some train traveling one year in advance. The days of the year in which you will travel are given as an integer array days. Each day is an integer from 1 to 365.
+Each day is an integer between 1 and 365.
 
-Train tickets are sold in three different ways:
-
-    a 1-day pass is sold for costs[0] dollars,
-    a 7-day pass is sold for costs[1] dollars, and
-    a 30-day pass is sold for costs[2] dollars.
-
-The passes allow that many days of consecutive travel.
-
-    For example, if we get a 7-day pass on day 2, then we can travel for 7 days: 2, 3, 4, 5, 6, 7, and 8.
-
-Return the minimum number of dollars you need to travel every day in the given list of days.
-
-### Examples
-Example 1:
-
+#### Example
+```
 Input: days = [1,4,6,7,8,20], costs = [2,7,15]
 Output: 11
-Explanation: For example, here is one way to buy passes that lets you travel your travel plan:
-On day 1, you bought a 1-day pass for costs[0] = $2, which covered day 1.
-On day 3, you bought a 7-day pass for costs[1] = $7, which covered days 3, 4, ..., 9.
-On day 20, you bought a 1-day pass for costs[0] = $2, which covered day 20.
-In total, you spent $11 and covered all the days of your travel.
-
-Example 2:
-
-Input: days = [1,2,3,4,5,6,7,8,9,10,30,31], costs = [2,7,15]
-Output: 17
-Explanation: For example, here is one way to buy passes that lets you travel your travel plan:
-On day 1, you bought a 30-day pass for costs[2] = $15 which covered days 1, 2, ..., 30.
-On day 31, you bought a 1-day pass for costs[0] = $2 which covered day 31.
-In total, you spent $17 and covered all the days of your travel.
-
-Constraints:
-
-    1 <= days.length <= 365
-    1 <= days[i] <= 365
-    days is in strictly increasing order.
-    costs.length == 3
-    1 <= costs[i] <= 1000
+```
 """,
         "title": "Min cost tickets",
         "level": "Steady",
         "test_cases": [
             [[[1, 4, 6, 7, 8, 20], [2, 7, 15]], 11],
+            [[[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 30, 31], [2, 7, 15]], 17],
             [[[1, 2, 3, 4, 5, 6, 7], [2, 7, 15]], 7],
             [[[i for i in range(1, 31)], [2, 7, 15]], 15],
             [[[1, 4, 6], [2, 7, 15]], 6],
@@ -2247,77 +1917,42 @@ Constraints:
     },
     63: {
         "markdown": """
-### House robber III 
-> Leetcode #337
+### Max loot binary tree
+Given the `root` of a binary tree where each node represents the amount of cash stashed in a boat, return the maximum amount that you can steal from the boats given that you cannot steal from any directly connected boats i.e parent node and child node. 
 
-The thief has found himself a new place for his thievery again. There is only one entrance to this area, called root.
-
-Besides the root, each house has one and only one parent house. After a tour, the smart thief realized that all houses in this place form a binary tree. It will automatically contact the police if two directly-linked houses were broken into on the same night.
-
-Given the root of the binary tree, return the maximum amount of money the thief can rob without alerting the police.
-
-### Examples
-Example 1:
-
+#### Example
+```
 Input: root = [3,2,3,null,3,null,1]
 Output: 7
-Explanation: Maximum amount of money the thief can rob = 3 + 3 + 1 = 7.
-
-Example 2:
-
-Input: root = [3,4,5,1,3,null,1]
-Output: 9
-Explanation: Maximum amount of money the thief can rob = 4 + 5 = 9.
-
-Constraints:
-
-    The number of nodes in the tree is in the range [1, 104].
-    0 <= Node.val <= 104
+How: Maximum amount of money the thief can rob = 3 + 3 + 1 = 7.
+```
 """,
         "test_cases": f"""
 {binary_tree}
-root = array_to_tree([6, 3, 9, None, 5, 4, 9])
+root1 = array_to_tree([6, 3, 9, None, 5, 4, 9])
+root2 = array_to_tree([3,2,3,None,3,None,1])
+root3 = array_to_tree([3,4,5,1,3,None,1])
 test_cases = [
-    [[root], 24],
+    [[root1], 24],
+    [[root2], 7],
+    [[root3], 9],
 ]
 """,
-        "title": "House robber III",
+        "title": "Max loot binary tree",
         "level": "Steady",
     },
     64: {
         "markdown": """
 ### Lowest common ancestor 
-> Leetcode #236
+Given the `root` of a binary tree and two nodes `p` and `q`, find the lowest common ancestor (LCA) of p and q.
 
-Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
+> According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in a tree that has both p and q as descendants (where a node can be a descendant of itself).”
 
-According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”
-
-### Examples
-Example 1:
-
+#### Example
+```
 Input: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1
 Output: 3
-Explanation: The LCA of nodes 5 and 1 is 3.
-
-Example 2:
-
-Input: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 4
-Output: 5
-Explanation: The LCA of nodes 5 and 4 is 5, since a node can be a descendant of itself according to the LCA definition.
-
-Example 3:
-
-Input: root = [1,2], p = 1, q = 2
-Output: 1
-
-Constraints:
-
-    The number of nodes in the tree is in the range [2, 105].
-    -109 <= Node.val <= 109
-    All Node.val are unique.
-    p != q
-    p and q will exist in the tree.
+```
 """,
         "test_cases": f"""
 {binary_tree}
@@ -2335,32 +1970,18 @@ test_cases = [
     65: {
         "markdown": """
 ### Same binary tree 
-> Leetcode #100
+Check if two binary trees `p` and `q` are the same given their roots. 
 
-Given the roots of two binary trees p and q, write a function to check if they are the same or not.
+> Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
 
-Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
-
-### Examples
-Example 1:
-
+#### Example
+```
 Input: p = [1,2,3], q = [1,2,3]
 Output: true
 
-Example 2:
-
 Input: p = [1,2], q = [1,null,2]
 Output: false
-
-Example 3:
-
-Input: p = [1,2,1], q = [1,1,2]
-Output: false
-
-Constraints:
-
-    The number of nodes in both trees is in the range [0, 100].
-    -104 <= Node.val <= 104
+```
 """,
         "test_cases": f"""
 {binary_tree}
@@ -2369,10 +1990,13 @@ t2 = array_to_tree([6, 3, 9, None, 5, 4, 9])
 t3 = array_to_tree([6, 3, 9, 6, 5, 4, 9])
 t4 = array_to_tree([])
 t5 = array_to_tree([])
+t6 = array_to_tree([1, 2])
+t7 = array_to_tree([1, None, 2])
 test_cases = [
     [[t1, t2], True],
     [[t2, t3], False],
     [[t4, t5], True],
+    [[t6, t7], False],
 ]
 """,
         "title": "Same binary tree",
@@ -2381,47 +2005,28 @@ test_cases = [
     66: {
         "markdown": """
 ### Boolean tree 
-> Leetcode #2331
+Given the `root` of a full binary tree with the following properties:
+- Leaf nodes have either the value 0 or 1, where 0 represents false and 1 represents true. 
+- Non leaf nodes have either the value 2 or 3, with 2 representing boolean **OR** and 3 representing boolean **AND**. 
 
-You are given the root of a full binary tree with the following properties:
-
-    Leaf nodes have either the value 0 or 1, where 0 represents False and 1 represents True.
-    Non-leaf nodes have either the value 2 or 3, where 2 represents the boolean OR and 3 represents the boolean AND.
-
-The evaluation of a node is as follows:
-
-    If the node is a leaf node, the evaluation is the value of the node, i.e. True or False.
-    Otherwise, evaluate the node's two children and apply the boolean operation of its value with the children's evaluations.
+Evalulate each node as follows:
+- If leaf node, the evaluation is the value of the node, i.e true or false. 
+- if non leaf node, evaluate the node's two children and apply the boolean operation of its value with the children's evaluations. 
 
 Return the boolean result of evaluating the root node.
 
-A full binary tree is a binary tree where each node has either 0 or 2 children.
+> A full binary tree is a binary tree where each node has either 0 or 2 children.
 
-A leaf node is a node that has zero children.
+> A leaf node is a node that has no children.
 
-### Examples
-Example 1:
-
+#### Example
+```
 Input: root = [2,1,3,null,null,0,1]
 Output: true
-Explanation: The above diagram illustrates the evaluation process.
-The AND node evaluates to False AND True = False.
-The OR node evaluates to True OR False = True.
-The root node evaluates to True, so we return true.
-
-Example 2:
 
 Input: root = [0]
 Output: false
-Explanation: The root node is a leaf node and it evaluates to false, so we return false.
-
-Constraints:
-
-    The number of nodes in the tree is in the range [1, 1000].
-    0 <= Node.val <= 3
-    Every node has either 0 or 2 children.
-    Leaf nodes have a value of 0 or 1.
-    Non-leaf nodes have a value of 2 or 3.
+```
 """,
         "test_cases": f"""
 {binary_tree}
@@ -2437,49 +2042,32 @@ test_cases = [
     },
     67: {
         "markdown": """
-### Cousins in a binary tree 
-> Leetcode #993
+### Binary tree cousins
+Given the `root` of a binary tree with unique values and the value of two different nodes in the tree `x` and `y`, check whether x and y are cousins. 
 
-Given the root of a binary tree with unique values and the values of two different nodes of the tree x and y, return true if the nodes corresponding to the values x and y in the tree are cousins, or false otherwise.
+> Two nodes of a binary tree are cousins if they have the same depth with different parents.
 
-Two nodes of a binary tree are cousins if they have the same depth with different parents.
-
-Note that in a binary tree, the root node is at the depth 0, and children of each depth k node are at the depth k + 1.
-
-### Examples
-Example 1:
-
-Input: root = [1,2,3,4], x = 4, y = 3
-Output: false
-
-Example 2:
-
+#### Example
+```
 Input: root = [1,2,3,null,4,null,5], x = 5, y = 4
 Output: true
 
-Example 3:
-
 Input: root = [1,2,3,null,4], x = 2, y = 3
 Output: false
-
-Constraints:
-
-    The number of nodes in the tree is in the range [2, 100].
-    1 <= Node.val <= 100
-    Each node has a unique value.
-    x != y
-    x and y are exist in the tree.
+```
 """,
         "test_cases": f"""
 {binary_tree}
 t1 = array_to_tree([1, 2, 3, None, 4, None, 5])
 t2 = array_to_tree([1, 2, 3, None, 4])
+t3 = array_to_tree([1, 2, 3, 4])
 test_cases = [
     [[t1, 5, 4], True],
     [[t2, 2, 3], False],
+    [[t3, 4, 3], False],
 ]
 """,
-        "title": "Cousins",
+        "title": "Binary tree cousins",
         "level": "Steady",
     },
 }
