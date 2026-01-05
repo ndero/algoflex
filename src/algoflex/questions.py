@@ -730,29 +730,24 @@ test_cases = [
     },
     20: {
         "markdown": """
-### Remove occurence
-Given two strings `s` and `part`, perform the following operation on s until all occurrences of the substring part are removed:
-
-Find the leftmost occurrence of the substring part and remove it from s. Return s after removing all occurrences of part.
-
-> A substring is a contiguous sequence of characters in a string.
+### Power set 
+Given an array `nums` of unique numbers, return all subsets (power set) of the given array. 
 
 #### Example
 ```
-inputs:
-  s = "axeaxae"
-  part = "ax"
-output: 'eae'
+input: [1, 2, 3]
+output: [[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
+
+input: [0]
+output: [[], [0]]
 ```
 """,
-        "title": "Remove occurence",
-        "level": "Breezy",
+        "title": "Power set",
+        "level": "Steady",
         "test_cases": """
 test_cases = [
-    [["axeaxae", "ax"], "eae"],
-    [["axxxxyyyyb", "xy"], "ab"],
-    [["daa-cbaa-c-c", "a-c"], "dab"],
-    [["shesellsseashellsattheseashore", "sh"], "esellsseaellsattheseaore"],
+    [[[1, 2, 3]], [[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]],
+    [[[0]], [[], [0]]],
 ]
 """,
     },
@@ -837,34 +832,27 @@ test_cases = [
     },
     24: {
         "markdown": """
-### Fibonacci numbers
-Given a positive interger `n`, return the nth fibonacci number
+### Max water held
+Given an array `nums` where each number represents the height of a vertical wall, find two walls that hold the most water between them and return the units of water contained. 
 
-> The first 6 fibonacci numbers are: [0, 1, 1, 2, 3, 5]
+> To calculate Units of water held, multiply the `width(base)` by `height`
 
 #### Example
 ```
-input: 0
-output: 0
+input: [1,8,6,2,5,4,8,3,7]
+output: 49
+how: water held between lines 2 and 9
 
-input: 1
+input: [1, 1]
 output: 1
-
-input: 5
-output: 5
 ```
 """,
-        "title": "Fibonacci numbers",
-        "level": "Breezy",
+        "title": "Max water held",
+        "level": "Steady",
         "test_cases": """
 test_cases = [
-    [[0], 0],
-    [[1], 1],
-    [[5], 5],
-    [[10], 55],
-    [[23], 28657],
-    [[50], 12586269025],
-    [[100], 354224848179261915075],
+    [[[1,8,6,2,5,4,8,3,7]], 49],
+    [[[1, 1]], 1],
 ],
 """,
     },
@@ -1081,44 +1069,53 @@ test_cases = [
     },
     32: {
         "markdown": """
-### Tree pre-order traversal
-Given the `root` of a binary search tree, traverse the tree using pre order traversal and return the values as an array.
+### Generate parentheses
+Given a positive integer `n`, generate all combinations of well formed parentheses with n pairs. 
 
 #### Example
 ```
-input: [12, 8, 16, 4, 9, 13, 18, 11]
-output: [12, 8, 4, 9, 11, 16, 13, 18]
+input: n = 3
+output: ["((()))","(()())","(())()","()(())","()()()"]
+
+input: n = 1
+output: ["()"]
 ```
 """,
-        "test_cases": f"""
-{binary_tree}
-t1 = array_to_tree([12, 8, 16, 4, 9, 13, 18, 11])
+        "test_cases": """
 test_cases = [
-    [[t1], [12, 8, 4, 9, 11, 16, 13, 18]],
+    [[1], ["()"]],
+    [[3], ["((()))","(()())","(())()","()(())","()()()"]],
 ]
 """,
-        "title": "Tree pre-order traversal",
+        "title": "Generate parentheses",
         "level": "Steady",
     },
     33: {
         "markdown": """
-### Tree post-order traversal
-Given the `root` of a binary search tree, traverse the tree using post order traversal and return the values as an array.
+### Valid BST
+Given the `root` of a binary search tree, check whether it is a valid BST.
+
+> **Valid BST:** for every node, all nodes in its left subtree are less than the node value and all nodes in its right subtree are greater than the node value. 
 
 #### Example
 ```
-input: [12, 8, 16, 4, 9, 13, 18, 11]
-output: [4, 11, 9, 8, 13, 18, 16, 12]
+input: [2, 1, 3]
+output: true
+
+input: [5, 1, 4, None, None, 3, 6]
+output: false 
 ```
 """,
         "test_cases": f"""
 {binary_tree}
-t1 = array_to_tree([12, 8, 16, 4, 9, 13, 18, 11])
+t1 = array_to_tree([5, 1, 4, None, None, 3, 6])
+t2 = array_to_tree([2, 1, 3])
 test_cases = [
-    [[t1], [4, 11, 9, 8, 13, 18, 16, 12]],
+    [[t2], True],
+    [[t1], False],
 ]
 """,
-        "title": "Tree post-order traversal",
+        "title": "Valid BST",
         "level": "Steady",
     },
     34: {
@@ -2069,5 +2066,319 @@ test_cases = [
 """,
         "title": "Binary tree cousins",
         "level": "Steady",
+    },
+    68: {
+        "markdown": """
+### Merge intervals
+Given an array of `intervals` merge all overlapping intervals. 
+
+#### Example
+```
+input: [[1,3],[2,6],[8,10],[15,18]]
+output: [[1,6],[8,10],[15,18]]
+
+input: [[1, 5], [5, 10]]
+output: [[1, 10]]
+
+input: [[3, 11], [2, 6]]
+output: [[2, 11]]
+```
+""",
+        "title": "Merge intervals",
+        "level": "Steady",
+        "test_cases": """
+test_cases = [
+    [[[[1,3],[2,6],[8,10],[15,18]]], [[1,6],[8,10],[15,18]]],
+    [[[[1, 5], [5, 10]]], [[1, 10]]],
+    [[[[3, 11], [2, 6]]], [[2, 11]]],
+],
+""",
+    },
+    69: {
+        "markdown": """
+### Triplet sum equals zero
+Given an array `nums` of integers, find all unique triplets that sum to zero. 
+
+#### Example
+```
+input: [-1,0,1,2,-1,-4]
+output: [[-1,-1,2],[-1,0,1]]
+
+input:  [0,1,1]
+output: []
+
+input: [0,0,0]
+output: [[0,0,0]]
+```
+""",
+        "title": "Triplets sum equals zero",
+        "level": "Steady",
+        "test_cases": """
+test_cases = [
+    [[[-1,0,1,2,-1,-4]], [[-1,-1,2],[-1,0,1]]
+],
+    [[[0,1,1]], []],
+    [[[0,0,0]], [[0,0,0]]],
+],
+""",
+    },
+    70: {
+        "markdown": """
+### longest increasing subsequence
+Given an array `nums` of integers return the length of the longest strictly increasing subsequence
+
+#### Example
+```
+input: [10,9,2,5,3,7,101,18]
+output: 4
+How: LIS is [2, 3, 7, 101] with length 4. 
+
+input: [0,1,0,3,2,3]
+output: 4
+
+input: [6,6,6,6,6,6,6,6]
+output: 1
+```
+""",
+        "title": "Longest increasing subsequence",
+        "level": "Steady",
+        "test_cases": """
+test_cases = [
+    [[[0,1,0,3,2,3]], 4],
+    [[[6,6,6,6,6,6,6,6]], 1],
+    [[[10,9,2,5,3,7,101,18]], 4],
+],
+""",
+    },
+    71: {
+        "markdown": """
+### Count bits
+Given a positive integer `n` return the number of 1-bits in the binary representation of each number `i` in `[0,n]`
+
+#### Example
+```
+input: 2
+output: [0,1,1]
+How: 0 -> 0, 1 -> 1, 2 -> 10 
+
+input: 5
+output: [0,1,1,2,1,2]
+How: 0, 1, 10, 11, 100, 101
+```
+""",
+        "title": "Count bits",
+        "level": "Breezy",
+        "test_cases": """
+test_cases = [
+    [[2], [0,1,1]],
+    [[5], [0,1,1,2,1,2]],
+],
+""",
+    },
+    72: {
+        "markdown": """
+### Trapping rain water
+Given `n` positive integers representing elevation heights where the width of each bar is 1, return how much water can be trapped after rain. 
+
+#### Example
+```
+input: [0,1,0,2,1,0,1,3,2,1,2,1]
+output: 6
+
+input: [4,2,0,3,2,5]
+output: 9
+```
+""",
+        "title": "Trapping rain water",
+        "level": "Edgy",
+        "test_cases": """
+test_cases = [
+    [[[0,1,0,2,1,0,1,3,2,1,2,1]], 6],
+    [[[4,2,0,3,2,5]], 9],
+],
+""",
+    },
+    73: {
+        "markdown": """
+### Longest palidromic substring
+Given a string `s`, return the longest palindromic substring in s. 
+
+Return the first one if there are multiple longest palindromic substrings. 
+
+#### Example
+```
+input: "babad"
+output: "bab" 
+
+input: "abcde"
+output: "a"
+```
+""",
+        "title": "Longest palindromic substring",
+        "level": "Steady",
+        "test_cases": """
+test_cases = [
+    [["babad"], "bab"],
+    [["abcde"], "a"],
+],
+""",
+    },
+    74: {
+        "markdown": """
+### Median of two sorted arrays
+Given two sorted arrays `nums1` and `nums2`of sizes n and m respectively, return the median of the two sorted arrrays. 
+
+You must write an algorithm that runs in **O(log(min(n, m)))**
+
+#### Example
+```
+input: nums1 = [1, 5], nums2 = [3]
+output: 3
+
+input: nums1 = [3, 4], nums2 = [4, 5]
+output: 4
+```
+""",
+        "title": "Median of two sorted arrays",
+        "level": "Edgy",
+        "test_cases": """
+test_cases = [
+    [[[1,5], [3]], 3],
+    [[[3, 4], [4, 5]], 4],
+],
+""",
+    },
+    75: {
+        "markdown": """
+### Most frequent elements
+Return the `k` most frequent element in a given array. 
+
+#### Example
+```
+input: nums = [1,1,1,2,2,3], k = 2
+output: [1, 2]
+
+input: nums = [1], k = 1 
+output: [1]
+
+input: nums = [1,2,1,2,1,2,3,1,3,2], k = 2
+output: [1,2]
+```
+""",
+        "title": "Most frequent elements",
+        "level": "Steady",
+        "test_cases": """
+test_cases = [
+    [[[1,1,1,2,2,3], 2], [1,2]],
+    [[[1,2,1,2,1,2,3,1,3,2], 2], [1,2]],
+    [[[1], 1], [1]],
+],
+""",
+    },
+    76: {
+        "markdown": """
+### Connected cities
+Given an `n * n` adjacency matrix of connected cities with each cell having values 1 or 0 where 0 indicate city i is not connected to city j and 1 indicate otherwise. 
+
+Return the number of connected groups of cities.  
+
+#### Example
+```
+input: [[1,1,0],[1,1,0],[0,0,1]]
+output: 2
+
+input: [[1,0,0],[0,1,0],[0,0,1]]
+output: 3
+```
+""",
+        "title": "Connected cities",
+        "level": "Steady",
+        "test_cases": """
+test_cases = [
+    [[[[1,1,0],[1,1,0],[0,0,1]]], 2],
+    [[[[1,0,0],[0,1,0],[0,0,1]]], 3],
+],
+""",
+    },
+    77: {
+        "markdown": """
+### Conway's game of life
+Return the next state of Conway's game of life given an `m * n` board where each cell represents one of two states - 0 for dead and 1 for alive. 
+
+Each cell interacts with its horizontal, vertical and diagonal neighbors subject to the following rules:
+- Birth - Any dead cell with exactly 3 live neighbors becomes alive. 
+- Life - Any live cell with 2 or 3 live neighbors lives on. 
+- Death - Any live cell with fewer than 2 live neighbors or more than 3 live neighbors dies. 
+#### Example
+```
+input: [[0,1,0],[0,0,1],[1,1,1],[0,0,0]]
+output: [[0,0,0],[1,0,1],[0,1,1],[0,1,0]]
+
+input: [[1,1],[1,0]]
+output: [[1,1],[1,1]]
+```
+""",
+        "title": "Conway's game of life",
+        "level": "Steady",
+        "test_cases": """
+test_cases = [
+    [[[[0,1,0],[0,0,1],[1,1,1],[0,0,0]]], [[0,0,0],[1,0,1],[0,1,1],[0,1,0]]
+],
+    [[[[1,1],[1,0]]], [[1,1],[1,1]]],
+],
+""",
+    },
+    78: {
+        "markdown": """
+### Min CPU intervals
+Given an array of CPU `tasks` and a positive integer representing the cooldown interval between two tasks with the same label, return the minimum number of cpu intervals required to complete all tasks. 
+
+#### Example
+```
+input: tasks = ["A","A","A","B","B","B"], n = 2
+output: 8
+How: A -> B -> idle -> A -> B -> idle -> A -> B.
+
+input: tasks = ["A","C","A","B","D","B"], n = 1
+output: 6
+
+input: tasks = ["A","A","A", "B","B","B"], n = 3
+output: 10
+```
+""",
+        "title": "Min CPU intervals",
+        "level": "Steady",
+        "test_cases": """
+test_cases = [
+    [[["A","A","A","B","B","B"], 2], 8],
+    [[["A","C","A","B","D","B"], 1], 6],
+    [[["A","A","A", "B","B","B"], 3], 10],
+],
+""",
+    },
+    79: {
+        "markdown": """
+### Product of array except self
+Given an array `nums`, return a new array where each element is the product of all elements except itself - **without using division**. 
+
+You must write an algorithm with **O(n)** average time complexity. 
+
+#### Example
+```
+input: [1, 2, 3, 4]
+output: [24, 12, 8, 6]
+
+input: [-1, 1, 0, -3, -3]
+output: [0, 0, 9, 0, 0]
+```
+""",
+        "title": "Product of array except self",
+        "level": "Steady",
+        "test_cases": """
+test_cases = [
+    [[[1, 2, 3, 4]], [24, 12, 8, 6]],
+    [[[-1, 1, 0, -3, -3]], [0, 0, 9, 0, 0]],
+],
+""",
     },
 }
