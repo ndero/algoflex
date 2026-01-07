@@ -1416,7 +1416,8 @@ Output: ''
 """,
         "title": "Longest common subsequence",
         "level": "Steady",
-        "test_cases": [
+        "test_cases": """
+        test_cases = [
             [["math", "arithmetic"], "ath"],
             [["original", "origin"], "origin"],
             [["foo", "bar"], ""],
@@ -1424,6 +1425,7 @@ Output: ''
             [["shesellsseashellsattheseashore", "isawyouyesterday"], "saester"],
             [["@work3r", "m@rxkd35rt"], "@rk3r"],
         ],
+        """,
     },
     47: {
         "markdown": """
@@ -1441,7 +1443,8 @@ Output: false
 """,
         "title": "Can you reach the last index?",
         "level": "Steady",
-        "test_cases": [
+        "test_cases": """
+        test_cases = [
             [[[2, 3, 1, 1, 4]], True],
             [[[0]], True],
             [[[2, 1, 1, 0, 4]], False],
@@ -1450,6 +1453,7 @@ Output: false
             [[[0, 0]], False],
             [[[200_000] + [0] * 200_000], True],
         ],
+        """,
     },
     48: {
         "markdown": """
@@ -1471,13 +1475,15 @@ How: jump 1 step to index 1, 3 steps to index 4 then 1 step to the last index.
 """,
         "title": "Min jumps to reach last index",
         "level": "Steady",
-        "test_cases": [
+        "test_cases": """
+        test_cases = [
             [[[2, 3, 1, 1, 4]], 2],
             [[[1]], 0],
             [[[1, 5]], 1],
             [[[1 for _ in range(200_000)]], 199_999],
             [[[200_000] + [0] * 200_000], 1],
         ],
+        """,
     },
     49: {
         "markdown": """
@@ -1497,11 +1503,13 @@ How: There is no way to get to index 1 starting from index 2.
 """,
         "title": "Jump to zero",
         "level": "Steady",
-        "test_cases": [
+        "test_cases": """
+        test_cases = [
             [[[4, 2, 3, 0, 3, 1, 2], 0], True],
             [[[3, 0, 2, 1, 2], 2], False],
             [[[4, 2, 3, 0, 3, 1, 2], 5], True],
         ],
+        """,
     },
     50: {
         "markdown": """
@@ -1521,13 +1529,15 @@ How:  Only one boat, no adjacent boats to worry about.
 """,
         "title": "Max loot",
         "level": "Steady",
-        "test_cases": [
+        "test_cases": """
+        test_cases = [
             [[[1, 2, 3, 1]], 4],
             [[[1, 7, 2, 1, 6]], 13],
             [[[1, 2]], 2],
             [[[3]], 3],
             [[[i for i in range(0, 100_000, 100)]], 25_000_000],
         ],
+        """,
     },
     51: {
         "markdown": """
@@ -1543,12 +1553,14 @@ How: Cannot rob boats 1 and 3 for total of 6 because they are adjacent. So rob b
 """,
         "title": "Max loot circle",
         "level": "Steady",
-        "test_cases": [
+        "test_cases": """
+        test_cases = [
             [[[1, 2, 3, 1]], 4],
             [[[1, 7, 2, 1, 6]], 13],
             [[[1, 2, 3]], 3],
             [[[i for i in range(0, 100_000, 100)]], 25_000_000],
         ],
+        """,
     },
     52: {
         "markdown": """
@@ -1566,11 +1578,13 @@ How: To take course 1 you first need to take course 0 but to take course 0 you n
 """,
         "title": "Course schedule",
         "level": "Steady",
-        "test_cases": [
+        "test_cases": """
+        test_cases = [
             [[2, [[1, 0]]], [0, 1]],
             [[4, [[1, 0], [2, 0], [3, 1], [3, 2]]], [0, 1, 2, 3]],
             [[1, []], [0]],
         ],
+        """,
     },
     53: {
         "markdown": """
@@ -1596,10 +1610,12 @@ Output: [3,4]
 """,
         "title": "Minimum height trees",
         "level": "Steady",
-        "test_cases": [
+        "test_cases": """
+        test_cases = [
             [[4, [[1, 0], [1, 2], [1, 3]]], [1]],
             [[6, [[3, 0], [3, 1], [3, 2], [3, 4], [5, 4]]], [3, 4]],
         ],
+        """,
     },
     54: {
         "markdown": """
@@ -1617,7 +1633,8 @@ Output: ""
 """,
         "title": "Longest common prefix",
         "level": "Steady",
-        "test_cases": [
+        "test_cases": """
+        test_cases = [
             [[["flower", "flow", "flight"]], "fl"],
             [[["dog", "racecar", "car"]], ""],
             [
@@ -1659,6 +1676,7 @@ Output: ""
             [[["flytrap", "flyway", "flyweight", "flywheel"]], "fly"],
             [[["flower", "flow", ""]], ""],
         ],
+        """,
     },
     55: {
         "markdown": """
@@ -1677,7 +1695,8 @@ Output: 700
 """,
         "title": "Cheapest flight with at most k stops",
         "level": "Steady",
-        "test_cases": [
+        "test_cases": """
+        test_cases = [
             [
                 [
                     4,
@@ -1719,6 +1738,7 @@ Output: 700
                 500,
             ],
         ],
+        """,
     },
     56: {
         "markdown": """
@@ -1737,11 +1757,13 @@ Output: 2
 """,
         "title": "Network delay time",
         "level": "Steady",
-        "test_cases": [
+        "test_cases": """
+        test_cases = [
             [[[[2, 1, 1], [2, 3, 1], [3, 4, 1]], 4, 2], 2],
             [[[[1, 2, 1]], 2, 1], 1],
             [[[[1, 2, 1]], 4, 2], -1],
         ],
+        """,
     },
     57: {
         "markdown": """
@@ -1758,7 +1780,8 @@ Output: 3
 """,
         "title": "Reachable cities",
         "level": "Steady",
-        "test_cases": [
+        "test_cases": """
+        test_cases = [
             [[4, [[0, 1, 3], [1, 2, 1], [1, 3, 4], [2, 3, 1]], 4], 3],
             [
                 [
@@ -1769,6 +1792,7 @@ Output: 3
                 0,
             ],
         ],
+        """,
     },
     58: {
         "markdown": """
@@ -1796,10 +1820,12 @@ output: -1
 """,
         "title": "Minimum spanning trees",
         "level": "Steady",
-        "test_cases": [
+        "test_cases": """
+        test_cases = [
             [[3, [[1, 2, 5], [1, 3, 6], [2, 3, 1]]], 6],
             [[4, [[1, 2, 3], [3, 4, 4]]], -1],
         ],
+        """,
     },
     59: {
         "markdown": """
@@ -1819,7 +1845,8 @@ Output: [[0,1]]
 """,
         "title": "Critical connections",
         "level": "Edgy",
-        "test_cases": [
+        "test_cases": """
+        test_cases = [
             [[4, [[0, 1], [1, 2], [2, 0], [1, 3]]], [[1, 3]]],
             [
                 [7, [[0, 1], [1, 2], [2, 0], [1, 3], [1, 4], [4, 5], [5, 6]]],
@@ -1830,6 +1857,7 @@ Output: [[0,1]]
                 [[1, 3]],
             ],
         ],
+        """,
     },
     60: {
         "markdown": """
@@ -1849,11 +1877,13 @@ Output: 6
 """,
         "title": "Job scheduling",
         "level": "Steady",
-        "test_cases": [
+        "test_cases": """
+        test_cases = [
             [[[1, 2, 3, 3], [3, 4, 5, 6], [50, 10, 40, 70]], 120],
             [[[1, 2, 3, 4, 6], [3, 5, 10, 6, 9], [20, 20, 100, 70, 60]], 150],
             [[[1, 1, 1], [2, 3, 4], [5, 6, 4]], 6],
         ],
+        """,
     },
     61: {
         "markdown": """
@@ -1873,7 +1903,8 @@ How: 11 = 5 + 5 + 1
 """,
         "title": "Coin change I",
         "level": "Steady",
-        "test_cases": [
+        "test_cases": """
+        test_cases = [
             [[[1, 2, 5], 11], 3],
             [[[1, 2, 5, 10], 11], 2],
             [[[1], 0], 0],
@@ -1885,6 +1916,7 @@ How: 11 = 5 + 5 + 1
             [[[1, 2, 5, 10, 20, 50], 28], 4],
             [[[1, 2, 5, 10, 20, 50], 77], 4],
         ],
+        """,
     },
     62: {
         "markdown": """
@@ -1901,7 +1933,8 @@ Output: 11
 """,
         "title": "Min cost tickets",
         "level": "Steady",
-        "test_cases": [
+        "test_cases": """
+        test_cases = [
             [[[1, 4, 6, 7, 8, 20], [2, 7, 15]], 11],
             [[[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 30, 31], [2, 7, 15]], 17],
             [[[1, 2, 3, 4, 5, 6, 7], [2, 7, 15]], 7],
@@ -1911,6 +1944,7 @@ Output: 11
             [[[5, 6, 7, 8, 9, 10, 11, 210, 211, 212, 213, 365], [2, 7, 15]], 16],
             [[[i for i in range(1, 366)], [2, 7, 15]], 190],
         ],
+        """,
     },
     63: {
         "markdown": """
