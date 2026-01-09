@@ -275,7 +275,7 @@ def max_product(nums: list[int]) -> int:
     5: {
         "markdown": """
 ### Symmetric difference
-Create a function that takes two or more arrays and returns a set of their symmetric difference. The returned array must contain only unique values.
+Create a function that takes two or more `arrays` and returns a set of their symmetric difference. The returned array must contain only unique values.
 
 > The mathematical term symmetric difference (△ or ⊕) of two sets is the set of elements which are in either of the two sets but not in both.
 
@@ -287,33 +287,25 @@ output: [1, 4]
 """,
         "test_cases": """
 test_cases = [
-    [[[1, 2, 3], [2, 3, 4]], {1, 4}],
-    [[[1, 2, 3, 3, 2]], {1, 2, 3}],
-    [[[1], [2], [3], [4], [5], [6]], {1, 2, 3, 4, 5, 6}],
-    [[[1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7]], {1, 7}],
-    [[[1, 2, 4, 4], [0, 1, 6], [0, 1]], {2, 4, 6}],
-    [[[i] for i in range(6)], {0, 1, 2, 3, 4, 5}],
-    [[[-1], [], [], [0], [1]], {-1, 0, 1}],
-    [
-        [
-            [9, -4, 8, 3, 12, 0, -4, 8],
-            [3, 3, 8, 6, 7, 10],
-            [11, 12, 10, 13],
-            [5, 15, 3],
-            [11, 15, 11, 11, 6, -2],
-        ],
-        {9, -4, 0, 7, 13, 5, -2},
-    ],
-    [[[2] * 50_000 + [-2] * 50_000], {2, -2}],
-    [[[i for i in range(100_000)], [i for i in range(100_000)]], {}],
-    [
-        [[i for i in range(100_000)], [i for i in range(10, 100_000)]],
-        {i for i in range(10)},
-    ],
+    [symmetric_difference([1, 2, 3], [2, 3, 4]), {1, 4}],
+    [symmetric_difference([1, 2, 3, 3, 2]), {1, 2, 3}],
+    [symmetric_difference([1], [2], [3], [4], [5], [6]), {1, 2, 3, 4, 5, 6}],
+    [symmetric_difference([1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7]), {1, 7}],
+    [symmetric_difference([1, 2, 4, 4], [0, 1, 6], [0, 1]), {2, 4, 6}],
+    [symmetric_difference([i] for i in range(6)), {0, 1, 2, 3, 4, 5}],
+    [symmetric_difference([-1], [], [], [0], [1]), {-1, 0, 1}],
+    [symmetric_difference([9, -4, 8, 3, 12, 0, -4, 8], [3, 3, 8, 6, 7, 10], [11, 12, 10, 13], [5, 15, 3], [11, 15, 11, 11, 6, -2]), {9, -4, 0, 7, 13, 5, -2}],
+    [symmetric_difference([2] * 50_000 + [-2] * 50_000), {2, -2}],
+    [symmetric_difference([i for i in range(100_000)], [i for i in range(100_000)]), {}],
+    [symmetric_difference([i for i in range(100_000)], [i for i in range(10, 100_000)]), {i for i in range(10)}],
 ]
 """,
         "title": "Symmetric difference",
         "level": "Breezy",
+        "code": """
+def symmetric_difference(*arrs):
+
+"""
     },
     6: {
         "markdown": """
@@ -339,16 +331,19 @@ How: pairs 0 + 1 and 0 + 1, indices 0 + 4 and 1 + 5, total 10
 """,
         "test_cases": """
 test_cases = [
-    [[[7, 9, 11, 13, 15], 20], 6],
-    [[[0, 0, 0, 0, 1, 1], 1], 10],
-    [[[-1, 6, 3, 2, 4, 1, 3, 3], 5], 15],
-    [[[1, 6, 5], 6], 2],
-    [[[1, 6, 5, 15, 13, 2, 11], 10], 0],
-    [[[i for i in range(0, 100_000, 10)], 10], 1],
+    [pairwise([7, 9, 11, 13, 15], 20), 6],
+    [pairwise([0, 0, 0, 0, 1, 1], 1), 10],
+    [pairwise([-1, 6, 3, 2, 4, 1, 3, 3], 5), 15],
+    [pairwise([1, 6, 5], 6), 2],
+    [pairwise([1, 6, 5, 15, 13, 2, 11], 10), 0],
+    [pairwise([i for i in range(0, 100_000, 10)], 10), 1],
 ]
 """,
         "title": "Pairwise",
         "level": "Breezy",
+        "code":"""
+def pairwise(arr: list[int], target: int) -> int:
+"""
     },
     7: {
         "markdown": """
@@ -374,14 +369,17 @@ How: sub array [6] has sum >= 4
 """,
         "test_cases": """
 test_cases = [
-    [[[2, 3, 1, 2, 4, 3], 7], 2],
-    [[[1, 3, 6, 2, 1], 4], 1],
-    [[[i for i in range(500_000)], 3_000_000], 7],
-    [[[i for i in range(-10, 10)], 60], 0],
+    [min_len_arr([2, 3, 1, 2, 4, 3], 7), 2],
+    [min_len_arr([1, 3, 6, 2, 1], 4), 1],
+    [min_len_arr([i for i in range(500_000)], 3_000_000), 7],
+    [min_len_arr([i for i in range(-10, 10)], 60), 0],
 ]
 """,
         "title": "Min length sub array",
         "level": "Steady",
+        "code":"""
+def min_len_arr(arr: list[int], target: int) -> int:
+"""
     },
     8: {
         "markdown": """
@@ -398,21 +396,18 @@ output: 0
 """,
         "test_cases": """
 test_cases = [
-    [[[4, 5, 6, 7, 0, 1, 2]], 0],
-    [[[16, 23, 43, 55, -7, -4, 3, 5, 9, 15]], -7],
-    [[[i for i in range(36, 1_000_000, 10)]], 36],
-    [
-        [
-            [i for i in range(-10, 1_000_000, 10)]
-            + [i for i in range(-1_000_000, -10, 10)]
-        ],
-        -1_000_000,
-    ],
-    [[[2]], 2],
+    [rotated_min([4, 5, 6, 7, 0, 1, 2]), 0],
+    [rotated_min([16, 23, 43, 55, -7, -4, 3, 5, 9, 15]), -7],
+    [rotated_min([i for i in range(36, 1_000_000, 10)]), 36],
+    [rotated_min([i for i in range(-10, 1_000_000, 10)] + [i for i in range(-1_000_000, -10, 10)]), -1_000_000],
+    [rotated_min([2]), 2],
 ]
 """,
         "title": "Min in rotated array",
         "level": "Steady",
+        "code": """
+def rotated_min(arr: list[int]) -> int:
+"""
     },
     9: {
         "markdown": """
@@ -429,18 +424,21 @@ How:
 """,
         "test_cases": """
 test_cases = [
-    [[100], 25],
-    [[1_000], 168],
-    [[10_000], 1229],
-    [[100_000], 9592],
-    [[2], 1],
-    [[3], 2],
-    [[1], 0],
-    [[1_000_000], 78498],
+    [count_primes(100), 25],
+    [count_primes(1_000), 168],
+    [count_primes(10_000), 1229],
+    [count_primes(100_000), 9592],
+    [count_primes(2), 1],
+    [count_primes(3), 2],
+    [count_primes(1), 0],
+    [count_primes(1_000_000), 78498],
 ],
 """,
         "title": "Count primes",
         "level": "Steady",
+        "code": """
+def count_primes(n: int) -> int:
+"""
     },
     10: {
         "markdown": """
@@ -457,13 +455,16 @@ output: 4
 """,
         "test_cases": """
 test_cases =  [
-    [[[4, 1, 2, 1, 2]], 4],
-    [[[2]], 2],
-    [[[i for i in range(1, 500_000)] + [i for i in range(500_000)]], 0],
+    [single_num([4, 1, 2, 1, 2]), 4],
+    [single_num([2]), 2],
+    [single_num([i for i in range(1, 500_000)] + [i for i in range(500_000)]), 0],
 ]
 """,
         "title": "Single number",
         "level": "Breezy",
+        "code": """
+def single_num(arr: list[int]) -> int:
+"""
     },
     11: {
         "markdown": """
@@ -481,18 +482,21 @@ output: False
 """,
         "test_cases": """
 test_cases = [
-    [[64], True],
-    [[20], False],
-    [[1024], True],
-    [[2], True],
-    [[0], False],
-    [[1267650600228229401496703205376], True],
-    [[1267650600228229401496703205377], False],
-    [[-64], False],
+    [is_power(64), True],
+    [is_power(20), False],
+    [is_power(1024), True],
+    [is_power(2), True],
+    [is_power(0), False],
+    [is_power(1267650600228229401496703205376), True],
+    [is_power(1267650600228229401496703205377), False],
+    [is_power(-64), False],
 ]
 """,
         "title": "Powers of 2",
         "level": "Breezy",
+        "code": """
+def is_power(n: int) -> bool:
+"""
     },
     12: {
         "markdown": """
@@ -514,16 +518,16 @@ How: (4 + (13 / 5)) = 6
 """,
         "test_cases": """
 test_cases = [
-    [[["2", "1", "+", "3", "*"]], 9],
-    [[["4", "13", "5", "/", "+"]], 6],
-    [
-        [["10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"]],
-        12,
-    ],
+    [rpn(["2", "1", "+", "3", "*"]), 9],
+    [rpn(["4", "13", "5", "/", "+"]), 6],
+    [rpn(["10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"]), 12],
 ]
 """,
         "title": "Reverse polish notation",
         "level": "Breezy",
+        "code": """
+def rpn(v: list[str]) -> int:
+"""
     },
     13: {
         "markdown": """
@@ -546,18 +550,21 @@ output: 'XXIII'
 """,
         "title": "Roman numerals",
         "level": "Steady",
+        "code": """
+def int_to_roman(n: int) -> 
+"""
         "test_cases": """
 test_cases = [
-    [[4], "IV"],
-    [[23], "XXIII"],
-    [[768], "DCCLXVIII"],
-    [[1], "I"],
-    [[3999], "MMMCMXCIX"],
-    [[369], "CCCLXIX"],
-    [[1318], "MCCCXVIII"],
-    [[1089], "MLXXXIX"],
-    [[2424], "MMCDXXIV"],
-    [[999], "CMXCIX"],
+    [int_to_roman(4), "IV"],
+    [int_to_roman(23), "XXIII"],
+    [int_to_roman(768), "DCCLXVIII"],
+    [int_to_roman(1), "I"],
+    [int_to_roman(3999), "MMMCMXCIX"],
+    [int_to_roman(369), "CCCLXIX"],
+    [int_to_roman(1318), "MCCCXVIII"],
+    [int_to_roman(1089), "MLXXXIX"],
+    [int_to_roman(2424), "MMCDXXIV"],
+    [int_to_roman(999), "CMXCIX"],
 ]
 """,
     },
@@ -578,15 +585,15 @@ output: 'rain'
 """,
         "title": "Longest common substring",
         "level": "Steady",
+        "code": """
+def lcs(text1: str, text2: str) -> str:
+"""
         "test_cases": """
 test_cases = [
-    [["brain", "drain"], "rain"],
-    [["math", "arithmetic"], "th"],
-    [["blackmarket", "stagemarket"], "market"],
-    [
-        ["theoldmanoftheseaissowise", "sowisetheoldmanoftheseais"],
-        "theoldmanoftheseais",
-    ],
+    [lcs("brain", "drain"), "rain"],
+    [lcs("math", "arithmetic"), "th"],
+    [lcs("blackmarket", "stagemarket"), "market"],
+    [lcs("theoldmanoftheseaissowise", "sowisetheoldmanoftheseais"), "theoldmanoftheseais"],
 ]
 """,
     },
@@ -607,19 +614,22 @@ output: False
 """,
         "title": "Happy number",
         "level": "Breezy",
+        "code": """
+def is_happy(n: int) -> bool:
+"""
         "test_cases": """
 test_cases = [
-    [[19], True],
-    [[2], False],
-    [[17], False],
-    [[202], False],
-    [[711], False],
-    [[176], True],
-    [[19_345_672], False],
-    [[345_000_000], False],
-    [[1_703_932], False],
-    [[2_294_967_295], False],
-    [[1], True],
+    [is_happy(19), True],
+    [is_happy(2), False],
+    [is_happy(17), False],
+    [is_happy(202), False],
+    [is_happy(711), False],
+    [is_happy(176), True],
+    [is_happy(19_345_672), False],
+    [is_happy(345_000_000), False],
+    [is_happy(1_703_932), False],
+    [is_happy(2_294_967_295), False],
+    [is_happy(1), True],
 ]
 """,
     },
@@ -645,13 +655,13 @@ output: "a a b c"
 """,
         "title": "Trie/Prefix tree",
         "level": "Steady",
+        "code": """
+def replace(roots: list[str], sentence: str) -> str:
+"""
         "test_cases": """
 test_cases = [
-    [
-        [["cat", "bat", "rat"], "the cattle was rattled by the battery"],
-        "the cat was rat by the bat",
-    ],
-    [[["a", "b", "c"], "aadsfasf absbs bbab cadsfafs"], "a a b c"],
+    [replace(["cat", "bat", "rat"], "the cattle was rattled by the battery"), "the cat was rat by the bat"],
+    [replace(["a", "b", "c"], "aadsfasf absbs bbab cadsfafs"), "a a b c"],
 ]
 """,
     },
@@ -673,11 +683,14 @@ output: 240
 """,
         "title": "Fractional knapsack",
         "level": "Breezy",
+        "code": """
+def knapsack(capacity: int, weights: list[int], values: list[int]) -> int:
+"""
         "test_cases": """
 test_cases = [
-    [[50, [10, 20, 30], [60, 100, 120]], 240],
-    [[60, [10, 20, 30], [60, 100, 120]], 280],
-    [[5, [10, 20, 30], [60, 100, 120]], 30],
+    [knapsack(50, [10, 20, 30], [60, 100, 120]), 240],
+    [knapsack(60, [10, 20, 30], [60, 100, 120]), 280],
+    [knapsack(5, [10, 20, 30], [60, 100, 120]), 30],
 ]
 """,
     },
@@ -697,14 +710,17 @@ How: [13, -1], [12] and [3, 9]
 """,
         "title": "Subarrays with sum",
         "level": "Breezy",
+        "code": """
+def count_arrs(arr: list[int], target: int) -> int:
+"""
         "test_cases": """
 test_cases = [
-    [[[13, -1, 8, 12, 3, 9], 12], 3],
-    [[[13, -1, 8, 12, 3, 9], 2], 0],
-    [[[13, -1, 8, 12, 3, 9], 10], 0],
-    [[[13, -1, 8, 12, 3, 9, 7, 5, 9, 10], 75], 1],
-    [[[13, -1, 8, 12, 3, 9] * 20_000, 12], 60_000],
-    [[[13, -1, 8, 12, 3, 9, 7, 5, 9, 10] * 10_000, 24], 30_000],
+    [count_arrs([13, -1, 8, 12, 3, 9], 12), 3],
+    [count_arrs([13, -1, 8, 12, 3, 9], 2), 0],
+    [count_arrs([13, -1, 8, 12, 3, 9], 10), 0],
+    [count_arrs([13, -1, 8, 12, 3, 9, 7, 5, 9, 10), 75], 1],
+    [count_arrs([13, -1, 8, 12, 3, 9] * 20_000, 12), 60_000],
+    [count_arrs([13, -1, 8, 12, 3, 9, 7, 5, 9, 10] * 10_000, 24), 30_000],
 ]
 """,
     },
@@ -728,13 +744,16 @@ output: 3
 root1 = array_to_tree([10, 5, -3, 3, 2, None, 11, 3, -2, None, 1])
 root2 = array_to_tree([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, 5, 1])
 test_cases = [
-        [[root1, 8], 3],
-        [[root2, 22], 3],
-        [[root2, 20], 1],
+        [count_paths(root1, 8), 3],
+        [count_paths(root2, 22), 3],
+        [count_paths(root2, 20), 1],
 ]
 """,
         "title": "Paths with sum",
         "level": "Steady",
+        "code": """
+def count_paths(root, target):
+"""
     },
     20: {
         "markdown": """
@@ -752,17 +771,20 @@ output: [[], [0]]
 """,
         "title": "Power set",
         "level": "Steady",
+        "code": """
+def power_set(nums: list[int]) -> list[list[int]]:
+"""
         "test_cases": """
 test_cases = [
-    [[[1, 2, 3]], [[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]],
-    [[[0]], [[], [0]]],
+    [power_set([1, 2, 3]), [[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]],
+    [power_set([0]), [[], [0]]],
 ]
 """,
     },
     21: {
         "markdown": """
 ### Spinal case
-Given a string. Convert it to spinal case
+Given a string `s`. Convert it to spinal case
 
 > Spinal case is all-lowercase-words-joined-by-dashes.
 
@@ -774,12 +796,15 @@ output: "hello-world"
 """,
         "title": "Spinal case",
         "level": "Breezy",
+        "code": """
+def spinal_case(s: str) -> str:
+"""
         "test_cases": """
 test_cases = [
-    [["Hello World!"], "hello-world"],
-    [["The Greatest of All Time."], "the-greatest-of-all-time"],
-    [["yes/no"], "yes-no"],
-    [["...I-am_here lookingFor  You.See!!"], "i-am-here-looking-for-you-see"],
+    [spinal_case("Hello World!"), "hello-world"],
+    [spinal_case("The Greatest of All Time."), "the-greatest-of-all-time"],
+    [spinal_case("yes/no"), "yes-no"],
+    [spinal_case("...I-am_here lookingFor  You.See!!"), "i-am-here-looking-for-you-see"],
 ]
 """,
     },
@@ -804,11 +829,14 @@ output: (220, [0, 1, 1])
 """,
         "title": "0/1 knapsack",
         "level": "Breezy",
+        "code": """
+def knapsack(capacity: int, weights: list[int], values: list[int]) -> tuple[int, list[int]]:
+"""
         "test_cases": """
 test_cases = [
-    [[50, [10, 20, 30], [60, 100, 120]], (220, [0, 1, 1])],
-    [[60, [10, 20, 30], [60, 100, 120]], (280, [1, 1, 1])],
-    [[5, [10, 20, 30], [60, 100, 120]], (0, [0, 0, 0])],
+    [knapsack(50, [10, 20, 30], [60, 100, 120]), (220, [0, 1, 1])],
+    [knapsack(60, [10, 20, 30], [60, 100, 120]), (280, [1, 1, 1])],
+    [knapsack(5, [10, 20, 30], [60, 100, 120]), (0, [0, 0, 0])],
 ]
 """,
     },
@@ -826,15 +854,18 @@ How: [1, 5, 5] and [11]
 """,
         "title": "Equal array partitions",
         "level": "Steady",
+        "code": """
+def can_partition(nums: list[int]) -> bool:
+"""
         "test_cases": """
 test_cases = [
-    [[[1, 5, 11, 5]], True],
-    [[[6]], False],
-    [[[i for i in range(300)]], True],
-    [[[1, 5, 13, 5]], False],
-    [[[1, 5, 11, 5] * 100], True],
-    [[[1, 5, 13, 5, 35, 92, 11, 17, 13, 53]], False],
-    [[[i for i in range(1, 330, 2)]], False],
+    [can_partition([1, 5, 11, 5]), True],
+    [can_partition([6]), False],
+    [can_partition([i for i in range(300)]), True],
+    [can_partition([1, 5, 13, 5]), False],
+    [can_partition([1, 5, 11, 5] * 100), True],
+    [can_partition([1, 5, 13, 5, 35, 92, 11, 17, 13, 53]), False],
+    [can_partition([i for i in range(1, 330, 2)]), False],
 ]
 """,
     },
@@ -857,10 +888,13 @@ output: 1
 """,
         "title": "Max water held",
         "level": "Steady",
+        "code": """ 
+def max_water(nums: list[int]) -> int:
+"""
         "test_cases": """
 test_cases = [
-    [[[1,8,6,2,5,4,8,3,7]], 49],
-    [[[1, 1]], 1],
+    [max_water([1,8,6,2,5,4,8,3,7]), 49],
+    [max_water([1, 1]), 1],
 ]
 """,
     },
@@ -889,13 +923,16 @@ How:
 """,
         "title": "Climb stairs",
         "level": "Breezy",
+        "code": """ 
+def climb_stairs(n: int) -> int:
+"""
         "test_cases": """
 test_cases = [
-    [[0], 0],
-    [[1], 1],
-    [[2], 2],
-    [[10], 89],
-    [[36], 24157817],
+    [climb_stairs(0), 0],
+    [climb_stairs(1), 1],
+    [climb_stairs(2), 2],
+    [climb_stairs(10), 89],
+    [climb_stairs(36), 24157817],
 ]
 """,
     },
@@ -926,14 +963,17 @@ How: There are six ways to make change for 15 cents
 """,
         "title": "Ways to make change",
         "level": "Steady",
+        "code": """ 
+def count_ways(cents: int) -> int:
+"""
         "test_cases": """
 test_cases = [
-    [[15], 6],
-    [[10], 4],
-    [[5], 2],
-    [[55], 60],
-    [[1000], 142511],
-    [[10_000], 134235101],
+    [count_ways(10), 4],
+    [count_ways(15), 6],
+    [count_ways(5), 2],
+    [count_ways(55), 60],
+    [count_ways(1000), 142511],
+    [count_ways(10_000), 134235101],
 ]
 """,
     },
@@ -957,12 +997,15 @@ output: True
 t1 = array_to_tree([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, None, None, None, 1])
 t2 = array_to_tree([1, 2, 3, None, 4])
 test_cases = [
-    [[t1, 18], True],
-    [[t2, 18], False],
+    [has_path_sum(t1, 18), True],
+    [has_path_sum(t2, 18), False],
 ]
 """,
         "title": "Has path sum",
         "level": "Steady",
+        "code": """ 
+def has_path_sum(root, target):
+"""
     },
     28: {
         "markdown": """
@@ -989,14 +1032,17 @@ t2 = array_to_tree([9, 8, 16, 4])
 t3 = array_to_tree([12, 3, 20])
 t4 = array_to_tree([12, 3, 20, None, 5])
 test_cases = [
-    [[t1, 5], False],
-    [[t3, 3], True],
-    [[t2, 4], True],
-    [[t4, 21], False],
+    [has_node(t1, 5), False],
+    [has_node(t3, 3), True],
+    [has_node(t2, 4), True],
+    [has_node(t4, 21), False],
 ]
 """,
         "title": "Has node BST",
         "level": "Steady",
+        "code": """ 
+def has_node(root, x):
+"""
     },
     29: {
         "markdown": """
@@ -1016,14 +1062,17 @@ t2 = array_to_tree([9, 8, 16, 4])
 t3 = array_to_tree([12, 3, 20])
 t4 = array_to_tree([12, 3, 20, None, 5])
 test_cases = [
-    [[t3], 3],
-    [[t1], 8],
-    [[t2], 4],
-    [[t4], 3],
+    [BST_min(t3), 3],
+    [BST_min(t1), 8],
+    [BST_min(t2), 4],
+    [BST_min(t4), 3],
 ]
 """,
         "title": "BST min",
         "level": "Steady",
+        "code": """ 
+def BST_min(root):
+"""
     },
     30: {
         "markdown": """
@@ -1047,13 +1096,16 @@ t1 = array_to_tree([12, 8, 16, 4, 9, 13, 18, 11])
 t2 = array_to_tree([4, None, 9, None, None, None, 12])
 t3 = array_to_tree([12, 3, 20, None, 5])
 test_cases = [
-    [[t1], True],
-    [[t2], False],
-    [[t3], True],
+    [is_balanced(t1), True],
+    [is_balanced(t2), False],
+    [is_balanced(t3), True],
 ]
 """,
         "title": "Balanced tree",
         "level": "Steady",
+        "code": """ 
+def is_balanced(root):
+"""
     },
     31: {
         "markdown": """
@@ -1070,11 +1122,14 @@ output: [4, 8, 9, 11, 12, 13, 16, 18]
 {binary_tree}
 t1 = array_to_tree([12, 8, 16, 4, 9, 13, 18, 11])
 test_cases = [
-    [[t1], [4, 8, 9, 11, 12, 13, 16, 18]],
+    [in_order(t1), [4, 8, 9, 11, 12, 13, 16, 18]],
 ]
 """,
         "title": "Tree in-order traversal",
         "level": "Steady",
+        "code": """ 
+def in_order(root):
+"""
     },
     32: {
         "markdown": """
@@ -1092,12 +1147,15 @@ output: ["()"]
 """,
         "test_cases": """
 test_cases = [
-    [[1], ["()"]],
-    [[3], ["((()))","(()())","(())()","()(())","()()()"]],
+    [generate_parentheses(1), ["()"]],
+    [generate_parentheses(3), ["((()))","(()())","(())()","()(())","()()()"]],
 ]
 """,
         "title": "Generate parentheses",
         "level": "Steady",
+        "code": """ 
+def generate_parentheses(n: int) -> list[str]:
+"""
     },
     33: {
         "markdown": """
@@ -1120,12 +1178,15 @@ output: false
 t1 = array_to_tree([5, 1, 4, None, None, 3, 6])
 t2 = array_to_tree([2, 1, 3])
 test_cases = [
-    [[t2], True],
-    [[t1], False],
+    [valid_BST(t2), True],
+    [valid_BST(t1), False],
 ]
 """,
         "title": "Valid BST",
         "level": "Steady",
+        "code": """ 
+def valid_BST(root):
+"""
     },
     34: {
         "markdown": """
@@ -1142,11 +1203,14 @@ output: [12, 8, 16, 4, 9, 13, 18, 11]
 {binary_tree}
 t1 = array_to_tree([12, 8, 16, 4, 9, 13, 18, 11])
 test_cases = [
-    [[t1], [12, 8, 16, 4, 9, 13, 18, 11]],
+    [level_order(t1), [12, 8, 16, 4, 9, 13, 18, 11]],
 ]
 """,
         "title": "Tree level-order traversal",
         "level": "Steady",
+        "code": """ 
+def level_order(root):
+"""
     },
     35: {
         "markdown": """
@@ -1165,11 +1229,14 @@ output: [4, 11, 13, 18]
 {binary_tree}
 t1 = array_to_tree([12, 8, 16, 4, 9, 13, 18, 11])
 test_cases = [
-    [[t1], [4, 11, 13, 18]],
+    [get_leaves(t1), [4, 11, 13, 18]],
 ]
 """,
         "title": "Tree leaves",
         "level": "Steady",
+        "code": """ 
+def get_leaves(root):
+"""
     },
     36: {
         "markdown": """
@@ -1186,11 +1253,14 @@ output: 25
 {binary_tree}
 t1 = array_to_tree([12, 8, 16, 4, 9, 13, 18, 11])
 test_cases = [
-    [[t1], 25],
+    [sum_right_nodes(t1), 25],
 ]
 """,
         "title": "Sum right nodes",
         "level": "Steady",
+        "code": """ 
+def sum_right_nodes(root):
+"""
     },
     37: {
         "markdown": """
@@ -1209,13 +1279,16 @@ output: True
 """,
         "test_cases": """
 test_cases = [
-    [[[2, 4, 8, 9, 12, 13, 16, 18], 18], True],
-    [[[i for i in range(5_000_000)], 45], True],
-    [[[i for i in range(5_000_000)], 5_000_000], False],
+    [has_value([2, 4, 8, 9, 12, 13, 16, 18], 18), True],
+    [has_value([i for i in range(5_000_000)], 45), True],
+    [has_value([i for i in range(5_000_000)], 5_000_000), False],
 ]
 """,
         "title": "Value in array",
         "level": "Breezy",
+        "code": """ 
+def has_value(arr: list[int], target: int) -> bool:
+"""
     },
     38: {
         "markdown": """
@@ -1230,12 +1303,15 @@ output: [2, 4, 8, 9, 12, 13, 16, 18]
 """,
         "test_cases": """
 test_cases = [
-    [[[8, 2, 4, 9, 12, 18, 16, 13]], [2, 4, 8, 9, 12, 13, 16, 18]],
-    [[[i for i in range(100_000, -1, -1)]], [i for i in range(100_001)]],
+    [merge_sort([8, 2, 4, 9, 12, 18, 16, 13]), [2, 4, 8, 9, 12, 13, 16, 18]],
+    [merge_sort([i for i in range(100_000, -1, -1)]), [i for i in range(100_001)]],
 ]
 """,
         "title": "Merge sort",
         "level": "Breezy",
+        "code": """ 
+def merge_sort(nums: list[int]) -> list[int]:
+"""
     },
     39: {
         "markdown": """
@@ -1250,12 +1326,16 @@ output: [2, 4, 8, 9, 12, 13, 16, 18]
 """,
         "test_cases": """
 test_cases = [
-    [[[8, 2, 4, 9, 12, 18, 16, 13]], [2, 4, 8, 9, 12, 13, 16, 18]],
-    [[[i for i in range(100_000, -1, -1)]], [i for i in range(100_001)]],
+    [heap_sort([8, 2, 4, 9, 12, 18, 16, 13]), [2, 4, 8, 9, 12, 13, 16, 18]],
+    [heap_sort([i for i in range(100_000, -1, -1)]), [i for i in range(100_001)]],
 ]
 """,
         "title": "Heap sort",
         "level": "Breezy",
+        "code": """ 
+def heap_sort(nums: list[int]) -> list[int]:
+"""
+
     },
     40: {
         "markdown": """
@@ -1270,12 +1350,16 @@ output: [2, 4, 8, 9, 12, 13, 16, 18]
 """,
         "test_cases": """
 test_cases = [
-    [[[8, 2, 4, 9, 12, 18, 16, 13]], [2, 4, 8, 9, 12, 13, 16, 18]],
-    [[[i for i in range(100_000, -1, -1)]], [i for i in range(100_001)]],
+    [quick_sort([8, 2, 4, 9, 12, 18, 16, 13]), [2, 4, 8, 9, 12, 13, 16, 18]],
+    [quick_sort([i for i in range(100_000, -1, -1)]), [i for i in range(100_001)]],
 ]
 """,
         "title": "Quick sort",
         "level": "Breezy",
+        "code": """ 
+def quick_sort(nums: list[int]) -> list[int]:
+"""
+
     },
     41: {
         "markdown": """
@@ -1290,12 +1374,16 @@ output: [2, 4, 8, 9, 12, 13, 16, 18]
 """,
         "test_cases": """
 test_cases = [
-    [[[8, 2, 4, 9, 12, 18, 16, 13]], [2, 4, 8, 9, 12, 13, 16, 18]],
-    [[[i for i in range(100_000, -1, -1)]], [i for i in range(100_001)]],
+    [bubble_sort([8, 2, 4, 9, 12, 18, 16, 13]), [2, 4, 8, 9, 12, 13, 16, 18]],
+    [bubble_sort([i for i in range(100_000, -1, -1)]), [i for i in range(100_001)]],
 ]
 """,
         "title": "Bubble sort",
         "level": "Breezy",
+        "code": """ 
+def bubble_sort(nums: list[int]) -> list[int]:
+"""
+
     },
     42: {
         "markdown": """
@@ -1313,19 +1401,22 @@ output: [0, 0]
 """,
         "test_cases": """
 test_cases = [
-    [[[5, 2, 2, 6, 1]], [3, 1, 1, 1, 0]],
-    [[[-1, -1]], [0, 0]],
-    [[[8, 2, 4, 9, 12, 18, 16]], [2, 0, 0, 0, 0, 1, 0]],
-    [[[i for i in range(100_000, -1, -1)]], [0 for i in range(100_001)]],
+    [count_smaller([5, 2, 2, 6, 1]), [3, 1, 1, 1, 0]],
+    [count_smaller([-1, -1]), [0, 0]],
+    [count_smaller([8, 2, 4, 9, 12, 18, 16]), [2, 0, 0, 0, 0, 1, 0]],
+    [count_smaller([i for i in range(100_000, -1, -1)]), [0 for i in range(100_001)]],
 ]
 """,
         "title": "Smaller to the right",
         "level": "Edgy",
+        "code": """ 
+def count_smaller(nums: list[int]) -> list[int]:
+"""
     },
     43: {
         "markdown": """
 ### Majority element 
-Given an array nums of size n, return the majority element.
+Given an array `nums` of size n, return the majority element.
 
 > The majority element is the element that appears more than
 ⌊n / 2⌋ times.
@@ -1340,17 +1431,20 @@ Output: 3
 """,
         "test_cases": """
 test_cases = [
-    [[[3, 2, 3]], 3],
-    [[[6] * 20], 6],
-    [[[9] * 21 + [7] * 20], 9],
-    [[[2]], 2],
-    [[[]], None],
-    [[[6] * 100_000 + [9] * 100_001], 9],
-    [[[-2, -2, -4, -2, -4, -4, -4]], -4],
+    [majority([3, 2, 3]), 3],
+    [majority([6] * 20), 6],
+    [majority([9] * 21 + [7] * 20), 9],
+    [majority([2]), 2],
+    [majority([]), None],
+    [majority([6] * 100_000 + [9] * 100_001), 9],
+    [majority([-2, -2, -4, -2, -4, -4, -4]), -4],
 ]
 """,
         "title": "Majority element",
         "level": "Breezy",
+        "code": """ 
+def majority(nums: list[int]) -> int:
+"""
     },
     44: {
         "markdown": """
@@ -1371,17 +1465,20 @@ Output: 0
 """,
         "test_cases": """
 test_cases = [
-    [[[7, 1, 5, 3, 6, 4]], 5],
-    [[[7, 6, 4, 3, 1]], 0],
-    [[[0, 0, 0, 0]], 0],
-    [[[4] * 2_000 + [15] * 1_000], 11],
-    [[[90] * 10_000 + [50] * 20_000], 0],
-    [[[]], 0],
-    [[[i for i in range(1, 100_000)]], 99_998],
+    [max_profit([7, 1, 5, 3, 6, 4]), 5],
+    [max_profit([7, 6, 4, 3, 1]), 0],
+    [max_profit([0, 0, 0, 0]), 0],
+    [max_profit([4] * 2_000 + [15] * 1_000), 11],
+    [max_profit([90] * 10_000 + [50] * 20_000), 0],
+    [max_profit([]), 0],
+    [max_profit([i for i in range(1, 100_000)]), 99_998],
 ]
 """,
         "title": "Max profit",
         "level": "Breezy",
+        "code": """ 
+def max_profit(prices: list[int]) -> int:
+"""
     },
     45: {
         "markdown": """
@@ -1398,14 +1495,17 @@ Each input has exactly one solution.
 """,
         "test_cases": """
 test_cases = [
-    [[[2, 7, 1, 15], 13], [1, 3]],
-    [[[2, 4, 7, 14], 6], [1, 2]],
-    [[[i for i in range(400_000)], 5], [1, 6]],
-    [[[i for i in range(-10, 10)], -10], [1, 11]],
+    [pair_sum([2, 7, 1, 15], 13), [1, 3]],
+    [pair_sum([2, 4, 7, 14], 6), [1, 2]],
+    [pair_sum([i for i in range(400_000)], 5), [1, 6]],
+    [pair_sum([i for i in range(-10, 10)], -10), [1, 11]],
 ]
 """,
         "title": "Pair sum equal target",
         "level": "Breezy",
+        "code": """ 
+def pair_sum(nums: list[int], target: int) -> int:
+"""
     },
     46: {
         "markdown": """
@@ -1425,14 +1525,17 @@ Output: ''
 """,
         "title": "Longest common subsequence",
         "level": "Steady",
+        "code": """ 
+def lcs(str1: str, str2: str) -> str:
+"""
         "test_cases": """
     test_cases = [
-        [["math", "arithmetic"], "ath"],
-        [["original", "origin"], "origin"],
-        [["foo", "bar"], ""],
-        [["", "arithmetic"], ""],
-        [["shesellsseashellsattheseashore", "isawyouyesterday"], "saester"],
-        [["@work3r", "m@rxkd35rt"], "@rk3r"],
+        [lcs("math", "arithmetic"), "ath"],
+        [lcs("original", "origin"), "origin"],
+        [lcs("foo", "bar"), ""],
+        [lcs("", "arithmetic"), ""],
+        [lcs("shesellsseashellsattheseashore", "isawyouyesterday"), "saester"],
+        [lcs("@work3r", "m@rxkd35rt"), "@rk3r"],
     ]
     """,
     },
