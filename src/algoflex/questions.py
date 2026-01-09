@@ -28,6 +28,16 @@ def tree_to_array(root):
             result.append(None)
     return result
 
+def same_tree(p, q):
+    if not p and not q:
+        return True
+    if not p or not q:
+        return False
+    if p.val != q.val:
+        return False
+    return same_tree(p.left, q.left) and same_tree(p.right, q.right)
+
+
 """
 linked_list = """
 class ListNode:
@@ -49,6 +59,15 @@ def list_to_array(head):
         arr.append(head.val)
         head = head.next
     return arr
+
+def same_list(head1, head2):
+    if not head1 and not head2:
+        return True 
+    if not head1 or not head2:
+        return False
+    if head1.val != head2.val:
+        return False 
+    return same_list(head1.next, head2.next)
 """
 questions = {
     0: {
@@ -81,22 +100,25 @@ How:
 """,
         "test_cases": """
 test_cases = [
-    [[["5", "2", "C", "D", "+", "+", "C"]], 30],
-    [[["9", "C", "6", "D", "C", "C"]], 0],
-    [[["3", "4", "9", "8"]], 24],
-    [[["4", "D", "+", "C", "D"]], 28],
-    [[["1", "C"]], 0],
-    [[["1", "1", "+", "+", "+", "+", "+", "+", "+", "+"]], 143],
-    [[["1", "D", "D", "D", "D", "D"]], 63],
-    [[["1", "1"] + ["+"] * 1_00], 2427893228399975082452],
-    [[["1", "1"] + ["D"] * 1_00], 2535301200456458802993406410752],
-    [[["1", "1"] + ["D"] * 100_000 + ["C"] * 100_001], 1],
-    [[["1", "1"] + ["+"] * 50 + ["C"] * 30 + ["+"] * 20], 701408732],
-    [[["1", "1", "C", "D", "D", "+"] * 1000], 1300],
+    [score(["5", "2", "C", "D", "+", "+", "C"]), 30],
+    [score(["9", "C", "6", "D", "C", "C"]), 0],
+    [score(["3", "4", "9", "8"]), 24],
+    [score(["4", "D", "+", "C", "D"]), 28],
+    [score(["1", "C"]), 0],
+    [score(["1", "1", "+", "+", "+", "+", "+", "+", "+", "+"]), 143],
+    [score(["1", "D", "D", "D", "D", "D"]), 63],
+    [score(["1", "1"] + ["+"] * 1_00), 2427893228399975082452],
+    [score(["1", "1"] + ["D"] * 1_00), 2535301200456458802993406410752],
+    [score(["1", "1"] + ["D"] * 100_000 + ["C"] * 100_001), 1],
+    [score(["1", "1"] + ["+"] * 50 + ["C"] * 30 + ["+"] * 20), 701408732],
+    [score(["1", "1", "C", "D", "D", "+"] * 1000), 1300],
 ]
 """,
         "title": "Score tally",
         "level": "Breezy",
+        "code": """
+def score(scores: list[str]) -> int:
+""",
     },
     1: {
         "markdown": """
@@ -114,43 +136,24 @@ How: "abcdddeeeeaabbbed" has three valid substrings: "ddd",
 """,
         "test_cases": """
 test_cases = [
-    [["abcdddeeeeaabbbb"], [[3, 5], [6, 9], [1azqa  1qwv                                         b2, 15]]],
-    [["xxxcyyyyydkkkkkk"], [[0, 2], [4, 8], [10, 15]]],
-    [
-        ["abcdddeeeeaabbbb" * 6],
-        [
-            [3, 5],
-            [6, 9],
-            [12, 15],
-            [19, 21],
-            [22, 25],
-            [28, 31],
-            [35, 37],
-            [38, 41],
-            [44, 47],
-            [51, 53],
-            [54, 57],
-            [60, 63],
-            [67, 69],
-            [70, 73],
-            [76, 79],
-            [83, 85],
-            [86, 89],
-            [92, 95],
-        ],
-    ],
-    [["abcd"], []],
-    [["aabbccdd"], []],
-    [[""], []],
-    [["abcdefffghijkl"], [[5, 7]]],
-    [["abcdeffghijkl" * 100_000], []],
-    [["abcdeffghijkl" * 100_000 + "kkk"], [[1_300_000, 1_300_002]]],
-    [["kkk" + "abcdeffghijkl" * 100_000], [[0, 2]]],
-    [["abcdefffghijkl" * 100_000], [[5 + i, 7 + i] for i in range(0, 100_000 * 14, 14)]],
+    [repeated("abcdddeeeeaabbbb"), [[3, 5], [6, 9], [12, 15]]],
+    [repeated("xxxcyyyyydkkkkkk"), [[0, 2], [4, 8], [10, 15]]],
+    [repeated("abcdddeeeeaabbbb" * 6), [[3, 5], [6, 9], [12, 15], [19, 21], [22, 25], [28, 31], [35, 37], [38, 41], [44, 47], [51, 53], [54, 57], [60, 63], [67, 69], [70, 73], [76, 79], [83, 85], [86, 89], [92, 95]]],
+    [repeated("abcd"), []],
+    [repeated("aabbccdd"), []],
+    [repeated(""), []],
+    [repeated("abcdefffghijkl"), [[5, 7]]],
+    [repeated("abcdeffghijkl" * 100_000), []],
+    [repeated("abcdeffghijkl" * 100_000 + "kkk"), [[1_300_000, 1_300_002]]],
+    [repeated("kkk" + "abcdeffghijkl" * 100_000), [[0, 2]]],
+    [repeated("abcdefffghijkl" * 100_000), [[5 + i, 7 + i] for i in range(0, 100_000 * 14, 14)]],
 ]
 """,
         "title": "Repeated letters",
         "level": "Breezy",
+        "code": """
+def repeated(s: str) -> list:
+""",
     },
     2: {
         "markdown": """
@@ -174,28 +177,26 @@ output: True
 """,
         "test_cases": """
 test_cases = [
-    [["[](){}"], True],
-    [["{{}}[][](()"], False],
-    [["[[[()]]]{}"], True],
-    [["[[[(((((((()))))))]]]{[{[{[{{({})}}]}]}]}"], False],
-    [["[[[([[[[[[[[[[[[[[[()]]]]]]]]]]]]]]])]]]{}"], True],
-    [["[[[()]]]{[](){}()[{[{{]}}]}]}"], False],
-    [["[[[()]]]{[](){}()[{[{{[]]}}]}]}{}[]((()))"], False],
-    [["[[[()]]]{}"], True],
-    [["["], False],
-    [["{}" * 50_000 + "()" * 50_000 + "[]"], True],
-    [
-        [
-            "{{{{{{{{{{{{{{{{{{{{{{{{{{{{[[[[[[[[[[()]]]]]]]]]]}}}}}}}}}}}}}}}}}}}}}}}}}}}}"
-        ],
-        True,
-    ],
-    [["[" + "()" * 100_000 + ")"], False],
-    [["[" + "()" * 100_000 + "]"], True],
+    [is_valid("[](){}"), True],
+    [is_valid("{{}}[][](()"), False],
+    [is_valid("[[[()]]]{}"), True],
+    [is_valid("[[[(((((((()))))))]]]{[{[{[{{({})}}]}]}]}"), False],
+    [is_valid("[[[([[[[[[[[[[[[[[[()]]]]]]]]]]]]]]])]]]{}"), True],
+    [is_valid("[[[()]]]{[](){}()[{[{{]}}]}]}"), False],
+    [is_valid("[[[()]]]{[](){}()[{[{{[]]}}]}]}{}[]((()))"), False],
+    [is_valid("[[[()]]]{}"), True],
+    [is_valid("["), False],
+    [is_valid("{}" * 50_000 + "()" * 50_000 + "[]"), True],
+    [is_valid("{{{{{{{{{{{{{{{{{{{{{{{{{{{{[[[[[[[[[[()]]]]]]]]]]}}}}}}}}}}}}}}}}}}}}}}}}}}}}"), True],
+    [is_valid("[" + "()" * 100_000 + ")"), False],
+    [is_valid("[" + "()" * 100_000 + "]"), True],
 ]
 """,
         "title": "Valid matching brackets",
         "level": "Breezy",
+        "code": """
+def is_valid(s: str) -> bool:
+""",
     },
     3: {
         "markdown": """
@@ -214,20 +215,23 @@ output: 7
 """,
         "test_cases": """
 test_cases = [
-    [[[-2, 0, -1]], 0],
-    [[[-2, 0, -1] * 1000], 0],
-    [[[2, 3, -2, 4]], 7],
-    [[[2, 3, -2, 4] * 100_000], 700_000],
-    [[[-2]], -2],
-    [[[i for i in range(100_000)]], 4_999_950_000],
-    [[[2] * 50_000 + [-2] * 50_000], 100_000],
-    [[[2, -4, 8, 6, 9, -1, 3, -4, 12]], 33],
-    [[[2, -4, 8, 0, 9, -1, 0, -4, 12]], 24],
-    [[[2, -4, 8, 0, 9, -1, 0, -4, 12] * 10_000], 220_002],
+    [max_sum([-2, 0, -1]), 0],
+    [max_sum([-2, 0, -1] * 1000), 0],
+    [max_sum([2, 3, -2, 4]), 7],
+    [max_sum([2, 3, -2, 4] * 100_000), 700_000],
+    [max_sum([-2]), -2],
+    [max_sum([i for i in range(100_000)]), 4_999_950_000],
+    [max_sum([2] * 50_000 + [-2] * 50_000), 100_000],
+    [max_sum([2, -4, 8, 6, 9, -1, 3, -4, 12]), 33],
+    [max_sum([2, -4, 8, 0, 9, -1, 0, -4, 12]), 24],
+    [max_sum([2, -4, 8, 0, 9, -1, 0, -4, 12] * 10_000), 220_002],
 ]
 """,
         "title": "Max sum sub array",
         "level": "Breezy",
+        "code": """
+def max_sum(nums: list[int]) -> int:
+""",
     },
     4: {
         "markdown": """
@@ -246,24 +250,27 @@ output: 6
 """,
         "test_cases": """
 test_cases = [
-    [[[-2, 0, -1]], 0],
-    [[[2, 3, -2, 4]], 6],
-    [[[-2, 0, -1, -3]], 3],
-    [[[-2]], -2],
-    [[[1 for _ in range(200_000)]], 1],
-    [[[2, -4, 8, 6, 9, -1, 3, -4, 12]], 497664],
-    [[[2, 0, 0, 0, 0, 0, 0, 0, 12]], 12],
-    [[[2, -4, 1, -6, 0, -1, 3, 0, 12]], 48],
-    [[[2, -4, 8, 0, 9, -1, 3, -4, 0]], 12],
-    [[[2, -4, 0, 6, 9, 0, 3, -4, 12]], 54],
-    [[[2, 0, 8, 6, 9, 0, 3, 0, 12]], 432],
-    [[[1, -1, 1, 1, 1, -1, 1, -1, 1]], 1],
-    [[[2, -1, -1, 1, 1, -1, 0, 2, 1]], 2],
-    [[[2, -1, -1, 1, 1, -1, 0, 2, 1] * 100_000], 4],
+    [max_product([-2, 0, -1]), 0],
+    [max_product([2, 3, -2, 4]), 6],
+    [max_product([-2, 0, -1, -3]), 3],
+    [max_product([-2]), -2],
+    [max_product([1 for _ in range(200_000)]), 1],
+    [max_product([2, -4, 8, 6, 9, -1, 3, -4, 12]), 497664],
+    [max_product([2, 0, 0, 0, 0, 0, 0, 0, 12]), 12],
+    [max_product([2, -4, 1, -6, 0, -1, 3, 0, 12]), 48],
+    [max_product([2, -4, 8, 0, 9, -1, 3, -4, 0]), 12],
+    [max_product([2, -4, 0, 6, 9, 0, 3, -4, 12]), 54],
+    [max_product([2, 0, 8, 6, 9, 0, 3, 0, 12]), 432],
+    [max_product([1, -1, 1, 1, 1, -1, 1, -1, 1]), 1],
+    [max_product([2, -1, -1, 1, 1, -1, 0, 2, 1]), 2],
+    [max_product([2, -1, -1, 1, 1, -1, 0, 2, 1] * 100_000), 4],
 ]
 """,
         "title": "Max product sub array",
         "level": "Breezy",
+        "code": """
+def max_product(nums: list[int]) -> int:
+""",
     },
     5: {
         "markdown": """
@@ -1591,7 +1598,7 @@ How: To take course 1 you first need to take course 0 but to take course 0 you n
     53: {
         "markdown": """
 ### Minimum height trees (MHTs) 
-Given an integer `n` representing number of nodes in a tree and an array of `n-1` edges where edges[i] = [a, b] represent an undirected edge between nodes a and b. Return a list of minimum height trees root labels in any order. 
+Given an integer `n` representing number of nodes in a tree and an array of `n-1` edges where edges[i] = [a, b] represent an undirected edge between nodes a and b. Return a list of minimum height trees root labels sorted in a non decreasing order. 
 
 The nodes are labelled from 0 to n - 1. 
 
@@ -2414,6 +2421,284 @@ test_cases = [
     [[[1, 2, 3, 4]], [24, 12, 8, 6]],
     [[[-1, 1, 0, -3, -3]], [0, 0, 9, 0, 0]],
 ]
+""",
+    },
+    80: {
+        "markdown": """
+### Permutations
+Given an array `nums` of distinct integers, return all the possible permutations.
+
+Return the permutations in non decreasing order. 
+
+Can you do it without python's itertools?
+
+### Example
+```
+input: [1, 2]
+output: [[1, 2], [2, 1]]
+```
+""",
+        "test_cases": """
+test_cases = [
+    [perms([1, 2]), [[1, 2], [2, 1]]],
+    [perms([i for i in range(1, 5)]), [[1, 2, 3, 4], [1, 2, 4, 3], [1, 3, 2, 4], [1, 3, 4, 2], [1, 4, 2, 3], [1, 4, 3, 2], [2, 1, 3, 4], [2, 1, 4, 3], [2, 3, 1, 4], [2, 3, 4, 1], [2, 4, 1, 3], [2, 4, 3, 1], [3, 1, 2, 4], [3, 1, 4, 2], [3, 2, 1, 4], [3, 2, 4, 1], [3, 4, 1, 2], [3, 4, 2, 1], [4, 1, 2, 3], [4, 1, 3, 2], [4, 2, 1, 3], [4, 2, 3, 1], [4, 3, 1, 2], [4, 3, 2, 1]]],
+    [perms([1]), [[1]]],
+]
+""",
+        "title": "Permutations",
+        "level": "Steady",
+        "code": """
+def perms(nums: list[int]) -> list[list[int]]:
+""",
+    },
+    81: {
+        "markdown": """
+### Combinations
+Given a string `s` and a positive integer `k`, return all possible combinations of characters of size k.
+Return the combinations sorted in a non decreasing order.
+
+Are your hands tied without python's itertools 😅?
+
+### Example
+```
+input:
+    string: "abcd",
+    k: 3
+output: 'abc', 'abd', 'acd', 'bcd'
+```
+""",
+        "test_cases": """
+test_cases = [
+    [combs("abcd", 3), ["abc", "abd", "acd", "bcd"]],
+    [combs("combinations", 2), ["co", "cm", "cb", "ci", "cn", "ca", "ct", "ci", "co", "cn", "cs", "om", "ob", "oi", "on", "oa", "ot", "oi", "oo", "on", "os", "mb", "mi", "mn", "ma", "mt", "mi", "mo", "mn", "ms", "bi", "bn", "ba", "bt", "bi", "bo", "bn", "bs", "in", "ia", "it", "ii", "io", "in", "is", "na", "nt", "ni", "no", "nn", "ns", "at", "ai", "ao", "an", "as", "ti", "to", "tn", "ts", "io", "in", "is", "on", "os", "ns"]],
+    [combs("rat", 3), ["rat"]],
+    [combs("rat", 1), ["r", "a", "t"]],
+    [combs("rat", 0), []],
+]
+""",
+        "title": "Combinations",
+        "level": "Steady",
+        "code": """
+def combs(s: str, k: int) -> list[str]:
+""",
+    },
+    82: {
+        "markdown": """
+### Calendar add event
+Design `MyCalendar` with a method `book(start: int, end: int) -> bool` that can add an event to the calendar. The book method should return true if an event can be successfully added or false otherwise.
+
+### Example
+```python
+calendar = MyCalendar()
+calendar.book(10, 20)  # True
+calendar.book(10, 20)  # False - already booked
+calendar.book(15, 25)  # False - overlapping with [10, 20)
+calendar.book(20, 30)  # True  - new event can start at the end time of another
+```
+""",
+        "test_cases": f"""
+calendar = MyCalendar()
+test_cases = [
+    [calendar.book(10, 20), True],
+    [calendar.book(10, 20), False],
+    [calendar.book(15, 25), False],
+    [calendar.book(20, 30), True],
+    [calendar.book(30, 31), True],
+    [calendar.book(100, 2000), True],
+    [calendar.book(2_000, 6_000_000), True],
+    [calendar.book(3_000, 50_000), False],
+    [calendar.book(10_000, 20_000), False],
+    [calendar.book(0, 6_000_000), False],
+    [calendar.book(55_556, 3_000_000), False],
+    [calendar.book(2000, 2020), False],
+    [calendar.book(5_999_999, 6_000_001), False],
+    [calendar.book(100_000, 200_000), False],
+    [calendar.book(31, 41), True],
+    [calendar.book(42, 50), True],
+    [calendar.book(50, 60), True],
+    [calendar.book(60, 70), True],
+    [calendar.book(70, 80), True],
+    [calendar.book(80, 90), True],
+    [calendar.book(90, 100), True],
+]
+""",
+        "title": "Calendar book event",
+        "level": "Steady",
+        "code": """
+class MyCalendar:
+""",
+    },
+    83: {
+        "markdown": """
+### Range frequency query 
+Given an `arr` design a data structure `RangeFreq` with a method `query(left: int, right: int, value: int) -> int` that returns the number of times the given value occurs in the subarray arr[left...right] (both left and right inclusive)
+
+### Example
+```
+arr = [1, 3, 7, 7, 7, 3, 4, 1, 7]
+rf = RangeFreq(arr)
+
+input: rf.query(2, 5, 7)
+output: 3  # 7 appears 3 times between indices 1 and 6
+
+input: rf.query(2, 4, 7)  
+output: 3 
+
+input: rf.query(0, 8, 1)
+output: 2 
+
+input: rf.query(4, 7, 4)
+output: 1
+```
+""",
+        "test_cases": f"""
+arr = [1, 3, 7, 7, 7, 3, 4, 1, 7]
+rf1 = RangeFreq(arr)
+arr2 = [i for i in range(100_000)]
+rf2 = RangeFreq(arr2)
+arr3 = [i for i in range(1, 100_000)] + [22] * 50_000 + [-15] * 100_000
+rf3 = RangeFreq(arr3)
+test_cases = [
+    [rf1.query(2, 4, 7), 3],
+    [rf1.query(0, 8, 1), 2],
+    [rf1.query(4, 7, 4), 1],
+    [rf1.query(2, 4, 9), 0],
+    [rf1.query(8, 8, 7), 1],
+    [rf2.query(0, 100_000, 897), 1],
+    [rf2.query(0, 100_000, 0), 1],
+    [rf2.query(0, 100_000, 99_999), 1],
+    [rf2.query(0, 10, 7), 1],
+    [rf2.query(50_000, 50_000, 50_000), 1],
+    [rf3.query(0, 250_000, 0), 1],
+    [rf3.query(0, 250_000, 22), 50_001],
+    [rf3.query(0, 250_000, -5), 100_000],
+    [rf3.query(100_000, 150_000, 22), 50_000],
+    [rf3.query(100_000, 150_005, -15), 5],
+]
+""",
+        "title": "Range frequency query",
+        "level": "Steady",
+        "code": """
+class RangeFreq:
+""",
+    },
+    84: {
+        "markdown": """
+### Sum linked lists
+You are given two non-empty linked lists, `head2` and `head2` representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit.
+
+Add the two numbers and return the sum as a linked list. You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+
+### Example
+```
+input:
+  head1 = [2, 4, 3]
+  head2 = [5, 6, 4]
+output: [7, 0, 8]
+explanation: 342 + 465 = 807
+```
+""",
+        "test_cases": f"""
+{linked_list}
+l1 = array_to_list([2, 4, 3])
+l2 = array_to_list([5, 6, 4])
+l3 = array_to_list([9, 9, 9, 9, 9, 9, 9])
+l4 = array_to_list([9, 9, 9, 9])
+l12 = array_to_list([7, 0, 8])
+l34 = array_to_list([8, 9, 9, 9, 0, 0, 0, 1])
+test_cases = [
+    [same_list(add_numbers(l1, l2), l12), True],
+    [same_list(add_numbers(l3, l4), l34), True],
+]
+""",
+        "title": "Sum linked lists",
+        "level": "Steady",
+        "code": """
+def add_numbers(head1, head2):
+""",
+    },
+    85: {
+        "markdown": """
+### Invert binary tree
+Given the `root` of a binary tree, invert the tree, and return its root.
+
+### Examples
+Input: root = [2,1,3]
+Output: [2,3,1]
+
+Input: root = []
+Output: []
+""",
+        "test_cases": f"""
+{binary_tree}
+t1 = array_to_tree([4, 2, 7, 1, 3, 6, 9])
+t2 = array_to_tree([4, 7, 2, 9, 6, 3, 1])
+t3 = array_to_tree([2, 1, 3])
+t4 = array_to_tree([2, 3, 1])
+t5 = array_to_tree([])
+test_cases = [
+    [same_tree(invert_tree(t1), t2), True],
+    [same_tree(invert_tree(t3), t4), True],
+    [same_tree(invert_tree(t5), t5), True],
+]
+""",
+        "title": "Invert binary tree",
+        "level": "Steady",
+        "code": """
+def invert_tree(root):
+""",
+    },
+    86: {
+        "markdown": """
+### Reverse a linked list
+Given the `head` of a linked list, reverse the list, and return its head
+
+### Example
+```
+input: [1, 2, 3, 4, 5, 6]
+output: [6, 5, 4, 3, 2, 1]
+```
+""",
+        "test_cases": f"""
+{linked_list}
+l1 = array_to_list([1, 2, 3, 4, 5, 6])
+l2 = array_to_list([6, 5, 4, 3, 2, 1])
+test_cases = [
+    [same_list(reverse_list(l1), l2), True],
+]
+""",
+        "title": "Reverse linked list",
+        "level": "Steady",
+        "code": """
+def reverse_list(head)
+""",
+    },
+    87: {
+        "markdown": """
+### Merge two sorted linked lists
+Given two sorted linked lists, `head1` and `head2`. Merge them into one sorted linked list and return the head of the merged list. 
+
+### Example
+```
+input:
+  head1 = [2, 4, 6, 6, 12, 22]
+  head2 = [3, 7, 8, 9]
+output: [2, 3, 4, 6, 6, 7, 8, 9, 12, 22]
+```
+""",
+        "test_cases": f"""
+{linked_list}
+l1 = array_to_list([2, 4, 6, 6, 12, 22])
+l2 = array_to_list([3, 7, 8, 9])
+l3 = array_to_list([2, 3, 4, 6, 6, 7, 8, 9, 12, 22])
+test_cases = [
+    [same_list(list_merge(l1, l2), l3), True],
+]
+""",
+        "title": "Merge sorted linked lists",
+        "level": "Steady",
+        "code": """
+def list_merge(head1, head2):
 """,
     },
 }
