@@ -83,8 +83,10 @@ if __name__ == "__main__":
         passed, best = s.get("passed", 0), s.get("best", 0)
         user_code = self.user_code.strip()
         output_log = self.query_one(RichLog)
-        test_cases = questions.get(self.problem_id, {}).get("test_cases", [])
-        full_code = f"{user_code}\n\n{test_cases}\n\n{self.TEST_CODE}"
+        question = questions.get(self.problem_id, {})
+        test_cases = question.get("test_cases", [])
+        test_code = question.get("test_code", self.TEST_CODE)
+        full_code = f"{user_code}\n\n{test_cases}\n\n{test_code}"
         with tempfile.NamedTemporaryFile(
             delete=False, suffix=".py", mode="w+", encoding="utf-8"
         ) as tmp_file:
