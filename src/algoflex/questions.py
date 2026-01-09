@@ -2701,4 +2701,54 @@ test_cases = [
 def list_merge(head1, head2):
 """,
     },
+    88: {
+        "markdown": """
+### Min Stack
+
+Design a stack `Stack` that supports:
+
+- `push` - add value to stack
+- `pop` - removes element on top of the stack
+- `top` - returns the top element of the stack
+- `get_min` - returns the minimum element in the stack
+
+  All in **O(1)** time.
+
+### Example
+```
+stack = Stack()
+stack.push(1)   # adds 1 to the stack 
+stack.push(2)   # adds 2 to the stack
+stack.push(3)   # adds 3 to the stack
+stack.top()     # returns 3
+stack.pop()     # removes 3 from stack 
+stack.get_min() # returns 1 
+```
+""",
+        "test_cases": f"""
+stack1 = Stack()
+for i in range(1, 5):
+    stack1.push(i)
+stack2 = Stack()
+for i in range(100_000, 10, -2):
+    stack2.push(i)
+test_cases = [
+    [stack1.top(), 4],
+    [stack1.get_min(), 1],
+    [stack1.top(), 4],
+    [stack1.pop(), None],
+    [stack1.top(), 3],
+    [stack2.top(), 11],
+    [stack2.pop(), None],
+    [stack2.get_min(), 12],
+    [stack2.push(3), None],
+    [stack2.get_min(), 3],
+]
+""",
+        "title": "Min stack",
+        "level": "Steady",
+        "code": """
+class Stack:
+""",
+    },
 }
