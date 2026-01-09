@@ -2794,4 +2794,38 @@ test_cases = [
 class LRUCache:
 """,
     },
+    90: {
+        "markdown": """
+### How many islands
+Given an `m x n grid` where each value is either 1 or 0 with 1 indicating land and 0 indicating water, return the number of islands in the grid. You may assume all four edges of the grid are surrounded by water. 
+
+> An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You can assume all four edges of t
+
+### Examples
+Input: grid = [[1, 1, 1, 1], [0, 0, 0, 0], [1, 1, 1, 1]]
+Output: 2  # 2 horizontal islands. 
+""",
+        "test_cases": f"""
+g1 = [[1, 1, 1, 1], [0, 0, 0, 0], [1, 1, 1, 1]]
+g2 = [[1, 0, 1, 1], [0, 0, 1, 0], [1, 1, 1, 1]]
+g3 = [[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]]
+g4 = [[1, 0, 1, 0, 1] for _ in range(100_000)]
+g5 = [[0, 1, 0, 0, 1] for _ in range(100_000)]
+g6 = [[1, 1, 1, 1, 1] for _ in range(100_000)]
+test_cases = [
+test_cases = [
+    [count_islands(g1), 2],
+    [count_islands(g2), 2],
+    [count_islands(g3), 1],
+    [count_islands(g4), 3],
+    [count_islands(g5), 2],
+    [count_islands(g6), 1],
+]
+""",
+        "title": "Invert binary tree",
+        "level": "Steady",
+        "code": """
+def count_islands(grid: list[list[int]]) -> int:
+""",
+    },
 }
