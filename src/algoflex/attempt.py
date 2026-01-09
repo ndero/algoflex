@@ -25,10 +25,6 @@ class AttemptScreen(Screen):
         margin-right: 1;
     }
     """
-    DEFAULT_CODE = """\
-def solution():
-    # do your thing
-"""
 
     def __init__(self, problem_id):
         super().__init__()
@@ -36,12 +32,14 @@ def solution():
         self.test_time = monotonic()
 
     def compose(self):
-        problem = questions.get(self.problem_id, {}).get("markdown", "")
+        question = questions.get(self.problem_id, {})
+        description = question.get("markdown", "")
+        code = question.get("code", "")
         yield Title()
         with Horizontal():
-            yield Problem(problem)
+            yield Problem(description)
             yield TextArea(
-                self.DEFAULT_CODE,
+                code,
                 show_line_numbers=True,
                 language="python",
                 compact=True,
