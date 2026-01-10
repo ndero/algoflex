@@ -168,9 +168,6 @@ output: True
 
 input: "{{}}[][](()"
 output: False
-
-input: "[[[()]]]{}"
-output: True
 ```
 """,
         "test_cases": """
@@ -314,15 +311,11 @@ Each element can only construct a single pair.
 
 #### Example
 ```
-inputs:
-    arr: [7, 9, 11, 13, 15]
-    target: 20
+input: arr = [7, 9, 11, 13, 15], target = 20
 output: 6
 How: pairs 7 + 13 and 9 + 11, indices 0 + 3 and 1 + 2, total 6
 
-inputs:
-    arr: [0, 0, 0, 0, 1, 1]
-    target: 1
+input: arr = [0, 0, 0, 0, 1, 1], target = 1
 output: 10
 How: pairs 0 + 1 and 0 + 1, indices 0 + 4 and 1 + 5, total 10
 ```
@@ -352,15 +345,11 @@ If there is no such subarray, return `0` instead.
 
 #### Example
 ```
-inputs:
-    arr: [2, 3, 1, 2, 4, 3],
-    target: 7
+input: arr = [2, 3, 1, 2, 4, 3], target = 7
 output: 2
 How: sub array [4, 3] has sum >= 7
 
-inputs:
-    arr: [1, 3, 6, 2, 1],
-    target: 4
+input: arr = [1, 3, 6, 2, 1], target = 4
 output: 1
 How: sub array [6] has sum >= 4
 ```
@@ -416,8 +405,7 @@ Given a positive integer `n`, write an algorithm to return the number of prime n
 ```
 input: 1000
 output: 168
-How:
-    There are 168 prime numbers between 0 and 1000 inclusive.
+How: There are 168 prime numbers between 0 and 1000 inclusive.
 ```
 """,
         "test_cases": """
@@ -575,9 +563,7 @@ Given two strings `text1` and `text2`, return their longest common substring. If
 
 #### Example
 ```
-input:
-    text1: "brain"
-    text2: 'drain'
+input: text1 = "brain", text2 = 'drain'
 output: 'rain'
 ```
 """,
@@ -640,14 +626,10 @@ Return the sentence after the replacement.
 
 #### Example
 ```
-input:
-    roots = ["cat", "bat", "rat"],
-    sentence = "the cattle was rattled by the battery"
+input: roots = ["cat", "bat", "rat"], sentence = "the cattle was rattled by the battery"
 output: "the cat was rat by the bat"
 
-input:
-    roots = ["a", "b", "c"],
-    sentence = "aadsfasf absbs bbab cadsfafs"
+input: roots = ["a", "b", "c"], sentence = "aadsfasf absbs bbab cadsfafs"
 output: "a a b c"
 ```
 """,
@@ -672,10 +654,7 @@ You are allowed to add a fraction of an item.
 
 #### Example
 ```
-inputs:
-  capacity = 50
-  weights = [10, 20, 30]
-  values = [60, 100, 120]
+inputs: capacity = 50, weights = [10, 20, 30], values = [60, 100, 120]
 output: 240
 ```
 """,
@@ -699,9 +678,7 @@ Given an array `arr` and `target`, return the total number of contigous subarray
 
 #### Example
 ```
-inputs:
-  arr = [13, -1, 8, 12, 3, 9]
-  target = 12
+inputs: arr = [13, -1, 8, 12, 3, 9], target = 12
 output: 3
 How: [13, -1], [12] and [3, 9]
 ```
@@ -731,9 +708,7 @@ The path does not need to start or end at the root or a leaf, but it must go dow
 
 #### Example
 ```
-inputs:
-  root = [10, 5, -3, 3, 2, None, 11, 3, -2, None, 1]
-  target = 8
+inputs: root = [10, 5, -3, 3, 2, None, 11, 3, -2, None, 1], target = 8
 output: 3
 ```
 """,
@@ -817,11 +792,7 @@ Return a tuple of maximum value and selected items
 
 #### Example
 ```
-inputs:
-  capacity = 50
-  weights = [10, 20, 30]
-  values = [60, 100, 120]
-
+input: capacity = 50, weights = [10, 20, 30], values = [60, 100, 120]
 output: (220, [0, 1, 1])
 ```
 """,
@@ -984,9 +955,7 @@ Given the `root` of a binary tree and an integer `target`, return true if the tr
 
 #### Example
 ```
-input:
-  root = [5, 4, 8, 11, None, 13, 4, 7, 2, None, None, None, None, None, 1]
-  target = 18
+input: root = [5, 4, 8, 11, None, 13, 4, 7, 2, None, None, None, None, None, 1], target = 18
 output: True
 ```
 """,
@@ -1012,14 +981,10 @@ Given the `root` of a binary search tree and a value `x`, check whether x is in 
 
 #### Example
 ```
-input:
-  root = [9, 8, 16]
-  x = 5
+input: root = [9, 8, 16], x = 5
 output: False
 
-input:
-  root = [12, 3, 20]
-  x = 3
+input: root = [12, 3, 20], x = 3
 output: True
 ```
 """,
@@ -1269,9 +1234,7 @@ You must write an algorithm that runs in **O(log n)** average time complexity.
 
 #### Example
 ```
-input:
-  arr = [2, 4, 8, 9, 12, 13, 16, 18]
-  y = 18
+input: arr = [2, 4, 8, 9, 12, 13, 16, 18], y = 18
 output: True
 ```
 """,
@@ -1484,8 +1447,8 @@ Each input has exactly one solution.
 
 #### Example
 ```
-- Input → nums = [2, 7, 1, 15], target = 9
-- Output → [0, 1] (because 2 + 7 = 9)
+- Input: nums = [2, 7, 1, 15], target = 9
+- Output: [0, 1] (because 2 + 7 = 9)
 ```
 """,
         "test_cases": """
@@ -1511,7 +1474,7 @@ Given two strings `str1` and `str2`, both lowercase, return their longest common
 
 #### Example
 ```
-Input: str1 = "mountain", text2 = "man"
+Input: str1 = "mountain", str2 = "man"
 Output: 'man'
 
 Input: str1 = "dent", str2 = "crab"
@@ -1873,14 +1836,10 @@ Return -1 if it isn't possible to connect all n cities.
 
 #### Example
 ```
-inputs:
-    n = 3,
-    connections = [[1, 2, 5], [1, 3, 6], [2, 3, 1]]
+input: n = 3, connections = [[1, 2, 5], [1, 3, 6], [2, 3, 1]]
 output: 6
 
-inputs:
-    n = 4,
-    connections = [[1, 2, 3], [3, 4, 4]]
+input: n = 4, connections = [[1, 2, 3], [3, 4, 4]]
 output: -1
 ```
 """,
@@ -2577,10 +2536,8 @@ Are your hands tied without python's itertools 😅?
 
 ### Example
 ```
-input:
-    string: "abcd",
-    k: 3
-output: 'abc', 'abd', 'acd', 'bcd'
+input: s = "abcd", k = 3
+output: ['abc', 'abd', 'acd', 'bcd']
 ```
 """,
         "test_cases": """
@@ -2707,9 +2664,7 @@ Add the two numbers and return the sum as a linked list. You may assume the two 
 
 ### Example
 ```
-input:
-  head1 = [2, 4, 3]
-  head2 = [5, 6, 4]
+input: head1 = [2, 4, 3], head2 = [5, 6, 4]
 output: [7, 0, 8]
 explanation: 342 + 465 = 807
 ```
@@ -2796,9 +2751,7 @@ Given two sorted linked lists, `head1` and `head2`. Merge them into one sorted l
 
 ### Example
 ```
-input:
-  head1 = [2, 4, 6, 6, 12, 22]
-  head2 = [3, 7, 8, 9]
+input: head1 = [2, 4, 6, 6, 12, 22], head2 = [3, 7, 8, 9]
 output: [2, 3, 4, 6, 6, 7, 8, 9, 12, 22]
 ```
 """,
