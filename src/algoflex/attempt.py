@@ -1,6 +1,7 @@
+from textual import on
 from textual.app import App
-from textual.widgets import TextArea, Footer, TabbedContent
-from textual.containers import Horizontal
+from textual.widgets import TextArea, Footer, TabbedContent, Button
+from textual.containers import Horizontal, Vertical, VerticalGroup
 from textual.screen import Screen
 from textual.binding import Binding
 from algoflex.custom_widgets import Title, Problem
@@ -11,6 +12,7 @@ from tinydb import Query
 from time import monotonic
 
 KV = Query()
+stats = get_db()
 
 
 class AttemptScreen(Screen):
@@ -39,14 +41,13 @@ class AttemptScreen(Screen):
         question = questions.get(self.problem_id, {})
         description = question.get("markdown", "")
         code = question.get("code", "")
-        stats = get_db()
         s = stats.get(KV.problem_id == self.problem_id) or {}
         recent_code, saved_code = s.get("recent_code", ""), s.get("saved_code", "")
 
         yield Title()
         with Horizontal():
             yield Problem(description)
-            with TabbedContent("Attempt", "Last Solution", "Saved Solution"):
+            with TabbedContent("Attempt", "Recent Solution", "Saved Solution"):
                 yield TextArea(
                     code,
                     show_line_numbers=True,
@@ -63,16 +64,23 @@ class AttemptScreen(Screen):
                     read_only=True,
                     placeholder="# Recent correct submitted solution will be shown here.",
                 )
-                yield TextArea(
-                    saved_code,
-                    show_line_numbers=True,
-                    language="python",
-                    compact=True,
-                    tab_behavior="indent",
-                    placeholder="# You can save a solution here for future reference",
-                )
+                with VerticalGroup():
+                    yield TextArea(
+                        saved_code,
+                        show_line_numbers=True,
+                        language="python",
+                        compact=True,
+                        tab_behavior="indent",
+                        placeholder="# You can save a solution here for future reference",
+                    )
+                    yield Button("Default", id="save")
 
         yield Footer()
+
+    @on(Button.Pressed, "#save")
+    def save_code(self):
+        code = self.query(TextArea)[1]
+        stats.upsert({"saved_code": code.text}, KV.problem_id == self.problem_id)
 
     def action_submit(self):
         code = self.query_one(TextArea)
