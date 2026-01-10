@@ -1555,15 +1555,18 @@ Output: false
 """,
         "title": "Can you reach the last index?",
         "level": "Steady",
+        "code": """ 
+def can_reach_end(nums: list[int]) -> bool:
+"""
         "test_cases": """
         test_cases = [
-            [[[2, 3, 1, 1, 4]], True],
-            [[[0]], True],
-            [[[2, 1, 1, 0, 4]], False],
-            [[[i for i in range(200_000)]], False],
-            [[[1 for _ in range(200_000)]], True],
-            [[[0, 0]], False],
-            [[[200_000] + [0] * 200_000], True],
+            [can_reach_end([2, 3, 1, 1, 4]), True],
+            [can_reach_end([0]), True],
+            [can_reach_end([2, 1, 1, 0, 4]), False],
+            [can_reach_end([i for i in range(200_000)]), False],
+            [can_reach_end([1 for _ in range(200_000)]), True],
+            [can_reach_end([0, 0]), False],
+            [can_reach_end([200_000] + [0] * 200_000), True],
         ]
         """,
     },
@@ -1587,13 +1590,16 @@ How: jump 1 step to index 1, 3 steps to index 4 then 1 step to the last index.
 """,
         "title": "Min jumps to reach last index",
         "level": "Steady",
+        "code": """ 
+def min_jumps(nums: list[int]) -> int:
+"""
         "test_cases": """
         test_cases = [
-            [[[2, 3, 1, 1, 4]], 2],
-            [[[1]], 0],
-            [[[1, 5]], 1],
-            [[[1 for _ in range(200_000)]], 199_999],
-            [[[200_000] + [0] * 200_000], 1],
+            [min_jumps([2, 3, 1, 1, 4]), 2],
+            [min_jumps([1]), 0],
+            [min_jumps([1, 5]), 1],
+            [min_jumps([1 for _ in range(200_000)]), 199_999],
+            [min_jumps([200_000] + [0] * 200_000), 1],
         ]
         """,
     },
@@ -1604,22 +1610,25 @@ Given an integer array `nums` where `nums[i]` represents the maximum forward or 
 
 #### Example
 ```
-Input: arr = [4,2,3,0,3,1,2], start = 5
+Input: nums = [4,2,3,0,3,1,2], start = 5
 Output: true
 How: index 5 -> 4 -> 1 -> 3 or 5 -> 6 -> 4 -> 1 -> 3
 
-Input: arr = [3,0,2,1,2], start = 2
+Input: nums = [3,0,2,1,2], start = 2
 Output: false
 How: There is no way to get to index 1 starting from index 2.
 ```
 """,
         "title": "Jump to zero",
         "level": "Steady",
+        "code": """ 
+def can_jump_to_zero(nums: list[int], start: int) -> bool:
+"""
         "test_cases": """
         test_cases = [
-            [[[4, 2, 3, 0, 3, 1, 2], 0], True],
-            [[[3, 0, 2, 1, 2], 2], False],
-            [[[4, 2, 3, 0, 3, 1, 2], 5], True],
+            [can_jump_to_zero([4, 2, 3, 0, 3, 1, 2], 0), True],
+            [can_jump_to_zero([3, 0, 2, 1, 2], 2), False],
+            [can_jump_to_zero([4, 2, 3, 0, 3, 1, 2], 5), True],
         ]
         """,
     },
@@ -1641,13 +1650,16 @@ How:  Only one boat, no adjacent boats to worry about.
 """,
         "title": "Max loot",
         "level": "Steady",
+        "code": """ 
+def max_loot(nums: list[int]) -> int:
+"""
         "test_cases": """
         test_cases = [
-            [[[1, 2, 3, 1]], 4],
-            [[[1, 7, 2, 1, 6]], 13],
-            [[[1, 2]], 2],
-            [[[3]], 3],
-            [[[i for i in range(0, 100_000, 100)]], 25_000_000],
+            [max_loot([1, 2, 3, 1]), 4],
+            [max_loot([1, 7, 2, 1, 6]), 13],
+            [max_loot([1, 2]), 2],
+            [max_loot([3]), 3],
+            [max_loot([i for i in range(0, 100_000, 100)]), 25_000_000],
         ]
         """,
     },
@@ -1665,12 +1677,15 @@ How: Cannot rob boats 1 and 3 for total of 6 because they are adjacent. So rob b
 """,
         "title": "Max loot circle",
         "level": "Steady",
+        "code": """ 
+def max_loot_circle(nums: list[int]) -> int:
+"""
         "test_cases": """
         test_cases = [
-            [[[1, 2, 3, 1]], 4],
-            [[[1, 7, 2, 1, 6]], 13],
-            [[[1, 2, 3]], 3],
-            [[[i for i in range(0, 100_000, 100)]], 25_000_000],
+            [max_loot_circle([1, 2, 3, 1]), 4],
+            [max_loot_circle([1, 7, 2, 1, 6]), 13],
+            [max_loot_circle([1, 2, 3]), 3],
+            [max_loot_circle([i for i in range(0, 100_000, 100)]), 25_000_000],
         ]
         """,
     },
@@ -1690,11 +1705,14 @@ How: To take course 1 you first need to take course 0 but to take course 0 you n
 """,
         "title": "Course schedule",
         "level": "Steady",
+        "code": """ 
+can_finish(n: int, courses: list[int]) -> bool:
+"""
         "test_cases": """
         test_cases = [
-            [[2, [[1, 0]]], [0, 1]],
-            [[4, [[1, 0], [2, 0], [3, 1], [3, 2]]], [0, 1, 2, 3]],
-            [[1, []], [0]],
+            [can_finish(2, [[1, 0], [0, 1]]), False)
+            [can_finish(4, [[1, 0], [2, 0], [3, 1], [3, 2]]), True],
+            [can_finish(1, []), True],
         ]
         """,
     },
@@ -1722,17 +1740,20 @@ Output: [3,4]
 """,
         "title": "Minimum height trees",
         "level": "Steady",
+        "code": """ 
+def min_height(n: int, edges: list[list[int]]) -> list[int]:
+"""
         "test_cases": """
         test_cases = [
-            [[4, [[1, 0], [1, 2], [1, 3]]], [1]],
-            [[6, [[3, 0], [3, 1], [3, 2], [3, 4], [5, 4]]], [3, 4]],
+            [min_height(4, [[1, 0], [1, 2], [1, 3]]), [1]],
+            [min_height(6, [[3, 0], [3, 1], [3, 2], [3, 4], [5, 4]]), [3, 4]],
         ]
         """,
     },
     54: {
         "markdown": """
 ### Longest common prefix
-Given an array of strings `strs`, all lowercase, return the longest common prefix of all the strings. 
+Given an array of strings `strs` return the longest common prefix of all the strings. 
 
 #### Example
 ```
@@ -1745,48 +1766,20 @@ Output: ""
 """,
         "title": "Longest common prefix",
         "level": "Steady",
+        "code": """ 
+def longest_common_prefix(strs: list[str]) -> str:
+"""
         "test_cases": """
         test_cases = [
-            [[["flower", "flow", "flight"]], "fl"],
-            [[["dog", "racecar", "car"]], ""],
-            [
-                [
-                    [
-                        "algology",
-                        "algologies",
-                        "algologists",
-                        "algometer",
-                        "algometric",
-                        "algometry",
-                        "algophobia",
-                        "algologically",
-                        "algorithm",
-                        "algorism",
-                    ]
-                ],
-                "algo",
-            ],
-            [[["ORGANOMETALLICS", "ORGANOPHOSPHATE", "ORGANOTHERAPY "]], "ORGANO"],
-            [[["lower", "low", "light"]], "l"],
-            [
-                [
-                    [
-                        "SYSTEMATISE",
-                        "SYSTEMATISED",
-                        "SYSTEMATISER",
-                        "SYSTEMATISERS",
-                        "SYSTEMATISES",
-                        "SYSTEMATISING",
-                        "SYSTEMATISM",
-                        "SYSTEMATISMS",
-                        "SYSTEMATIST",
-                    ]
-                ],
-                "SYSTEMATIS",
-            ],
-            [[["garden", "gardener", "gardened", "gardenful", "gardenia"]], "garden"],
-            [[["flytrap", "flyway", "flyweight", "flywheel"]], "fly"],
-            [[["flower", "flow", ""]], ""],
+            [longest_common_prefix(["flower", "flow", "flight"]), "fl"],
+            [longest_common_prefix(["dog", "racecar", "car"]), ""],
+            [longest_common_prefix([ "algology", "algologies", "algologists", "algometer", "algometric", "algometry", "algophobia", "algologically", "algorithm", "algorism"]), "algo"],
+            [longest_common_prefix(["ORGANOMETALLICS", "ORGANOPHOSPHATE", "ORGANOTHERAPY "]), "ORGANO"],
+            [longest_common_prefix(["lower", "low", "light"]), "l"],
+            [longest_common_prefix([ "SYSTEMATISE", "SYSTEMATISED", "SYSTEMATISER", "SYSTEMATISERS", "SYSTEMATISES", "SYSTEMATISING", "SYSTEMATISM", "SYSTEMATISMS", "SYSTEMATIST"]), "SYSTEMATIS"],
+            [longest_common_prefix(["garden", "gardener", "gardened", "gardenful", "gardenia"]), "garden"],
+            [longest_common_prefix(["flytrap", "flyway", "flyweight", "flywheel"]), "fly"],
+            [longest_common_prefix(["flower", "flow", ""]), ""],
         ]
         """,
     },
@@ -1807,48 +1800,15 @@ Output: 700
 """,
         "title": "Cheapest flight with at most k stops",
         "level": "Steady",
+        "code": """ 
+def cheapest_flight(n: int, flights: list[list[int]], src: int, dst: int, k: int) -> int:
+"""
         "test_cases": """
         test_cases = [
-            [
-                [
-                    4,
-                    [[0, 1, 100], [1, 2, 100], [2, 0, 100], [1, 3, 600], [2, 3, 200]],
-                    0,
-                    3,
-                    1,
-                ],
-                700,
-            ],
-            [
-                [
-                    4,
-                    [[0, 1, 100], [1, 2, 100], [2, 0, 100], [1, 3, 600], [2, 3, 200]],
-                    0,
-                    3,
-                    2,
-                ],
-                400,
-            ],
-            [
-                [
-                    3,
-                    [[0, 1, 100], [1, 2, 100], [0, 2, 500]],
-                    0,
-                    2,
-                    1,
-                ],
-                200,
-            ],
-            [
-                [
-                    3,
-                    [[0, 1, 100], [1, 2, 100], [0, 2, 500]],
-                    0,
-                    2,
-                    0,
-                ],
-                500,
-            ],
+            [cheapest_flight(4, [[0, 1, 100], [1, 2, 100], [2, 0, 100], [1, 3, 600], [2, 3, 200]], 0, 3, 1), 700],
+            [cheapest_flight(4, [[0, 1, 100], [1, 2, 100], [2, 0, 100], [1, 3, 600], [2, 3, 200]], 0, 3, 2), 400],
+            [cheapest_flight(3, [[0, 1, 100], [1, 2, 100], [0, 2, 500]], 0, 2, 1), 200],
+            [cheapest_flight(3, [[0, 1, 100], [1, 2, 100], [0, 2, 500]], 0, 2, 0), 500],
         ]
         """,
     },
@@ -1869,40 +1829,39 @@ Output: 2
 """,
         "title": "Network delay time",
         "level": "Steady",
+        "code": """ 
+def min_time(times: list[list[int]], n: int, k: int) -> int:
+"""
         "test_cases": """
         test_cases = [
-            [[[[2, 1, 1], [2, 3, 1], [3, 4, 1]], 4, 2], 2],
-            [[[[1, 2, 1]], 2, 1], 1],
-            [[[[1, 2, 1]], 4, 2], -1],
+            [min_time([[2, 1, 1], [2, 3, 1], [3, 4, 1]], 4, 2), 2],
+            [min_time([[1, 2, 1]], 2, 1), 1],
+            [min_time([[1, 2, 1]], 4, 2), -1],
         ]
         """,
     },
     57: {
         "markdown": """
 ### Reachable cities
-Given `n` cities labelled 0 to n - 1 and an array `edges` where edges[i] = [from, to, weight] represents a weighted bidirectional edge between cities `from` and `to`.  Return the smallest number of cities that are reachable and whose distance is at most `distanceThreshold`. 
+Given `n` cities labelled 0 to n - 1 and an array `edges` where edges[i] = [from, to, weight] represents a weighted bidirectional edge between cities `from` and `to`.  Return the smallest number of cities that are reachable and whose distance is at most `k`. 
 
 If multiple such cities, return the one with the greatest number. 
 
 #### Examples
 ```
-Input: n = 4, edges = [[0,1,3],[1,2,1],[1,3,4],[2,3,1]], distanceThreshold = 4
+Input: n = 4, edges = [[0,1,3],[1,2,1],[1,3,4],[2,3,1]], k = 4
 Output: 3
 ```
 """,
         "title": "Reachable cities",
         "level": "Steady",
+        "code": """ 
+def reachable_cities(n: int, edges: list[list[int]], k: int) -> int:
+"""
         "test_cases": """
         test_cases = [
-            [[4, [[0, 1, 3], [1, 2, 1], [1, 3, 4], [2, 3, 1]], 4], 3],
-            [
-                [
-                    5,
-                    [[0, 1, 2], [0, 4, 8], [1, 2, 3], [1, 4, 2], [2, 3, 1], [3, 4, 1]],
-                    2,
-                ],
-                0,
-            ],
+            [reachable_cities(4, [[0, 1, 3], [1, 2, 1], [1, 3, 4], [2, 3, 1]], 4), 3],
+            [reachable_cities(5, [[0, 1, 2], [0, 4, 8], [1, 2, 3], [1, 4, 2], [2, 3, 1], [3, 4, 1]], 2), 0],
         ]
         """,
     },
@@ -1932,10 +1891,13 @@ output: -1
 """,
         "title": "Minimum spanning trees",
         "level": "Steady",
+        "code": """ 
+def mst(n: int, connections: list[list[int]]) -> int:
+"""
         "test_cases": """
         test_cases = [
-            [[3, [[1, 2, 5], [1, 3, 6], [2, 3, 1]]], 6],
-            [[4, [[1, 2, 3], [3, 4, 4]]], -1],
+            [mst(3, [[1, 2, 5], [1, 3, 6], [2, 3, 1]]), 6],
+            [mst(4, [[1, 2, 3], [3, 4, 4]]), -1],
         ]
         """,
     },
@@ -1957,43 +1919,43 @@ Output: [[0,1]]
 """,
         "title": "Critical connections",
         "level": "Edgy",
+        "code": """ 
+def critical_connections(n: int, connections: list[list[int]]) -> list[list]:
+"""
         "test_cases": """
         test_cases = [
-            [[4, [[0, 1], [1, 2], [2, 0], [1, 3]]], [[1, 3]]],
-            [
-                [7, [[0, 1], [1, 2], [2, 0], [1, 3], [1, 4], [4, 5], [5, 6]]],
-                [[1, 3], [5, 6], [4, 5], [1, 4]],
-            ],
-            [
-                [7, [[0, 1], [1, 2], [2, 0], [1, 3], [1, 4], [4, 5], [5, 6], [2, 6]]],
-                [[1, 3]],
-            ],
+            [critical_connections(4, [[0, 1], [1, 2], [2, 0], [1, 3]]), [[1, 3]]],
+            [critical_connections(7, [[0, 1], [1, 2], [2, 0], [1, 3], [1, 4], [4, 5], [5, 6]]), [[1, 3], [5, 6], [4, 5], [1, 4]]],
+            [critical_connections(7, [[0, 1], [1, 2], [2, 0], [1, 3], [1, 4], [4, 5], [5, 6], [2, 6]]), [[1, 3]]],
         ]
         """,
     },
     60: {
         "markdown": """
 ### Job scheduling
-Given arrays `startTime`, `endTime` and `profit` representing `n` jobs with the ith job scheduled to be done from startTime[i] to endTime[i] generating profit[i]. Find the maximum profit you can make from the jobs
+Given arrays `start_time`, `end_time` and `profit` representing `n` jobs with the ith job scheduled to be done from start_time[i] to end_time[i] generating profit[i]. Find the maximum profit you can make from the jobs
 
 If you choose a job that ends at time x you can be able to choose another one that starts at time x. 
 
 #### Example
 ```
-Input: startTime = [1,2,3,3], endTime = [3,4,5,6], profit = [50,10,40,70]
+Input: start_time = [1,2,3,3], end_time = [3,4,5,6], profit = [50,10,40,70]
 Output: 120
 
-Input: startTime = [1,1,1], endTime = [2,3,4], profit = [5,6,4]
+Input: start_time = [1,1,1], end_time = [2,3,4], profit = [5,6,4]
 Output: 6
 ```
 """,
         "title": "Job scheduling",
         "level": "Steady",
+        "code": """ 
+def job_schedule(start_time: list[int], end_time: list[int], profit: list[int]) -> int:
+"""
         "test_cases": """
         test_cases = [
-            [[[1, 2, 3, 3], [3, 4, 5, 6], [50, 10, 40, 70]], 120],
-            [[[1, 2, 3, 4, 6], [3, 5, 10, 6, 9], [20, 20, 100, 70, 60]], 150],
-            [[[1, 1, 1], [2, 3, 4], [5, 6, 4]], 6],
+            [job_schedule([1, 2, 3, 3], [3, 4, 5, 6], [50, 10, 40, 70]), 120],
+            [job_schedule([1, 2, 3, 4, 6], [3, 5, 10, 6, 9], [20, 20, 100, 70, 60]), 150],
+            [job_schedule([1, 1, 1], [2, 3, 4], [5, 6, 4]), 6],
         ]
         """,
     },
@@ -2015,18 +1977,21 @@ How: 11 = 5 + 5 + 1
 """,
         "title": "Coin change I",
         "level": "Steady",
+        "code": """ 
+def min_coins(coins: list[int], amount: int) -> int:
+"""
         "test_cases": """
         test_cases = [
-            [[[1, 2, 5], 11], 3],
-            [[[1, 2, 5, 10], 11], 2],
-            [[[1], 0], 0],
-            [[[1, 2, 5, 10, 20], 11], 2],
-            [[[1, 2, 5, 10, 20], 110], 6],
-            [[[2, 5], 3], -1],
-            [[[1, 2, 5, 10, 20], 63], 5],
-            [[[1, 2, 5, 10, 20, 50], 16], 3],
-            [[[1, 2, 5, 10, 20, 50], 28], 4],
-            [[[1, 2, 5, 10, 20, 50], 77], 4],
+            [min_coins([1, 2, 5], 11), 3],
+            [min_coins([1, 2, 5, 10], 11), 2],
+            [min_coins([1], 0), 0],
+            [min_coins([1, 2, 5, 10, 20], 11), 2],
+            [min_coins([1, 2, 5, 10, 20], 110), 6],
+            [min_coins([2, 5], 3), -1],
+            [min_coins([1, 2, 5, 10, 20], 63), 5],
+            [min_coins([1, 2, 5, 10, 20, 50], 16), 3],
+            [min_coins([1, 2, 5, 10, 20, 50], 28), 4],
+            [min_coins([1, 2, 5, 10, 20, 50], 77), 4],
         ]
         """,
     },
@@ -2045,16 +2010,19 @@ Output: 11
 """,
         "title": "Min cost tickets",
         "level": "Steady",
+        "code": """ 
+min_cost_tickets(days: list[int], costs: list[int]) -> int:
+"""
         "test_cases": """
         test_cases = [
-            [[[1, 4, 6, 7, 8, 20], [2, 7, 15]], 11],
-            [[[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 30, 31], [2, 7, 15]], 17],
-            [[[1, 2, 3, 4, 5, 6, 7], [2, 7, 15]], 7],
-            [[[i for i in range(1, 31)], [2, 7, 15]], 15],
-            [[[1, 4, 6], [2, 7, 15]], 6],
-            [[[5, 6, 7, 8, 9, 10, 11], [2, 7, 15]], 7],
-            [[[5, 6, 7, 8, 9, 10, 11, 210, 211, 212, 213, 365], [2, 7, 15]], 16],
-            [[[i for i in range(1, 366)], [2, 7, 15]], 190],
+            [min_cost_tickets([1, 4, 6, 7, 8, 20], [2, 7, 15]), 11],
+            [min_cost_tickets([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 30, 31], [2, 7, 15]), 17],
+            [min_cost_tickets([1, 2, 3, 4, 5, 6, 7], [2, 7, 15]), 7],
+            [min_cost_tickets([i for i in range(1, 31)], [2, 7, 15]), 15],
+            [min_cost_tickets([1, 4, 6], [2, 7, 15]), 6],
+            [min_cost_tickets([5, 6, 7, 8, 9, 10, 11], [2, 7, 15]), 7],
+            [min_cost_tickets([5, 6, 7, 8, 9, 10, 11, 210, 211, 212, 213, 365], [2, 7, 15]), 16],
+            [min_cost_tickets([i for i in range(1, 366)], [2, 7, 15]), 190],
         ]
         """,
     },
@@ -2076,13 +2044,16 @@ root1 = array_to_tree([6, 3, 9, None, 5, 4, 9])
 root2 = array_to_tree([3,2,3,None,3,None,1])
 root3 = array_to_tree([3,4,5,1,3,None,1])
 test_cases = [
-    [[root1], 24],
-    [[root2], 7],
-    [[root3], 9],
+    [max_loot_tree(root1), 24],
+    [max_loot_tree(root2), 7],
+    [max_loot_tree(root3), 9],
 ]
 """,
         "title": "Max loot binary tree",
         "level": "Steady",
+        "code": """ 
+def max_loot_tree(root):
+"""
     },
     64: {
         "markdown": """
@@ -2102,13 +2073,16 @@ Output: 3
 root1 = array_to_tree([3, 5, 1, 6, 2, 0, 8, None, None, 7, 4])
 root2 = array_to_tree([1, 2])
 test_cases = [
-    [[root1, 5, 1], 3],
-    [[root1, 5, 4], 5],
-    [[root2, 1, 2], 1],
+    [lca(root1, 5, 1), 3],
+    [lca(root1, 5, 4), 5],
+    [lca(root2, 1, 2), 1],
 ]
 """,
         "title": "Lowest common ancestor",
         "level": "Steady",
+        "code": """ 
+def lca(root, p, q):
+"""
     },
     65: {
         "markdown": """
@@ -2136,14 +2110,17 @@ t5 = array_to_tree([])
 t6 = array_to_tree([1, 2])
 t7 = array_to_tree([1, None, 2])
 test_cases = [
-    [[t1, t2], True],
-    [[t2, t3], False],
-    [[t4, t5], True],
-    [[t6, t7], False],
+    [same_tree(t1, t2), True],
+    [same_tree(t2, t3), False],
+    [same_tree(t4, t5), True],
+    [same_tree(t6, t7), False],
 ]
 """,
         "title": "Same binary tree",
         "level": "Breezy",
+        "code": """ 
+def same_tree(p, q):
+"""
     },
     66: {
         "markdown": """
@@ -2176,12 +2153,15 @@ Output: false
 t1 = array_to_tree([2, 1, 3, None, None, 0, 1])
 t2 = array_to_tree([0])
 test_cases = [
-    [[t1], True],
-    [[t2], False],
+    [boolean_tree(t1), True],
+    [boolean_tree(t2), False],
 ]
 """,
         "title": "Boolean binary tree",
         "level": "Breezy",
+        "code": """ 
+def boolean_tree(root):
+"""
     },
     67: {
         "markdown": """
@@ -2205,13 +2185,16 @@ t1 = array_to_tree([1, 2, 3, None, 4, None, 5])
 t2 = array_to_tree([1, 2, 3, None, 4])
 t3 = array_to_tree([1, 2, 3, 4])
 test_cases = [
-    [[t1, 5, 4], True],
-    [[t2, 2, 3], False],
-    [[t3, 4, 3], False],
+    [are_cousins(t1, 5, 4), True],
+    [are_cousins(t2, 2, 3), False],
+    [are_cousins(t3, 4, 3), False],
 ]
 """,
         "title": "Binary tree cousins",
         "level": "Steady",
+        "code": """ 
+def are_cousins(root, x, y):
+"""
     },
     68: {
         "markdown": """
@@ -2232,11 +2215,14 @@ output: [[2, 11]]
 """,
         "title": "Merge intervals",
         "level": "Steady",
+        "code": """ 
+def merge_intervals(intervals: list[list[int]]) -> list[list[int]]:
+"""
         "test_cases": """
 test_cases = [
-    [[[[1,3],[2,6],[8,10],[15,18]]], [[1,6],[8,10],[15,18]]],
-    [[[[1, 5], [5, 10]]], [[1, 10]]],
-    [[[[3, 11], [2, 6]]], [[2, 11]]],
+    [merge_intervals([[1,3],[2,6],[8,10],[15,18]]), [[1,6],[8,10],[15,18]]],
+    [merge_intervals([[1, 5], [5, 10]]), [[1, 10]]],
+    [merge_intervals([[3, 11], [2, 6]]), [[2, 11]]],
 ]
 """,
     },
@@ -2259,12 +2245,14 @@ output: [[0,0,0]]
 """,
         "title": "Triplets sum equals zero",
         "level": "Steady",
+        "code": """ 
+def zero_sum_triplets(nums: list[int]) -> list[list[int]]:
+"""
         "test_cases": """
 test_cases = [
-    [[[-1,0,1,2,-1,-4]], [[-1,-1,2],[-1,0,1]]
-]
-    [[[0,1,1]], []],
-    [[[0,0,0]], [[0,0,0]]],
+    [zero_sum_triplets([-1,0,1,2,-1,-4]), [[-1,-1,2],[-1,0,1]]]
+    [zero_sum_triplets([0,1,1]), []],
+    [zero_sum_triplets([0,0,0]), [[0,0,0]]],
 ],
 """,
     },
@@ -2288,11 +2276,14 @@ output: 1
 """,
         "title": "Longest increasing subsequence",
         "level": "Steady",
+        "code": """ 
+def lis(nums: list[int]) -> int:
+"""
         "test_cases": """
 test_cases = [
-    [[[0,1,0,3,2,3]], 4],
-    [[[6,6,6,6,6,6,6,6]], 1],
-    [[[10,9,2,5,3,7,101,18]], 4],
+    [lis([0,1,0,3,2,3]), 4],
+    [lis([6,6,6,6,6,6,6,6]), 1],
+    [lis([10,9,2,5,3,7,101,18]), 4],
 ]
 """,
     },
@@ -2314,17 +2305,20 @@ How: 0, 1, 10, 11, 100, 101
 """,
         "title": "Count bits",
         "level": "Breezy",
+        "code": """ 
+def count_bits(n: int) -> list[int]:
+"""
         "test_cases": """
 test_cases = [
-    [[2], [0,1,1]],
-    [[5], [0,1,1,2,1,2]],
+    [count_bits(2), [0,1,1]],
+    [count_bits(5), [0,1,1,2,1,2]],
 ]
 """,
     },
     72: {
         "markdown": """
 ### Trapping rain water
-Given `n` positive integers representing elevation heights where the width of each bar is 1, return how much water can be trapped after rain. 
+Given `n` positive integers `nums` representing elevation heights where the width of each bar is 1, return how much water can be trapped after rain. 
 
 #### Example
 ```
@@ -2337,10 +2331,13 @@ output: 9
 """,
         "title": "Trapping rain water",
         "level": "Edgy",
+        "code": """ 
+def trap_water(nums: list[int]) -> int:
+"""
         "test_cases": """
 test_cases = [
-    [[[0,1,0,2,1,0,1,3,2,1,2,1]], 6],
-    [[[4,2,0,3,2,5]], 9],
+    [trap_water([0,1,0,2,1,0,1,3,2,1,2,1]), 6],
+    [trap_water([4,2,0,3,2,5]), 9],
 ]
 """,
     },
@@ -2362,10 +2359,13 @@ output: "a"
 """,
         "title": "Longest palindromic substring",
         "level": "Steady",
+        "code": """ 
+lps(s: str) -> str:
+"""
         "test_cases": """
 test_cases = [
-    [["babad"], "bab"],
-    [["abcde"], "a"],
+    [lps("babad"), "bab"],
+    [lps("abcde"), "a"],
 ]
 """,
     },
@@ -2387,10 +2387,13 @@ output: 4
 """,
         "title": "Median of two sorted arrays",
         "level": "Edgy",
+        "code": """ 
+median(nums1: list[int], nums2: list[int]) -> float:
+"""
         "test_cases": """
 test_cases = [
-    [[[1,5], [3]], 3],
-    [[[3, 4], [4, 5]], 4],
+    [median([1,5], [3]), 3],
+    [median([3, 4], [4, 5]), 4],
 ]
 """,
     },
@@ -2413,11 +2416,14 @@ output: [1,2]
 """,
         "title": "Most frequent elements",
         "level": "Steady",
+        "code": """ 
+def most_frequent(nums: list[int], k: int) -> list[int]:
+"""
         "test_cases": """
 test_cases = [
-    [[[1,1,1,2,2,3], 2], [1,2]],
-    [[[1,2,1,2,1,2,3,1,3,2], 2], [1,2]],
-    [[[1], 1], [1]],
+    [most_frequent([1,1,1,2,2,3], 2), [1,2]],
+    [most_frequent([1,2,1,2,1,2,3,1,3,2], 2), [1,2]],
+    [most_frequent([1], 1), [1]],
 ]
 """,
     },
@@ -2439,10 +2445,13 @@ output: 3
 """,
         "title": "Connected cities",
         "level": "Steady",
+        "code": """ 
+def connected_cities(adj_mat: list[list[int]]) -> int:
+"""
         "test_cases": """
 test_cases = [
-    [[[[1,1,0],[1,1,0],[0,0,1]]], 2],
-    [[[[1,0,0],[0,1,0],[0,0,1]]], 3],
+    [connected_cities([[1,1,0],[1,1,0],[0,0,1]]), 2],
+    [connected_cities([[1,0,0],[0,1,0],[0,0,1]]), 3],
 ]
 """,
     },
@@ -2466,10 +2475,13 @@ output: [[1,1],[1,1]]
 """,
         "title": "Conway's game of life",
         "level": "Steady",
+        "code": """ 
+def life_game(boars: list[list[int]]) -> list[list[int]]:
+"""
         "test_cases": """
 test_cases = [
-    [[[[0,1,0],[0,0,1],[1,1,1],[0,0,0]]], [[0,0,0],[1,0,1],[0,1,1],[0,1,0]]],
-    [[[[1,1],[1,0]]], [[1,1],[1,1]]],
+    [life_game([[0,1,0],[0,0,1],[1,1,1],[0,0,0]]), [[0,0,0],[1,0,1],[0,1,1],[0,1,0]]],
+    [life_game([[1,1],[1,0]]), [[1,1],[1,1]]],
 ]
 """,
     },
@@ -2493,11 +2505,14 @@ output: 10
 """,
         "title": "Min CPU intervals",
         "level": "Steady",
+        "code": """ 
+def min_intervals(tasks: list[str], n: int) -> int:
+"""
         "test_cases": """
 test_cases = [
-    [[["A","A","A","B","B","B"], 2], 8],
-    [[["A","C","A","B","D","B"], 1], 6],
-    [[["A","A","A", "B","B","B"], 3], 10],
+    [min_intervals(["A","A","A","B","B","B"], 2), 8],
+    [min_intervals(["A","C","A","B","D","B"], 1), 6],
+    [min_intervals(["A","A","A", "B","B","B"], 3), 10],
 ]
 """,
     },
@@ -2519,10 +2534,13 @@ output: [0, 0, 9, 0, 0]
 """,
         "title": "Product of array except self",
         "level": "Steady",
+        "code": """ 
+def array_product(nums: list[int]) -> list[int]:
+"""
         "test_cases": """
 test_cases = [
-    [[[1, 2, 3, 4]], [24, 12, 8, 6]],
-    [[[-1, 1, 0, -3, -3]], [0, 0, 9, 0, 0]],
+    [array_product([1, 2, 3, 4]), [24, 12, 8, 6]],
+    [array_product([-1, 1, 0, -3, -3]), [0, 0, 9, 0, 0]],
 ]
 """,
     },
