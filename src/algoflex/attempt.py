@@ -46,7 +46,7 @@ class AttemptScreen(Screen):
         yield Title()
         with Horizontal():
             yield Problem(description)
-            with TabbedContent(*["Attempt", "Recent Solution", "Saved Solution"]):
+            with TabbedContent("Attempt", "Last Solution", "Saved Solution"):
                 yield TextArea(
                     code,
                     show_line_numbers=True,
@@ -59,7 +59,7 @@ class AttemptScreen(Screen):
                     show_line_numbers=True,
                     language="python",
                     compact=True,
-                    tab_behavior="indent",
+                    # tab_behavior="indent",
                     read_only=True,
                     placeholder="# Recent correct submitted solution will be shown here.",
                 )
