@@ -31,27 +31,18 @@ class ResultModal(ModalScreen):
     TEST_CODE = """
 import sys
 
-def truncate(param):
-    s = str(param)
-    if len(s) > 60:
-        return f'{s[:32]}... (truncated {type(param)})'
-    return param
-
-def display(params):
-    return [truncate(param) for param in params]
-
 def run_tests():
     total, passed = len(test_cases), 0
-    for i, [inputs, expected] in enumerate(test_cases):
+    for i, [input, expected] in enumerate(test_cases):
         try:
-            result = solution(*inputs)
-            if result == expected:
+            if input == expected:
                 print(f"[green][b]✓[/] test case {i+1} passed![/]")
                 passed += 1
             else:
-                print(f"[red][b]x[/] test case {i+1} failed![/] \\n\\t[b]inputs[/]: {display(inputs)}\\n\\t[b]got[/]: [red]{result}[/]\\n\\t[b]expected[/]: [green]{expected}[/]")
+                print(f"[red][b]x[/] test case {i+1} failed![/]\\n\\t[b]got[/]: [red]{input}[/]\\n\\t[b]expected[/]: [green]{expected}[/]")
+                return 1
         except Exception as e:
-            print(f"[red][b]x[/] test case {i+1} error![/]\\n\\t[b]error[/]: {e}\\n\\t[b]inputs[/]: {display(inputs)}")
+            print(f"[red][b]x[/] test case {i+1} error![/]\\n\\t[b]error[/]: {e}")
             return 1
     if passed == total:
         print(f"\\n{passed}/{total} passed!")
