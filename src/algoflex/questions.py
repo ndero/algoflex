@@ -114,8 +114,7 @@ test_cases = [
 """,
         "title": "Score tally",
         "level": "Breezy",
-        "code": """
-def score(scores: list[str]) -> int:
+        "code": """def score(scores: list[str]) -> int:
 """,
     },
     1: {
@@ -149,8 +148,7 @@ test_cases = [
 """,
         "title": "Repeated letters",
         "level": "Breezy",
-        "code": """
-def repeated(s: str) -> list:
+        "code": """def repeated(s: str) -> list:
 """,
     },
     2: {
@@ -189,8 +187,7 @@ test_cases = [
 """,
         "title": "Valid matching brackets",
         "level": "Breezy",
-        "code": """
-def is_valid(s: str) -> bool:
+        "code": """def is_valid(s: str) -> bool:
 """,
     },
     3: {
@@ -224,8 +221,7 @@ test_cases = [
 """,
         "title": "Max sum sub array",
         "level": "Breezy",
-        "code": """
-def max_sum(nums: list[int]) -> int:
+        "code": """def max_sum(nums: list[int]) -> int:
 """,
     },
     4: {
@@ -263,8 +259,7 @@ test_cases = [
 """,
         "title": "Max product sub array",
         "level": "Breezy",
-        "code": """
-def max_product(nums: list[int]) -> int:
+        "code": """def max_product(nums: list[int]) -> int:
 """,
     },
     5: {
@@ -297,8 +292,7 @@ test_cases = [
 """,
         "title": "Symmetric difference",
         "level": "Breezy",
-        "code": """
-def symmetric_difference(*arrs):
+        "code": """def symmetric_difference(*arrs):
 
 """,
     },
@@ -332,8 +326,7 @@ test_cases = [
 """,
         "title": "Pairwise",
         "level": "Breezy",
-        "code": """
-def pairwise(arr: list[int], target: int) -> int:
+        "code": """def pairwise(arr: list[int], target: int) -> int:
 """,
     },
     7: {
@@ -364,8 +357,7 @@ test_cases = [
 """,
         "title": "Min length sub array",
         "level": "Steady",
-        "code": """
-def min_len_arr(arr: list[int], target: int) -> int:
+        "code": """def min_len_arr(arr: list[int], target: int) -> int:
 """,
     },
     8: {
@@ -392,8 +384,7 @@ test_cases = [
 """,
         "title": "Min in rotated array",
         "level": "Steady",
-        "code": """
-def rotated_min(arr: list[int]) -> int:
+        "code": """def rotated_min(arr: list[int]) -> int:
 """,
     },
     9: {
@@ -422,8 +413,7 @@ test_cases = [
 """,
         "title": "Count primes",
         "level": "Steady",
-        "code": """
-def count_primes(n: int) -> int:
+        "code": """def count_primes(n: int) -> int:
 """,
     },
     10: {
@@ -448,8 +438,7 @@ test_cases =  [
 """,
         "title": "Single number",
         "level": "Breezy",
-        "code": """
-def single_num(arr: list[int]) -> int:
+        "code": """def single_num(arr: list[int]) -> int:
 """,
     },
     11: {
@@ -480,8 +469,7 @@ test_cases = [
 """,
         "title": "Powers of 2",
         "level": "Breezy",
-        "code": """
-def is_power(n: int) -> bool:
+        "code": """def is_power(n: int) -> bool:
 """,
     },
     12: {
@@ -511,8 +499,7 @@ test_cases = [
 """,
         "title": "Reverse polish notation",
         "level": "Breezy",
-        "code": """
-def rpn(v: list[str]) -> int:
+        "code": """def rpn(v: list[str]) -> int:
 """,
     },
     13: {
@@ -536,8 +523,7 @@ output: 'XXIII'
 """,
         "title": "Roman numerals",
         "level": "Steady",
-        "code": """
-def int_to_roman(n: int) -> 
+        "code": """def int_to_roman(n: int) -> 
 """,
         "test_cases": """
 test_cases = [
@@ -569,8 +555,7 @@ output: 'rain'
 """,
         "title": "Longest common substring",
         "level": "Steady",
-        "code": """
-def lcs(text1: str, text2: str) -> str:
+        "code": """def lcs(text1: str, text2: str) -> str:
 """,
         "test_cases": """
 test_cases = [
@@ -598,8 +583,7 @@ output: False
 """,
         "title": "Happy number",
         "level": "Breezy",
-        "code": """
-def is_happy(n: int) -> bool:
+        "code": """def is_happy(n: int) -> bool:
 """,
         "test_cases": """
 test_cases = [
@@ -635,8 +619,7 @@ output: "a a b c"
 """,
         "title": "Trie/Prefix tree",
         "level": "Steady",
-        "code": """
-def replace(roots: list[str], sentence: str) -> str:
+        "code": """def replace(roots: list[str], sentence: str) -> str:
 """,
         "test_cases": """
 test_cases = [
@@ -660,8 +643,7 @@ output: 240
 """,
         "title": "Fractional knapsack",
         "level": "Breezy",
-        "code": """
-def knapsack(capacity: int, weights: list[int], values: list[int]) -> int:
+        "code": """def knapsack(capacity: int, weights: list[int], values: list[int]) -> int:
 """,
         "test_cases": """
 test_cases = [
@@ -685,8 +667,7 @@ How: [13, -1], [12] and [3, 9]
 """,
         "title": "Subarrays with sum",
         "level": "Breezy",
-        "code": """
-def count_arrs(arr: list[int], target: int) -> int:
+        "code": """def count_arrs(arr: list[int], target: int) -> int:
 """,
         "test_cases": """
 test_cases = [
@@ -724,8 +705,7 @@ test_cases = [
 """,
         "title": "Paths with sum",
         "level": "Steady",
-        "code": """
-def count_paths(root, target):
+        "code": """def count_paths(root, target):
 """,
     },
     20: {
@@ -744,8 +724,7 @@ output: [[], [0]]
 """,
         "title": "Power set",
         "level": "Steady",
-        "code": """
-def power_set(nums: list[int]) -> list[list[int]]:
+        "code": """def power_set(nums: list[int]) -> list[list[int]]:
 """,
         "test_cases": """
 test_cases = [
@@ -769,8 +748,7 @@ output: "hello-world"
 """,
         "title": "Spinal case",
         "level": "Breezy",
-        "code": """
-def spinal_case(s: str) -> str:
+        "code": """def spinal_case(s: str) -> str:
 """,
         "test_cases": """
 test_cases = [
@@ -798,8 +776,7 @@ output: (220, [0, 1, 1])
 """,
         "title": "0/1 knapsack",
         "level": "Breezy",
-        "code": """
-def knapsack(capacity: int, weights: list[int], values: list[int]) -> tuple[int, list[int]]:
+        "code": """def knapsack(capacity: int, weights: list[int], values: list[int]) -> tuple[int, list[int]]:
 """,
         "test_cases": """
 test_cases = [
@@ -823,8 +800,7 @@ How: [1, 5, 5] and [11]
 """,
         "title": "Equal array partitions",
         "level": "Steady",
-        "code": """
-def can_partition(nums: list[int]) -> bool:
+        "code": """def can_partition(nums: list[int]) -> bool:
 """,
         "test_cases": """
 test_cases = [
@@ -857,8 +833,7 @@ output: 1
 """,
         "title": "Max water held",
         "level": "Steady",
-        "code": """ 
-def max_water(nums: list[int]) -> int:
+        "code": """def max_water(nums: list[int]) -> int:
 """,
         "test_cases": """
 test_cases = [
@@ -892,8 +867,7 @@ How:
 """,
         "title": "Climb stairs",
         "level": "Breezy",
-        "code": """ 
-def climb_stairs(n: int) -> int:
+        "code": """def climb_stairs(n: int) -> int:
 """,
         "test_cases": """
 test_cases = [
@@ -932,8 +906,7 @@ How: There are six ways to make change for 15 cents
 """,
         "title": "Ways to make change",
         "level": "Steady",
-        "code": """ 
-def count_ways(cents: int) -> int:
+        "code": """def count_ways(cents: int) -> int:
 """,
         "test_cases": """
 test_cases = [
@@ -970,8 +943,7 @@ test_cases = [
 """,
         "title": "Has path sum",
         "level": "Steady",
-        "code": """ 
-def has_path_sum(root, target):
+        "code": """def has_path_sum(root, target):
 """,
     },
     28: {
@@ -1003,8 +975,7 @@ test_cases = [
 """,
         "title": "Has node BST",
         "level": "Steady",
-        "code": """ 
-def has_node(root, x):
+        "code": """def has_node(root, x):
 """,
     },
     29: {
@@ -1033,8 +1004,7 @@ test_cases = [
 """,
         "title": "BST min",
         "level": "Steady",
-        "code": """ 
-def BST_min(root):
+        "code": """def BST_min(root):
 """,
     },
     30: {
@@ -1066,8 +1036,7 @@ test_cases = [
 """,
         "title": "Balanced tree",
         "level": "Steady",
-        "code": """ 
-def is_balanced(root):
+        "code": """def is_balanced(root):
 """,
     },
     31: {
@@ -1090,8 +1059,7 @@ test_cases = [
 """,
         "title": "Tree in-order traversal",
         "level": "Steady",
-        "code": """ 
-def in_order(root):
+        "code": """def in_order(root):
 """,
     },
     32: {
@@ -1116,8 +1084,7 @@ test_cases = [
 """,
         "title": "Generate parentheses",
         "level": "Steady",
-        "code": """ 
-def generate_parentheses(n: int) -> list[str]:
+        "code": """def generate_parentheses(n: int) -> list[str]:
 """,
     },
     33: {
@@ -1147,8 +1114,7 @@ test_cases = [
 """,
         "title": "Valid BST",
         "level": "Steady",
-        "code": """ 
-def valid_BST(root):
+        "code": """def valid_BST(root):
 """,
     },
     34: {
@@ -1171,8 +1137,7 @@ test_cases = [
 """,
         "title": "Tree level-order traversal",
         "level": "Steady",
-        "code": """ 
-def level_order(root):
+        "code": """def level_order(root):
 """,
     },
     35: {
@@ -1197,8 +1162,7 @@ test_cases = [
 """,
         "title": "Tree leaves",
         "level": "Steady",
-        "code": """ 
-def get_leaves(root):
+        "code": """def get_leaves(root):
 """,
     },
     36: {
@@ -1221,8 +1185,7 @@ test_cases = [
 """,
         "title": "Sum right nodes",
         "level": "Steady",
-        "code": """ 
-def sum_right_nodes(root):
+        "code": """def sum_right_nodes(root):
 """,
     },
     37: {
@@ -1247,8 +1210,7 @@ test_cases = [
 """,
         "title": "Value in array",
         "level": "Breezy",
-        "code": """ 
-def has_value(arr: list[int], target: int) -> bool:
+        "code": """def has_value(arr: list[int], target: int) -> bool:
 """,
     },
     38: {
@@ -1270,8 +1232,7 @@ test_cases = [
 """,
         "title": "Merge sort",
         "level": "Breezy",
-        "code": """ 
-def merge_sort(nums: list[int]) -> list[int]:
+        "code": """def merge_sort(nums: list[int]) -> list[int]:
 """,
     },
     39: {
@@ -1293,8 +1254,7 @@ test_cases = [
 """,
         "title": "Heap sort",
         "level": "Breezy",
-        "code": """ 
-def heap_sort(nums: list[int]) -> list[int]:
+        "code": """def heap_sort(nums: list[int]) -> list[int]:
 """,
     },
     40: {
@@ -1316,8 +1276,7 @@ test_cases = [
 """,
         "title": "Quick sort",
         "level": "Breezy",
-        "code": """ 
-def quick_sort(nums: list[int]) -> list[int]:
+        "code": """def quick_sort(nums: list[int]) -> list[int]:
 """,
     },
     41: {
@@ -1339,8 +1298,7 @@ test_cases = [
 """,
         "title": "Bubble sort",
         "level": "Breezy",
-        "code": """ 
-def bubble_sort(nums: list[int]) -> list[int]:
+        "code": """def bubble_sort(nums: list[int]) -> list[int]:
 """,
     },
     42: {
@@ -1367,8 +1325,7 @@ test_cases = [
 """,
         "title": "Smaller to the right",
         "level": "Edgy",
-        "code": """ 
-def count_smaller(nums: list[int]) -> list[int]:
+        "code": """def count_smaller(nums: list[int]) -> list[int]:
 """,
     },
     43: {
@@ -1400,8 +1357,7 @@ test_cases = [
 """,
         "title": "Majority element",
         "level": "Breezy",
-        "code": """ 
-def majority(nums: list[int]) -> int:
+        "code": """def majority(nums: list[int]) -> int:
 """,
     },
     44: {
@@ -1434,8 +1390,7 @@ test_cases = [
 """,
         "title": "Max profit",
         "level": "Breezy",
-        "code": """ 
-def max_profit(prices: list[int]) -> int:
+        "code": """def max_profit(prices: list[int]) -> int:
 """,
     },
     45: {
@@ -1461,8 +1416,7 @@ test_cases = [
 """,
         "title": "Pair sum equal target",
         "level": "Breezy",
-        "code": """ 
-def pair_sum(nums: list[int], target: int) -> int:
+        "code": """def pair_sum(nums: list[int], target: int) -> int:
 """,
     },
     46: {
@@ -1483,8 +1437,7 @@ Output: ''
 """,
         "title": "Longest common subsequence",
         "level": "Steady",
-        "code": """ 
-def lcs(str1: str, str2: str) -> str:
+        "code": """def lcs(str1: str, str2: str) -> str:
 """,
         "test_cases": """
     test_cases = [
@@ -1513,8 +1466,7 @@ Output: false
 """,
         "title": "Can you reach the last index?",
         "level": "Steady",
-        "code": """ 
-def can_reach_end(nums: list[int]) -> bool:
+        "code": """def can_reach_end(nums: list[int]) -> bool:
 """,
         "test_cases": """
         test_cases = [
@@ -1548,8 +1500,7 @@ How: jump 1 step to index 1, 3 steps to index 4 then 1 step to the last index.
 """,
         "title": "Min jumps to reach last index",
         "level": "Steady",
-        "code": """ 
-def min_jumps(nums: list[int]) -> int:
+        "code": """def min_jumps(nums: list[int]) -> int:
 """,
         "test_cases": """
         test_cases = [
@@ -1579,8 +1530,7 @@ How: There is no way to get to index 1 starting from index 2.
 """,
         "title": "Jump to zero",
         "level": "Steady",
-        "code": """ 
-def can_jump_to_zero(nums: list[int], start: int) -> bool:
+        "code": """def can_jump_to_zero(nums: list[int], start: int) -> bool:
 """,
         "test_cases": """
         test_cases = [
@@ -1608,8 +1558,7 @@ How:  Only one boat, no adjacent boats to worry about.
 """,
         "title": "Max loot",
         "level": "Steady",
-        "code": """ 
-def max_loot(nums: list[int]) -> int:
+        "code": """def max_loot(nums: list[int]) -> int:
 """,
         "test_cases": """
         test_cases = [
@@ -1635,8 +1584,7 @@ How: Cannot rob boats 1 and 3 for total of 6 because they are adjacent. So rob b
 """,
         "title": "Max loot circle",
         "level": "Steady",
-        "code": """ 
-def max_loot_circle(nums: list[int]) -> int:
+        "code": """def max_loot_circle(nums: list[int]) -> int:
 """,
         "test_cases": """
         test_cases = [
@@ -1663,8 +1611,7 @@ How: To take course 1 you first need to take course 0 but to take course 0 you n
 """,
         "title": "Course schedule",
         "level": "Steady",
-        "code": """
-def can_finish(n: int, courses: list[int]) -> bool:
+        "code": """def can_finish(n: int, courses: list[int]) -> bool:
 """,
         "test_cases": """
         test_cases = [
@@ -1698,8 +1645,7 @@ Output: [3,4]
 """,
         "title": "Minimum height trees",
         "level": "Steady",
-        "code": """ 
-def min_height(n: int, edges: list[list[int]]) -> list[int]:
+        "code": """def min_height(n: int, edges: list[list[int]]) -> list[int]:
 """,
         "test_cases": """
         test_cases = [
@@ -1724,8 +1670,7 @@ Output: ""
 """,
         "title": "Longest common prefix",
         "level": "Steady",
-        "code": """ 
-def longest_common_prefix(strs: list[str]) -> str:
+        "code": """def longest_common_prefix(strs: list[str]) -> str:
 """,
         "test_cases": """
         test_cases = [
@@ -1758,8 +1703,7 @@ Output: 700
 """,
         "title": "Cheapest flight with at most k stops",
         "level": "Steady",
-        "code": """ 
-def cheapest_flight(n: int, flights: list[list[int]], src: int, dst: int, k: int) -> int:
+        "code": """def cheapest_flight(n: int, flights: list[list[int]], src: int, dst: int, k: int) -> int:
 """,
         "test_cases": """
         test_cases = [
@@ -1787,8 +1731,7 @@ Output: 2
 """,
         "title": "Network delay time",
         "level": "Steady",
-        "code": """ 
-def min_time(times: list[list[int]], n: int, k: int) -> int:
+        "code": """def min_time(times: list[list[int]], n: int, k: int) -> int:
 """,
         "test_cases": """
         test_cases = [
@@ -1813,8 +1756,7 @@ Output: 3
 """,
         "title": "Reachable cities",
         "level": "Steady",
-        "code": """ 
-def reachable_cities(n: int, edges: list[list[int]], k: int) -> int:
+        "code": """def reachable_cities(n: int, edges: list[list[int]], k: int) -> int:
 """,
         "test_cases": """
         test_cases = [
@@ -1845,8 +1787,7 @@ output: -1
 """,
         "title": "Minimum spanning trees",
         "level": "Steady",
-        "code": """ 
-def mst(n: int, connections: list[list[int]]) -> int:
+        "code": """def mst(n: int, connections: list[list[int]]) -> int:
 """,
         "test_cases": """
         test_cases = [
@@ -1873,8 +1814,7 @@ Output: [[0,1]]
 """,
         "title": "Critical connections",
         "level": "Edgy",
-        "code": """ 
-def critical_connections(n: int, connections: list[list[int]]) -> list[list]:
+        "code": """def critical_connections(n: int, connections: list[list[int]]) -> list[list]:
 """,
         "test_cases": """
         test_cases = [
@@ -1902,8 +1842,7 @@ Output: 6
 """,
         "title": "Job scheduling",
         "level": "Steady",
-        "code": """ 
-def job_schedule(start_time: list[int], end_time: list[int], profit: list[int]) -> int:
+        "code": """def job_schedule(start_time: list[int], end_time: list[int], profit: list[int]) -> int:
 """,
         "test_cases": """
         test_cases = [
@@ -1931,8 +1870,7 @@ How: 11 = 5 + 5 + 1
 """,
         "title": "Coin change I",
         "level": "Steady",
-        "code": """ 
-def min_coins(coins: list[int], amount: int) -> int:
+        "code": """def min_coins(coins: list[int], amount: int) -> int:
 """,
         "test_cases": """
         test_cases = [
@@ -1964,8 +1902,7 @@ Output: 11
 """,
         "title": "Min cost tickets",
         "level": "Steady",
-        "code": """ 
-min_cost_tickets(days: list[int], costs: list[int]) -> int:
+        "code": """def min_cost_tickets(days: list[int], costs: list[int]) -> int:
 """,
         "test_cases": """
         test_cases = [
@@ -2005,8 +1942,7 @@ test_cases = [
 """,
         "title": "Max loot binary tree",
         "level": "Steady",
-        "code": """ 
-def max_loot_tree(root):
+        "code": """def max_loot_tree(root):
 """,
     },
     64: {
@@ -2034,8 +1970,7 @@ test_cases = [
 """,
         "title": "Lowest common ancestor",
         "level": "Steady",
-        "code": """ 
-def lca(root, p, q):
+        "code": """def lca(root, p, q):
 """,
     },
     65: {
@@ -2072,8 +2007,7 @@ test_cases = [
 """,
         "title": "Same binary tree",
         "level": "Breezy",
-        "code": """ 
-def same_tree(p, q):
+        "code": """def same_tree(p, q):
 """,
     },
     66: {
@@ -2113,8 +2047,7 @@ test_cases = [
 """,
         "title": "Boolean binary tree",
         "level": "Breezy",
-        "code": """ 
-def boolean_tree(root):
+        "code": """def boolean_tree(root):
 """,
     },
     67: {
@@ -2146,8 +2079,7 @@ test_cases = [
 """,
         "title": "Binary tree cousins",
         "level": "Steady",
-        "code": """ 
-def are_cousins(root, x, y):
+        "code": """def are_cousins(root, x, y):
 """,
     },
     68: {
@@ -2169,8 +2101,7 @@ output: [[2, 11]]
 """,
         "title": "Merge intervals",
         "level": "Steady",
-        "code": """ 
-def merge_intervals(intervals: list[list[int]]) -> list[list[int]]:
+        "code": """def merge_intervals(intervals: list[list[int]]) -> list[list[int]]:
 """,
         "test_cases": """
 test_cases = [
@@ -2199,8 +2130,7 @@ output: [[0,0,0]]
 """,
         "title": "Triplets sum equals zero",
         "level": "Steady",
-        "code": """ 
-def zero_sum_triplets(nums: list[int]) -> list[list[int]]:
+        "code": """def zero_sum_triplets(nums: list[int]) -> list[list[int]]:
 """,
         "test_cases": """
 test_cases = [
@@ -2230,8 +2160,7 @@ output: 1
 """,
         "title": "Longest increasing subsequence",
         "level": "Steady",
-        "code": """ 
-def lis(nums: list[int]) -> int:
+        "code": """def lis(nums: list[int]) -> int:
 """,
         "test_cases": """
 test_cases = [
@@ -2259,8 +2188,7 @@ How: 0, 1, 10, 11, 100, 101
 """,
         "title": "Count bits",
         "level": "Breezy",
-        "code": """ 
-def count_bits(n: int) -> list[int]:
+        "code": """def count_bits(n: int) -> list[int]:
 """,
         "test_cases": """
 test_cases = [
@@ -2285,8 +2213,7 @@ output: 9
 """,
         "title": "Trapping rain water",
         "level": "Edgy",
-        "code": """ 
-def trap_water(nums: list[int]) -> int:
+        "code": """def trap_water(nums: list[int]) -> int:
 """,
         "test_cases": """
 test_cases = [
@@ -2313,8 +2240,7 @@ output: "a"
 """,
         "title": "Longest palindromic substring",
         "level": "Steady",
-        "code": """ 
-lps(s: str) -> str:
+        "code": """def lps(s: str) -> str:
 """,
         "test_cases": """
 test_cases = [
@@ -2341,8 +2267,7 @@ output: 4
 """,
         "title": "Median of two sorted arrays",
         "level": "Edgy",
-        "code": """ 
-median(nums1: list[int], nums2: list[int]) -> float:
+        "code": """def median(nums1: list[int], nums2: list[int]) -> float:
 """,
         "test_cases": """
 test_cases = [
@@ -2370,8 +2295,7 @@ output: [1,2]
 """,
         "title": "Most frequent elements",
         "level": "Steady",
-        "code": """ 
-def most_frequent(nums: list[int], k: int) -> list[int]:
+        "code": """def most_frequent(nums: list[int], k: int) -> list[int]:
 """,
         "test_cases": """
 test_cases = [
@@ -2399,8 +2323,7 @@ output: 3
 """,
         "title": "Connected cities",
         "level": "Steady",
-        "code": """ 
-def connected_cities(adj_mat: list[list[int]]) -> int:
+        "code": """def connected_cities(adj_mat: list[list[int]]) -> int:
 """,
         "test_cases": """
 test_cases = [
@@ -2429,8 +2352,7 @@ output: [[1,1],[1,1]]
 """,
         "title": "Conway's game of life",
         "level": "Steady",
-        "code": """ 
-def life_game(boars: list[list[int]]) -> list[list[int]]:
+        "code": """def life_game(boars: list[list[int]]) -> list[list[int]]:
 """,
         "test_cases": """
 test_cases = [
@@ -2459,8 +2381,7 @@ output: 10
 """,
         "title": "Min CPU intervals",
         "level": "Steady",
-        "code": """ 
-def min_intervals(tasks: list[str], n: int) -> int:
+        "code": """def min_intervals(tasks: list[str], n: int) -> int:
 """,
         "test_cases": """
 test_cases = [
@@ -2488,8 +2409,7 @@ output: [0, 0, 9, 0, 0]
 """,
         "title": "Product of array except self",
         "level": "Steady",
-        "code": """ 
-def array_product(nums: list[int]) -> list[int]:
+        "code": """def array_product(nums: list[int]) -> list[int]:
 """,
         "test_cases": """
 test_cases = [
@@ -2522,8 +2442,7 @@ test_cases = [
 """,
         "title": "Permutations",
         "level": "Steady",
-        "code": """
-def perms(nums: list[int]) -> list[list[int]]:
+        "code": """def perms(nums: list[int]) -> list[list[int]]:
 """,
     },
     81: {
@@ -2551,8 +2470,7 @@ test_cases = [
 """,
         "title": "Combinations",
         "level": "Steady",
-        "code": """
-def combs(s: str, k: int) -> list[str]:
+        "code": """def combs(s: str, k: int) -> list[str]:
 """,
     },
     82: {
@@ -2597,8 +2515,7 @@ test_cases = [
 """,
         "title": "Calendar book event",
         "level": "Steady",
-        "code": """
-class MyCalendar:
+        "code": """class MyCalendar:
 """,
     },
     83: {
@@ -2651,8 +2568,7 @@ test_cases = [
 """,
         "title": "Range frequency query",
         "level": "Steady",
-        "code": """
-class RangeFreq:
+        "code": """class RangeFreq:
 """,
     },
     84: {
@@ -2684,8 +2600,7 @@ test_cases = [
 """,
         "title": "Sum linked lists",
         "level": "Steady",
-        "code": """
-def add_numbers(head1, head2):
+        "code": """def add_numbers(head1, head2):
 """,
     },
     85: {
@@ -2715,8 +2630,7 @@ test_cases = [
 """,
         "title": "Invert binary tree",
         "level": "Steady",
-        "code": """
-def invert_tree(root):
+        "code": """def invert_tree(root):
 """,
     },
     86: {
@@ -2740,8 +2654,7 @@ test_cases = [
 """,
         "title": "Reverse linked list",
         "level": "Steady",
-        "code": """
-def reverse_list(head)
+        "code": """def reverse_list(head)
 """,
     },
     87: {
@@ -2766,8 +2679,7 @@ test_cases = [
 """,
         "title": "Merge sorted linked lists",
         "level": "Steady",
-        "code": """
-def list_merge(head1, head2):
+        "code": """def list_merge(head1, head2):
 """,
     },
     88: {
@@ -2816,8 +2728,7 @@ test_cases = [
 """,
         "title": "Min stack",
         "level": "Steady",
-        "code": """
-class Stack:
+        "code": """class Stack:
 """,
     },
     89: {
@@ -2859,8 +2770,7 @@ test_cases = [
 """,
         "title": "LRU Cache",
         "level": "Steady",
-        "code": """
-class LRUCache:
+        "code": """class LRUCache:
 """,
     },
     90: {
@@ -2893,8 +2803,7 @@ test_cases = [
 """,
         "title": "Invert binary tree",
         "level": "Steady",
-        "code": """
-def count_islands(grid: list[list[int]]) -> int:
+        "code": """def count_islands(grid: list[list[int]]) -> int:
 """,
     },
 }
