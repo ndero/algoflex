@@ -116,7 +116,8 @@ if __name__ == "__main__":
 
         if success:
             stats.upsert(
-                {"last_attempt": self.elapsed}, KV.problem_id == self.problem_id
+                {"last_attempt": self.elapsed, "recent_code": user_code},
+                KV.problem_id == self.problem_id,
             )
             if not best or self.elapsed < best:
                 stats.upsert({"best": self.elapsed}, KV.problem_id == self.problem_id)
