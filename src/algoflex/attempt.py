@@ -63,6 +63,7 @@ class AttemptScreen(Screen):
                 with Vertical():
                     yield TextArea(
                         code,
+                        id="code",
                         show_line_numbers=True,
                         language="python",
                         compact=True,
@@ -91,13 +92,13 @@ class AttemptScreen(Screen):
 
     @on(Button.Pressed, "#save")
     def save_code(self):
-        code = self.query_one(TextArea)
+        code = self.query_one("#code", TextArea)
         stats.upsert({"saved_code": code.text}, KV.problem_id == self.problem_id)
         self.notify("Saved - can be accessed in saved solution tab")
 
     @on(Button.Pressed, "#submit")
     def submit_code(self):
-        code = self.query_one(TextArea)
+        code = self.query_one("#code", TextArea)
         elapsed = monotonic() - self.test_time
         self.app.push_screen(ResultModal(self.problem_id, code.text, elapsed))
 
