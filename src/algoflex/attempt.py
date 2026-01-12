@@ -82,6 +82,7 @@ class AttemptScreen(Screen):
                 )
                 yield TextArea(
                     saved_code,
+                    id="saved",
                     show_line_numbers=True,
                     language="python",
                     compact=True,
@@ -90,17 +91,20 @@ class AttemptScreen(Screen):
                 )
         yield Footer()
 
-    @on(Button.Pressed, "#save")
-    def save_code(self):
-        code = self.query_one("#code", TextArea)
-        stats.upsert({"saved_code": code.text}, KV.problem_id == self.problem_id)
-        self.notify("Saved - can be accessed in saved solution tab")
-
     @on(Button.Pressed, "#submit")
     def submit_code(self):
         code = self.query_one("#code", TextArea)
         elapsed = monotonic() - self.test_time
         self.app.push_screen(ResultModal(self.problem_id, code.text, elapsed))
+
+    @on(Button.Pressed, "#save")
+    def save_code(self):
+        code, saved = self.query_one("#code", TextArea), self.query_one(
+            "#saved", TextArea
+        )
+        saved.text = code.text
+        stats.upsert({"saved_code": code.text}, KV.problem_id == self.problem_id)
+        self.notify("Saved - can be accessed in saved solution tab")
 
     def action_back(self):
         self.dismiss()
