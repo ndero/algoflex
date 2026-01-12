@@ -1440,15 +1440,15 @@ Output: ''
         "code": """def lcs(str1: str, str2: str) -> str:
 """,
         "test_cases": """
-    test_cases = [
-        [lcs("math", "arithmetic"), "ath"],
-        [lcs("original", "origin"), "origin"],
-        [lcs("foo", "bar"), ""],
-        [lcs("", "arithmetic"), ""],
-        [lcs("shesellsseashellsattheseashore", "isawyouyesterday"), "saester"],
-        [lcs("@work3r", "m@rxkd35rt"), "@rk3r"],
-    ]
-    """,
+test_cases = [
+    [lcs("math", "arithmetic"), "ath"],
+    [lcs("original", "origin"), "origin"],
+    [lcs("foo", "bar"), ""],
+    [lcs("", "arithmetic"), ""],
+    [lcs("shesellsseashellsattheseashore", "isawyouyesterday"), "saester"],
+    [lcs("@work3r", "m@rxkd35rt"), "@rk3r"],
+]
+""",
     },
     47: {
         "markdown": """
@@ -1469,16 +1469,16 @@ Output: false
         "code": """def can_reach_end(nums: list[int]) -> bool:
 """,
         "test_cases": """
-        test_cases = [
-            [can_reach_end([2, 3, 1, 1, 4]), True],
-            [can_reach_end([0]), True],
-            [can_reach_end([2, 1, 1, 0, 4]), False],
-            [can_reach_end([i for i in range(200_000)]), False],
-            [can_reach_end([1 for _ in range(200_000)]), True],
-            [can_reach_end([0, 0]), False],
-            [can_reach_end([200_000] + [0] * 200_000), True],
-        ]
-        """,
+test_cases = [
+    [can_reach_end([2, 3, 1, 1, 4]), True],
+    [can_reach_end([0]), True],
+    [can_reach_end([2, 1, 1, 0, 4]), False],
+    [can_reach_end([i for i in range(200_000)]), False],
+    [can_reach_end([1 for _ in range(200_000)]), True],
+    [can_reach_end([0, 0]), False],
+    [can_reach_end([200_000] + [0] * 200_000), True],
+]
+""",
     },
     48: {
         "markdown": """
@@ -1503,14 +1503,14 @@ How: jump 1 step to index 1, 3 steps to index 4 then 1 step to the last index.
         "code": """def min_jumps(nums: list[int]) -> int:
 """,
         "test_cases": """
-        test_cases = [
-            [min_jumps([2, 3, 1, 1, 4]), 2],
-            [min_jumps([1]), 0],
-            [min_jumps([1, 5]), 1],
-            [min_jumps([1 for _ in range(200_000)]), 199_999],
-            [min_jumps([200_000] + [0] * 200_000), 1],
-        ]
-        """,
+test_cases = [
+    [min_jumps([2, 3, 1, 1, 4]), 2],
+    [min_jumps([1]), 0],
+    [min_jumps([1, 5]), 1],
+    [min_jumps([1 for _ in range(200_000)]), 199_999],
+    [min_jumps([200_000] + [0] * 200_000), 1],
+]
+""",
     },
     49: {
         "markdown": """
@@ -1533,12 +1533,12 @@ How: There is no way to get to index 1 starting from index 2.
         "code": """def can_jump_to_zero(nums: list[int], start: int) -> bool:
 """,
         "test_cases": """
-        test_cases = [
-            [can_jump_to_zero([4, 2, 3, 0, 3, 1, 2], 0), True],
-            [can_jump_to_zero([3, 0, 2, 1, 2], 2), False],
-            [can_jump_to_zero([4, 2, 3, 0, 3, 1, 2], 5), True],
-        ]
-        """,
+test_cases = [
+    [can_jump_to_zero([4, 2, 3, 0, 3, 1, 2], 0), True],
+    [can_jump_to_zero([3, 0, 2, 1, 2], 2), False],
+    [can_jump_to_zero([4, 2, 3, 0, 3, 1, 2], 5), True],
+]
+""",
     },
     50: {
         "markdown": """
@@ -1561,14 +1561,14 @@ How:  Only one boat, no adjacent boats to worry about.
         "code": """def max_loot(nums: list[int]) -> int:
 """,
         "test_cases": """
-        test_cases = [
-            [max_loot([1, 2, 3, 1]), 4],
-            [max_loot([1, 7, 2, 1, 6]), 13],
-            [max_loot([1, 2]), 2],
-            [max_loot([3]), 3],
-            [max_loot([i for i in range(0, 100_000, 100)]), 25_000_000],
-        ]
-        """,
+test_cases = [
+    [max_loot([1, 2, 3, 1]), 4],
+    [max_loot([1, 7, 2, 1, 6]), 13],
+    [max_loot([1, 2]), 2],
+    [max_loot([3]), 3],
+    [max_loot([i for i in range(0, 100_000, 100)]), 25_000_000],
+]
+""",
     },
     51: {
         "markdown": """
@@ -1587,13 +1587,13 @@ How: Cannot rob boats 1 and 3 for total of 6 because they are adjacent. So rob b
         "code": """def max_loot_circle(nums: list[int]) -> int:
 """,
         "test_cases": """
-        test_cases = [
-            [max_loot_circle([1, 2, 3, 1]), 4],
-            [max_loot_circle([1, 7, 2, 1, 6]), 13],
-            [max_loot_circle([1, 2, 3]), 3],
-            [max_loot_circle([i for i in range(0, 100_000, 100)]), 25_000_000],
-        ]
-        """,
+test_cases = [
+    [max_loot_circle([1, 2, 3, 1]), 4],
+    [max_loot_circle([1, 7, 2, 1, 6]), 13],
+    [max_loot_circle([1, 2, 3]), 3],
+    [max_loot_circle([i for i in range(0, 100_000, 100)]), 25_000_000],
+]
+""",
     },
     52: {
         "markdown": """
@@ -1614,12 +1614,12 @@ How: To take course 1 you first need to take course 0 but to take course 0 you n
         "code": """def can_finish(n: int, courses: list[int]) -> bool:
 """,
         "test_cases": """
-        test_cases = [
-            [can_finish(2, [[1, 0], [0, 1]]), False)
-            [can_finish(4, [[1, 0], [2, 0], [3, 1], [3, 2]]), True],
-            [can_finish(1, []), True],
-        ]
-        """,
+test_cases = [
+    [can_finish(2, [[1, 0], [0, 1]]), False)
+    [can_finish(4, [[1, 0], [2, 0], [3, 1], [3, 2]]), True],
+    [can_finish(1, []), True],
+]
+""",
     },
     53: {
         "markdown": """
@@ -1648,11 +1648,11 @@ Output: [3,4]
         "code": """def min_height(n: int, edges: list[list[int]]) -> list[int]:
 """,
         "test_cases": """
-        test_cases = [
-            [min_height(4, [[1, 0], [1, 2], [1, 3]]), [1]],
-            [min_height(6, [[3, 0], [3, 1], [3, 2], [3, 4], [5, 4]]), [3, 4]],
-        ]
-        """,
+test_cases = [
+    [min_height(4, [[1, 0], [1, 2], [1, 3]]), [1]],
+    [min_height(6, [[3, 0], [3, 1], [3, 2], [3, 4], [5, 4]]), [3, 4]],
+]
+""",
     },
     54: {
         "markdown": """
@@ -1673,18 +1673,18 @@ Output: ""
         "code": """def longest_common_prefix(strs: list[str]) -> str:
 """,
         "test_cases": """
-        test_cases = [
-            [longest_common_prefix(["flower", "flow", "flight"]), "fl"],
-            [longest_common_prefix(["dog", "racecar", "car"]), ""],
-            [longest_common_prefix([ "algology", "algologies", "algologists", "algometer", "algometric", "algometry", "algophobia", "algologically", "algorithm", "algorism"]), "algo"],
-            [longest_common_prefix(["ORGANOMETALLICS", "ORGANOPHOSPHATE", "ORGANOTHERAPY "]), "ORGANO"],
-            [longest_common_prefix(["lower", "low", "light"]), "l"],
-            [longest_common_prefix([ "SYSTEMATISE", "SYSTEMATISED", "SYSTEMATISER", "SYSTEMATISERS", "SYSTEMATISES", "SYSTEMATISING", "SYSTEMATISM", "SYSTEMATISMS", "SYSTEMATIST"]), "SYSTEMATIS"],
-            [longest_common_prefix(["garden", "gardener", "gardened", "gardenful", "gardenia"]), "garden"],
-            [longest_common_prefix(["flytrap", "flyway", "flyweight", "flywheel"]), "fly"],
-            [longest_common_prefix(["flower", "flow", ""]), ""],
-        ]
-        """,
+test_cases = [
+    [longest_common_prefix(["flower", "flow", "flight"]), "fl"],
+    [longest_common_prefix(["dog", "racecar", "car"]), ""],
+    [longest_common_prefix([ "algology", "algologies", "algologists", "algometer", "algometric", "algometry", "algophobia", "algologically", "algorithm", "algorism"]), "algo"],
+    [longest_common_prefix(["ORGANOMETALLICS", "ORGANOPHOSPHATE", "ORGANOTHERAPY "]), "ORGANO"],
+    [longest_common_prefix(["lower", "low", "light"]), "l"],
+    [longest_common_prefix([ "SYSTEMATISE", "SYSTEMATISED", "SYSTEMATISER", "SYSTEMATISERS", "SYSTEMATISES", "SYSTEMATISING", "SYSTEMATISM", "SYSTEMATISMS", "SYSTEMATIST"]), "SYSTEMATIS"],
+    [longest_common_prefix(["garden", "gardener", "gardened", "gardenful", "gardenia"]), "garden"],
+    [longest_common_prefix(["flytrap", "flyway", "flyweight", "flywheel"]), "fly"],
+    [longest_common_prefix(["flower", "flow", ""]), ""],
+]
+""",
     },
     55: {
         "markdown": """
@@ -1706,13 +1706,13 @@ Output: 700
         "code": """def cheapest_flight(n: int, flights: list[list[int]], src: int, dst: int, k: int) -> int:
 """,
         "test_cases": """
-        test_cases = [
-            [cheapest_flight(4, [[0, 1, 100], [1, 2, 100], [2, 0, 100], [1, 3, 600], [2, 3, 200]], 0, 3, 1), 700],
-            [cheapest_flight(4, [[0, 1, 100], [1, 2, 100], [2, 0, 100], [1, 3, 600], [2, 3, 200]], 0, 3, 2), 400],
-            [cheapest_flight(3, [[0, 1, 100], [1, 2, 100], [0, 2, 500]], 0, 2, 1), 200],
-            [cheapest_flight(3, [[0, 1, 100], [1, 2, 100], [0, 2, 500]], 0, 2, 0), 500],
-        ]
-        """,
+test_cases = [
+    [cheapest_flight(4, [[0, 1, 100], [1, 2, 100], [2, 0, 100], [1, 3, 600], [2, 3, 200]], 0, 3, 1), 700],
+    [cheapest_flight(4, [[0, 1, 100], [1, 2, 100], [2, 0, 100], [1, 3, 600], [2, 3, 200]], 0, 3, 2), 400],
+    [cheapest_flight(3, [[0, 1, 100], [1, 2, 100], [0, 2, 500]], 0, 2, 1), 200],
+    [cheapest_flight(3, [[0, 1, 100], [1, 2, 100], [0, 2, 500]], 0, 2, 0), 500],
+]
+""",
     },
     56: {
         "markdown": """
@@ -1734,12 +1734,12 @@ Output: 2
         "code": """def min_time(times: list[list[int]], n: int, k: int) -> int:
 """,
         "test_cases": """
-        test_cases = [
-            [min_time([[2, 1, 1], [2, 3, 1], [3, 4, 1]], 4, 2), 2],
-            [min_time([[1, 2, 1]], 2, 1), 1],
-            [min_time([[1, 2, 1]], 4, 2), -1],
-        ]
-        """,
+test_cases = [
+    [min_time([[2, 1, 1], [2, 3, 1], [3, 4, 1]], 4, 2), 2],
+    [min_time([[1, 2, 1]], 2, 1), 1],
+    [min_time([[1, 2, 1]], 4, 2), -1],
+]
+""",
     },
     57: {
         "markdown": """
@@ -1759,11 +1759,11 @@ Output: 3
         "code": """def reachable_cities(n: int, edges: list[list[int]], k: int) -> int:
 """,
         "test_cases": """
-        test_cases = [
-            [reachable_cities(4, [[0, 1, 3], [1, 2, 1], [1, 3, 4], [2, 3, 1]], 4), 3],
-            [reachable_cities(5, [[0, 1, 2], [0, 4, 8], [1, 2, 3], [1, 4, 2], [2, 3, 1], [3, 4, 1]], 2), 0],
-        ]
-        """,
+test_cases = [
+    [reachable_cities(4, [[0, 1, 3], [1, 2, 1], [1, 3, 4], [2, 3, 1]], 4), 3],
+    [reachable_cities(5, [[0, 1, 2], [0, 4, 8], [1, 2, 3], [1, 4, 2], [2, 3, 1], [3, 4, 1]], 2), 0],
+]
+""",
     },
     58: {
         "markdown": """
@@ -1790,11 +1790,11 @@ output: -1
         "code": """def mst(n: int, connections: list[list[int]]) -> int:
 """,
         "test_cases": """
-        test_cases = [
-            [mst(3, [[1, 2, 5], [1, 3, 6], [2, 3, 1]]), 6],
-            [mst(4, [[1, 2, 3], [3, 4, 4]]), -1],
-        ]
-        """,
+test_cases = [
+    [mst(3, [[1, 2, 5], [1, 3, 6], [2, 3, 1]]), 6],
+    [mst(4, [[1, 2, 3], [3, 4, 4]]), -1],
+]
+""",
     },
     59: {
         "markdown": """
@@ -1817,12 +1817,12 @@ Output: [[0,1]]
         "code": """def critical_connections(n: int, connections: list[list[int]]) -> list[list]:
 """,
         "test_cases": """
-        test_cases = [
-            [critical_connections(4, [[0, 1], [1, 2], [2, 0], [1, 3]]), [[1, 3]]],
-            [critical_connections(7, [[0, 1], [1, 2], [2, 0], [1, 3], [1, 4], [4, 5], [5, 6]]), [[1, 3], [5, 6], [4, 5], [1, 4]]],
-            [critical_connections(7, [[0, 1], [1, 2], [2, 0], [1, 3], [1, 4], [4, 5], [5, 6], [2, 6]]), [[1, 3]]],
-        ]
-        """,
+test_cases = [
+    [critical_connections(4, [[0, 1], [1, 2], [2, 0], [1, 3]]), [[1, 3]]],
+    [critical_connections(7, [[0, 1], [1, 2], [2, 0], [1, 3], [1, 4], [4, 5], [5, 6]]), [[1, 3], [5, 6], [4, 5], [1, 4]]],
+    [critical_connections(7, [[0, 1], [1, 2], [2, 0], [1, 3], [1, 4], [4, 5], [5, 6], [2, 6]]), [[1, 3]]],
+]
+""",
     },
     60: {
         "markdown": """
@@ -1845,12 +1845,12 @@ Output: 6
         "code": """def job_schedule(start_time: list[int], end_time: list[int], profit: list[int]) -> int:
 """,
         "test_cases": """
-        test_cases = [
-            [job_schedule([1, 2, 3, 3], [3, 4, 5, 6], [50, 10, 40, 70]), 120],
-            [job_schedule([1, 2, 3, 4, 6], [3, 5, 10, 6, 9], [20, 20, 100, 70, 60]), 150],
-            [job_schedule([1, 1, 1], [2, 3, 4], [5, 6, 4]), 6],
-        ]
-        """,
+test_cases = [
+    [job_schedule([1, 2, 3, 3], [3, 4, 5, 6], [50, 10, 40, 70]), 120],
+    [job_schedule([1, 2, 3, 4, 6], [3, 5, 10, 6, 9], [20, 20, 100, 70, 60]), 150],
+    [job_schedule([1, 1, 1], [2, 3, 4], [5, 6, 4]), 6],
+]
+""",
     },
     61: {
         "markdown": """
@@ -1873,19 +1873,19 @@ How: 11 = 5 + 5 + 1
         "code": """def min_coins(coins: list[int], amount: int) -> int:
 """,
         "test_cases": """
-        test_cases = [
-            [min_coins([1, 2, 5], 11), 3],
-            [min_coins([1, 2, 5, 10], 11), 2],
-            [min_coins([1], 0), 0],
-            [min_coins([1, 2, 5, 10, 20], 11), 2],
-            [min_coins([1, 2, 5, 10, 20], 110), 6],
-            [min_coins([2, 5], 3), -1],
-            [min_coins([1, 2, 5, 10, 20], 63), 5],
-            [min_coins([1, 2, 5, 10, 20, 50], 16), 3],
-            [min_coins([1, 2, 5, 10, 20, 50], 28), 4],
-            [min_coins([1, 2, 5, 10, 20, 50], 77), 4],
-        ]
-        """,
+test_cases = [
+    [min_coins([1, 2, 5], 11), 3],
+    [min_coins([1, 2, 5, 10], 11), 2],
+    [min_coins([1], 0), 0],
+    [min_coins([1, 2, 5, 10, 20], 11), 2],
+    [min_coins([1, 2, 5, 10, 20], 110), 6],
+    [min_coins([2, 5], 3), -1],
+    [min_coins([1, 2, 5, 10, 20], 63), 5],
+    [min_coins([1, 2, 5, 10, 20, 50], 16), 3],
+    [min_coins([1, 2, 5, 10, 20, 50], 28), 4],
+    [min_coins([1, 2, 5, 10, 20, 50], 77), 4],
+]
+""",
     },
     62: {
         "markdown": """
@@ -1905,17 +1905,17 @@ Output: 11
         "code": """def min_cost_tickets(days: list[int], costs: list[int]) -> int:
 """,
         "test_cases": """
-        test_cases = [
-            [min_cost_tickets([1, 4, 6, 7, 8, 20], [2, 7, 15]), 11],
-            [min_cost_tickets([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 30, 31], [2, 7, 15]), 17],
-            [min_cost_tickets([1, 2, 3, 4, 5, 6, 7], [2, 7, 15]), 7],
-            [min_cost_tickets([i for i in range(1, 31)], [2, 7, 15]), 15],
-            [min_cost_tickets([1, 4, 6], [2, 7, 15]), 6],
-            [min_cost_tickets([5, 6, 7, 8, 9, 10, 11], [2, 7, 15]), 7],
-            [min_cost_tickets([5, 6, 7, 8, 9, 10, 11, 210, 211, 212, 213, 365], [2, 7, 15]), 16],
-            [min_cost_tickets([i for i in range(1, 366)], [2, 7, 15]), 190],
-        ]
-        """,
+test_cases = [
+    [min_cost_tickets([1, 4, 6, 7, 8, 20], [2, 7, 15]), 11],
+    [min_cost_tickets([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 30, 31], [2, 7, 15]), 17],
+    [min_cost_tickets([1, 2, 3, 4, 5, 6, 7], [2, 7, 15]), 7],
+    [min_cost_tickets([i for i in range(1, 31)], [2, 7, 15]), 15],
+    [min_cost_tickets([1, 4, 6], [2, 7, 15]), 6],
+    [min_cost_tickets([5, 6, 7, 8, 9, 10, 11], [2, 7, 15]), 7],
+    [min_cost_tickets([5, 6, 7, 8, 9, 10, 11, 210, 211, 212, 213, 365], [2, 7, 15]), 16],
+    [min_cost_tickets([i for i in range(1, 366)], [2, 7, 15]), 190],
+]
+""",
     },
     63: {
         "markdown": """
@@ -2792,7 +2792,6 @@ g4 = [[1, 0, 1, 0, 1] for _ in range(100_000)]
 g5 = [[0, 1, 0, 0, 1] for _ in range(100_000)]
 g6 = [[1, 1, 1, 1, 1] for _ in range(100_000)]
 test_cases = [
-test_cases = [
     [count_islands(g1), 2],
     [count_islands(g2), 2],
     [count_islands(g3), 1],
@@ -2801,7 +2800,7 @@ test_cases = [
     [count_islands(g6), 1],
 ]
 """,
-        "title": "Invert binary tree",
+        "title": "How many islands",
         "level": "Steady",
         "code": """def count_islands(grid: list[list[int]]) -> int:
 """,
