@@ -26,7 +26,7 @@ class StatScreen(Vertical):
             padding: 1;
             margin: 1 0;
         }
-        #passed, #last_attempt, #best, #level {
+        #passed, #last, #best, #level {
             padding-top: 1;
         }
     }
@@ -39,7 +39,7 @@ class StatScreen(Vertical):
                 yield Static("...", id="passed")
             with Vertical():
                 yield Static("[b]Last[/]")
-                yield Static("...", id="last_attempt")
+                yield Static("...", id="last")
             with Vertical():
                 yield Static("[b]Best[/]")
                 yield Static("...", id="best")
@@ -92,29 +92,17 @@ class HomeScreen(App):
         hrs, mins = divmod(mins, 60)
         return f"{hrs:02,.0f}:{mins:02.0f}:{secs:02.0f}"
 
-    def time_markup(self, tm, color):
-        tm = self.hrs_mins_secs(tm)
-        if tm == "..." or color == "primary":
-            return f"[$primary]{tm}[/]"
-        if tm == "Failed" or color == "red":
-            return f"[red]{tm}[/]"
-        return f"[green]{tm}[/]"
-
     def watch_problem_id(self, id):
         stats = get_db()
         s = stats.get(KV.problem_id == id) or {}
         p = questions.get(id, {})
         problem, level = p.get("markdown", ""), p.get("level", "Breezy")
-        passed, attempts, last, best = (
+        passed, attempts, last_elapsed, best_elapsed = (
             s.get("passed", "0"),
             s.get("attempts", "0"),
-            s.get("last_attempt", "..."),
-            s.get("best", "..."),
+            self.hrs_mins_secs(s.get("last_elapsed", "...")),
+            self.hrs_mins_secs(s.get("best_elapsed", "...")),
         )
-
-        last_color = "primary" if (isinstance(last, float) and last > best) else ""
-        best = self.time_markup(best, color="green")
-        last = self.time_markup(last, last_color)
 
         problem_widget = self.query_one(Problem)
         problem_widget.query_one(Markdown).update(markdown=problem)
@@ -123,8 +111,8 @@ class HomeScreen(App):
         s_widget.query_one("#passed").update(
             f"[$primary]{str(passed)}/{str(attempts)}[/]"
         )
-        s_widget.query_one("#last_attempt").update(last)
-        s_widget.query_one("#best").update(best)
+        s_widget.query_one("#last").update(f"[$primary]{last_elapsed}[/]")
+        s_widget.query_one("#best").update(f"[$primary]{best_elapsed}[/]")
         s_widget.query_one("#level").update(f"[$primary]{level}[/]")
 
     def action_attempt(self):

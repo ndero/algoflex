@@ -6,6 +6,7 @@ from tinydb import Query
 import tempfile
 import subprocess
 import os
+import time
 
 KV = Query()
 
@@ -71,7 +72,8 @@ if __name__ == "__main__":
         stats = get_db()
         s = stats.get(KV.problem_id == self.problem_id) or {}
         success, attempts = False, s.get("attempts", 0) + 1
-        passed, best = s.get("passed", 0), s.get("best", 0)
+        passed, best = s.get("passed", 0), s.get("best_elapsed", 0)
+        now = time.time()
         user_code = self.user_code.strip()
         output_log = self.query_one(RichLog)
         question = questions.get(self.problem_id, {})
@@ -104,20 +106,23 @@ if __name__ == "__main__":
 
         stats.upsert(
             {
-                "attempts": attempts,
-                "passed": passed,
                 "problem_id": self.problem_id,
+                "attempts": attempts,  # total attempts
+                "passed": passed,  # total passing attempts
+                "last_at": now,  # time of attempt
+                "last_elapsed": self.elapsed,  # last attempt time taken.
+                "last_passed": success,  # True or False
             },
             KV.problem_id == self.problem_id,
         )
 
-        if not success:
-            stats.upsert({"last_attempt": "Failed"}, KV.problem_id == self.problem_id)
-
         if success:
             stats.upsert(
-                {"last_attempt": self.elapsed, "recent_code": user_code},
+                {"recent_code": user_code},
                 KV.problem_id == self.problem_id,
             )
             if not best or self.elapsed < best:
-                stats.upsert({"best": self.elapsed}, KV.problem_id == self.problem_id)
+                stats.upsert(
+                    {"best_at": now, "best_elapsed": self.elapsed},
+                    KV.problem_id == self.problem_id,
+                )
