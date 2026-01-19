@@ -144,8 +144,6 @@ class HomeScreen(App):
         last, best = s_widget.query_one("#last"), s_widget.query_one("#best")
         last.update(f"[$primary]{last_at} {'ago' if last_at != '...' else ''}[/]")
         best.update(f"[$primary]{best_elapsed}[/]")
-        if best_at:
-            best.tooltip = f"{best_at} ago"
         s_widget.query_one("#level").update(f"[$primary]{level}[/]")
 
     def action_attempt(self):
