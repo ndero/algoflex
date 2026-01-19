@@ -1,10 +1,6 @@
 from textual.app import App
 from textual.screen import Screen
-from textual.containers import (
-    Horizontal,
-    Vertical,
-    VerticalScroll,
-)
+from textual.containers import Horizontal, Vertical, VerticalScroll, HorizontalScroll
 from textual.widgets import Footer, Markdown, Static
 from textual.binding import Binding
 from textual.reactive import Reactive
@@ -14,6 +10,7 @@ from algoflex.custom_widgets import Title, Problem
 from algoflex.db import get_db
 from random import shuffle
 from tinydb import Query
+import time
 
 KV = Query()
 
@@ -38,11 +35,11 @@ class StatScreen(Vertical):
                 yield Static("[b]Passed[/]")
                 yield Static("...", id="passed")
             with Vertical():
-                yield Static("[b]Last[/]")
-                yield Static("...", id="last")
-            with Vertical():
-                yield Static("[b]Best[/]")
+                yield Static("[b]Best time[/]")
                 yield Static("...", id="best")
+            with Vertical():
+                yield Static("[b]Last attempt[/]")
+                yield Static("...", id="last")
             with Vertical():
                 yield Static("[b]Level[/]")
                 yield Static("...", id="level")
@@ -92,18 +89,51 @@ class HomeScreen(App):
         hrs, mins = divmod(mins, 60)
         return f"{hrs:02,.0f}:{mins:02.0f}:{secs:02.0f}"
 
+    def time_ago(self, tm):
+        if isinstance(tm, str):
+            return tm
+        secs = int(time.time() - tm)
+        mn, hr, day, week, month, year = (
+            60,
+            3600,
+            86_400,
+            604_800,
+            2_592_000,
+            31_104_000,
+        )
+        if secs < mn:
+            v = secs // 1
+            return f"{v} sec{'s' if v > 1 else ''}"
+        if secs < hr:
+            v = secs // mn
+            return f"{v} min{'s' if v > 1 else ''}"
+        if secs < day:
+            v = secs // hr
+            return f"{v} hr{'s' if v > 1 else ''}"
+        if secs < week:
+            v = secs // day
+            return f"{v} day{'s' if v > 1 else ''}"
+        if secs < month:
+            v = secs // week
+            return f"{v} wk{'s' if v > 1 else ''}"
+        if secs < year:
+            v = secs // month
+            return f"{v} month{'s' if v > 1 else ''}"
+        v = secs // year
+        return f"{v} yr{'s' if v > 1 else ''}"
+
     def watch_problem_id(self, id):
         stats = get_db()
         s = stats.get(KV.problem_id == id) or {}
         p = questions.get(id, {})
         problem, level = p.get("markdown", ""), p.get("level", "Breezy")
-        passed, attempts, last_elapsed, best_elapsed = (
+        passed, attempts, last_at, best_at, best_elapsed = (
             s.get("passed", "0"),
             s.get("attempts", "0"),
-            self.hrs_mins_secs(s.get("last_elapsed", "...")),
+            self.time_ago(s.get("last_at", "...")),
+            self.time_ago(s.get("best_at", "")),
             self.hrs_mins_secs(s.get("best_elapsed", "...")),
         )
-
         problem_widget = self.query_one(Problem)
         problem_widget.query_one(Markdown).update(markdown=problem)
         problem_widget.scroll_home()
@@ -111,8 +141,11 @@ class HomeScreen(App):
         s_widget.query_one("#passed").update(
             f"[$primary]{str(passed)}/{str(attempts)}[/]"
         )
-        s_widget.query_one("#last").update(f"[$primary]{last_elapsed}[/]")
-        s_widget.query_one("#best").update(f"[$primary]{best_elapsed}[/]")
+        last, best = s_widget.query_one("#last"), s_widget.query_one("#best")
+        last.update(f"[$primary]{last_at} {'ago' if last_at != '...' else ''}[/]")
+        best.update(f"[$primary]{best_elapsed}[/]")
+        if best_at:
+            best.tooltip = f"{best_at} ago"
         s_widget.query_one("#level").update(f"[$primary]{level}[/]")
 
     def action_attempt(self):
