@@ -7,4 +7,7 @@
 - [x] Add support for class based questions.
 - [ ] Dashboard - show current user progress/(per level e.g x/91), correct attempts/ total attempts, fast five, forever five.
 - [ ] Refine individual question tests.
-- [ ] Add types
+- [ ] Add types.
+- [ ] New best time.
+- [ ] Fun/cool congratulation messages on successive submission.
+- [ ] Tips/hints
