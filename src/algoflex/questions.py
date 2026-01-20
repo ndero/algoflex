@@ -2352,7 +2352,7 @@ output: [[1,1],[1,1]]
 """,
         "title": "Conway's game of life",
         "level": "Steady",
-        "code": """def life_game(boars: list[list[int]]) -> list[list[int]]:
+        "code": """def life_game(boats: list[list[int]]) -> list[list[int]]:
 """,
         "test_cases": """
 test_cases = [

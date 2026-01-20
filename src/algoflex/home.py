@@ -103,35 +103,34 @@ class HomeScreen(App):
         )
         if secs < mn:
             v = secs // 1
-            return f"{v} sec{'s' if v > 1 else ''}"
+            return f"{v} second{'s' if v > 1 else ''}"
         if secs < hr:
             v = secs // mn
-            return f"{v} min{'s' if v > 1 else ''}"
+            return f"{v} minute{'s' if v > 1 else ''}"
         if secs < day:
             v = secs // hr
-            return f"{v} hr{'s' if v > 1 else ''}"
+            return f"{v} hour{'s' if v > 1 else ''}"
         if secs < week:
             v = secs // day
             return f"{v} day{'s' if v > 1 else ''}"
         if secs < month:
             v = secs // week
-            return f"{v} wk{'s' if v > 1 else ''}"
+            return f"{v} week{'s' if v > 1 else ''}"
         if secs < year:
             v = secs // month
             return f"{v} month{'s' if v > 1 else ''}"
         v = secs // year
-        return f"{v} yr{'s' if v > 1 else ''}"
+        return f"{v} year{'s' if v > 1 else ''}"
 
     def watch_problem_id(self, id):
         stats = get_db()
         s = stats.get(KV.problem_id == id) or {}
         p = questions.get(id, {})
         problem, level = p.get("markdown", ""), p.get("level", "Breezy")
-        passed, attempts, last_at, best_at, best_elapsed = (
+        passed, attempts, last_at, best_elapsed = (
             s.get("passed", "0"),
             s.get("attempts", "0"),
             self.time_ago(s.get("last_at", "...")),
-            self.time_ago(s.get("best_at", "")),
             self.hrs_mins_secs(s.get("best_elapsed", "...")),
         )
         problem_widget = self.query_one(Problem)
