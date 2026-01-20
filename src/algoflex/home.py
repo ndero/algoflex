@@ -87,6 +87,8 @@ class HomeScreen(App):
             return tm
         mins, secs = divmod(tm, 60)
         hrs, mins = divmod(mins, 60)
+        if hrs > 23:
+            return self.time_ago(tm)
         return f"{hrs:02,.0f}:{mins:02.0f}:{secs:02.0f}"
 
     def time_ago(self, tm):
