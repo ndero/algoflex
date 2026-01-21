@@ -69,11 +69,7 @@ if __name__ == "__main__":
         yield RichLog(markup=True, wrap=True, max_lines=1_000)
 
     def run_user_code(self):
-        stats = get_db()
-        s = stats.get(KV.problem_id == self.problem_id) or {}
-        success, attempts = False, s.get("attempts", 0) + 1
-        passed, best = s.get("passed", 0), s.get("best_elapsed", 0)
-        now = time.time()
+        attempts, passed, now = get_db(), False, time.time()
         user_code = self.user_code.strip()
         output_log = self.query_one(RichLog)
         question = questions.get(self.problem_id, {})
@@ -93,8 +89,7 @@ if __name__ == "__main__":
             if result.stderr:
                 output_log.write(result.stderr, animate=True)
             if result.returncode == 0:
-                passed += 1
-                success = True
+                passed = True
         except subprocess.TimeoutExpired:
             output_log.write(
                 "[red]Execution timed out[/]\\n\\tYour solution must run within 10 seconds"
@@ -104,25 +99,13 @@ if __name__ == "__main__":
         finally:
             os.remove(tmp_file.name)
 
-        stats.upsert(
+        attempts.insert(
             {
                 "problem_id": self.problem_id,
-                "attempts": attempts,  # total attempts
-                "passed": passed,  # total passing attempts
-                "last_at": now,  # time of attempt
-                "last_elapsed": self.elapsed,  # last attempt time taken.
-                "last_passed": success,  # True or False
+                "passed": passed,
+                "elapsed": self.elapsed,
+                "created_at": now,
+                "language": "python",
+                "code": user_code if passed else "",
             },
-            KV.problem_id == self.problem_id,
         )
-
-        if success:
-            stats.upsert(
-                {"recent_code": user_code},
-                KV.problem_id == self.problem_id,
-            )
-            if not best or self.elapsed < best:
-                stats.upsert(
-                    {"best_at": now, "best_elapsed": self.elapsed},
-                    KV.problem_id == self.problem_id,
-                )

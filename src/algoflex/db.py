@@ -10,6 +10,6 @@ def get_db():
     if _db_instance is None:
         app_data_dir = Path(user_data_dir("algoflex"))
         app_data_dir.mkdir(parents=True, exist_ok=True)
-        path = Path(app_data_dir, "stats.json")
+        path = Path(app_data_dir, "attempts.json")
         _db_instance = TinyDB(path=path)
     return _db_instance

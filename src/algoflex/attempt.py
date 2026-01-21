@@ -12,7 +12,7 @@ from tinydb import Query
 from time import monotonic
 
 KV = Query()
-stats = get_db()
+attempts = get_db()
 
 
 class AttemptScreen(Screen):
@@ -53,13 +53,15 @@ class AttemptScreen(Screen):
         question = questions.get(self.problem_id, {})
         description = question.get("markdown", "")
         code = question.get("code", "")
-        s = stats.get(KV.problem_id == self.problem_id) or {}
-        recent_code, saved_code = s.get("recent_code", ""), s.get("saved_code", "")
+        passed_attempts = attempts.search(
+            (KV.problem_id == self.problem_id) & (KV.passed == True)
+        )
+        recent_code = "\n\n".join(doc.get("code", "") for doc in passed_attempts)
 
         yield Title()
         with Horizontal():
             yield Problem(description)
-            with TabbedContent("Attempt", "Recent Solution", "Saved Solution"):
+            with TabbedContent("Attempt", "Recent Solution"):
                 with Vertical():
                     yield TextArea(
                         code,
@@ -71,7 +73,6 @@ class AttemptScreen(Screen):
                     )
                     with Horizontal():
                         yield Button(id="submit", label="Submit", flat=True)
-                        yield Button(id="save", label="Save", flat=True)
                 yield TextArea(
                     recent_code,
                     show_line_numbers=True,
@@ -80,15 +81,6 @@ class AttemptScreen(Screen):
                     read_only=True,
                     placeholder="# Recent correct submitted solution will be shown here.",
                 )
-                yield TextArea(
-                    saved_code,
-                    id="saved",
-                    show_line_numbers=True,
-                    language="python",
-                    compact=True,
-                    read_only=True,
-                    placeholder="# Your saved solution will appear here",
-                )
         yield Footer()
 
     @on(Button.Pressed, "#submit")
@@ -96,15 +88,6 @@ class AttemptScreen(Screen):
         code = self.query_one("#code", TextArea)
         elapsed = monotonic() - self.test_time
         self.app.push_screen(ResultModal(self.problem_id, code.text, elapsed))
-
-    @on(Button.Pressed, "#save")
-    def save_code(self):
-        code, saved = self.query_one("#code", TextArea), self.query_one(
-            "#saved", TextArea
-        )
-        saved.text = code.text
-        stats.upsert({"saved_code": code.text}, KV.problem_id == self.problem_id)
-        self.notify("Saved - can be accessed in saved solution tab")
 
     def action_back(self):
         self.dismiss()

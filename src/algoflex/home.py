@@ -125,22 +125,30 @@ class HomeScreen(App):
         return f"{v} year{'s' if v > 1 else ''}"
 
     def watch_problem_id(self, id):
-        stats = get_db()
-        s = stats.get(KV.problem_id == id) or {}
         p = questions.get(id, {})
         problem, level = p.get("markdown", ""), p.get("level", "Breezy")
-        passed, attempts, last_at, best_elapsed = (
-            s.get("passed", "0"),
-            s.get("attempts", "0"),
-            self.time_ago(s.get("last_at", "...")),
-            self.hrs_mins_secs(s.get("best_elapsed", "...")),
+        attempts = get_db()
+        docs = attempts.search(KV.problem_id == id)
+        total_attempts = len(docs)
+        passed = sum(1 for doc in docs if doc.get("passed"))
+        best_elapsed = (
+            "..."
+            if not docs
+            else self.hrs_mins_secs(
+                min(doc.get("elapsed", "...") for doc in docs if doc["passed"])
+            )
+        )
+        last_at = (
+            "..."
+            if not docs
+            else self.time_ago(sorted(doc.get("created_at", "...") for doc in docs)[0])
         )
         problem_widget = self.query_one(Problem)
         problem_widget.query_one(Markdown).update(markdown=problem)
         problem_widget.scroll_home()
         s_widget = self.query_one(StatScreen)
         s_widget.query_one("#passed").update(
-            f"[$primary]{str(passed)}/{str(attempts)}[/]"
+            f"[$primary]{str(passed)}/{str(total_attempts)}[/]"
         )
         last, best = s_widget.query_one("#last"), s_widget.query_one("#best")
         last.update(f"[$primary]{last_at} {'ago' if last_at != '...' else ''}[/]")
