@@ -48,8 +48,8 @@ class StatScreen(Vertical):
 class HomeScreen(App):
     BINDINGS = [
         Binding("a", "attempt", "attempt", tooltip="Attempt this question"),
-        Binding("n", "next", "next", tooltip="Next question"),
         Binding("p", "previous", "previous", tooltip="Previous question"),
+        Binding("n", "next", "next", tooltip="Next question"),
     ]
     DEFAULT_CSS = """
     HomeScreen {
