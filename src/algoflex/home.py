@@ -130,12 +130,13 @@ class HomeScreen(App):
         attempts = get_db()
         docs = attempts.search(KV.problem_id == id)
         total_attempts = len(docs)
-        passed = sum(1 for doc in docs if doc.get("passed"))
+        passed_attempts = [doc for doc in docs if doc.get("passed")]
+        passed = len(passed_attempts)
         best_elapsed = (
             "..."
-            if not docs
+            if not passed_attempts
             else self.hrs_mins_secs(
-                min(doc.get("elapsed", "...") for doc in docs if doc["passed"])
+                min(doc.get("elapsed", "...") for doc in passed_attempts)
             )
         )
         last_at = (
