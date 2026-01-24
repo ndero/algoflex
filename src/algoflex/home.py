@@ -103,22 +103,25 @@ class HomeScreen(App):
             if not passed_attempts
             else fmt_secs(min(doc.get("elapsed", "...") for doc in passed_attempts))
         )
-        last_at = (
-            "..."
-            if not docs
-            else time_ago(sorted(doc.get("created_at", "...") for doc in docs)[0])
-        )
+        last_at = "..."
+        if docs:
+            last = sorted(docs, key=lambda x: x["created_at"])[0]
+            last_at = ("🟢 " if last["passed"] else "🔴 ") + time_ago(
+                last["created_at"]
+            )
         problem_widget = self.query_one(Problem)
         problem_widget.query_one(Markdown).update(markdown=problem)
         problem_widget.scroll_home()
         s_widget = self.query_one(StatScreen)
-        s_widget.query_one("#passed").update(
+        s_widget.query_one("#passed", Static).update(
             f"[$primary]{str(passed)}/{str(total_attempts)}[/]"
         )
-        last, best = s_widget.query_one("#last"), s_widget.query_one("#best")
+        last, best = s_widget.query_one("#last", Static), s_widget.query_one(
+            "#best", Static
+        )
         last.update(f"[$primary]{last_at}[/]")
         best.update(f"[$primary]{best_elapsed}[/]")
-        s_widget.query_one("#level").update(f"[$primary]{level}[/]")
+        s_widget.query_one("#level", Static).update(f"[$primary]{level}[/]")
 
     def watch_show_dashboard(self, show_dashboard) -> None:
         dashboard = self.query_one(Dashboard)
@@ -131,16 +134,16 @@ class HomeScreen(App):
         self.push_screen(AttemptScreen(self.problem_id), update)
 
     def action_next(self):
+        self.show_dashboard = False
         if self.index + 1 < self.PROBLEMS_COUNT:
             self.index += 1
         self.problem_id = self.PROBLEMS[self.index]
-        self.show_dashboard = False
 
     def action_previous(self):
+        self.show_dashboard = False
         if self.index > 0:
             self.index -= 1
         self.problem_id = self.PROBLEMS[self.index]
-        self.show_dashboard = False
 
     def action_dashboard(self):
         self.show_dashboard = not self.show_dashboard
