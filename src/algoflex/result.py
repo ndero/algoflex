@@ -1,7 +1,8 @@
 from textual.screen import ModalScreen
-from textual.widgets import RichLog
+from textual.widgets import RichLog, Static
 from algoflex.questions import questions
 from algoflex.db import get_db
+from algoflex.utils import fmt_secs
 from tinydb import Query
 import tempfile
 import subprocess
@@ -56,11 +57,12 @@ if __name__ == "__main__":
     sys.exit(run_tests())
     """
 
-    def __init__(self, problem_id, user_code, elapsed):
+    def __init__(self, problem_id, user_code, elapsed, best):
         super().__init__()
         self.problem_id = problem_id
         self.user_code = user_code
         self.elapsed = elapsed
+        self.best = best
 
     def on_mount(self):
         self.run_user_code()
@@ -90,6 +92,8 @@ if __name__ == "__main__":
                 output_log.write(result.stderr, animate=True)
             if result.returncode == 0:
                 passed = True
+                if not self.best or self.elapsed < self.best:
+                    self.new_best()
         except subprocess.TimeoutExpired:
             output_log.write(
                 "[red]Execution timed out[/]\\n\\tYour solution must run within 10 seconds"
@@ -109,3 +113,10 @@ if __name__ == "__main__":
                 "code": user_code if passed else "",
             },
         )
+
+    def new_best(self):
+        widget = Static(f"[b]New best time!!  -->  {fmt_secs(self.elapsed)}[/]")
+        widget.styles.height = 3
+        widget.styles.content_align = ("center", "middle")
+        widget.styles.background = "#303134"
+        self.mount(widget)

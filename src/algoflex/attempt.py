@@ -63,6 +63,7 @@ class AttemptScreen(Screen):
         super().__init__()
         self.problem_id = problem_id
         self.test_time = monotonic()
+        self.best = None
 
     def compose(self):
         question = questions.get(self.problem_id, {})
@@ -106,16 +107,18 @@ class AttemptScreen(Screen):
 
         code = self.query_one("#code", TextArea)
         elapsed = monotonic() - self.test_time
-        self.app.push_screen(ResultModal(self.problem_id, code.text, elapsed), update)
+        self.app.push_screen(
+            ResultModal(self.problem_id, code.text, elapsed, self.best), update
+        )
 
     def update_timeline(self, docs):
         md = ""
         timeline = sorted(docs, key=lambda x: x["created_at"], reverse=True)
         elapsed = [doc["elapsed"] for doc in docs if doc["passed"]]
-        best = min(elapsed) if elapsed else None
+        self.best = min(elapsed) if elapsed else None
         for doc in timeline:
             md += f"\n|- {('🟢' if doc['passed'] else '🔴')} {time_ago(doc['created_at'])}   ({fmt_secs(doc['elapsed'])})"
-            if doc["passed"] and doc["elapsed"] == best:
+            if doc["passed"] and doc["elapsed"] == self.best:
                 md += "\t<--- best"
             md += "\n|"
         self.query_one("#timeline", Static).update(md.rstrip("|"))
