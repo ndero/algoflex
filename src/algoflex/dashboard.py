@@ -129,22 +129,7 @@ class Dashboard(Widget):
             self.update_digits(ids, [0, 0, 0])
 
     def animate_digit(self, id, value):
-        target = self.query_one(f"{id}", Digits)
-        if value < 1:
-            target.update(f"{value}")
-            return
-        start = 0
-
-        def update_digit():
-            nonlocal start
-            target.update(f"{start}")
-            start += 1
-
-        self.set_interval(
-            value / (value * 15),
-            update_digit,
-            repeat=value,
-        )
+        self.query_one(f"{id}", Digits).update(f"{value}")
 
     def md_table(self, headers, rows):
         if not rows:
@@ -191,7 +176,7 @@ class Dashboard(Widget):
         ]
         recent = [
             (
-                "🟢 " if passed else "🔴 " + q.get(id, {}).get("title", ""),
+                ("🟢 " if passed else "🔴 ") + q.get(id, {}).get("title", ""),
                 q.get(id, {}).get("level", ""),
                 time_ago(tm),
             )
