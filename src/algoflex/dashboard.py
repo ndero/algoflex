@@ -38,7 +38,7 @@ class Dashboard(Widget):
     DEFAULT_CSS = """
     Dashboard {
         overflow-y: auto;
-        width: 50vw;
+        width: 52vw;
         border-left: vkey $boost;
         border-right: vkey $boost;
         padding: 1 2;
@@ -48,7 +48,7 @@ class Dashboard(Widget):
         offset-x: 100vw;
         transition: offset 200ms;  
         &.-visible {
-            offset-x: 50vw;
+            offset-x: 48vw;
         }
 
         Bar {
@@ -108,7 +108,7 @@ class Dashboard(Widget):
                     yield Center(Label(f"of {len(self.edgy)}"))
             with Center(id="progress"):
                 yield ProgressBar(total=self.total, show_eta=False, id="all")
-            with Collapsible(title="Recent attempts"):
+            with Collapsible(title="Recent attempts", collapsed=False):
                 yield Markdown(id="recent")
             with Collapsible(title="Frequent Problems"):
                 yield Markdown(id="frequent")
@@ -125,10 +125,8 @@ class Dashboard(Widget):
             self.update_digits(ids, [breezy, steady, edgy])
             self.update_progress(breezy + steady + edgy)
             self.update_md(docs)
-        else:
-            self.update_digits(ids, [0, 0, 0])
 
-    def animate_digit(self, id, value):
+    def update_digit(self, id, value):
         self.query_one(f"{id}", Digits).update(f"{value}")
 
     def md_table(self, headers, rows):
@@ -190,10 +188,10 @@ class Dashboard(Widget):
 
     def update_md(self, docs) -> None:
         recent, frequent, fast, forever = self.get_stats(docs)
-        latest = self.md_table(["question", "level", "time"], recent)
-        popular = self.md_table(["question", "level", "attempts"], frequent)
-        best = self.md_table(["question", "level", "best time"], fast)
-        worst = self.md_table(["question", "level", "best time"], forever)
+        latest = self.md_table(["Question", "Level", "When"], recent)
+        popular = self.md_table(["Question", "Level", "Attempts"], frequent)
+        best = self.md_table(["Question", "Level", "Best time"], fast)
+        worst = self.md_table(["Question", "Level", "Best time"], forever)
         self.query_one("#recent", Markdown).update(latest)
         self.query_one("#frequent", Markdown).update(popular)
         self.query_one("#best", Markdown).update(best)
@@ -201,7 +199,7 @@ class Dashboard(Widget):
 
     def update_digits(self, ids, values):
         for id, val in zip(ids, values):
-            self.animate_digit(id, val)
+            self.update_digit(id, val)
 
     def update_progress(self, value):
         self.query_one(ProgressBar).update(progress=value)
