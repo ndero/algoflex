@@ -17,7 +17,8 @@ attempts = get_db()
 
 class AttemptScreen(Screen):
     BINDINGS = [
-        Binding("b", "back", "back", tooltip="Go to home"),
+        Binding("a", "back", "back", tooltip="Go to home"),
+        Binding("s", "submit", "submit", tooltip="Submit your solution"),
     ]
     DEFAULT_CSS = """
     Horizontal {
@@ -85,9 +86,15 @@ class AttemptScreen(Screen):
 
     @on(Button.Pressed, "#submit")
     def submit_code(self):
+        self.attempt()
+
+    def attempt(self):
         code = self.query_one("#code", TextArea)
         elapsed = monotonic() - self.test_time
         self.app.push_screen(ResultModal(self.problem_id, code.text, elapsed))
 
     def action_back(self):
         self.dismiss()
+
+    def action_submit(self):
+        self.attempt()
