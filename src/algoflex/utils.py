@@ -15,24 +15,24 @@ def time_ago(tm):
     )
     if secs < mn:
         v = secs // 1
-        return f"{v} second{'s' if v > 1 else ''} ago"
+        return f"{v} sec{'s' if v > 1 else ''} ago"
     if secs < hr:
         v = secs // mn
-        return f"{v} minute{'s' if v > 1 else ''} ago"
+        return f"{v} min{'s' if v > 1 else ''} ago"
     if secs < day:
         v = secs // hr
-        return f"{v} hour{'s' if v > 1 else ''} ago"
+        return f"{v} hr{'s' if v > 1 else ''} ago"
     if secs < week:
         v = secs // day
         return f"{v} day{'s' if v > 1 else ''} ago"
     if secs < month:
         v = secs // week
-        return f"{v} week{'s' if v > 1 else ''} ago"
+        return f"{v} wk{'s' if v > 1 else ''} ago"
     if secs < year:
         v = secs // month
-        return f"{v} month{'s' if v > 1 else ''} ago"
+        return f"{v} mon{'s' if v > 1 else ''} ago"
     v = secs // year
-    return f"{v} year{'s' if v > 1 else ''} ago"
+    return f"{v} yr{'s' if v > 1 else ''} ago"
 
 
 def fmt_secs(tm):
