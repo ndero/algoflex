@@ -1,5 +1,5 @@
 from textual.screen import ModalScreen
-from textual.widgets import RichLog, Static
+from textual.widgets import RichLog, Static, Footer
 from algoflex.questions import questions
 from algoflex.db import get_db
 from algoflex.utils import fmt_secs
@@ -13,7 +13,7 @@ KV = Query()
 
 
 class ResultModal(ModalScreen):
-    BINDINGS = [("escape", "dismiss", "dismiss")]
+    BINDINGS = [("s", "dismiss", "dismiss")]
     DEFAULT_CSS = """
     ResultModal {
         &>* {
@@ -69,6 +69,7 @@ if __name__ == "__main__":
 
     def compose(self):
         yield RichLog(markup=True, wrap=True, max_lines=1_000)
+        yield Footer()
 
     def run_user_code(self):
         attempts, passed, now = get_db(), False, time.time()
