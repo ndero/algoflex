@@ -1,6 +1,6 @@
 from textual import on
 from textual.app import App
-from textual.widgets import TextArea, Footer, TabbedContent, Button
+from textual.widgets import TextArea, Footer, TabbedContent, Button, Markdown, Static
 from textual.containers import Horizontal, Vertical
 from textual.screen import Screen
 from textual.binding import Binding
@@ -8,6 +8,7 @@ from algoflex.custom_widgets import Title, Problem
 from algoflex.result import ResultModal
 from algoflex.questions import questions
 from algoflex.db import get_db
+from algoflex.utils import time_ago, fmt_secs
 from tinydb import Query
 from time import monotonic
 
@@ -31,9 +32,11 @@ class AttemptScreen(Screen):
             width: 1fr;
         }
     }
+
     TextArea {
         margin-right: 1;
     }
+
     Vertical {
         Horizontal {
             height: 4;
@@ -42,6 +45,17 @@ class AttemptScreen(Screen):
             border-top: hkey $background;
             margin-right: 1;
         }
+    }
+
+    #timeline {
+        padding: 1 2;
+        border-left: vkey $boost;
+        height: 1fr;
+    }
+
+    Markdown {
+        border-left: vkey $boost;
+        height: 1fr;
     }
     """
 
@@ -54,15 +68,11 @@ class AttemptScreen(Screen):
         question = questions.get(self.problem_id, {})
         description = question.get("markdown", "")
         code = question.get("code", "")
-        passed_attempts = attempts.search(
-            (KV.problem_id == self.problem_id) & (KV.passed == True)
-        )
-        recent_code = "\n\n".join(doc.get("code", "") for doc in passed_attempts)
 
         yield Title()
         with Horizontal():
             yield Problem(description)
-            with TabbedContent("Attempt", "Recent Solution"):
+            with TabbedContent("Attempt", "Timeline", "Past solutions"):
                 with Vertical():
                     yield TextArea(
                         code,
@@ -74,15 +84,14 @@ class AttemptScreen(Screen):
                     )
                     with Horizontal():
                         yield Button(id="submit", label="Submit", flat=True)
-                yield TextArea(
-                    recent_code,
-                    show_line_numbers=True,
-                    language="python",
-                    compact=True,
-                    read_only=True,
-                    placeholder="# Recent correct submitted solution will be shown here.",
-                )
+                yield Static(id="timeline")
+                yield Markdown(id="solutions")
         yield Footer()
+
+    def on_mount(self):
+        docs = attempts.search(KV.problem_id == self.problem_id)
+        self.update_timeline(docs)
+        self.update_solutions(docs)
 
     @on(Button.Pressed, "#submit")
     def submit_code(self):
@@ -92,6 +101,19 @@ class AttemptScreen(Screen):
         code = self.query_one("#code", TextArea)
         elapsed = monotonic() - self.test_time
         self.app.push_screen(ResultModal(self.problem_id, code.text, elapsed))
+
+    def update_timeline(self, docs):
+        md = ""
+        for doc in sorted(docs, key=lambda x: x["created_at"], reverse=True):
+            md += f"\n|- {('🟢' if doc['passed'] else '🔴')} {time_ago(doc['created_at'])}\t({fmt_secs(doc['elapsed'])})\n|"
+        self.query_one("#timeline", Static).update(md.rstrip("|"))
+
+    def update_solutions(self, docs):
+        passed = [doc for doc in docs if doc["passed"]]
+        md = ""
+        for doc in passed:
+            md += f"### {time_ago(doc['created_at'])}\n```python\n{doc['code']}\n```"
+        self.query_one("#solutions", Markdown).update(md)
 
     def action_back(self):
         self.dismiss()
