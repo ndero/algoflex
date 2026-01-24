@@ -114,17 +114,21 @@ class AttemptScreen(Screen):
         elapsed = [doc["elapsed"] for doc in docs if doc["passed"]]
         best = min(elapsed) if elapsed else None
         for doc in timeline:
-            md += f"\n|- {('🟢' if doc['passed'] else '🔴')} {time_ago(doc['created_at'])}\t({fmt_secs(doc['elapsed'])})"
+            md += f"\n|- {('🟢' if doc['passed'] else '🔴')} {time_ago(doc['created_at'])}   ({fmt_secs(doc['elapsed'])})"
             if doc["passed"] and doc["elapsed"] == best:
                 md += "\t<--- best"
             md += "\n|"
         self.query_one("#timeline", Static).update(md.rstrip("|"))
 
     def update_solutions(self, docs):
-        passed = [doc for doc in docs if doc["passed"]]
+        passed = sorted(
+            (doc for doc in docs if doc["passed"]),
+            key=lambda x: x["created_at"],
+            reverse=True,
+        )
         md = ""
         for doc in passed:
-            md += f"### {time_ago(doc['created_at'])}\n```python\n{doc['code']}\n```"
+            md += f"### {time_ago(doc['created_at'])}\n```python\n{doc['code']}\n```\n"
         self.query_one("#solutions", Markdown).update(md)
 
     def action_back(self):
