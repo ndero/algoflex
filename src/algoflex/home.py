@@ -134,11 +134,13 @@ class HomeScreen(App):
         if self.index + 1 < self.PROBLEMS_COUNT:
             self.index += 1
         self.problem_id = self.PROBLEMS[self.index]
+        self.show_dashboard = False
 
     def action_previous(self):
         if self.index > 0:
             self.index -= 1
         self.problem_id = self.PROBLEMS[self.index]
+        self.show_dashboard = False
 
     def action_dashboard(self):
         self.show_dashboard = not self.show_dashboard
