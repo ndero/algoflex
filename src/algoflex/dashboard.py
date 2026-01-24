@@ -108,13 +108,13 @@ class Dashboard(Widget):
                     yield Center(Label(f"of {len(self.edgy)}"))
             with Center(id="progress"):
                 yield ProgressBar(total=self.total, show_eta=False, id="all")
-            with Collapsible(title="Recent"):
+            with Collapsible(title="Recent attempts"):
                 yield Markdown(id="recent")
-            with Collapsible(title="Frequent"):
+            with Collapsible(title="Frequent Problems"):
                 yield Markdown(id="frequent")
-            with Collapsible(title="Best"):
+            with Collapsible(title="Speedy Solves"):
                 yield Markdown(id="best")
-            with Collapsible(title="Worst"):
+            with Collapsible(title="Slow Solves"):
                 yield Markdown(id="worst")
 
     def watch_show_dashboard(self) -> None:
@@ -167,7 +167,7 @@ class Dashboard(Widget):
         for d in docs:
             pid = d["problem_id"]
             counts[pid] += 1
-            latest[pid] = max(d["created_at"], latest.get(pid, 0))
+            latest[pid] = max(d["created_at"], latest.get(pid, (0, 0))[0]), d["passed"]
             if d["passed"]:
                 if d["elapsed"] <= 30 * 60 * 60:
                     best[pid] = min(d["elapsed"], best.get(pid, float("inf")))
@@ -175,7 +175,7 @@ class Dashboard(Widget):
                     worst[pid] = min(d["elapsed"], worst.get(pid, float("inf")))
         fast = [
             (
-                q.get(id, {}).get("title", ""),
+                "🟢 " + q.get(id, {}).get("title", ""),
                 q.get(id, {}).get("level", ""),
                 fmt_secs(tm),
             )
@@ -183,7 +183,7 @@ class Dashboard(Widget):
         ]
         forever = [
             (
-                q.get(id, {}).get("title", ""),
+                "🟢 " + q.get(id, {}).get("title", ""),
                 q.get(id, {}).get("level", ""),
                 fmt_secs(tm),
             )
@@ -191,11 +191,11 @@ class Dashboard(Widget):
         ]
         recent = [
             (
-                q.get(id, {}).get("title", ""),
+                "🟢 " if passed else "🔴 " + q.get(id, {}).get("title", ""),
                 q.get(id, {}).get("level", ""),
                 time_ago(tm),
             )
-            for id, tm in nlargest(6, latest.items(), key=lambda x: x[1])
+            for id, (tm, passed) in nlargest(6, latest.items(), key=lambda x: x[1][0])
         ]
         frequent = [
             (q.get(id, {}).get("title", ""), q.get(id, {}).get("level", ""), count)
