@@ -1408,10 +1408,11 @@ Each input has exactly one solution.
 """,
         "test_cases": """
 test_cases = [
-    [pair_sum([2, 7, 1, 15], 13), [1, 3]],
-    [pair_sum([2, 4, 7, 14], 6), [1, 2]],
-    [pair_sum([i for i in range(400_000)], 5), [1, 6]],
-    [pair_sum([i for i in range(-10, 10)], -10), [1, 11]],
+    [pair_sum([2, 7, 1, 15], 22), [1, 3]],
+    [pair_sum([2, 4, 7, 14], 6), [0, 1]],
+    [pair_sum([2, 4, 7, 14] + [40] * 100_000, 6), [0, 1]],
+    [pair_sum([30] * 100_000 + [2, 4, 7, 14], 6), [100_000, 100_001]],
+    [pair_sum([10] * 100_000 + [2, 4, 7, 14] + [20] * 100_000, 6), [100_000, 100_001]],
 ]
 """,
         "title": "Pair sum equal target",

@@ -129,6 +129,9 @@ class HomeScreen(App):
         dashboard.set_class(show_dashboard, "-visible")
 
     def action_attempt(self):
+        if self.show_dashboard:
+            self.show_dashboard = False
+
         def update(_id):
             self.problem_id = self.PROBLEMS[self.index]
 

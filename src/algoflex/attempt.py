@@ -1,7 +1,7 @@
 from textual import on
 from textual.app import App
 from textual.widgets import TextArea, Footer, TabbedContent, Button, Markdown, Static
-from textual.containers import Horizontal, Vertical
+from textual.containers import Horizontal, Vertical, ScrollableContainer
 from textual.screen import Screen
 from textual.binding import Binding
 from algoflex.custom_widgets import Title, Problem
@@ -50,8 +50,6 @@ class AttemptScreen(Screen):
     #timeline {
         padding: 1 2;
         border-left: vkey $boost;
-        height: 1fr;
-        overflow-y: auto;
     }
 
     Markdown {
@@ -87,7 +85,7 @@ class AttemptScreen(Screen):
                     )
                     with Horizontal():
                         yield Button(id="submit", label="Submit", flat=True)
-                yield Static(id="timeline")
+                yield ScrollableContainer(Static(id="timeline"))
                 yield Markdown(id="solutions")
         yield Footer()
 
