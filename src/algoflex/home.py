@@ -3,14 +3,15 @@ from textual.screen import Screen
 from textual.containers import Horizontal, Vertical, VerticalScroll, HorizontalScroll
 from textual.widgets import Footer, Markdown, Static
 from textual.binding import Binding
-from textual.reactive import Reactive
+from textual.reactive import reactive
 from algoflex.questions import questions
 from algoflex.attempt import AttemptScreen
 from algoflex.custom_widgets import Title, Problem
+from algoflex.dashboard import Dashboard
 from algoflex.db import get_db
+from algoflex.utils import time_ago, fmt_secs
 from random import shuffle
 from tinydb import Query
-import time
 
 KV = Query()
 
@@ -50,6 +51,7 @@ class HomeScreen(App):
         Binding("a", "attempt", "attempt", tooltip="Attempt this question"),
         Binding("p", "previous", "previous", tooltip="Previous question"),
         Binding("n", "next", "next", tooltip="Next question"),
+        Binding("d", "dashboard", "dashboard", tooltip="Show dashboard"),
     ]
     DEFAULT_CSS = """
     HomeScreen {
@@ -64,9 +66,14 @@ class HomeScreen(App):
             align: center middle;
         }
     }
+
+    Screen {
+        layers: dashboard;
+    }
     """
-    problem_id = Reactive(0, always_update=True)
-    index = Reactive(0, bindings=True)
+    problem_id = reactive(0, always_update=True)
+    index = reactive(0, bindings=True)
+    show_dashboard: reactive[bool] = reactive(False)
     PROBLEMS_COUNT = len(questions.keys())
     PROBLEMS = [i for i in range(PROBLEMS_COUNT)]
 
@@ -74,6 +81,7 @@ class HomeScreen(App):
         problem = questions.get(id, {}).get("markdown", "")
         yield Title()
         with VerticalScroll():
+            yield Dashboard().data_bind(HomeScreen.show_dashboard)
             yield Problem(problem)
             yield StatScreen()
         yield Footer()
@@ -81,48 +89,6 @@ class HomeScreen(App):
     def on_mount(self):
         shuffle(self.PROBLEMS)
         self.problem_id = self.PROBLEMS[self.index]
-
-    def hrs_mins_secs(self, tm):
-        if isinstance(tm, str):
-            return tm
-        mins, secs = divmod(tm, 60)
-        hrs, mins = divmod(mins, 60)
-        if hrs > 23:
-            return self.time_ago(tm)
-        return f"{hrs:02,.0f}:{mins:02.0f}:{secs:02.0f}"
-
-    def time_ago(self, tm):
-        if isinstance(tm, str):
-            return tm
-        secs = int(time.time() - tm)
-        mn, hr, day, week, month, year = (
-            60,
-            3600,
-            86_400,
-            604_800,
-            2_592_000,
-            31_104_000,
-        )
-        if secs < mn:
-            v = secs // 1
-            return f"{v} second{'s' if v > 1 else ''}"
-        if secs < hr:
-            v = secs // mn
-            return f"{v} minute{'s' if v > 1 else ''}"
-        if secs < day:
-            v = secs // hr
-            return f"{v} hour{'s' if v > 1 else ''}"
-        if secs < week:
-            v = secs // day
-            return f"{v} day{'s' if v > 1 else ''}"
-        if secs < month:
-            v = secs // week
-            return f"{v} week{'s' if v > 1 else ''}"
-        if secs < year:
-            v = secs // month
-            return f"{v} month{'s' if v > 1 else ''}"
-        v = secs // year
-        return f"{v} year{'s' if v > 1 else ''}"
 
     def watch_problem_id(self, id):
         p = questions.get(id, {})
@@ -135,14 +101,12 @@ class HomeScreen(App):
         best_elapsed = (
             "..."
             if not passed_attempts
-            else self.hrs_mins_secs(
-                min(doc.get("elapsed", "...") for doc in passed_attempts)
-            )
+            else fmt_secs(min(doc.get("elapsed", "...") for doc in passed_attempts))
         )
         last_at = (
             "..."
             if not docs
-            else self.time_ago(sorted(doc.get("created_at", "...") for doc in docs)[0])
+            else time_ago(sorted(doc.get("created_at", "...") for doc in docs)[0])
         )
         problem_widget = self.query_one(Problem)
         problem_widget.query_one(Markdown).update(markdown=problem)
@@ -152,9 +116,13 @@ class HomeScreen(App):
             f"[$primary]{str(passed)}/{str(total_attempts)}[/]"
         )
         last, best = s_widget.query_one("#last"), s_widget.query_one("#best")
-        last.update(f"[$primary]{last_at} {'ago' if last_at != '...' else ''}[/]")
+        last.update(f"[$primary]{last_at}[/]")
         best.update(f"[$primary]{best_elapsed}[/]")
         s_widget.query_one("#level").update(f"[$primary]{level}[/]")
+
+    def watch_show_dashboard(self, show_dashboard) -> None:
+        dashboard = self.query_one(Dashboard)
+        dashboard.set_class(show_dashboard, "-visible")
 
     def action_attempt(self):
         def update(_id):
@@ -171,6 +139,9 @@ class HomeScreen(App):
         if self.index > 0:
             self.index -= 1
         self.problem_id = self.PROBLEMS[self.index]
+
+    def action_dashboard(self):
+        self.show_dashboard = not self.show_dashboard
 
     def check_action(self, action, parameters):
         if not self.screen.id == "_default":
