@@ -78,11 +78,10 @@ class HomeScreen(App):
     PROBLEMS = [i for i in range(PROBLEMS_COUNT)]
 
     def compose(self):
-        problem = questions.get(id, {}).get("markdown", "")
         yield Title()
         with VerticalScroll():
             yield Dashboard().data_bind(HomeScreen.show_dashboard)
-            yield Problem(problem)
+            yield Problem("")
             yield StatScreen()
         yield Footer()
 
