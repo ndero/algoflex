@@ -115,7 +115,7 @@ if __name__ == "__main__":
         )
 
     def new_best(self):
-        widget = Static(f"[b]New best time!!  -->  {fmt_secs(self.elapsed)}[/]")
+        widget = Static(f"[b]New best time! --> {fmt_secs(self.elapsed)}[/]")
         widget.styles.height = 3
         widget.styles.content_align = ("center", "middle")
         widget.styles.background = "#303134"
