@@ -51,11 +51,13 @@ class AttemptScreen(Screen):
         padding: 1 2;
         border-left: vkey $boost;
         height: 1fr;
+        overflow-y: auto;
     }
 
     Markdown {
         border-left: vkey $boost;
         height: 1fr;
+        overflow-y: auto;
     }
     """
 
