@@ -89,6 +89,9 @@ class AttemptScreen(Screen):
         yield Footer()
 
     def on_mount(self):
+        self.update()
+
+    def update(self):
         docs = attempts.search(KV.problem_id == self.problem_id)
         self.update_timeline(docs)
         self.update_solutions(docs)
@@ -98,14 +101,23 @@ class AttemptScreen(Screen):
         self.attempt()
 
     def attempt(self):
+        def update(_id):
+            self.update()
+
         code = self.query_one("#code", TextArea)
         elapsed = monotonic() - self.test_time
-        self.app.push_screen(ResultModal(self.problem_id, code.text, elapsed))
+        self.app.push_screen(ResultModal(self.problem_id, code.text, elapsed), update)
 
     def update_timeline(self, docs):
         md = ""
-        for doc in sorted(docs, key=lambda x: x["created_at"], reverse=True):
-            md += f"\n|- {('🟢' if doc['passed'] else '🔴')} {time_ago(doc['created_at'])}\t({fmt_secs(doc['elapsed'])})\n|"
+        timeline = sorted(docs, key=lambda x: x["created_at"], reverse=True)
+        elapsed = [doc["elapsed"] for doc in docs if doc["passed"]]
+        best = min(elapsed) if elapsed else None
+        for doc in timeline:
+            md += f"\n|- {('🟢' if doc['passed'] else '🔴')} {time_ago(doc['created_at'])}\t({fmt_secs(doc['elapsed'])})"
+            if doc["passed"] and doc["elapsed"] == best:
+                md += "\t<--- best"
+            md += "\n|"
         self.query_one("#timeline", Static).update(md.rstrip("|"))
 
     def update_solutions(self, docs):

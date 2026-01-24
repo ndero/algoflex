@@ -136,13 +136,15 @@ class HomeScreen(App):
         self.push_screen(AttemptScreen(self.problem_id), update)
 
     def action_next(self):
-        self.show_dashboard = False
+        if self.show_dashboard:
+            self.show_dashboard = False
         if self.index + 1 < self.PROBLEMS_COUNT:
             self.index += 1
         self.problem_id = self.PROBLEMS[self.index]
 
     def action_previous(self):
-        self.show_dashboard = False
+        if self.show_dashboard:
+            self.show_dashboard = False
         if self.index > 0:
             self.index -= 1
         self.problem_id = self.PROBLEMS[self.index]
