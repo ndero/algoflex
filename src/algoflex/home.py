@@ -112,16 +112,18 @@ class HomeScreen(App):
         problem_widget = self.query_one(Problem)
         problem_widget.query_one(Markdown).update(markdown=problem)
         problem_widget.scroll_home()
-        s_widget = self.query_one(StatScreen)
-        s_widget.query_one("#passed", Static).update(
+        self.query_one("#passed", Static).update(
             f"[$primary]{str(passed)}/{str(total_attempts)}[/]"
         )
-        last, best = s_widget.query_one("#last", Static), s_widget.query_one(
-            "#best", Static
-        )
+        last, best = self.query_one("#last", Static), self.query_one("#best", Static)
         last.update(f"[$primary]{last_at}[/]")
         best.update(f"[$primary]{best_elapsed}[/]")
-        s_widget.query_one("#level", Static).update(f"[$primary]{level}[/]")
+        self.update_level(level)
+
+    def update_level(self, level):
+        target = self.query_one("#level", Static)
+        colors = {"Breezy": "green 90%", "Steady": "orange 70%", "Edgy": "red 70%"}
+        target.update(f"[{colors.get(level, '$primary')}]{level}[/]")
 
     def watch_show_dashboard(self, show_dashboard) -> None:
         dashboard = self.query_one(Dashboard)
