@@ -1,5 +1,5 @@
 from textual.app import ComposeResult
-from textual.containers import Vertical, Horizontal, Center, Grid, HorizontalGroup
+from textual.containers import Horizontal, Center
 from textual.reactive import reactive
 from textual.widgets import (
     ProgressBar,
@@ -7,7 +7,6 @@ from textual.widgets import (
     Static,
     Label,
     Collapsible,
-    DataTable,
     Markdown,
 )
 from textual.widget import Widget
