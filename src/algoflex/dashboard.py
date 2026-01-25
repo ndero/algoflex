@@ -33,7 +33,7 @@ class Dashboard(Widget):
             steady.add(k)
         else:
             edgy.add(k)
-    total = len(q)
+    total = len(breezy) + (len(steady) * 2) + (len(edgy) * 4)
 
     DEFAULT_CSS = """
     Dashboard {
@@ -142,7 +142,7 @@ class Dashboard(Widget):
         breezy = len(self.breezy.intersection(passed))
         steady = len(self.steady.intersection(passed))
         edgy = len(self.edgy.intersection(passed))
-        return breezy, steady, edgy
+        return breezy, steady * 2, edgy * 4
 
     def get_stats(self, docs):
         # get recent, frequent, fast and forever.

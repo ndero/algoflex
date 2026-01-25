@@ -104,7 +104,7 @@ class HomeScreen(App):
         )
         last_at = "..."
         if docs:
-            last = sorted(docs, key=lambda x: x["created_at"])[0]
+            last = sorted(docs, key=lambda x: x["created_at"], reverse=True)[0]
             last_at = ("🟢 " if last["passed"] else "🔴 ") + time_ago(
                 last["created_at"]
             )
