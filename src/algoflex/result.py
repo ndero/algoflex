@@ -85,22 +85,22 @@ if __name__ == "__main__":
             tmp_file.write(full_code)
         try:
             result = subprocess.run(
-                ["python", tmp_file.name], capture_output=True, text=True, timeout=5
+                ["python", tmp_file.name], capture_output=True, text=True, timeout=9
             )
             if result.stdout:
                 output_log.write(result.stdout, animate=True)
             if result.stderr:
-                output_log.write(result.stderr, animate=True)
+                return output_log.write(result.stderr, animate=True)
             if result.returncode == 0:
                 passed = True
                 if not self.best or self.elapsed < self.best:
                     self.new_best()
         except subprocess.TimeoutExpired:
             output_log.write(
-                "[red]Execution timed out[/]\\n\\tYour solution must run within 10 seconds"
+                "[red]Execution timed out[/]\\n\\tYour solution must run within 9 seconds"
             )
         except Exception as e:
-            output_log.write(f"[red]Error running code[/]\\n\\t{e}")
+            return output_log.write(f"[red]Error running code[/]\\n\\t{e}")
         finally:
             os.remove(tmp_file.name)
 
@@ -110,7 +110,6 @@ if __name__ == "__main__":
                 "passed": passed,
                 "elapsed": self.elapsed,
                 "created_at": now,
-                "language": "python",
                 "code": user_code if passed else "",
             },
         )
