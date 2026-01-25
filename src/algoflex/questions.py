@@ -1707,6 +1707,7 @@ test_cases = [
     [min_jumps([1, 5]), 1],
     [min_jumps([1 for _ in range(200_000)]), 199_999],
     [min_jumps([200_000] + [0] * 200_000), 1],
+    [min_jumps([i for i in range(1, 100_000)]), 17],
 ]
 """,
     },
@@ -1735,6 +1736,9 @@ test_cases = [
     [can_jump_to_zero([4, 2, 3, 0, 3, 1, 2], 0), True],
     [can_jump_to_zero([3, 0, 2, 1, 2], 2), False],
     [can_jump_to_zero([4, 2, 3, 0, 3, 1, 2], 5), True],
+    [can_jump_to_zero([1] * 200_000 + [0], 567), True],
+    [can_jump_to_zero([0], 0), True],
+    [can_jump_to_zero([2, 4, 0, 1, 1, 1, 0, 2, 1], 8), True],
 ]
 """,
     },
@@ -1764,6 +1768,7 @@ test_cases = [
     [max_loot([1, 7, 2, 1, 6]), 13],
     [max_loot([1, 2]), 2],
     [max_loot([3]), 3],
+    [max_loot([133, 99, 17, 39, 54, 98, 57, 34, 23, 100]), 404],
     [max_loot([i for i in range(0, 100_000, 100)]), 25_000_000],
 ]
 """,
@@ -1786,9 +1791,11 @@ How: Cannot rob boats 1 and 3 for total of 6 because they are adjacent. So rob b
 """,
         "test_cases": """
 test_cases = [
-    [max_loot_circle([1, 2, 3, 1]), 4],
-    [max_loot_circle([1, 7, 2, 1, 6]), 13],
-    [max_loot_circle([1, 2, 3]), 3],
+    [max_loot_circle([3, 5, 3]), 5],
+    [max_loot_circle([1, 7, 2, 1, 6, 14]), 22],
+    [max_loot_circle([3, 2, 5]), 5],
+    [max_loot_circle([3]), 3],
+    [max_loot_circle([133, 99, 17, 39, 54, 98, 57, 34, 23, 100]), 370],
     [max_loot_circle([i for i in range(0, 100_000, 100)]), 25_000_000],
 ]
 """,
@@ -1796,26 +1803,30 @@ test_cases = [
     52: {
         "markdown": """
 ### Course schedule 
-Given an array of `courses` representing the courses you have to take where courses[i] = [a, b] indicates that you must take course b in order to take course a. And an integer `n` representing the total number of courses with the courses being labelled from 0 to n - 1. Determine whether you can finish all the courses. 
+Given an array of `courses` representing the courses you have to take where courses[i] = [a, b] indicates that you must take course b in order to take course a. And an integer `n` representing the total number of courses with the courses being labelled from 0 to n - 1. Determine the order in which you can do all the courses. Return [] if you can't do all the courses. 
 
 #### Example
 Input: n = 2, courses = [[1,0]]
-Output: true
+Output: [0, 1]
 How: Take course 0 then 1. 
 
 Input: n = 2, courses = [[1,0],[0,1]]
-Output: false
+Output: []
 How: To take course 1 you first need to take course 0 but to take course 0 you need to first take course 1 so no way to take any of them. 
 """,
         "title": "Course schedule",
         "level": "Steady",
-        "code": """def can_finish(n: int, courses: list[int]) -> bool:
+        "code": """def course_schedule(n: int, courses: list[list[int]]) -> list[int]:
 """,
         "test_cases": """
 test_cases = [
-    [can_finish(2, [[1, 0], [0, 1]]), False)
-    [can_finish(4, [[1, 0], [2, 0], [3, 1], [3, 2]]), True],
-    [can_finish(1, []), True],
+    [course_schedule(2, [[1, 0], [0, 1]]), []],
+    [course_schedule(4, [[1, 0], [2, 0], [3, 1], [3, 2]]), [0, 1, 2, 3]],
+    [course_schedule(1, []), [0]],
+    [course_schedule(10, [[0, 9]]), [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]],
+    [course_schedule(10, [[0, 9], [8, 5]]), [1, 2, 3, 4, 5, 6, 7, 9, 8, 0]],
+    [course_schedule(10, [[0, 9], [8, 5], [5, 8]]), []],
+    [course_schedule(10, [[2, 3], [2, 4], [4, 3]]), [0, 1, 3, 5, 6, 7, 8, 9, 4, 2]],
 ]
 """,
     },
@@ -1849,6 +1860,10 @@ Output: [3,4]
 test_cases = [
     [min_height(4, [[1, 0], [1, 2], [1, 3]]), [1]],
     [min_height(6, [[3, 0], [3, 1], [3, 2], [3, 4], [5, 4]]), [3, 4]],
+    [min_height(10, [[6, 5], [6, 1], [1, 4], [1, 7], [3, 4], [7, 0], [4, 8], [7, 2], [2, 9]]), [1, 7]],
+    [min_height(2, [[0, 1]]), [0, 1]],
+    [min_height(100001, [[i, i + 1] for i in range(100_000)]), [50000]],
+    [min_height(1000, [[i, i + 1] for i in range(999)]), [499, 500]],
 ]
 """,
     },
@@ -1904,11 +1919,17 @@ Output: 700
         "code": """def cheapest_flight(n: int, flights: list[list[int]], src: int, dst: int, k: int) -> int:
 """,
         "test_cases": """
+flights = [[i, i + 1, i * 100] for i in range(10)] + [[i, i + 2, 100] for i in range(0, 10, 2)] + [[10, 0, 10_000]]
 test_cases = [
     [cheapest_flight(4, [[0, 1, 100], [1, 2, 100], [2, 0, 100], [1, 3, 600], [2, 3, 200]], 0, 3, 1), 700],
     [cheapest_flight(4, [[0, 1, 100], [1, 2, 100], [2, 0, 100], [1, 3, 600], [2, 3, 200]], 0, 3, 2), 400],
+    [cheapest_flight(3, [[0, 1, 200]], 0, 1, 0), 200],
     [cheapest_flight(3, [[0, 1, 100], [1, 2, 100], [0, 2, 500]], 0, 2, 1), 200],
     [cheapest_flight(3, [[0, 1, 100], [1, 2, 100], [0, 2, 500]], 0, 2, 0), 500],
+    [cheapest_flight(11, flights, 4, 7, 1), 700],
+    [cheapest_flight(11, flights, 0, 9, 10), 1200],
+    [cheapest_flight(11, flights, 1, 0, 4), -1],
+    [cheapest_flight(11, flights, 1, 0, 5), 10500],
 ]
 """,
     },
@@ -1932,17 +1953,24 @@ Output: 2
         "code": """def min_time(times: list[list[int]], n: int, k: int) -> int:
 """,
         "test_cases": """
+network = [[i, i + 1, i * 100] for i in range(1, 10)] + [[i, i + 2, 100] for i in range(1, 10, 2)] + [[10, 1, 10_000]]
 test_cases = [
     [min_time([[2, 1, 1], [2, 3, 1], [3, 4, 1]], 4, 2), 2],
     [min_time([[1, 2, 1]], 2, 1), 1],
     [min_time([[1, 2, 1]], 4, 2), -1],
+    [min_time([[1, 2, 6]], 2, 1), 6],
+    [min_time([[1, 2, 6]], 2, 2), -1],
+    [min_time(network, 11, 1), 1300],
+    [min_time(network, 11, 2), 11400],
+    [min_time(network, 11, 11), -1],
+    [min_time(network, 11, 5), 11500],
 ]
 """,
     },
     57: {
         "markdown": """
 ### Reachable cities
-Given `n` cities labelled 0 to n - 1 and an array `edges` where edges[i] = [from, to, weight] represents a weighted bidirectional edge between cities `from` and `to`.  Return the smallest number of cities that are reachable and whose distance is at most `k`. 
+Given `n` cities labelled 0 to n - 1 and an array `edges` where edges[i] = [from, to, weight] represents a weighted bidirectional edge between cities `from` and `to`.  Return city with the smallest number of cities that are reachable and whose distance is at most `k`. 
 
 If multiple such cities, return the one with the greatest number. 
 
@@ -1957,9 +1985,13 @@ Output: 3
         "code": """def reachable_cities(n: int, edges: list[list[int]], k: int) -> int:
 """,
         "test_cases": """
+cities = [[0, 4, 10], [0, 8, 25], [0, 1, 10], [0, 2, 30], [0, 3, 20], [8, 4, 60], [4, 5, 60], [5, 3, 70], [3, 6, 10], [6, 7, 5], [1, 7, 50]]
 test_cases = [
     [reachable_cities(4, [[0, 1, 3], [1, 2, 1], [1, 3, 4], [2, 3, 1]], 4), 3],
     [reachable_cities(5, [[0, 1, 2], [0, 4, 8], [1, 2, 3], [1, 4, 2], [2, 3, 1], [3, 4, 1]], 2), 0],
+    [reachable_cities(9, cities, 5), 8],
+    [reachable_cities(9, cities, 70), 5],
+    [reachable_cities(9, cities, 1), 8],
 ]
 """,
     },
@@ -2015,10 +2047,16 @@ Output: [[0,1]]
         "code": """def critical_connections(n: int, connections: list[list[int]]) -> list[list]:
 """,
         "test_cases": """
+network1 = [[0, 4], [0, 8], [0, 1], [0, 2], [0, 3], [8, 4], [4, 5], [5, 3], [3, 6], [6, 7], [1, 7]]
+network2 = [[i, i + 1] for i in range(10)]
+network3 = [[i, i + 1] for i in range(10)] + [[10, 1]]
 test_cases = [
     [critical_connections(4, [[0, 1], [1, 2], [2, 0], [1, 3]]), [[1, 3]]],
     [critical_connections(7, [[0, 1], [1, 2], [2, 0], [1, 3], [1, 4], [4, 5], [5, 6]]), [[1, 3], [5, 6], [4, 5], [1, 4]]],
     [critical_connections(7, [[0, 1], [1, 2], [2, 0], [1, 3], [1, 4], [4, 5], [5, 6], [2, 6]]), [[1, 3]]],
+    [critical_connections(9, network1), [[0, 2]]],
+    [critical_connections(11, network2), [[i, i +1] for i in range(9, -1, -1)]],
+    [critical_connections(11, network3), [[0, 1]]],
 ]
 """,
     },
@@ -2047,6 +2085,9 @@ test_cases = [
     [job_schedule([1, 2, 3, 3], [3, 4, 5, 6], [50, 10, 40, 70]), 120],
     [job_schedule([1, 2, 3, 4, 6], [3, 5, 10, 6, 9], [20, 20, 100, 70, 60]), 150],
     [job_schedule([1, 1, 1], [2, 3, 4], [5, 6, 4]), 6],
+    [job_schedule([i for i in range(1, 1000)], [i + 5 for i in range(1000)], [10] * 10), 30],
+    [job_schedule([1] * 1000, [2] * 1000, [60] * 1000), 60],
+    [job_schedule([1] * 1000, [2] * 1000, [60 * i for i in range(1000)]), 59940],
 ]
 """,
     },
@@ -2122,20 +2163,32 @@ Given the `root` of a binary tree where each node represents the amount of cash 
 
 #### Example
 ```
-Input: root = [3,2,3,null,3,null,1]
-Output: 7
-How: Maximum amount of money the thief can rob = 3 + 3 + 1 = 7.
+Input: root = [9, 8, 16]
+Output: 24
+How: Maximum amount of money the thief can rob is 8 + 16 = 24 
 ```
 """,
         "test_cases": f"""
 {binary_tree}
-root1 = array_to_tree([6, 3, 9, None, 5, 4, 9])
-root2 = array_to_tree([3,2,3,None,3,None,1])
-root3 = array_to_tree([3,4,5,1,3,None,1])
+root1 = array_to_tree([3,2,3,None,3,None,1])
+root2 = array_to_tree([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, 5, 1] * 100_000)
+root3 = array_to_tree([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, None, None, None, 1])
+# bst
+root4 = array_to_tree([9, 8, 16])
+root5 = array_to_tree([9, 8, 16, 4])
+root6 = array_to_tree([])
+root7 = array_to_tree([100, 50, 600, 45, 55, 500, 1000])
+root8 = sorted_to_bst([i for i in range(100)])
+
 test_cases = [
-    [max_loot_tree(root1), 24],
-    [max_loot_tree(root2), 7],
-    [max_loot_tree(root3), 9],
+    [max_loot_tree(root1), 7],
+    [max_loot_tree(root2), 286381],
+    [max_loot_tree(root3), 33],
+    [max_loot_tree(root4), 24],
+    [max_loot_tree(root5), 24],
+    [max_loot_tree(root6), 0],
+    [max_loot_tree(root7), 1700],
+    [max_loot_tree(root8), 2824],
 ]
 """,
         "title": "Max loot binary tree",
@@ -2152,18 +2205,22 @@ Given the `root` of a binary tree and two nodes `p` and `q`, find the lowest com
 
 #### Example
 ```
-Input: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1
-Output: 3
+Input: root = [9, 8, 16], p = 8, q = 16
+Output: 9
 ```
 """,
         "test_cases": f"""
 {binary_tree}
 root1 = array_to_tree([3, 5, 1, 6, 2, 0, 8, None, None, 7, 4])
 root2 = array_to_tree([1, 2])
+root3 = sorted_to_bst([i for i in range(100)])
 test_cases = [
-    [lca(root1, 5, 1), 3],
-    [lca(root1, 5, 4), 5],
-    [lca(root2, 1, 2), 1],
+    [lca(root1, 6, 8), 3],
+    [lca(root2, 2, 1), 1],
+    [lca(root3, 0, 4), 4],
+    [lca(root3, 7, 17), 12],
+    [lca(root3, 39, 89), 50],
+    [lca(root3, 67, 98), 75],
 ]
 """,
         "title": "Lowest common ancestor",
@@ -2189,18 +2246,22 @@ Output: false
 """,
         "test_cases": f"""
 {binary_tree}
-t1 = array_to_tree([6, 3, 9, None, 5, 4, 9])
-t2 = array_to_tree([6, 3, 9, None, 5, 4, 9])
-t3 = array_to_tree([6, 3, 9, 6, 5, 4, 9])
-t4 = array_to_tree([])
-t5 = array_to_tree([])
-t6 = array_to_tree([1, 2])
-t7 = array_to_tree([1, None, 2])
+root1 = array_to_tree([6, 3, 9, None, 5, 4, 9])
+root2 = array_to_tree([6, 3, 9, None, 5, 4, 9])
+root3 = sorted_to_bst([i for i in range(100)])
+root4 = sorted_to_bst([i for i in range(100)])
+root5 = array_to_tree([])
+root6 = array_to_tree([])
+root7 = array_to_tree([1, 2])
+root8 = array_to_tree([1, None, 2])
 test_cases = [
-    [same_tree(t1, t2), True],
-    [same_tree(t2, t3), False],
-    [same_tree(t4, t5), True],
-    [same_tree(t6, t7), False],
+    [same_tree(root1, root2), True],
+    [same_tree(root3, root4), True],
+    [same_tree(root2, root3), False],
+    [same_tree(root5, root6), True],
+    [same_tree(root4, root6), False],
+    [same_tree(root7, root8), False],
+    [same_tree(root8, root8), True],
 ]
 """,
         "title": "Same binary tree",
@@ -2209,46 +2270,6 @@ test_cases = [
 """,
     },
     66: {
-        "markdown": """
-### Boolean tree 
-Given the `root` of a full binary tree with the following properties:
-- Leaf nodes have either the value 0 or 1, where 0 represents false and 1 represents true. 
-- Non leaf nodes have either the value 2 or 3, with 2 representing boolean **OR** and 3 representing boolean **AND**. 
-
-Evalulate each node as follows:
-- If leaf node, the evaluation is the value of the node, i.e true or false. 
-- if non leaf node, evaluate the node's two children and apply the boolean operation of its value with the children's evaluations. 
-
-Return the boolean result of evaluating the root node.
-
-> A full binary tree is a binary tree where each node has either 0 or 2 children.
-
-> A leaf node is a node that has no children.
-
-#### Example
-```
-Input: root = [2,1,3,null,null,0,1]
-Output: true
-
-Input: root = [0]
-Output: false
-```
-""",
-        "test_cases": f"""
-{binary_tree}
-t1 = array_to_tree([2, 1, 3, None, None, 0, 1])
-t2 = array_to_tree([0])
-test_cases = [
-    [boolean_tree(t1), True],
-    [boolean_tree(t2), False],
-]
-""",
-        "title": "Boolean binary tree",
-        "level": "Breezy",
-        "code": """def boolean_tree(root):
-""",
-    },
-    67: {
         "markdown": """
 ### Binary tree cousins
 Given the `root` of a binary tree with unique values and the value of two different nodes in the tree `x` and `y`, check whether x and y are cousins. 
@@ -2278,6 +2299,38 @@ test_cases = [
         "title": "Binary tree cousins",
         "level": "Steady",
         "code": """def are_cousins(root, x, y):
+""",
+    },
+    67: {
+        "markdown": """
+### How many islands
+Given an `m x n grid` where each value is either 1 or 0 with 1 indicating land and 0 indicating water, return the number of islands in the grid. You may assume all four edges of the grid are surrounded by water. 
+
+> An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You can assume all four edges of t
+
+### Examples
+Input: grid = [[1, 1, 1, 1], [0, 0, 0, 0], [1, 1, 1, 1]]
+Output: 2  # 2 horizontal islands. 
+""",
+        "test_cases": f"""
+g1 = [[1, 1, 1, 1], [0, 0, 0, 0], [1, 1, 1, 1]]
+g2 = [[1, 0, 1, 1], [0, 0, 1, 0], [1, 1, 1, 1]]
+g3 = [[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]]
+g4 = [[1, 0, 1, 0, 1] for _ in range(100_000)]
+g5 = [[0, 1, 0, 0, 1] for _ in range(100_000)]
+g6 = [[1, 1, 1, 1, 1] for _ in range(100_000)]
+test_cases = [
+    [count_islands(g1), 2],
+    [count_islands(g2), 2],
+    [count_islands(g3), 1],
+    [count_islands(g4), 3],
+    [count_islands(g5), 2],
+    [count_islands(g6), 1],
+]
+""",
+        "title": "How many islands",
+        "level": "Steady",
+        "code": """def count_islands(grid: list[list[int]]) -> int:
 """,
     },
     68: {
@@ -2969,38 +3022,6 @@ test_cases = [
         "title": "LRU Cache",
         "level": "Steady",
         "code": """class LRUCache:
-""",
-    },
-    90: {
-        "markdown": """
-### How many islands
-Given an `m x n grid` where each value is either 1 or 0 with 1 indicating land and 0 indicating water, return the number of islands in the grid. You may assume all four edges of the grid are surrounded by water. 
-
-> An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You can assume all four edges of t
-
-### Examples
-Input: grid = [[1, 1, 1, 1], [0, 0, 0, 0], [1, 1, 1, 1]]
-Output: 2  # 2 horizontal islands. 
-""",
-        "test_cases": f"""
-g1 = [[1, 1, 1, 1], [0, 0, 0, 0], [1, 1, 1, 1]]
-g2 = [[1, 0, 1, 1], [0, 0, 1, 0], [1, 1, 1, 1]]
-g3 = [[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]]
-g4 = [[1, 0, 1, 0, 1] for _ in range(100_000)]
-g5 = [[0, 1, 0, 0, 1] for _ in range(100_000)]
-g6 = [[1, 1, 1, 1, 1] for _ in range(100_000)]
-test_cases = [
-    [count_islands(g1), 2],
-    [count_islands(g2), 2],
-    [count_islands(g3), 1],
-    [count_islands(g4), 3],
-    [count_islands(g5), 2],
-    [count_islands(g6), 1],
-]
-""",
-        "title": "How many islands",
-        "level": "Steady",
-        "code": """def count_islands(grid: list[list[int]]) -> int:
 """,
     },
 }
