@@ -28,6 +28,16 @@ def tree_to_array(root):
             result.append(None)
     return result
 
+def sorted_to_bst(nums):  # returns balanced bst from a sorted list
+    if not nums:
+        return None
+    mid = len(nums) // 2
+    root = TreeNode(nums[mid])
+    root.left = sorted_to_bst(nums[:mid])
+    root.right = sorted_to_bst(nums[mid + 1 :])
+    return root
+
+
 def same_tree(p, q):
     if not p and not q:
         return True
@@ -282,11 +292,11 @@ test_cases = [
     [symmetric_difference([1], [2], [3], [4], [5], [6]), {1, 2, 3, 4, 5, 6}],
     [symmetric_difference([1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7]), {1, 7}],
     [symmetric_difference([1, 2, 4, 4], [0, 1, 6], [0, 1]), {2, 4, 6}],
-    [symmetric_difference([i] for i in range(6)), {0, 1, 2, 3, 4, 5}],
+    [symmetric_difference([0], [1], [2], [3], [4], [5]), {0, 1, 2, 3, 4, 5}],
     [symmetric_difference([-1], [], [], [0], [1]), {-1, 0, 1}],
     [symmetric_difference([9, -4, 8, 3, 12, 0, -4, 8], [3, 3, 8, 6, 7, 10], [11, 12, 10, 13], [5, 15, 3], [11, 15, 11, 11, 6, -2]), {9, -4, 0, 7, 13, 5, -2}],
     [symmetric_difference([2] * 50_000 + [-2] * 50_000), {2, -2}],
-    [symmetric_difference([i for i in range(100_000)], [i for i in range(100_000)]), {}],
+    [symmetric_difference([i for i in range(100_000)], [i for i in range(100_000)]), set()],
     [symmetric_difference([i for i in range(100_000)], [i for i in range(10, 100_000)]), {i for i in range(10)}],
 ]
 """,
@@ -352,7 +362,9 @@ test_cases = [
     [min_len_arr([2, 3, 1, 2, 4, 3], 7), 2],
     [min_len_arr([1, 3, 6, 2, 1], 4), 1],
     [min_len_arr([i for i in range(500_000)], 3_000_000), 7],
-    [min_len_arr([i for i in range(-10, 10)], 60), 0],
+    [min_len_arr([i for i in range(100)], 60), 1],
+    [min_len_arr([i for i in range(100_000)], 60_000_000), 602],
+    [min_len_arr([i for i in range(1_000_000)], 60_000_000), 61],
 ]
 """,
         "title": "Min length sub array",
@@ -380,6 +392,7 @@ test_cases = [
     [rotated_min([i for i in range(36, 1_000_000, 10)]), 36],
     [rotated_min([i for i in range(-10, 1_000_000, 10)] + [i for i in range(-1_000_000, -10, 10)]), -1_000_000],
     [rotated_min([2]), 2],
+    [rotated_min([134, 140, 147, 156, 160, 164, 166, 166, 170, 183, 184, 192, -9, -4, 1, 20, 51, 54, 54, 56, 67, 75, 80, 88, 92, 93, 96, 105, 115, 127]), -9],
 ]
 """,
         "title": "Min in rotated array",
@@ -409,7 +422,7 @@ test_cases = [
     [count_primes(3), 2],
     [count_primes(1), 0],
     [count_primes(1_000_000), 78498],
-],
+]
 """,
         "title": "Count primes",
         "level": "Steady",
@@ -434,6 +447,9 @@ test_cases =  [
     [single_num([4, 1, 2, 1, 2]), 4],
     [single_num([2]), 2],
     [single_num([i for i in range(1, 500_000)] + [i for i in range(500_000)]), 0],
+    [single_num([i for i in range(500_000)] + [-2, -3] + [i for i in range(500_000)] + [-2]), -3],
+    [single_num([i for i in range(1, 500_000)] * 2 + [-4]), -4],
+    [single_num([500_001] + [i for i in range(-500, 000, 500_000)] * 2), 500_001],
 ]
 """,
         "title": "Single number",
@@ -495,6 +511,9 @@ test_cases = [
     [rpn(["2", "1", "+", "3", "*"]), 9],
     [rpn(["4", "13", "5", "/", "+"]), 6],
     [rpn(["10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"]), 12],
+    [rpn(["10", "6", "9", "3", "+", "-11", "/", "*", "*", "17", "+", "5", "+"]), -98],
+    [rpn(['1'] + ['2', '+'] * 100_000), 200_001],
+    [rpn(['2'] + ['1', '*'] * 100_000), 2],
 ]
 """,
         "title": "Reverse polish notation",
@@ -561,6 +580,8 @@ output: 'rain'
 test_cases = [
     [lcs("brain", "drain"), "rain"],
     [lcs("math", "arithmetic"), "th"],
+    [lcs("abca" * 360, "bca" * 500), "abca"],
+    [lcs("abc" * 400, "xyz" * 300), ""],
     [lcs("blackmarket", "stagemarket"), "market"],
     [lcs("theoldmanoftheseaissowise", "sowisetheoldmanoftheseais"), "theoldmanoftheseais"],
 ]
@@ -625,6 +646,10 @@ output: "a a b c"
 test_cases = [
     [replace(["cat", "bat", "rat"], "the cattle was rattled by the battery"), "the cat was rat by the bat"],
     [replace(["a", "b", "c"], "aadsfasf absbs bbab cadsfafs"), "a a b c"],
+    [replace(["a", "b", "c"], "aadsfasf absbs bbab cadsfafs " * 100_000), ("a a b c " * 100_000).rstrip()],
+    [replace([c for c in 'aceghikmnprsuvwxyz'], "the quick brown fox jumped over the lazy dog"), "the quick brown fox jumped over the lazy dog"],
+    [replace([c for c in 'abcdefghijklmnopqrstuvwxyz'], "the quick brown fox jumped over the lazy dog"), "t q b f j o t l d"],
+    [replace([c for c in 'abcdefghijklmnopqrstuvwxyz'], ""), ""],
 ]
 """,
     },
@@ -649,7 +674,13 @@ output: 240
 test_cases = [
     [knapsack(50, [10, 20, 30], [60, 100, 120]), 240],
     [knapsack(60, [10, 20, 30], [60, 100, 120]), 280],
-    [knapsack(5, [10, 20, 30], [60, 100, 120]), 30],
+    [knapsack(9, [10, 20, 30], [60, 100, 120]), 54],
+    [knapsack(0, [10, 20, 30], [60, 100, 120]), 0],
+    [knapsack(9, [10, 20, 30], [60, 100, 120]), 54],
+    [knapsack(5, [], []), 0],
+    [knapsack(6000, [10, 20, 30], [60, 100, 120]), 280],
+    [knapsack(5, [10, 20, 30] * 1000, [60, 100, 120] * 1000), 30],
+    [knapsack(5000, [10, 20, 30] * 100_000, [60, 100, 120] * 100_000), 30_000],
 ]
 """,
     },
@@ -674,7 +705,7 @@ test_cases = [
     [count_arrs([13, -1, 8, 12, 3, 9], 12), 3],
     [count_arrs([13, -1, 8, 12, 3, 9], 2), 0],
     [count_arrs([13, -1, 8, 12, 3, 9], 10), 0],
-    [count_arrs([13, -1, 8, 12, 3, 9, 7, 5, 9, 10), 75], 1],
+    [count_arrs([13, -1, 8, 12, 3, 9, 7, 5, 9, 10], 75), 1],
     [count_arrs([13, -1, 8, 12, 3, 9] * 20_000, 12), 60_000],
     [count_arrs([13, -1, 8, 12, 3, 9, 7, 5, 9, 10] * 10_000, 24), 30_000],
 ]
@@ -697,10 +728,19 @@ output: 3
 {binary_tree}
 root1 = array_to_tree([10, 5, -3, 3, 2, None, 11, 3, -2, None, 1])
 root2 = array_to_tree([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, 5, 1])
+root3 = array_to_tree([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, 5, 1] * 100_000)
+root4 = array_to_tree([])
+root5 = array_to_tree([100, 50, 600, 45, 55, 500, 1000])
 test_cases = [
         [count_paths(root1, 8), 3],
         [count_paths(root2, 22), 3],
         [count_paths(root2, 20), 1],
+        [count_paths(root3, 20), 11311],
+        [count_paths(root3, 22), 13557],
+        [count_paths(root4, 0), 0],
+        [count_paths(root5, 195), 1],
+        [count_paths(root5, 1000), 1],
+        [count_paths(root5, 40), 0],
 ]
 """,
         "title": "Paths with sum",
@@ -754,7 +794,10 @@ output: "hello-world"
 test_cases = [
     [spinal_case("Hello World!"), "hello-world"],
     [spinal_case("The Greatest of All Time."), "the-greatest-of-all-time"],
-    [spinal_case("yes/no"), "yes-no"],
+    [spinal_case("yes/no/trueFalse"), "yes-no-true-false"],
+    [spinal_case("yes/no/trueFalse" * 60_000), "yes-no-true-false" * 60_000],
+    [spinal_case("follow-this-link"), "follow-this-link"],
+    [spinal_case(""), ""],
     [spinal_case("...I-am_here lookingFor  You.See!!"), "i-am-here-looking-for-you-see"],
 ]
 """,
@@ -782,7 +825,11 @@ output: (220, [0, 1, 1])
 test_cases = [
     [knapsack(50, [10, 20, 30], [60, 100, 120]), (220, [0, 1, 1])],
     [knapsack(60, [10, 20, 30], [60, 100, 120]), (280, [1, 1, 1])],
-    [knapsack(5, [10, 20, 30], [60, 100, 120]), (0, [0, 0, 0])],
+    [knapsack(9, [10, 20, 30], [60, 100, 120]), (0, [0, 0, 0])],
+    [knapsack(0, [10, 20, 30], [60, 100, 120]), (0, [0, 0, 0])],
+    [knapsack(5, [], []), (0, [])],
+    [knapsack(5, [10, 20, 30] * 100, [60, 100, 120] * 100), (0, [0] * 300)],
+    [knapsack(10, [10, 20, 30] * 10_000, [60, 100, 120] * 10_000), (60, [1] + [0] * 29999)],
 ]
 """,
     },
@@ -875,7 +922,8 @@ test_cases = [
     [climb_stairs(1), 1],
     [climb_stairs(2), 2],
     [climb_stairs(10), 89],
-    [climb_stairs(36), 24157817],
+    [climb_stairs(51), 32951280099],
+    [climb_stairs(500), 225591516161936330872512695036072072046011324913758190588638866418474627738686883405015987052796968498626],
 ]
 """,
     },
@@ -934,11 +982,28 @@ output: True
 """,
         "test_cases": f"""
 {binary_tree}
-t1 = array_to_tree([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, None, None, None, 1])
-t2 = array_to_tree([1, 2, 3, None, 4])
+root1 = array_to_tree([10, 5, -3, 3, 2, None, 11, 3, -2, None, 1])
+root2 = array_to_tree([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, 5, 1])
+root3 = array_to_tree([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, 5, 1] * 100_000)
+root4 = array_to_tree([])
+root5 = array_to_tree([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, None, None, None, 1])
+# bst
+root6 = array_to_tree([100, 50, 600, 45, 55, 500, 1000])
+root7 = sorted_to_bst([i for i in range(100)])
+root8 = sorted_to_bst([i for i in range(-100_000, 100_000)])
 test_cases = [
-    [has_path_sum(t1, 18), True],
-    [has_path_sum(t2, 18), False],
+    [has_path_sum(root1, 18), True],
+    [has_path_sum(root2, 18), False],
+    [has_path_sum(root3, 182), True],
+    [has_path_sum(root3, 44), False],
+    [has_path_sum(root3, 43), True],
+    [has_path_sum(root4, 0), False],
+    [has_path_sum(root5, 26), True],
+    [has_path_sum(root6, 1000), False],
+    [has_path_sum(root6, 205), True],
+    [has_path_sum(root7, 577), True],
+    [has_path_sum(root7, 411), False],
+    [has_path_sum(root8, -99996), True],
 ]
 """,
         "title": "Has path sum",
@@ -962,20 +1027,26 @@ output: True
 """,
         "test_cases": f"""
 {binary_tree}
-t1 = array_to_tree([9, 8, 16])
-t2 = array_to_tree([9, 8, 16, 4])
-t3 = array_to_tree([12, 3, 20])
-t4 = array_to_tree([12, 3, 20, None, 5])
+root1 = array_to_tree([9, 8, 16])
+root2 = array_to_tree([9, 8, 16, 4])
+root3 = array_to_tree([12, 3, 20, None, 5])
+root5 = array_to_tree([])
+root6 = array_to_tree([100, 50, 600, 45, 55, 500, 1000])
+root7 = sorted_to_bst([i for i in range(100)])
+root8 = sorted_to_bst([i for i in range(-100_000, 100_000)])
 test_cases = [
-    [has_node(t1, 5), False],
-    [has_node(t3, 3), True],
-    [has_node(t2, 4), True],
-    [has_node(t4, 21), False],
+    [has_node_bst(root1, 5), False],
+    [has_node_bst(root2, 9), True],
+    [has_node_bst(root3, 5), True],
+    [has_node_bst(root5, 4), False],
+    [has_node_bst(root6, 600), True],
+    [has_node_bst(root7, 100), False],
+    [has_node_bst(root8, 1), True],
 ]
 """,
         "title": "Has node BST",
         "level": "Steady",
-        "code": """def has_node(root, x):
+        "code": """def has_node_bst(root, x):
 """,
     },
     29: {
@@ -991,26 +1062,32 @@ output: 3
 """,
         "test_cases": f"""
 {binary_tree}
-t1 = array_to_tree([9, 8, 16])
-t2 = array_to_tree([9, 8, 16, 4])
-t3 = array_to_tree([12, 3, 20])
-t4 = array_to_tree([12, 3, 20, None, 5])
+root1 = array_to_tree([9, 8, 16])
+root2 = array_to_tree([9, 8, 16, 4])
+root3 = array_to_tree([12, 3, 20, None, 5])
+root5 = array_to_tree([])
+root6 = array_to_tree([100, 50, 600, 45, 55, 500, 1000])
+root7 = sorted_to_bst([i for i in range(100)])
+root8 = sorted_to_bst([i for i in range(-100_000, 100_000)])
 test_cases = [
-    [BST_min(t3), 3],
-    [BST_min(t1), 8],
-    [BST_min(t2), 4],
-    [BST_min(t4), 3],
+    [min_bst(root1), 8],
+    [min_bst(root2), 4],
+    [min_bst(root3), 3],
+    [min_bst(root5), 0],
+    [min_bst(root6), 45],
+    [min_bst(root7), 0],
+    [min_bst(root8), -100_000],
 ]
 """,
         "title": "BST min",
         "level": "Steady",
-        "code": """def BST_min(root):
+        "code": """def min_bst(root):
 """,
     },
     30: {
         "markdown": """
 ### Balanced tree
-Given the `root` of a binary search tree, return `True` if it is balanced or `False` otherwise
+Given the `root` of a binary tree, return `True` if it is balanced or `False` otherwise
 
 > A balanced tree is one whose difference between maximum height and minimum height is less than 2
 
@@ -1025,13 +1102,28 @@ output: False
 """,
         "test_cases": f"""
 {binary_tree}
-t1 = array_to_tree([12, 8, 16, 4, 9, 13, 18, 11])
-t2 = array_to_tree([4, None, 9, None, None, None, 12])
-t3 = array_to_tree([12, 3, 20, None, 5])
+root1 = array_to_tree([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, 5, 1])
+root2 = array_to_tree([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, 5, 1] * 100_000)
+root3 = array_to_tree([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, None, None, None, 1])
+# bst
+root4 = array_to_tree([9, 8, 16])
+root5 = array_to_tree([9, 8, 16, 4])
+root6 = array_to_tree([12, 3, 20, None, 5])
+root7 = array_to_tree([])
+root8 = array_to_tree([100, 50, 600, 45, 55, 500, 1000])
+root9 = sorted_to_bst([i for i in range(100)])
+root10 = sorted_to_bst([i for i in range(-100_000, 100_000)])
 test_cases = [
-    [is_balanced(t1), True],
-    [is_balanced(t2), False],
-    [is_balanced(t3), True],
+    [is_balanced(root1), False],
+    [is_balanced(root2), False],
+    [is_balanced(root3), False],
+    [is_balanced(root4), True],
+    [is_balanced(root5), True],
+    [is_balanced(root6), True],
+    [is_balanced(root7), True],
+    [is_balanced(root8), True],
+    [is_balanced(root9), True],
+    [is_balanced(root10), True],
 ]
 """,
         "title": "Balanced tree",
@@ -1042,19 +1134,34 @@ test_cases = [
     31: {
         "markdown": """
 ### Tree in-order traversal
-Given the `root` of a binary search tree, traverse the tree in order and return the values as an array.
+Given the `root` of a binary tree, traverse the tree in order and return the values as an array.
 
 #### Example
 ```
-input: [12, 8, 16, 4, 9, 13, 18, 11]
-output: [4, 8, 9, 11, 12, 13, 16, 18]
+input: [12, 8, 16, 4, 9, 13, 18, 1]
+output: [1, 4, 8, 9, 12, 13, 16, 18]
 ```
 """,
         "test_cases": f"""
 {binary_tree}
-t1 = array_to_tree([12, 8, 16, 4, 9, 13, 18, 11])
+root3 = array_to_tree([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, None, None, None, 1])
+# bst
+root4 = array_to_tree([9, 8, 16])
+root5 = array_to_tree([12, 8, 16, 4, 9, 13, 18, 1])
+root6 = array_to_tree([12, 3, 20, None, 5])
+root7 = array_to_tree([])
+root8 = array_to_tree([100, 50, 600, 45, 55, 500, 1000])
+root9 = sorted_to_bst([i for i in range(100)])
+root10 = sorted_to_bst([i for i in range(-100_000, 100_000)])
 test_cases = [
-    [in_order(t1), [4, 8, 9, 11, 12, 13, 16, 18]],
+    [in_order(root3), [7, 11, 2, 4, 5, 13, 8, 4, 1]],
+    [in_order(root4), [8, 9, 16]],
+    [in_order(root5), [1, 4, 8, 9, 12, 13, 16, 18]],
+    [in_order(root6), [3, 5, 12, 20]],
+    [in_order(root7), []],
+    [in_order(root8), [45, 50, 55, 100, 500, 600, 1000]],
+    [in_order(root9), [i for i in range(100)]],
+    [in_order(root10), [i for i in range(-100_000, 100_000)]],
 ]
 """,
         "title": "Tree in-order traversal",
@@ -1090,49 +1197,76 @@ test_cases = [
     33: {
         "markdown": """
 ### Valid BST
-Given the `root` of a binary search tree, check whether it is a valid BST.
+Given the `root` of a binary tree, check whether it is a valid binary search tree.
 
 > **Valid BST:** for every node, all nodes in its left subtree are less than the node value and all nodes in its right subtree are greater than the node value. 
 
 #### Example
 ```
-input: [2, 1, 3]
+input: [9, 8, 16]
 output: true
-
-input: [5, 1, 4, None, None, 3, 6]
-output: false 
 ```
 """,
         "test_cases": f"""
 {binary_tree}
-t1 = array_to_tree([5, 1, 4, None, None, 3, 6])
-t2 = array_to_tree([2, 1, 3])
+root1 = array_to_tree([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, 5, 1])
+root2 = array_to_tree([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, 5, 1] * 100_000)
+root3 = array_to_tree([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, None, None, None, 1])
+# bst
+root4 = array_to_tree([9, 8, 16])
+root5 = array_to_tree([12, 8, 16, 4, 9, 13, 18, 1])
+root6 = array_to_tree([12, 3, 20, None, 5])
+root7 = array_to_tree([12, 8, 16, 4, 9, 13, 18, 11])
+root8 = array_to_tree([100, 50, 600, 45, 55, 500, 1000])
+root9 = sorted_to_bst([i for i in range(100)])
+root10 = sorted_to_bst([i for i in range(-100_000, 100_000)])
 test_cases = [
-    [valid_BST(t2), True],
-    [valid_BST(t1), False],
+    [valid_bst(root1), False],
+    [valid_bst(root2), False],
+    [valid_bst(root3), False],
+    [valid_bst(root4), True],
+    [valid_bst(root5), True],
+    [valid_bst(root6), True],
+    [valid_bst(root7), False],
+    [valid_bst(root8), True],
+    [valid_bst(root9), True],
+    [valid_bst(root10), True],
 ]
 """,
         "title": "Valid BST",
         "level": "Steady",
-        "code": """def valid_BST(root):
+        "code": """def valid_bst(root):
 """,
     },
     34: {
         "markdown": """
 ### Tree level-order traversal
-Given the `root` of a binary search tree, traverse the tree using level order traversal and return the values as an array.
+Given the `root` of a binary tree, traverse the tree using level order traversal and return the values as an array.
 
 #### Example
 ```
-input: [12, 8, 16, 4, 9, 13, 18, 11]
-output: [12, 8, 16, 4, 9, 13, 18, 11]
+input: [12, 8, 16, 4, 9, 13, 18, 1]
+output: [12, 8, 16, 4, 9, 13, 18, 1]
 ```
 """,
         "test_cases": f"""
 {binary_tree}
-t1 = array_to_tree([12, 8, 16, 4, 9, 13, 18, 11])
+root3 = array_to_tree([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, None, None, None, 1])
+# bst
+root4 = array_to_tree([9, 8, 16])
+root5 = array_to_tree([12, 8, 16, 4, 9, 13, 18, 1])
+root6 = array_to_tree([12, 3, 20, None, 5])
+root7 = array_to_tree([])
+root8 = array_to_tree([100, 50, 600, 45, 55, 500, 1000])
+root9 = sorted_to_bst([i for i in range(100)])
 test_cases = [
-    [level_order(t1), [12, 8, 16, 4, 9, 13, 18, 11]],
+    [level_order(root3), [5, 4, 8, 11, 13, 4, 7, 2, 1]],
+    [level_order(root4), [9, 8, 16]],
+    [level_order(root5), [12, 8, 16, 4, 9, 13, 18, 1]],
+    [level_order(root6), [12, 3, 20, 5]],
+    [level_order(root7), []],
+    [level_order(root8), [100, 50, 600, 45, 55, 500, 1000]],
+    [level_order(root9), [50, 25, 75, 12, 38, 63, 88, 6, 19, 32, 44, 57, 69, 82, 94, 3, 9, 16, 22, 29, 35, 41, 47, 54, 60, 66, 72, 79, 85, 91, 97, 1, 5, 8, 11, 14, 18, 21, 24, 27, 31, 34, 37, 40, 43, 46, 49, 52, 56, 59, 62, 65, 68, 71, 74, 77, 81, 84, 87, 90, 93, 96, 99, 0, 2, 4, 7, 10, 13, 15, 17, 20, 23, 26, 28, 30, 33, 36, 39, 42, 45, 48, 51, 53, 55, 58, 61, 64, 67, 70, 73, 76, 78, 80, 83, 86, 89, 92, 95, 98]],
 ]
 """,
         "title": "Tree level-order traversal",
@@ -1143,21 +1277,34 @@ test_cases = [
     35: {
         "markdown": """
 ### Tree leaves
-Given the `root` of a binary search tree, return all the leaves as an array ordered from left to right.
+Given the `root` of a binary tree, return all the leaves as an array ordered from left to right.
 
 > A leaf is tree node with no children. 
 
 #### Example
 ```
-input: [12, 8, 16, 4, 9, 13, 18, 11]
-output: [4, 11, 13, 18]
+input: [100, 50, 600, 45, 55, 500, 1000]
+output: [45, 55, 500, 1000]
 ```
 """,
         "test_cases": f"""
 {binary_tree}
-t1 = array_to_tree([12, 8, 16, 4, 9, 13, 18, 11])
+root3 = array_to_tree([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, None, None, None, 1])
+# bst
+root4 = array_to_tree([9, 8, 16])
+root5 = array_to_tree([12, 8, 16, 4, 9, 13, 18, 1])
+root6 = array_to_tree([12, 3, 20, None, 5])
+root7 = array_to_tree([])
+root8 = array_to_tree([100, 50, 600, 45, 55, 500, 1000])
+root9 = sorted_to_bst([i for i in range(100)])
 test_cases = [
-    [get_leaves(t1), [4, 11, 13, 18]],
+    [leaves(root3), [7, 2, 13, 1]],
+    [leaves(root4), [8, 16]],
+    [leaves(root5), [1, 9, 13, 18]],
+    [leaves(root6), [5, 20]],
+    [leaves(root7), []],
+    [leaves(root8), [45, 55, 500, 1000]],
+    [leaves(root9), [0, 2, 4, 7, 10, 13, 15, 17, 20, 23, 26, 28, 30, 33, 36, 39, 42, 45, 48, 51, 53, 55, 58, 61, 64, 67, 70, 73, 76, 78, 80, 83, 86, 89, 92, 95, 98]],
 ]
 """,
         "title": "Tree leaves",
@@ -1168,7 +1315,7 @@ test_cases = [
     36: {
         "markdown": """
 ### Sum right nodes
-Given the `root` of a binary search tree, return the sum of all the right nodes
+Given the `root` of a binary tree, return the sum of all the right nodes
 
 #### Example
 ```
@@ -1178,14 +1325,33 @@ output: 25
 """,
         "test_cases": f"""
 {binary_tree}
-t1 = array_to_tree([12, 8, 16, 4, 9, 13, 18, 11])
+root1 = array_to_tree([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, 5, 1])
+root2 = array_to_tree([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, 5, 1] * 100_000)
+root3 = array_to_tree([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, None, None, None, 1])
+# bst
+root4 = array_to_tree([9, 8, 16])
+root5 = array_to_tree([12, 8, 16, 4, 9, 13, 18, 1])
+root6 = array_to_tree([12, 3, 20, None, 5])
+root7 = array_to_tree([])
+root8 = array_to_tree([100, 50, 600, 45, 55, 500, 1000])
+root9 = sorted_to_bst([i for i in range(100)])
+root10 = sorted_to_bst([i for i in range(-100_000, 100_000)])
 test_cases = [
-    [sum_right_nodes(t1), 25],
+    [sum_right(root1), 15],
+    [sum_right(root2), 211629],
+    [sum_right(root3), 15],
+    [sum_right(root4), 16],
+    [sum_right(root5), 43],
+    [sum_right(root6), 25],
+    [sum_right(root7), 0],
+    [sum_right(root8), 1655],
+    [sum_right(root9), 1868],
+    [sum_right(root10), 539765],
 ]
 """,
         "title": "Sum right nodes",
         "level": "Steady",
-        "code": """def sum_right_nodes(root):
+        "code": """def sum_right(root):
 """,
     },
     37: {
@@ -1206,6 +1372,9 @@ test_cases = [
     [has_value([2, 4, 8, 9, 12, 13, 16, 18], 18), True],
     [has_value([i for i in range(5_000_000)], 45), True],
     [has_value([i for i in range(5_000_000)], 5_000_000), False],
+    [has_value([i for i in range(-1_000_000, 1_000_000)], 0), True],
+    [has_value([i for i in range(-1_000_000, 1_000_000)], -223), True],
+    [has_value([i for i in range(-1_000_000, 1_000_000, 10)], 33), False],
 ]
 """,
         "title": "Value in array",
@@ -1225,9 +1394,16 @@ output: [2, 4, 8, 9, 12, 13, 16, 18]
 ```
 """,
         "test_cases": """
+from random import shuffle
+nums = [i for i in range(-50_000, 60_000)]
+shuffle(nums)
 test_cases = [
     [merge_sort([8, 2, 4, 9, 12, 18, 16, 13]), [2, 4, 8, 9, 12, 13, 16, 18]],
     [merge_sort([i for i in range(100_000, -1, -1)]), [i for i in range(100_001)]],
+    [merge_sort([i for i in range(10_000)]), [i for i in range(10_000)]],
+    [merge_sort([8, 1, 5] * 100_000), [1] * 100_000 + [5] * 100_000 + [8] * 100_000],
+    [merge_sort([3]), [3]],
+    [merge_sort(nums), [i for i in range(-50_000, 60_000)]]
 ]
 """,
         "title": "Merge sort",
@@ -1247,9 +1423,16 @@ output: [2, 4, 8, 9, 12, 13, 16, 18]
 ```
 """,
         "test_cases": """
+from random import shuffle
+nums = [i for i in range(-50_000, 60_000)]
+shuffle(nums)
 test_cases = [
     [heap_sort([8, 2, 4, 9, 12, 18, 16, 13]), [2, 4, 8, 9, 12, 13, 16, 18]],
     [heap_sort([i for i in range(100_000, -1, -1)]), [i for i in range(100_001)]],
+    [heap_sort([i for i in range(10_000)]), [i for i in range(10_000)]],
+    [heap_sort([8, 1, 5] * 100_000), [1] * 100_000 + [5] * 100_000 + [8] * 100_000],
+    [heap_sort([3]), [3]],
+    [heap_sort(nums), [i for i in range(-50_000, 60_000)]]
 ]
 """,
         "title": "Heap sort",
@@ -1269,9 +1452,16 @@ output: [2, 4, 8, 9, 12, 13, 16, 18]
 ```
 """,
         "test_cases": """
+from random import shuffle
+nums = [i for i in range(-50_000, 60_000)]
+shuffle(nums)
 test_cases = [
     [quick_sort([8, 2, 4, 9, 12, 18, 16, 13]), [2, 4, 8, 9, 12, 13, 16, 18]],
     [quick_sort([i for i in range(100_000, -1, -1)]), [i for i in range(100_001)]],
+    [quick_sort([i for i in range(10_000)]), [i for i in range(10_000)]],
+    [quick_sort([8, 1, 5] * 100_000), [1] * 100_000 + [5] * 100_000 + [8] * 100_000],
+    [quick_sort([3]), [3]],
+    [quick_sort(nums), [i for i in range(-50_000, 60_000)]]
 ]
 """,
         "title": "Quick sort",
@@ -1291,9 +1481,16 @@ output: [2, 4, 8, 9, 12, 13, 16, 18]
 ```
 """,
         "test_cases": """
+from random import shuffle
+nums = [i for i in range(-1000, 1000)]
+shuffle(nums)
 test_cases = [
     [bubble_sort([8, 2, 4, 9, 12, 18, 16, 13]), [2, 4, 8, 9, 12, 13, 16, 18]],
-    [bubble_sort([i for i in range(100_000, -1, -1)]), [i for i in range(100_001)]],
+    [bubble_sort([i for i in range(1000, -1, -1)]), [i for i in range(1001)]],
+    [bubble_sort([i for i in range(1000)]), [i for i in range(1000)]],
+    [bubble_sort([8, 1, 5] * 1000), [1] * 1000 + [5] * 1000 + [8] * 1000],
+    [bubble_sort([3]), [3]],
+    [bubble_sort(nums), [i for i in range(-1000, 1000)]]
 ]
 """,
         "title": "Bubble sort",
@@ -1310,17 +1507,16 @@ Given an integer array `nums`, return an integer array counts where counts[i] is
 ```
 input: [5, 2, 2, 6, 1]
 output: [3, 1, 1, 1, 0]
-
-input: [-1, -1]
-output: [0, 0]
 ```
 """,
         "test_cases": """
 test_cases = [
     [count_smaller([5, 2, 2, 6, 1]), [3, 1, 1, 1, 0]],
-    [count_smaller([-1, -1]), [0, 0]],
+    [count_smaller([0]), [0]],
+    [count_smaller([]), []],
     [count_smaller([8, 2, 4, 9, 12, 18, 16]), [2, 0, 0, 0, 0, 1, 0]],
-    [count_smaller([i for i in range(100_000, -1, -1)]), [0 for i in range(100_001)]],
+    [count_smaller([i for i in range(100_000)]), [0] * 100_000],
+    [count_smaller([i for i in range(100_000, 0, -1)]), [i for i in range(99_999, -1, -1)]],
 ]
 """,
         "title": "Smaller to the right",
@@ -1410,7 +1606,8 @@ Each input has exactly one solution.
 test_cases = [
     [pair_sum([2, 7, 1, 15], 22), [1, 3]],
     [pair_sum([2, 4, 7, 14], 6), [0, 1]],
-    [pair_sum([2, 4, 7, 14] + [40] * 100_000, 6), [0, 1]],
+    [pair_sum([0, 1], 1), [0, 1]],
+    [pair_sum([2, 4, 7, 14] + [40] * 10_000, 6), [0, 1]],
     [pair_sum([30] * 100_000 + [2, 4, 7, 14], 6), [100_000, 100_001]],
     [pair_sum([10] * 100_000 + [2, 4, 7, 14] + [20] * 100_000, 6), [100_000, 100_001]],
 ]
