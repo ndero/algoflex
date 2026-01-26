@@ -47,6 +47,46 @@ def same_tree(p, q):
         return False
     return same_tree(p.left, q.left) and same_tree(p.right, q.right)
 """
+linked_list = """
+class ListNode:
+    __slots__ = ("val", "next")
+
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+# prefer iterative to recursive for all these helpers
+# - recursive hit depth limit real fast 
+def array_to_list(arr):
+    dummy = ListNode()
+    curr = dummy
+
+    for val in arr:
+        curr.next = ListNode(val)
+        curr = curr.next
+
+    return dummy.next
+
+
+def list_to_array(head):
+    result = []
+    curr = head
+
+    while curr:
+        result.append(curr.val)
+        curr = curr.next
+
+    return result
+
+def same_list(head1, head2):
+    while head1 and head2:
+        if head1.val != head2.val:
+            return False
+        head1 = head1.next
+        head2 = head2.next
+
+    return head1 is None and head2 is None
+"""
 questions = {
     0: {
         "markdown": """
@@ -2568,6 +2608,57 @@ test_cases = [
         "title": "LRU Cache",
         "level": "Steady",
         "code": """class LRUCache:
+""",
+    },
+73: {
+        "markdown": """
+### Reverse a linked list
+Given the `head` of a linked list, reverse the list, and return its head
+
+### Example
+```
+input: [1, 2, 3, 4, 5, 6]
+output: [6, 5, 4, 3, 2, 1]
+```
+""",
+        "test_cases": f"""
+{linked_list}
+def REVERSE_LIST(head):
+    prev = None
+    curr = head
+
+    while curr:
+        nxt = curr.next
+        curr.next = prev
+        prev = curr
+        curr = nxt
+
+    return prev
+
+l1 = array_to_list([1, 2, 3, 4, 5, 6])
+l1_ = array_to_list([1, 2, 3, 4, 5, 6])
+l2 = array_to_list([i for i in range(100_000)])
+l2_ = array_to_list([i for i in range(100_000)])
+l3 = array_to_list([3] * 100_000)
+l3_ = array_to_list([3] * 100_000)
+l4 = array_to_list([])
+l4_ = array_to_list([])
+l5 = array_to_list([6] + [0] * 99_999 + [9])
+l5_ = array_to_list([6] + [0] * 99_999 + [9])
+l6 = array_to_list([i for i in range(-100_000, 0)])
+l6_ = array_to_list([i for i in range(-100_000, 0)])
+test_cases = [
+    [same_list(reverse_list(l1), REVERSE_LIST(l1_)), True],
+    [same_list(reverse_list(l2), REVERSE_LIST(l2_)), True],
+    [same_list(reverse_list(l3), REVERSE_LIST(l3_)), True],
+    [same_list(reverse_list(l4), REVERSE_LIST(l4_)), True],
+    [same_list(reverse_list(l5), REVERSE_LIST(l5_)), True],
+    [same_list(reverse_list(l6), REVERSE_LIST(l6_)), True],
+]
+""",
+        "title": "Reverse linked list",
+        "level": "Steady",
+        "code": """def reverse_list(head)
 """,
     },
 }
