@@ -536,9 +536,13 @@ test_cases = [
 ### Roman numerals
 Convert a given integer, `n`,  to its equivalent roman numerals for `0 < n < 4000`.
 
-|Decimal | 1000 | 900 | 400 | 100 | 90 | 50 | 40 | 10 | 9 | 5 | 4 | 1 |
-|--------|------|-----|-----|-----|----|----|----|----|---|---|---|---|
-|Roman | M | CM | CD | C | XC | L | XL | X | IX | V | IV | I|
+|Decimal | 1000 | 900 | 500 | 400 | 100 |90|
+|--------|------|-----|-----|-----|----|---|
+|Roman | M | CM | D | CD | C |XC|
+
+|Decimal| 50| 40 | 10| 9 | 5 | 4 | 1 |
+|-------|---|----|---|---|---|---|---|
+|Roman  | L | XL | X | IX| V | IV| I|
 
 
 #### Example
@@ -552,7 +556,7 @@ output: 'XXIII'
 """,
         "title": "Roman numerals",
         "level": "Steady",
-        "code": """def int_to_roman(n: int) -> 
+        "code": """def int_to_roman(n: int) -> str:
 """,
         "test_cases": """
 test_cases = [
@@ -1230,13 +1234,13 @@ root7 = array_to_tree([])
 root8 = array_to_tree([100, 50, 600, 45, 55, 500, 1000])
 root9 = sorted_to_bst([i for i in range(100)])
 test_cases = [
-    [leaves(root3), [7, 2, 13, 1]],
-    [leaves(root4), [8, 16]],
-    [leaves(root5), [1, 9, 13, 18]],
-    [leaves(root6), [5, 20]],
-    [leaves(root7), []],
-    [leaves(root8), [45, 55, 500, 1000]],
-    [leaves(root9), [0, 2, 4, 7, 10, 13, 15, 17, 20, 23, 26, 28, 30, 33, 36, 39, 42, 45, 48, 51, 53, 55, 58, 61, 64, 67, 70, 73, 76, 78, 80, 83, 86, 89, 92, 95, 98]],
+    [get_leaves(root3), [7, 2, 13, 1]],
+    [get_leaves(root4), [8, 16]],
+    [get_leaves(root5), [1, 9, 13, 18]],
+    [get_leaves(root6), [5, 20]],
+    [get_leaves(root7), []],
+    [get_leaves(root8), [45, 55, 500, 1000]],
+    [get_leaves(root9), [0, 2, 4, 7, 10, 13, 15, 17, 20, 23, 26, 28, 30, 33, 36, 39, 42, 45, 48, 51, 53, 55, 58, 61, 64, 67, 70, 73, 76, 78, 80, 83, 86, 89, 92, 95, 98]],
 ]
 """,
         "title": "Tree leaves",
@@ -1646,7 +1650,7 @@ test_cases = [
 46: {
         "markdown": """
 ### Jump to zero
-Given an integer array `nums` where `nums[i]` represents the maximum forward or backward jump length from index `i` and a starting index `start'. Check if you can jump to an index where the value is 0.
+Given an integer array `nums` where `nums[i]` represents the maximum forward or backward jump length from index `i` and a starting index `start`. Check if you can jump to an index where the value is 0.
 
 #### Example
 ```
@@ -2151,9 +2155,9 @@ Given the `root` of a binary tree with unique values and the value of two differ
 
 #### Example
 ```
-Input: root = [100, 50, 600, 45, 55, 500, 1000]), x = 45, y = 500
-Output: True
-Why: both are at the same level and 45's parent is 50 while 500's parent is 600
+# Input: root = [100, 50, 600, 45, 55, 500, 1000]), x = 45, y = 500
+# Output: True
+# Why: both are at the same level and 45's parent is 50 while 500's parent is 600
 ```
 """,
         "test_cases": f"""
