@@ -151,7 +151,7 @@ class Dashboard(Widget):
             counts[pid] += 1
             latest[pid] = max(d["created_at"], latest.get(pid, (0, 0))[0]), d["passed"]
             if d["passed"]:
-                if d["elapsed"] <= 30 * 60 * 60:
+                if d["elapsed"] <= 30 * 60:
                     best[pid] = min(d["elapsed"], best.get(pid, float("inf")))
                 else:
                     worst[pid] = min(d["elapsed"], worst.get(pid, float("inf")))
