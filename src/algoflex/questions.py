@@ -2265,6 +2265,11 @@ output: "a"
 test_cases = [
     [lps("babad"), "bab"],
     [lps("abcde"), "a"],
+    [lps("ab" * 100), 'a' + "ba" * 99],
+    [lps("a" * 100), "a" * 100],
+    [lps("abcdefghijklmnopqrstuvwxyz"), "a"],
+    [lps('a' * 1000 + 'b' + 'a' * 1000), 'a' * 1000 + 'b' + 'a' * 1000],
+    [lps('a' * 1000 + 'b' + 'a' * 50), 'a' * 1000 ],
 ]
 """,
     },
