@@ -20,6 +20,7 @@ class AttemptScreen(Screen):
     BINDINGS = [
         Binding("a", "back", "back", tooltip="Go to home"),
         Binding("s", "submit", "submit", tooltip="Submit your solution"),
+        Binding('m', 'maximize', 'max/min editor', tooltip="maximize/minimize editor"),
     ]
     DEFAULT_CSS = """
     Horizontal {
@@ -73,7 +74,7 @@ class AttemptScreen(Screen):
         yield Title()
         with Horizontal():
             yield Problem(description)
-            with TabbedContent("Attempt", "Timeline", "Past solutions"):
+            with TabbedContent("Attempt", "Timeline", "Past solutions", id="editor"):
                 with Vertical():
                     yield TextArea(
                         code,
@@ -139,3 +140,10 @@ class AttemptScreen(Screen):
 
     def action_submit(self):
         self.attempt()
+
+    def action_maximize(self) -> None:
+        editor = self.query_one("#editor", TabbedContent)
+        if not editor.is_maximized:
+            self.maximize(editor)
+        else:
+            self.minimize()
