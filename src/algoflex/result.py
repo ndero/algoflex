@@ -90,7 +90,7 @@ if __name__ == "__main__":
             if result.stdout:
                 output_log.write(result.stdout, animate=True)
             if result.stderr:
-                return output_log.write(result.stderr, animate=True)
+                output_log.write(result.stderr, animate=True)
             if result.returncode == 0:
                 passed = True
                 if not self.best or self.elapsed < self.best:
