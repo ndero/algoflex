@@ -121,7 +121,7 @@ class Dashboard(Widget):
         if self.show_dashboard:
             docs = attempts.all()
             breezy, steady, edgy = self.get_complete(docs)
-            self.update_digits(ids, [breezy, steady, edgy])
+            self.update_digits(ids, [breezy, steady // 2, edgy // 4])
             self.update_progress(breezy + steady + edgy)
             self.update_md(docs)
 
