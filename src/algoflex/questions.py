@@ -1,9 +1,9 @@
 binary_tree = """
 class TreeNode:
-    def __init__(self, value):
-        self.val = value
-        self.left = None
-        self.right = None
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 
 
 def array_to_tree(arr, index=0):
@@ -46,36 +46,6 @@ def same_tree(p, q):
     if p.val != q.val:
         return False
     return same_tree(p.left, q.left) and same_tree(p.right, q.right)
-"""
-linked_list = """
-class ListNode:
-    def __init__(self, val):
-        self.val = val
-        self.next = None
-
-
-def array_to_list(arr, i=0):
-    if i >= len(arr):
-        return None
-    head = ListNode(arr[i])
-    head.next = array_to_list(arr, i + 1)
-    return head
-
-def list_to_array(head):
-    arr = []
-    while head:
-        arr.append(head.val)
-        head = head.next
-    return arr
-
-def same_list(head1, head2):
-    if not head1 and not head2:
-        return True 
-    if not head1 or not head2:
-        return False
-    if head1.val != head2.val:
-        return False 
-    return same_list(head1.next, head2.next)
 """
 questions = {
     0: {
@@ -2141,22 +2111,24 @@ Given the `root` of a binary tree with unique values and the value of two differ
 
 #### Example
 ```
-Input: root = [1,2,3,null,4,null,5], x = 5, y = 4
-Output: true
-
-Input: root = [1,2,3,null,4], x = 2, y = 3
-Output: false
+Input: root = [100, 50, 600, 45, 55, 500, 1000]), x = 45, y = 500
+Output: True
+Why: both are at the same level and 45's parent is 50 while 500's parent is 600
 ```
 """,
         "test_cases": f"""
 {binary_tree}
-t1 = array_to_tree([1, 2, 3, None, 4, None, 5])
-t2 = array_to_tree([1, 2, 3, None, 4])
-t3 = array_to_tree([1, 2, 3, 4])
+root1 = array_to_tree([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, None, None, None, 1])
+root2 = array_to_tree([9, 8, 16])
+root3 = array_to_tree([100, 50, 600, 45, 55, 500, 1000])
+root4 = sorted_to_bst([i for i in range(100)])
 test_cases = [
-    [are_cousins(t1, 5, 4), True],
-    [are_cousins(t2, 2, 3), False],
-    [are_cousins(t3, 4, 3), False],
+    [are_cousins(root1, 11, 13), True],
+    [are_cousins(root1, 7, 4), False],
+    [are_cousins(root2, 9, 16), False],
+    [are_cousins(root3, 55, 500), True],
+    [are_cousins(root4, 4, 13), True],
+    [are_cousins(root4, 51, 92), True],
 ]
 """,
         "title": "Binary tree cousins",
@@ -2176,19 +2148,25 @@ Input: grid = [[1, 1, 1, 1], [0, 0, 0, 0], [1, 1, 1, 1]]
 Output: 2  # 2 horizontal islands. 
 """,
         "test_cases": f"""
-g1 = [[1, 1, 1, 1], [0, 0, 0, 0], [1, 1, 1, 1]]
-g2 = [[1, 0, 1, 1], [0, 0, 1, 0], [1, 1, 1, 1]]
-g3 = [[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]]
-g4 = [[1, 0, 1, 0, 1] for _ in range(100_000)]
-g5 = [[0, 1, 0, 0, 1] for _ in range(100_000)]
-g6 = [[1, 1, 1, 1, 1] for _ in range(100_000)]
+g1 = [['1', '1', '1', '1'], ['0', '0', '0', '0'], ['1', '1', '1', '1']]
+g2 = [['1', '0', '1', '1'], ['0', '0', '1', '0'], ['1', '1', '1', '1']]
+g3 = [[]]
+g4 = [['1', '0', '1', '0', '1'] for _ in range(10_000)]
+g5 = [['0', '1', '0', '0', '1'] for _ in range(10_000)]
+g6 = [['1', '0', '1', '0', '1'] * 10_000]
+g7 = [[('1' if (i + j) % 2 else '0') for i in range(6_000)] for j in range(4)]
+g8 = [['1']]
+g9 = [['0']]
 test_cases = [
     [count_islands(g1), 2],
     [count_islands(g2), 2],
-    [count_islands(g3), 1],
+    [count_islands(g3), 0],
     [count_islands(g4), 3],
     [count_islands(g5), 2],
-    [count_islands(g6), 1],
+    [count_islands(g6), 20001],
+    [count_islands(g7), 12000],
+    [count_islands(g8), 1],
+    [count_islands(g9), 0],
 ]
 """,
         "title": "How many islands",
@@ -2203,14 +2181,8 @@ Given an array of `intervals` merge all overlapping intervals.
 
 #### Example
 ```
-input: [[1,3],[2,6],[8,10],[15,18]]
-output: [[1,6],[8,10],[15,18]]
-
 input: [[1, 5], [5, 10]]
 output: [[1, 10]]
-
-input: [[3, 11], [2, 6]]
-output: [[2, 11]]
 ```
 """,
         "title": "Merge intervals",
@@ -2218,10 +2190,22 @@ output: [[2, 11]]
         "code": """def merge_intervals(intervals: list[list[int]]) -> list[list[int]]:
 """,
         "test_cases": """
+intervals1 = [[1, 10], [2, 3], [4, 8], [9, 12], [11, 15], [16, 18], [17, 20]]
+intervals2 = [[5, 7], [1, 3], [2, 6], [8, 10], [9, 12], [15, 18], [17, 20], [19, 22]]
+intervals3 = [[1, 2], [2, 3], [3, 4], [5, 6], [6, 8], [8, 10], [10, 12]]
+intervals4 = [[0, 5], [1, 4], [2, 3] ,[10, 15], [12, 18], [14, 16], [30, 35], [32, 40], [41, 45]]
+intervals5 = [[1, 4], [3, 5], [6, 8], [7, 9], [10, 14], [12, 15], [16, 18], [17, 19], [20, 25], [22, 30], [28, 35], [36, 40]]
+intervals6 = [[i, i + 1] for i in range(100_000)]
 test_cases = [
     [merge_intervals([[1,3],[2,6],[8,10],[15,18]]), [[1,6],[8,10],[15,18]]],
     [merge_intervals([[1, 5], [5, 10]]), [[1, 10]]],
     [merge_intervals([[3, 11], [2, 6]]), [[2, 11]]],
+    [merge_intervals(intervals1), [[1, 15], [16, 20]]],
+    [merge_intervals(intervals2), [[1, 7], [8, 12], [15, 22]]],
+    [merge_intervals(intervals3), [[1, 4], [5, 12]]],
+    [merge_intervals(intervals4), [[0, 5], [10, 18], [30, 40], [41, 45]]],
+    [merge_intervals(intervals5), [[1, 5], [6, 9], [10, 15], [16, 19], [20, 35], [36, 40]]],
+    [merge_intervals(intervals6), [[0, 100_000]]],
 ]
 """,
     },
@@ -2235,12 +2219,6 @@ Given an array `nums` of integers return the length of the longest strictly incr
 input: [10,9,2,5,3,7,101,18]
 output: 4
 How: LIS is [2, 3, 7, 101] with length 4. 
-
-input: [0,1,0,3,2,3]
-output: 4
-
-input: [6,6,6,6,6,6,6,6]
-output: 1
 ```
 """,
         "title": "Longest increasing subsequence",
@@ -2248,10 +2226,18 @@ output: 1
         "code": """def lis(nums: list[int]) -> int:
 """,
         "test_cases": """
+nums1 = [i for i in range(10_000)]
+nums2 = [1 for _ in range(10_000)]
+nums3 = [10, 9, 2, 5, 3, 7, 101, 18]
+nums4 = [0, 1, 0, 3, 2, 3]
 test_cases = [
     [lis([0,1,0,3,2,3]), 4],
     [lis([6,6,6,6,6,6,6,6]), 1],
     [lis([10,9,2,5,3,7,101,18]), 4],
+    [lis(nums1), 10_000],
+    [lis(nums2), 1],
+    [lis(nums3), 4],
+    [lis(nums4), 4],
 ]
 """,
     },
@@ -2302,6 +2288,9 @@ test_cases = [
     [perms([1, 2]), [[1, 2], [2, 1]]],
     [perms([i for i in range(1, 5)]), [[1, 2, 3, 4], [1, 2, 4, 3], [1, 3, 2, 4], [1, 3, 4, 2], [1, 4, 2, 3], [1, 4, 3, 2], [2, 1, 3, 4], [2, 1, 4, 3], [2, 3, 1, 4], [2, 3, 4, 1], [2, 4, 1, 3], [2, 4, 3, 1], [3, 1, 2, 4], [3, 1, 4, 2], [3, 2, 1, 4], [3, 2, 4, 1], [3, 4, 1, 2], [3, 4, 2, 1], [4, 1, 2, 3], [4, 1, 3, 2], [4, 2, 1, 3], [4, 2, 3, 1], [4, 3, 1, 2], [4, 3, 2, 1]]],
     [perms([1]), [[1]]],
+    [perms([1, 2, 3]), [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]]],
+    [perms([]), [[]]],
+    [perms([1, 2, 3, 4]), [[1, 2, 3, 4], [1, 2, 4, 3], [1, 3, 2, 4], [1, 3, 4, 2], [1, 4, 2, 3], [1, 4, 3, 2], [2, 1, 3, 4], [2, 1, 4, 3], [2, 3, 1, 4], [2, 3, 4, 1], [2, 4, 1, 3], [2, 4, 3, 1], [3, 1, 2, 4], [3, 1, 4, 2], [3, 2, 1, 4], [3, 2, 4, 1], [3, 4, 1, 2], [3, 4, 2, 1], [4, 1, 2, 3], [4, 1, 3, 2], [4, 2, 1, 3], [4, 2, 3, 1], [4, 3, 1, 2], [4, 3, 2, 1]]],
 ]
 """,
         "title": "Permutations",
@@ -2330,6 +2319,7 @@ test_cases = [
     [combs("rat", 3), ["rat"]],
     [combs("rat", 1), ["r", "a", "t"]],
     [combs("rat", 0), []],
+    [combs("abcdefghijklmnopqrstuvwxyz", 1),  ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']],
 ]
 """,
         "title": "Combinations",
@@ -2449,15 +2439,34 @@ Output: []
 """,
         "test_cases": f"""
 {binary_tree}
-t1 = array_to_tree([4, 2, 7, 1, 3, 6, 9])
-t2 = array_to_tree([4, 7, 2, 9, 6, 3, 1])
-t3 = array_to_tree([2, 1, 3])
-t4 = array_to_tree([2, 3, 1])
-t5 = array_to_tree([])
+def INVERT_TREE(root):
+    if not root:
+        return None
+    root.left, root.right = root.right, root.left
+    INVERT_TREE(root.left)
+    INVERT_TREE(root.right)
+    return root
+
+root1 = array_to_tree([4, 2, 7, 1, 3, 6, 9])
+root2 = array_to_tree([4, 7, 2, 9, 6, 3, 1])
+root3 = array_to_tree([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, None, None, None, 1])
+root4 = array_to_tree([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, 5, 1] * 100_000)
+root5 = array_to_tree([9, 8, 16])
+root6 = array_to_tree([12, 3, 20, None, 5])
+root7 = array_to_tree([])
+root8 = array_to_tree([100, 50, 600, 45, 55, 500, 1000])
+root9 = sorted_to_bst([i for i in range(100)])
+
 test_cases = [
-    [same_tree(invert_tree(t1), t2), True],
-    [same_tree(invert_tree(t3), t4), True],
-    [same_tree(invert_tree(t5), t5), True],
+    [same_tree(invert_tree(root1), INVERT_TREE(root1)), True],
+    [same_tree(invert_tree(root2), INVERT_TREE(root2)), True],
+    [same_tree(invert_tree(root3), INVERT_TREE(root3)), True],
+    [same_tree(invert_tree(root4), INVERT_TREE(root4)), True],
+    [same_tree(invert_tree(root5), INVERT_TREE(root5)), True],
+    [same_tree(invert_tree(root6), INVERT_TREE(root6)), True],
+    [same_tree(invert_tree(root7), INVERT_TREE(root7)), True],
+    [same_tree(invert_tree(root8), INVERT_TREE(root8)), True],
+    [same_tree(invert_tree(root9), INVERT_TREE(root9)), True],
 ]
 """,
         "title": "Invert binary tree",
@@ -2466,55 +2475,6 @@ test_cases = [
 """,
     },
     71: {
-        "markdown": """
-### Reverse a linked list
-Given the `head` of a linked list, reverse the list, and return its head
-
-### Example
-```
-input: [1, 2, 3, 4, 5, 6]
-output: [6, 5, 4, 3, 2, 1]
-```
-""",
-        "test_cases": f"""
-{linked_list}
-l1 = array_to_list([1, 2, 3, 4, 5, 6])
-l2 = array_to_list([6, 5, 4, 3, 2, 1])
-test_cases = [
-    [same_list(reverse_list(l1), l2), True],
-]
-""",
-        "title": "Reverse linked list",
-        "level": "Steady",
-        "code": """def reverse_list(head)
-""",
-    },
-    72: {
-        "markdown": """
-### Merge two sorted linked lists
-Given two sorted linked lists, `head1` and `head2`. Merge them into one sorted linked list and return the head of the merged list. 
-
-### Example
-```
-input: head1 = [2, 4, 6, 6, 12, 22], head2 = [3, 7, 8, 9]
-output: [2, 3, 4, 6, 6, 7, 8, 9, 12, 22]
-```
-""",
-        "test_cases": f"""
-{linked_list}
-l1 = array_to_list([2, 4, 6, 6, 12, 22])
-l2 = array_to_list([3, 7, 8, 9])
-l3 = array_to_list([2, 3, 4, 6, 6, 7, 8, 9, 12, 22])
-test_cases = [
-    [same_list(list_merge(l1, l2), l3), True],
-]
-""",
-        "title": "Merge sorted linked lists",
-        "level": "Steady",
-        "code": """def list_merge(head1, head2):
-""",
-    },
-    73: {
         "markdown": """
 ### Min Stack
 
@@ -2551,9 +2511,9 @@ test_cases = [
     [stack1.top(), 4],
     [stack1.pop(), None],
     [stack1.top(), 3],
-    [stack2.top(), 11],
+    [stack2.top(), 12],
     [stack2.pop(), None],
-    [stack2.get_min(), 12],
+    [stack2.get_min(), 14],
     [stack2.push(3), None],
     [stack2.get_min(), 3],
 ]
@@ -2563,7 +2523,7 @@ test_cases = [
         "code": """class Stack:
 """,
     },
-    74: {
+    72: {
         "markdown": """
 ### LRU Cache
 Design a data structure that follows the constraints of a Least Recently Used (LRU) cache:
@@ -2592,12 +2552,12 @@ for i in range(1, 150_000):
     cache.put(i, i * 10) # 49,999 - 149,999
 test_cases = [
     [cache.get(100_000), 1_000_000],
-    [cache.get(49_999), 499_990],
+    [cache.get(49_999), -1],
     [cache.get(49_998), -1],
     [cache.get(10), -1],
     [cache.get(149_999), 1_499_990],
-    [cache.put(2, 20), None]
-    [cache.get(49_999), -1]
+    [cache.put(2, 20), None],
+    [cache.get(49_999), -1],
 ]
 """,
         "title": "LRU Cache",
