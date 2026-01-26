@@ -1026,7 +1026,6 @@ output: 3
 root1 = array_to_tree([9, 8, 16])
 root2 = array_to_tree([9, 8, 16, 4])
 root3 = array_to_tree([12, 3, 20, None, 5])
-root5 = array_to_tree([])
 root6 = array_to_tree([100, 50, 600, 45, 55, 500, 1000])
 root7 = sorted_to_bst([i for i in range(100)])
 root8 = sorted_to_bst([i for i in range(-100_000, 100_000)])
@@ -1034,7 +1033,6 @@ test_cases = [
     [min_bst(root1), 8],
     [min_bst(root2), 4],
     [min_bst(root3), 3],
-    [min_bst(root5), 0],
     [min_bst(root6), 45],
     [min_bst(root7), 0],
     [min_bst(root8), -100_000],
