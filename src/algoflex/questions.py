@@ -2661,4 +2661,45 @@ test_cases = [
         "code": """def reverse_list(head)
 """,
     },
+74: {
+        "markdown": """
+### Merge two sorted linked lists
+Given two sorted linked lists, `head1` and `head2`. Merge them into one sorted linked list and return the head of the merged list. 
+
+### Example
+```
+input: head1 = [2, 4, 6, 6, 12, 22], head2 = [3, 7, 8, 9]
+output: [2, 3, 4, 6, 6, 7, 8, 9, 12, 22]
+```
+""",
+        "test_cases": f"""
+{linked_list}
+l1 = array_to_list([2, 4, 6, 6, 12, 22])
+l2 = array_to_list([3, 7, 8, 9])
+l12 = array_to_list([2, 3, 4, 6, 6, 7, 8, 9, 12, 22])
+l3 = array_to_list([])
+l4 = array_to_list([0])
+l5 = array_to_list([2])
+l6 = array_to_list([2])
+l56 = array_to_list([2, 2])
+l7 = array_to_list([i for i in range(60_000)])
+l8 = array_to_list([i for i in range(-100, 0)])
+l78 = array_to_list([i for i in range(-100, 60_000)])
+l9 = array_to_list([1] * 1000)
+l10 = array_to_list([2] * 2000)
+l910 = array_to_list([1] * 1000 + [2] * 2000)
+test_cases = [
+    [same_list(list_merge(l1, l2), l12), True],
+    [same_list(list_merge(l3, l3), l3), True],
+    [same_list(list_merge(l3, l4), l4), True],
+    [same_list(list_merge(l5, l6), l56), True],
+    [same_list(list_merge(l7, l8), l78), True],
+    [same_list(list_merge(l9, l10), l910), True],
+]
+""",
+        "title": "Merge sorted linked lists",
+        "level": "Steady",
+        "code": """def list_merge(head1, head2):
+""",
+    },
 }
