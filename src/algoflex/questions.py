@@ -168,7 +168,7 @@ test_cases = [
 """,
         "title": "Repeated letters",
         "level": "Breezy",
-        "code": """def repeated(s: str) -> list:
+        "code": """def repeated(s: str) -> list[list[int]]:
 """,
     },
 2: {
@@ -1376,31 +1376,50 @@ test_cases = [
     },
 37: {
         "markdown": """
-### Quick sort
-Given an array of integers `nums`, use quick sort algorithm to return an array of all the integers sorted in non decreasing order.
+### Generate parentheses
+Given a positive integer `n`, generate all combinations of well formed parentheses with n pairs. 
 
 #### Example
 ```
-input: [8, 2, 4, 9, 12, 18, 16, 13]
-output: [2, 4, 8, 9, 12, 13, 16, 18]
+input: n = 3
+output: ["((()))","(()())","(())()","()(())","()()()"]
+
+input: n = 1
+output: ["()"]
 ```
 """,
         "test_cases": """
-from random import shuffle
-nums = [i for i in range(-50_000, 60_000)]
-shuffle(nums)
+def GENERATE_PARENTHESES(n: int) -> list[str]:
+    res, path = [], []
+
+    def backtrack(open: int, close: int) -> None:
+        if len(path) == 2 * n:
+            res.append(''.join(path))
+            return 
+        if open < n: 
+            path.append('(')
+            backtrack(open + 1, close)
+            path.pop()
+        if close < open:
+            path.append(')')
+            backtrack(open, close + 1)
+            path.pop()
+    
+    backtrack(0, 0)
+    return res 
+
 test_cases = [
-    [quick_sort([8, 2, 4, 9, 12, 18, 16, 13]), [2, 4, 8, 9, 12, 13, 16, 18]],
-    [quick_sort([i for i in range(100_000, -1, -1)]), [i for i in range(100_001)]],
-    [quick_sort([i for i in range(10_000)]), [i for i in range(10_000)]],
-    [quick_sort([8, 1, 5] * 100_000), [1] * 100_000 + [5] * 100_000 + [8] * 100_000],
-    [quick_sort([3]), [3]],
-    [quick_sort(nums), [i for i in range(-50_000, 60_000)]]
+    [generate_parentheses(3), GENERATE_PARENTHESES(3)],
+    [generate_parentheses(1), GENERATE_PARENTHESES(1)],
+    [generate_parentheses(2), GENERATE_PARENTHESES(2)],
+    [generate_parentheses(0), GENERATE_PARENTHESES(0)],
+    [generate_parentheses(12), GENERATE_PARENTHESES(12)],
+    [generate_parentheses(5), GENERATE_PARENTHESES(5)],
 ]
 """,
-        "title": "Quick sort",
-        "level": "Breezy",
-        "code": """def quick_sort(nums: list[int]) -> list[int]:
+        "title": "Generate parentheses",
+        "level": "Steady",
+        "code": """def generate_parentheses(n: int) -> list[str]:
 """,
     },
 38: {
