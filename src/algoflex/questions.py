@@ -2840,9 +2840,9 @@ Given an array `nums` where each number represents the height of a vertical wall
 
 #### Example
 ```
-input: [1,8,6,2,5,4,8,3,7]
-output: 49
-how: water held between lines 2 and 9
+input: [3, 1, 2, 7]
+output: 9
+how: 9 units of water held between the first and last wall
 
 input: [1, 1]
 output: 1
@@ -2853,7 +2853,7 @@ output: 1
         "code": """def max_water(nums: list[int]) -> int:
 """,
         "test_cases": """
-h1 = [1,8,6,2,5,4,8,3,7]
+h1 = [3, 1, 2, 7]
 h2 = [i for i in range(100_000)]
 h3 = [0] * 100_000 + h1 
 h4 = [0] * 60_000 + [1]
@@ -2861,13 +2861,50 @@ h5 = [1] * 100_000
 h6 = [100]
 h7 = [1] + [0] * 50 + h1 
 test_cases = [
-    [max_water(h1), 49],
+    [max_water(h1), 9],
     [max_water(h2), 2499950000],
-    [max_water(h3), 49],
+    [max_water(h3), 9],
     [max_water(h4), 0],
     [max_water(h5), 99_999],
     [max_water(h6), 0],
-    [max_water(h7), 59],
+    [max_water(h7), 54],
+]
+""",
+    },
+78: {
+        "markdown": """
+### Trapping rain water
+Given `n` positive integers `nums` representing elevation heights where the width of each bar is 1, return how much water can be trapped after rain. 
+
+#### Example
+```
+input: [3, 1, 2, 7]
+output: 3
+how: 2 units at index 1 and 1 unit at index 2 
+```
+""",
+        "title": "Trapping rain water",
+        "level": "Edgy",
+        "code": """def trap_water(nums: list[int]) -> int:
+""",
+        "test_cases": """
+h1 = [3, 1, 2, 7]
+h2 = [i for i in range(100_000)]
+h3 = [0] * 100_000 + h1 
+h4 = [0] * 60_000 + [1]
+h5 = [100] + [0] * 100_000 + [1]
+h6 = [100]
+h7 = [1] + [0] * 50 + h1 
+h8 = []
+test_cases = [
+    [trap_water(h1), 3],
+    [trap_water(h2), 0],
+    [trap_water(h3), 3],
+    [trap_water(h4), 0],
+    [trap_water(h5), 100000],
+    [trap_water(h6), 0],
+    [trap_water(h7), 53],
+    [trap_water(h8), 0],
 ]
 """,
     },
