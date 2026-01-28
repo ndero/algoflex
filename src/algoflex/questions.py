@@ -2782,7 +2782,7 @@ output: [[0,0,0]]
 """,
         "title": "Triplets sum equals zero",
         "level": "Steady",
-        "code": """def zero_sum_triplets(nums: list[int]) -> list[list[int]]:
+        "code": """def triplet_sum(nums: list[int]) -> list[list[int]]:
 """,
         "test_cases": """
 def TRIPLET_SUM(nums: list[int]) -> list[list[int]]:
@@ -2828,6 +2828,46 @@ test_cases = [
     [triplet_sum(nums4), TRIPLET_SUM(nums4)],
     [triplet_sum(nums5), TRIPLET_SUM(nums5)],
     [triplet_sum(nums6), TRIPLET_SUM(nums6)],
+]
+""",
+    },
+77: {
+        "markdown": """
+### Max water held
+Given an array `nums` where each number represents the height of a vertical wall, find two walls that hold the most water between them and return the units of water contained. 
+
+> To calculate Units of water held, multiply the `width(base)` by `height`
+
+#### Example
+```
+input: [1,8,6,2,5,4,8,3,7]
+output: 49
+how: water held between lines 2 and 9
+
+input: [1, 1]
+output: 1
+```
+""",
+        "title": "Max water held",
+        "level": "Steady",
+        "code": """def max_water(nums: list[int]) -> int:
+""",
+        "test_cases": """
+h1 = [1,8,6,2,5,4,8,3,7]
+h2 = [i for i in range(100_000)]
+h3 = [0] * 100_000 + h1 
+h4 = [0] * 60_000 + [1]
+h5 = [1] * 100_000
+h6 = [100]
+h7 = [1] + [0] * 50 + h1 
+test_cases = [
+    [max_water(h1), 49],
+    [max_water(h2), 2499950000],
+    [max_water(h3), 49],
+    [max_water(h4), 0],
+    [max_water(h5), 99_999],
+    [max_water(h6), 0],
+    [max_water(h7), 59],
 ]
 """,
     },
