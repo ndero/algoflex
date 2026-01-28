@@ -278,7 +278,7 @@ test_cases = [
 ]
 """,
         "title": "Max product sub array",
-        "level": "Breezy",
+        "level": "Steady",
         "code": """def max_product(nums: list[int]) -> int:
 """,
     },
@@ -711,7 +711,7 @@ How: [13, -1], [12] and [3, 9]
 ```
 """,
         "title": "Subarrays with sum",
-        "level": "Breezy",
+        "level": "Steady",
         "code": """def count_arrs(arr: list[int], target: int) -> int:
 """,
         "test_cases": """
@@ -776,7 +776,7 @@ output: "hello-world"
 ```
 """,
         "title": "Spinal case",
-        "level": "Breezy",
+        "level": "Steady",
         "code": """def spinal_case(s: str) -> str:
 """,
         "test_cases": """
@@ -807,7 +807,7 @@ output: (220, [0, 1, 1])
 ```
 """,
         "title": "0/1 knapsack",
-        "level": "Breezy",
+        "level": "Steady",
         "code": """def knapsack(capacity: int, weights: list[int], values: list[int]) -> tuple[int, list[int]]:
 """,
         "test_cases": """
@@ -1370,7 +1370,7 @@ test_cases = [
 ]
 """,
         "title": "Heap sort",
-        "level": "Breezy",
+        "level": "Steady",
         "code": """def heap_sort(nums: list[int]) -> list[int]:
 """,
     },
@@ -1925,7 +1925,7 @@ test_cases = [
 ### Critical connections
 Given `n` servers labelled 0 to n - 1 connected by undirected `connections` where connections[i] = [a, b] indicates a connection between servers a and b. Return all the critical connections in the network in any order. 
 
-> A critical connection is one that, if removed, will make some servers not be able to reach some other server. 
+> A critical connection is one that, if removed, will make some servers not be able to reach the rest of the server network. 
 
 #### Examples
 ```
@@ -2171,7 +2171,7 @@ Given the `root` of a binary tree with unique values and the value of two differ
 > Two nodes of a binary tree are cousins if they have the same depth with different parents.
 
 #### Example
-```
+```python
 # Input: root = [100, 50, 600, 45, 55, 500, 1000]), x = 45, y = 500
 # Output: True
 # Why: both are at the same level and 45's parent is 50 while 500's parent is 600
@@ -2761,6 +2761,74 @@ test_cases = [
         "title": "Sum linked lists",
         "level": "Steady",
         "code": """def list_add(head1, head2):
+""",
+    },
+76: {
+        "markdown": """
+### Triplet sum equals zero
+Given an array `nums` of integers, find all unique triplets that sum to zero. 
+
+#### Example
+```
+input: [-1,0,1,2,-1,-4]
+output: [[-1,-1,2],[-1,0,1]]
+
+input:  [0,1,1]
+output: []
+
+input: [0,0,0]
+output: [[0,0,0]]
+```
+""",
+        "title": "Triplets sum equals zero",
+        "level": "Steady",
+        "code": """def zero_sum_triplets(nums: list[int]) -> list[list[int]]:
+""",
+        "test_cases": """
+def TRIPLET_SUM(nums: list[int]) -> list[list[int]]:
+    # time O(n ^ 2)
+    nums.sort()
+    res, n = [], len(nums)
+    for i in range(n):
+        if nums[i] > 0:
+            break
+        # skip duplicate anchors
+        if i > 0 and nums[i] == nums[i - 1]:
+            continue
+        # two pointer search
+        l, r = i + 1, n -1 
+        while l < r:
+            total = nums[i] + nums[l] + nums[r]
+            if total < 0:
+                l += 1
+            elif total > 0:
+                r -= 1
+            else:
+                res.append([nums[i], nums[l], nums[r]])
+                # skip duplicates for left and right 
+                l += 1 
+                while l < r and nums[l] == nums[l - 1]:
+                    l += 1 
+                r -= 1 
+                while l < r and nums[r] == nums[r + 1]:
+                    r -= 1 
+    return res 
+
+nums1 = [1] * 5000 + [0] * 5000 + [-1] * 5000
+nums2 = [0] * 1000
+nums3 = [1] * 1000 + [-1] * 1000
+nums4 = [0, 1, 1]
+nums5 = [0, 0, 0]
+nums6 = [i for i in range(-1000, 1000)]
+test_cases = [
+    [triplet_sum([-1,0,1,2,-1,-4]), TRIPLET_SUM([-1,0,1,2,-1,-4])],
+    [triplet_sum(nums1), TRIPLET_SUM(nums1)],
+    [triplet_sum(nums2), TRIPLET_SUM(nums2)],
+    [triplet_sum(nums3), TRIPLET_SUM(nums3)],
+    [triplet_sum(nums4), TRIPLET_SUM(nums4)],
+    [triplet_sum(nums5), TRIPLET_SUM(nums5)],
+    [triplet_sum(nums6), TRIPLET_SUM(nums6)],
+]
 """,
     },
 }
