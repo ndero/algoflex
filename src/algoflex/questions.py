@@ -1,5 +1,7 @@
 binary_tree = """
 class TreeNode:
+    __slots__ = ("val", "left", "right")
+
     def __init__(self, val=0, left=None, right=None):
         self.val = val
         self.left = left
@@ -91,7 +93,7 @@ questions = {
 0: {
         "markdown": """
 ### Score tally
-Given an array of scores e.g `[ '5', '2', 'C', 'D', '+', '+', 'C' ]`, calculate the total points where:
+Given an array of `scores` e.g `[ '5', '2', 'C', 'D', '+', '+', 'C' ]`, calculate the total points where:
 ```
 +  add the last two scores.
 D  double the last score.
@@ -100,10 +102,10 @@ x  add the score
 ```
 You're always guaranteed to have the last two scores for `+` and the previous score for `D`.
 
-#### Example
+### Example
 ```markdown
-input: [ '5', '2', 'C', 'D', '+', '+', 'C' ]
-output: 30
+scores = [ '5', '2', 'C', 'D', '+', '+', 'C' ]
+output = 30
 How:
     '5' - add 5 -> [5]
     '2' - add 2 -> [5, 2]
@@ -142,10 +144,10 @@ test_cases = [
 ### Repeated letters
 Given a string `s` of lower-case letters. Find all substrings of `s` that contains at least three consecutive identical letters. Return an array of the indices `[start, end]` of the substrings. Order the indices by the start index in ascending order.  
 
-#### Example
+### Example
 ```
-Input: "abcdddeeeeaabbbcd"
-Output: [[3,5], [6,9], [12,15]]
+s = "abcdddeeeeaabbbcd"
+output = [[3,5], [6,9], [12,15]]
 How: "abcdddeeeeaabbbed" has three valid substrings: "ddd",
 "eeee" and "bbb".
 
@@ -174,18 +176,18 @@ test_cases = [
 2: {
         "markdown": """
 ### Valid matching brackets
-Given a string of brackets that can either be `[]`, `()` or `{}`.
+Given a string `s` of brackets that can either be `[]`, `()` or `{}`.
 Check if the brackets are valid.
 
 There no other characters in the string apart from '[', ']', '(', ')', '{'and '}'.
 
-#### Example
+### Example
 ```
-input: "[](){}"
-output: True
+s = "[](){}"
+output = True
 
-input: "{{}}[][](()"
-output: False
+s = "{{}}[][](()"
+output = False
 ```
 """,
         "test_cases": """
@@ -215,13 +217,13 @@ test_cases = [
 ### Max sum sub array
 Given a non empty integer array `nums`, find a contiguous non-empty subarray within the array that has the largest sum and return the sum.
 
-#### Example
+### Example
 ```
-input: [-2, 0, -1]
-output: 0
+nums = [-2, 0, -1]
+output = 0
 
-input: [2, 3, -2, 4]
-output: 7
+nums = [2, 3, -2, 4]
+output = 7
 ```
 ```
 """,
@@ -249,13 +251,13 @@ test_cases = [
 ### Max product sub array
 Given a non empty integer array `nums`, find a contiguous non-empty subarray within the array that has the largest product and return the product.
 
-#### Example
+### Example
 ```
-input: [-2, 0, -1]
-output: 0
+nums = [-2, 0, -1]
+output = 0
 
-input: [2, 3, -2, 4]
-output: 6
+nums = [2, 3, -2, 4]
+output = 6
 ```
 ```
 """,
@@ -285,14 +287,14 @@ test_cases = [
 5: {
         "markdown": """
 ### Symmetric difference
-Create a function that takes two or more `arrays` and returns a set of their symmetric difference. The returned array must contain only unique values.
+Create a function that takes two or more `arrays` and returns a `set` of their symmetric difference.
 
 > The mathematical term symmetric difference (△ or ⊕) of two sets is the set of elements which are in either of the two sets but not in both.
 
-#### Example
+### Example
 ```
-input: [[1, 2, 3], [2, 3, 4]]
-output: [1, 4]
+arrays = [1, 2, 3], [2, 3, 4]
+output = {1, 4}
 ```
 """,
         "test_cases": """
@@ -323,14 +325,16 @@ Given an array `arr`, find element pairs whose sum equal the second argument `ta
 
 Each element can only construct a single pair.
 
-#### Example
+### Example
 ```
-input: arr = [7, 9, 11, 13, 15], target = 20
-output: 6
+arr = [7, 9, 11, 13, 15]
+target = 20
+output = 6
 How: pairs 7 + 13 and 9 + 11, indices 0 + 3 and 1 + 2, total 6
 
-input: arr = [0, 0, 0, 0, 1, 1], target = 1
-output: 10
+arr = [0, 0, 0, 0, 1, 1]
+target = 1
+output = 10
 How: pairs 0 + 1 and 0 + 1, indices 0 + 4 and 1 + 5, total 10
 ```
 """,
@@ -356,14 +360,16 @@ Given an array of positive integers `nums` and a positive integer `target`, retu
 
 If there is no such subarray, return `0` instead.
 
-#### Example
+### Example
 ```
-input: arr = [2, 3, 1, 2, 4, 3], target = 7
-output: 2
+nums = [2, 3, 1, 2, 4, 3]
+target = 7
+output = 2
 How: sub array [4, 3] has sum >= 7
 
-input: arr = [1, 3, 6, 2, 1], target = 4
-output: 1
+nums = [1, 3, 6, 2, 1]
+target = 4
+output = 1
 How: sub array [6] has sum >= 4
 ```
 """,
@@ -389,10 +395,10 @@ Given a sorted (ascending order) but rotated array `nums`, return the minimum el
 
 > an example of rotating an array. If `[0, 1, 2, 4, 5, 6, 7]` is rotated 4 times it becomes `[4, 5, 6, 7, 0, 1, 2]`.
 
-#### Example
+### Example
 ```
-input: arr: [4, 5, 6, 7, 0, 1, 2]
-output: 0
+arr = [4, 5, 6, 7, 0, 1, 2]
+output = 0
 ```
 """,
         "test_cases": """
@@ -415,10 +421,10 @@ test_cases = [
 ### Count primes
 Given a positive integer `n`, write an algorithm to return the number of prime numbers in `[0, n]`.
 
-#### Example
+### Example
 ```
-input: 1000
-output: 168
+n = 1000
+output = 168
 How: There are 168 prime numbers between 0 and 1000 inclusive.
 ```
 """,
@@ -446,10 +452,10 @@ Given a non-empty array of integers `nums` where every element appears twice exc
 
 You must write an algorithm that runs in **O(n)** average time complexity and uses constant space.
 
-#### Example
+### Example
 ```
-input: [4, 1, 2, 1, 2]
-output: 4
+nums = [4, 1, 2, 1, 2]
+output = 4
 ```
 """,
         "test_cases": """
@@ -472,13 +478,13 @@ test_cases =  [
 ### Powers of 2
 Given an integer `n`, find whether it is a power of `2`.
 
-#### Example
+### Example
 ```
-input: 64
-output: True
+n = 64
+output = True
 
-input: 20
-output: False
+n = 20
+output = False
 ```
 """,
         "test_cases": """
@@ -505,14 +511,14 @@ Evaluate the value of an arithmetic expression in Reverse Polish Notation. Valid
 
 Division between two integers should truncate toward zero and it is guaranteed that the given RPN expression is always valid.
 
-#### Example
+### Example
 ```
 input: ["2", "1", "+", "3", "*"]
-output: 9
+output = 9
 How: ((2 + 1) * 3) = 9
 
 input: ["4", "13", "5", "/", "+"]
-output: 6
+output = 6
 How: (4 + (13 / 5)) = 6
 ```
 """,
@@ -545,13 +551,13 @@ Convert a given integer, `n`,  to its equivalent roman numerals for `0 < n < 400
 |Roman  | L | XL | X | IX| V | IV| I|
 
 
-#### Example
+### Example
 ```
 input: 4
-output: 'IV'
+output = 'IV'
 
 input: 23
-output: 'XXIII'
+output = 'XXIII'
 ```
 """,
         "title": "Roman numerals",
@@ -580,10 +586,10 @@ Given two strings `text1` and `text2`, return their longest common substring. If
 
 > A substring of a string is a new string generated from the original string with adjacent characters. For example, "rain" is a substring of "grain". 
 
-#### Example
+### Example
 ```
 input: text1 = "brain", text2 = 'drain'
-output: 'rain'
+output = 'rain'
 ```
 """,
         "title": "Longest common substring",
@@ -607,13 +613,13 @@ test_cases = [
 Given a positive integer `n`, return whether it is a happy number or not. 
 
 > A happy number is a number which if you repeatedly sum the squares of its digits the process will eventually lead to 1. For example, 19 → `1²+9²=82` → `8²+2²=68` → `6²+8²=100` → `1`.
-#### Example
+### Example
 ```
 input: 19
-output: True
+output = True
 
 input: 2
-output: False
+output = False
 ```
 """,
         "title": "Happy number",
@@ -643,13 +649,13 @@ Given an array `roots` of strings and a `sentence` of words separated by spaces.
 
 Return the sentence after the replacement.
 
-#### Example
+### Example
 ```
 input: roots = ["cat", "bat", "rat"], sentence = "the cattle was rattled by the battery"
-output: "the cat was rat by the bat"
+output = "the cat was rat by the bat"
 
 input: roots = ["a", "b", "c"], sentence = "aadsfasf absbs bbab cadsfafs"
-output: "a a b c"
+output = "a a b c"
 ```
 """,
         "title": "Trie/Prefix tree",
@@ -674,10 +680,10 @@ Given a knapsack `capacity` and two arrays, the first one for `weights` and the 
 
 You are allowed to add a fraction of an item.
 
-#### Example
+### Example
 ```
 inputs: capacity = 50, weights = [10, 20, 30], values = [60, 100, 120]
-output: 240
+output = 240
 ```
 """,
         "title": "Fractional knapsack",
@@ -703,10 +709,10 @@ test_cases = [
 ### Subarrays with sum
 Given an array `arr` and `target`, return the total number of contigous subarrays inside the array whose sum is equal to `target`
 
-#### Example
+### Example
 ```
 inputs: arr = [13, -1, 8, 12, 3, 9], target = 12
-output: 3
+output = 3
 How: [13, -1], [12] and [3, 9]
 ```
 """,
@@ -732,10 +738,10 @@ Given the `root` of a binary tree and an integer `target`, return the number of 
 
 The path does not need to start or end at the root or a leaf, but it must go downwards (i.e., traveling only from parent nodes to child nodes).
 
-#### Example
+### Example
 ```
 inputs: root = [10, 5, -3, 3, 2, None, 11, 3, -2, None, 1], target = 8
-output: 3
+output = 3
 ```
 """,
         "test_cases": f"""
@@ -769,10 +775,10 @@ Given a string `s`. Convert it to spinal case
 
 > Spinal case is all-lowercase-words-joined-by-dashes.
 
-#### Example
+### Example
 ```
 input: "Hello World!"
-output: "hello-world"
+output = "hello-world"
 ```
 """,
         "title": "Spinal case",
@@ -800,10 +806,10 @@ You can only either include or not include an item. i.e you can't add a portion 
 
 Return a tuple of maximum value and selected items
 
-#### Example
+### Example
 ```
 input: capacity = 50, weights = [10, 20, 30], values = [60, 100, 120]
-output: (220, [0, 1, 1])
+output = (220, [0, 1, 1])
 ```
 """,
         "title": "0/1 knapsack",
@@ -827,10 +833,10 @@ test_cases = [
 ### Equal array partitions
 Given an integer array `nums`, return true if you can partition the array into two subsets such that the sum of the elements in both subsets is equal or false otherwise.
 
-#### Example
+### Example
 ```
 input: [1, 5, 11, 5]
-output: True
+output = True
 How: [1, 5, 5] and [11]
 ```
 """,
@@ -855,18 +861,18 @@ test_cases = [
 ### Climb stairs
 You are climbing a staircase. It takes `n` steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
 
-#### Example
+### Example
 ```
 input: 0
-output: 0
+output = 0
 How: no stairs, no way to get to the top
 
 input: 1
-output: 1
+output = 1
 How: 1 stair, one way to get to the top
 
 input: 2
-output: 2
+output = 2
 How:
   2 ways to get to the top
     - climb stair 1 then stair 2
@@ -899,10 +905,10 @@ There are four types of common coins in US currency:
   - nickels (5 cents)
   - pennies (1 cent)
 
-#### Example
+### Example
 ```
 input: 15
-output: 6
+output = 6
 How: There are six ways to make change for 15 cents
   - A dime and a nickel
   - A dime and 5 pennies
@@ -935,10 +941,10 @@ Given the `root` of a binary tree and an integer `target`, return true if the tr
 
 > A leaf is a node with no children.
 
-#### Example
+### Example
 ```
 input: root = [5, 4, 8, 11, None, 13, 4, 7, 2, None, None, None, None, None, 1], target = 18
-output: True
+output = True
 ```
 """,
         "test_cases": f"""
@@ -977,13 +983,13 @@ test_cases = [
 ### Has node BST
 Given the `root` of a binary search tree and a value `x`, check whether x is in the tree and return `True` or `False`
 
-#### Example
+### Example
 ```
 input: root = [9, 8, 16], x = 5
-output: False
+output = False
 
 input: root = [12, 3, 20], x = 3
-output: True
+output = True
 ```
 """,
         "test_cases": f"""
@@ -1015,10 +1021,10 @@ test_cases = [
 ### BST min
 Given the `root` of a binary search tree find the minimum value and return it
 
-#### Example
+### Example
 ```
 input: [12, 3, 20]
-output: 3
+output = 3
 ```
 """,
         "test_cases": f"""
@@ -1050,13 +1056,13 @@ Given the `root` of a binary tree, return `True` if it is balanced or `False` ot
 
 > A balanced tree is one whose difference between maximum height and minimum height is less than 2
 
-#### Example
+### Example
 ```
 input: [12, 8, 16, 4, 9, 13, 18, 11]
-output: True
+output = True
 
 input: [4, None, 9, None, None, None, 12]
-output: False
+output = False
 ```
 """,
         "test_cases": f"""
@@ -1095,10 +1101,10 @@ test_cases = [
 ### Tree in-order traversal
 Given the `root` of a binary tree, traverse the tree in order and return the values as an array.
 
-#### Example
+### Example
 ```
 input: [12, 8, 16, 4, 9, 13, 18, 1]
-output: [1, 4, 8, 9, 12, 13, 16, 18]
+output = [1, 4, 8, 9, 12, 13, 16, 18]
 ```
 """,
         "test_cases": f"""
@@ -1135,10 +1141,10 @@ Given the `root` of a binary tree, check whether it is a valid binary search tre
 
 > **Valid BST:** for every node, all nodes in its left subtree are less than the node value and all nodes in its right subtree are greater than the node value. 
 
-#### Example
+### Example
 ```
 input: [9, 8, 16]
-output: true
+output = true
 ```
 """,
         "test_cases": f"""
@@ -1177,10 +1183,10 @@ test_cases = [
 ### Tree level-order traversal
 Given the `root` of a binary tree, traverse the tree using level order traversal and return the values as an array.
 
-#### Example
+### Example
 ```
 input: [12, 8, 16, 4, 9, 13, 18, 1]
-output: [12, 8, 16, 4, 9, 13, 18, 1]
+output = [12, 8, 16, 4, 9, 13, 18, 1]
 ```
 """,
         "test_cases": f"""
@@ -1215,10 +1221,10 @@ Given the `root` of a binary tree, return all the leaves as an array ordered fro
 
 > A leaf is tree node with no children. 
 
-#### Example
+### Example
 ```
 input: [100, 50, 600, 45, 55, 500, 1000]
-output: [45, 55, 500, 1000]
+output = [45, 55, 500, 1000]
 ```
 """,
         "test_cases": f"""
@@ -1251,10 +1257,10 @@ test_cases = [
 ### Sum right nodes
 Given the `root` of a binary tree, return the sum of all the right nodes
 
-#### Example
+### Example
 ```
 input: [12, 8, 16, 4, 9, 13, 18, 11]
-output: 25
+output = 25
 ```
 """,
         "test_cases": f"""
@@ -1295,10 +1301,10 @@ Given an array of integers `arr` sorted in a non decreasing order, and a target 
 
 You must write an algorithm that runs in **O(log n)** average time complexity. 
 
-#### Example
+### Example
 ```
 input: arr = [2, 4, 8, 9, 12, 13, 16, 18], y = 18
-output: True
+output = True
 ```
 """,
         "test_cases": """
@@ -1321,10 +1327,10 @@ test_cases = [
 ### Merge sort
 Given an array of integers `nums`, use merge sort algorithm to return an array of all the integers sorted in non decreasing order.
 
-#### Example
+### Example
 ```
 input: [8, 2, 4, 9, 12, 18, 16, 13]
-output: [2, 4, 8, 9, 12, 13, 16, 18]
+output = [2, 4, 8, 9, 12, 13, 16, 18]
 ```
 """,
         "test_cases": """
@@ -1350,10 +1356,10 @@ test_cases = [
 ### Heap sort
 Given an array of integers `nums`, use heap sort algorithm to return an array of all the integers sorted in non decreasing order.
 
-#### Example
+### Example
 ```
 input: [8, 2, 4, 9, 12, 18, 16, 13]
-output: [2, 4, 8, 9, 12, 13, 16, 18]
+output = [2, 4, 8, 9, 12, 13, 16, 18]
 ```
 """,
         "test_cases": """
@@ -1379,13 +1385,13 @@ test_cases = [
 ### Generate parentheses
 Given a positive integer `n`, generate all combinations of well formed parentheses with n pairs. 
 
-#### Example
+### Example
 ```
 input: n = 3
-output: ["((()))","(()())","(())()","()(())","()()()"]
+output = ["((()))","(()())","(())()","()(())","()()()"]
 
 input: n = 1
-output: ["()"]
+output = ["()"]
 ```
 """,
         "test_cases": """
@@ -1433,15 +1439,15 @@ Return the minimum cost to connect all the n cities such that there is at least 
 
 Return -1 if it isn't possible to connect all n cities. 
 
-#### Example
+### Example
 ```
-n = 3, 
+n = 3
 connections = [
         [1, 2, 10],
         [1, 2, 1],
         [2, 3, 2],
 ]
-output: 3
+output = 3
 ```
 """,
         "title": "Minimum connection cost",
@@ -1550,10 +1556,10 @@ test_cases = [
 ### Smaller to the right
 Given an integer array `nums`, return an integer array counts where counts[i] is the number of smaller elements to the right of nums[i].
 
-#### Example
+### Example
 ```
 input: [5, 2, 2, 6, 1]
-output: [3, 1, 1, 1, 0]
+output = [3, 1, 1, 1, 0]
 ```
 """,
         "test_cases": """
@@ -1581,10 +1587,10 @@ Given an array `nums` of size n, return the majority element.
 
 The majority element is guaranteed to exist in the array. 
 
-#### Example
+### Example
 ```
 Input: [3, 2, 3]
-Output: 3
+output = 3
 ```
 """,
         "test_cases": """
@@ -1610,14 +1616,14 @@ Given an array `prices` where `prices[i]` is the price of a given stock on the i
 
 If you cannot achieve any profit, return 0.
 
-#### Example
+### Example
 ```
 Input: prices = [7,1,5,3,6,4]
-Output: 5
+output = 5
 How: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
 
 Input: prices = [7,6,4,3,1]
-Output: 0
+output = 0
 ```
 """,
         "test_cases": """
@@ -1643,10 +1649,10 @@ Find two numbers in an array `nums` that add up to a specific `target`. Return t
 
 Each input has exactly one solution.
 
-#### Example
+### Example
 ```
 - Input: nums = [2, 7, 1, 15], target = 9
-- Output: [0, 1] (because 2 + 7 = 9)
+- output = [0, 1] (because 2 + 7 = 9)
 ```
 """,
         "test_cases": """
@@ -1671,13 +1677,13 @@ Given two strings `str1` and `str2`, both lowercase, return their longest common
 
 > A subsequence of a string is generated by selecting some characters from the original string while maintaining the relative order of the original characters. e.g 'man' is a subsequence of 'mountain'
 
-#### Example
+### Example
 ```
 Input: str1 = "mountain", str2 = "man"
-Output: 'man'
+output = 'man'
 
 Input: str1 = "dent", str2 = "crab"
-Output: ''
+output = ''
 ```
 """,
         "title": "Longest common subsequence",
@@ -1700,13 +1706,13 @@ test_cases = [
 ### Can you reach the last index?
 Given an integer array `nums` where `nums[i]` represents the maximum forward jump length from index `i`. Determine if, starting from the first index (0), you can reach the last index. 
 
-#### Example
+### Example
 ```
 Input: nums = [2,3,1,1,4]
-Output: true
+output = true
 
 Input: nums = [3,2,1,0,4]
-Output: false
+output = false
 ```
 """,
         "title": "Can you reach the last index?",
@@ -1732,14 +1738,14 @@ Given an integer array `nums` where `nums[i]` represents the maximum forward jum
 
 You are guaranteed to reach the last index. 
 
-#### Example
+### Example
 ```
 Input: nums = [2,5,2,1,4]
-Output: 2
+output = 2
 How: jump 1 step to index 1 then 3 steps to the last index. 
 
 Input: nums = [2,3,0,1,4,0]
-Output: 3
+output = 3
 How: jump 1 step to index 1, 3 steps to index 4 then 1 step to the last index.
 ```
 """,
@@ -1763,14 +1769,14 @@ test_cases = [
 ### Jump to zero
 Given an integer array `nums` where `nums[i]` represents the maximum forward or backward jump length from index `i` and a starting index `start`. Check if you can jump to an index where the value is 0.
 
-#### Example
+### Example
 ```
 Input: nums = [4,2,3,0,3,1,2], start = 5
-Output: true
+output = true
 How: index 5 -> 4 -> 1 -> 3 or 5 -> 6 -> 4 -> 1 -> 3
 
 Input: nums = [3,0,2,1,2], start = 2
-Output: false
+output = false
 How: There is no way to get to index 1 starting from index 2.
 ```
 """,
@@ -1794,14 +1800,14 @@ test_cases = [
 ### Max loot 
 Given an integer array `nums` where each `nums[i]` represents the amount of cash stashed in a boat, return the maximum amount that you can steal from the boats given that you cannot steal from any two adjacent boats.  
 
-#### Example
+### Example
 ```
 Input: nums = [2,2,5,1]
-Output: 7
+output = 7
 How: Rob boats 1 (2) and 3 (5) -> total loot 7 
 
 Input: nums = [2]
-Output: 2
+output = 2
 How:  Only one boat, no adjacent boats to worry about. 
 ```
 """,
@@ -1825,10 +1831,10 @@ test_cases = [
 ### Max loot circle
 Given an integer array `nums` where each `nums[i]` represents the amount of cash stashed in a boat, return the maximum amount that you can steal from the boats given that you cannot steal from any two adjacent boats and the boats are arranged in a circle i.e the last boat is adjacent to the first one. 
 
-#### Example
+### Example
 ```
 Input: nums = [3,5,3]
-Output: 5
+output = 5
 How: Cannot rob boats 1 and 3 for total of 6 because they are adjacent. So rob boat 2. 
 ```
 """,
@@ -1852,13 +1858,13 @@ test_cases = [
 ### Course schedule 
 Given an array of `courses` representing the courses you have to take where courses[i] = [a, b] indicates that you must take course b in order to take course a. And an integer `n` representing the total number of courses with the courses being labelled from 0 to n - 1. Determine the order in which you can do all the courses. Return [] if you can't do all the courses. 
 
-#### Example
+### Example
 Input: n = 2, courses = [[1,0]]
-Output: [0, 1]
+output = [0, 1]
 How: Take course 0 then 1. 
 
 Input: n = 2, courses = [[1,0],[0,1]]
-Output: []
+output = []
 How: To take course 1 you first need to take course 0 but to take course 0 you need to first take course 1 so no way to take any of them. 
 """,
         "title": "Course schedule",
@@ -1890,13 +1896,13 @@ The nodes are labelled from 0 to n - 1.
 
 > The height of a tree is the number of edges on the path from the root to the the farthest leaf. 
 
-#### Example
+### Example
 ```
 Input: n = 4, edges = [[1,0],[1,2],[1,3]]
-Output: [1]
+output = [1]
 
 Input: n = 6, edges = [[3,0],[3,1],[3,2],[3,4],[5,4]]
-Output: [3,4]
+output = [3,4]
 ```
 """,
         "title": "Minimum height trees",
@@ -1919,13 +1925,13 @@ test_cases = [
 ### Longest common prefix
 Given an array of strings `strs` return the longest common prefix of all the strings. 
 
-#### Example
+### Example
 ```
 Input: strs = ["flower","flow","flight"]
-Output: "fl"
+output = "fl"
 
 Input: strs = ["dog","racecar","car"]
-Output: ""
+output = ""
 ```
 """,
         "title": "Longest common prefix",
@@ -1955,10 +1961,10 @@ You are also given three integers `src`, `dst` and `k`. Find the cheapest cost f
 
 Return -1 if there's no such route.
 
-#### Example
+### Example
 ```
 Input: n = 4, flights = [[0,1,100],[1,2,100],[2,0,100],[1,3,600],[2,3,200]], src = 0, dst = 3, k = 1
-Output: 700
+output = 700
 ```
 """,
         "title": "Cheapest flight with at most k stops",
@@ -1989,10 +1995,10 @@ Find the minimum time it takes for a signal from a source node `k` to reach all 
 
 Return -1 if it's impossible for all the nodes to receive the signal. 
 
-#### Example
+### Example
 ```
 Input: times = [[2,1,1],[2,3,1],[3,4,1]], n = 4, k = 2
-Output: 2
+output = 2
 ```
 """,
         "title": "Network delay time",
@@ -2021,13 +2027,13 @@ Given `n` servers labelled 0 to n - 1 connected by undirected `connections` wher
 
 > A critical connection is one that, if removed, will make some servers not be able to reach the rest of the server network. 
 
-#### Examples
+### Examples
 ```
 Input: n = 4, connections = [[0,1],[1,2],[2,0],[1,3]]
-Output: [[1,3]]
+output = [[1,3]]
 
 Input: n = 2, connections = [[0,1]]
-Output: [[0,1]]
+output = [[0,1]]
 ```
 """,
         "title": "Critical connections",
@@ -2055,13 +2061,13 @@ Given arrays `start_time`, `end_time` and `profit` representing `n` jobs with th
 
 If you choose a job that ends at time x you can be able to choose another one that starts at time x. 
 
-#### Example
+### Example
 ```
 Input: start_time = [1,2,3,3], end_time = [3,4,5,6], profit = [50,10,40,70]
-Output: 120
+output = 120
 
 Input: start_time = [1,1,1], end_time = [2,3,4], profit = [5,6,4]
-Output: 6
+output = 6
 ```
 """,
         "title": "Job scheduling",
@@ -2088,10 +2094,10 @@ Return -1 if `amount` cannot be made by any combination of the coins.
 
 You may assume that you have an infinite number of each kind of coin.
 
-#### Example
+### Example
 ```
 Input: coins = [1,2,5], amount = 11
-Output: 3
+output = 3
 How: 11 = 5 + 5 + 1
 ```
 """,
@@ -2121,10 +2127,10 @@ Given an array `days` representing planned annual train travalling days and `cos
 
 Each day is an integer between 1 and 365.
 
-#### Example
+### Example
 ```
 Input: days = [1,4,6,7,8,20], costs = [2,7,15]
-Output: 11
+output = 11
 ```
 """,
         "title": "Min cost tickets",
@@ -2149,11 +2155,11 @@ test_cases = [
 ### Max loot binary tree
 Given the `root` of a binary tree where each node represents the amount of cash stashed in a boat, return the maximum amount that you can steal from the boats given that you cannot steal from any directly connected boats i.e parent node and child node. 
 
-#### Example
+### Example
 ```
 Input: root = [9, 8, 16]
-Output: 24
-How: Maximum amount of money the thief can rob is 8 + 16 = 24 
+output = 24
+How: Maximum amount of cash is 8 + 16 = 24 
 ```
 """,
         "test_cases": f"""
@@ -2191,10 +2197,10 @@ Given the `root` of a binary tree and two nodes `p` and `q`, find the lowest com
 
 > According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in a tree that has both p and q as descendants (where a node can be a descendant of itself).”
 
-#### Example
+### Example
 ```
 Input: root = [9, 8, 16], p = 8, q = 16
-Output: 9
+output = 9
 ```
 """,
         "test_cases": f"""
@@ -2223,13 +2229,13 @@ Check if two binary trees `p` and `q` are the same given their roots.
 
 > Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
 
-#### Example
+### Example
 ```
 Input: p = [1,2,3], q = [1,2,3]
-Output: true
+output = true
 
 Input: p = [1,2], q = [1,null,2]
-Output: false
+output = false
 ```
 """,
         "test_cases": f"""
@@ -2264,10 +2270,10 @@ Given the `root` of a binary tree with unique values and the value of two differ
 
 > Two nodes of a binary tree are cousins if they have the same depth with different parents.
 
-#### Example
+### Example
 ```python
 # Input: root = [100, 50, 600, 45, 55, 500, 1000]), x = 45, y = 500
-# Output: True
+# output = True
 # Why: both are at the same level and 45's parent is 50 while 500's parent is 600
 ```
 """,
@@ -2300,7 +2306,7 @@ Given an `m x n grid` where each value is either 1 or 0 with 1 indicating land a
 
 ### Examples
 Input: grid = [[1, 1, 1, 1], [0, 0, 0, 0], [1, 1, 1, 1]]
-Output: 2  # 2 horizontal islands. 
+output = 2  # 2 horizontal islands. 
 """,
         "test_cases": f"""
 g1 = [['1', '1', '1', '1'], ['0', '0', '0', '0'], ['1', '1', '1', '1']]
@@ -2334,10 +2340,10 @@ test_cases = [
 ### Merge intervals
 Given an array of `intervals` merge all overlapping intervals. 
 
-#### Example
+### Example
 ```
 input: [[1, 5], [5, 10]]
-output: [[1, 10]]
+output = [[1, 10]]
 ```
 """,
         "title": "Merge intervals",
@@ -2369,10 +2375,10 @@ test_cases = [
 ### longest increasing subsequence
 Given an array `nums` of integers return the length of the longest strictly increasing subsequence
 
-#### Example
+### Example
 ```
 input: [10,9,2,5,3,7,101,18]
-output: 4
+output = 4
 How: LIS is [2, 3, 7, 101] with length 4. 
 ```
 """,
@@ -2403,13 +2409,13 @@ Given a string `s`, return the longest palindromic substring in s.
 
 Return the first one if there are multiple longest palindromic substrings. 
 
-#### Example
+### Example
 ```
-input: "babad"
-output: "bab" 
+s = "babad"
+output = "bab" 
 
-input: "abcde"
-output: "a"
+s = "abcde"
+output = "a"
 ```
 """,
         "title": "Longest palindromic substring",
@@ -2431,16 +2437,17 @@ test_cases = [
 66: {
         "markdown": """
 ### Permutations
-Given an array `nums` of distinct integers, return all the possible permutations.
+Given a string `s` all lowercase characters and an integer `k`, return all the possible permutations of string `s` of size k.  
 
-Return the permutations in non decreasing order. 
+Return the permutations in any order. 
 
 Can you do it without python's itertools?
 
 ### Example
 ```
-input: [1, 2]
-output: [[1, 2], [2, 1]]
+s = 'art'
+k = 2
+output = ['ar', 'at', 'ra', 'rt', 'ta', 'tr']
 ```
 """,
         "test_cases": """
@@ -2469,7 +2476,7 @@ Are your hands tied without python's itertools 😅?
 ### Example
 ```
 input: s = "abcd", k = 3
-output: ['abc', 'abd', 'acd', 'bcd']
+output = ['abc', 'abd', 'acd', 'bcd']
 ```
 """,
         "test_cases": """
@@ -2543,16 +2550,16 @@ arr = [1, 3, 7, 7, 7, 3, 4, 1, 7]
 rf = RangeFreq(arr)
 
 input: rf.query(2, 5, 7)
-output: 3  # 7 appears 3 times between indices 1 and 6
+output = 3  # 7 appears 3 times between indices 1 and 6
 
 input: rf.query(2, 4, 7)  
-output: 3 
+output = 3 
 
 input: rf.query(0, 8, 1)
-output: 2 
+output = 2 
 
 input: rf.query(4, 7, 4)
-output: 1
+output = 1
 ```
 """,
         "test_cases": f"""
@@ -2592,10 +2599,10 @@ Given the `root` of a binary tree, invert the tree, and return its root.
 
 ### Examples
 Input: root = [2,1,3]
-Output: [2,3,1]
+output = [2,3,1]
 
 Input: root = []
-Output: []
+output = []
 """,
         "test_cases": f"""
 {binary_tree}
@@ -2733,7 +2740,7 @@ Given the `head` of a linked list, reverse the list, and return its head
 ### Example
 ```
 input: [1, 2, 3, 4, 5, 6]
-output: [6, 5, 4, 3, 2, 1]
+output = [6, 5, 4, 3, 2, 1]
 ```
 """,
         "test_cases": f"""
@@ -2784,7 +2791,7 @@ Given two sorted linked lists, `head1` and `head2`. Merge them into one sorted l
 ### Example
 ```
 input: head1 = [2, 4, 6, 6, 12, 22], head2 = [3, 7, 8, 9]
-output: [2, 3, 4, 6, 6, 7, 8, 9, 12, 22]
+output = [2, 3, 4, 6, 6, 7, 8, 9, 12, 22]
 ```
 """,
         "test_cases": f"""
@@ -2827,7 +2834,7 @@ Add the two numbers and return the sum as a linked list. You may assume the two 
 ### Example
 ```
 input: head1 = [2, 4, 3], head2 = [5, 6, 4]
-output: [7, 0, 8]
+output = [7, 0, 8]
 explanation: 342 + 465 = 807
 ```
 """,
@@ -2862,16 +2869,16 @@ test_cases = [
 ### Triplet sum equals zero
 Given an array `nums` of integers, find all unique triplets that sum to zero. 
 
-#### Example
+### Example
 ```
 input: [-1,0,1,2,-1,-4]
-output: [[-1,-1,2],[-1,0,1]]
+output = [[-1,-1,2],[-1,0,1]]
 
 input:  [0,1,1]
-output: []
+output = []
 
 input: [0,0,0]
-output: [[0,0,0]]
+output = [[0,0,0]]
 ```
 """,
         "title": "Triplets sum equals zero",
@@ -2932,14 +2939,14 @@ Given an array `nums` where each number represents the height of a vertical wall
 
 > To calculate Units of water held, multiply the `width(base)` by `height`
 
-#### Example
+### Example
 ```
 input: [3, 1, 2, 7]
-output: 9
+output = 9
 how: 9 units of water held between the first and last wall
 
 input: [1, 1]
-output: 1
+output = 1
 ```
 """,
         "title": "Max water held",
@@ -2970,10 +2977,10 @@ test_cases = [
 ### Trapping rain water
 Given `n` positive integers `nums` representing elevation heights where the width of each bar is 1, return how much water can be trapped after rain. 
 
-#### Example
+### Example
 ```
 input: [3, 1, 2, 7]
-output: 3
+output = 3
 how: 2 units at index 1 and 1 unit at index 2 
 ```
 """,
@@ -3009,10 +3016,10 @@ Given an `n * n` adjacency matrix of connected cities with each cell having valu
 
 Return the number of connected groups of cities.  
 
-#### Example
+### Example
 ```
 input: [[1,0,0],[0,1,0],[0,0,1]]
-output: 3
+output = 3
 ```
 """,
         "title": "Connected cities",
@@ -3080,7 +3087,7 @@ Given `n` cities labelled 0 to n - 1 and an array `edges` where edges[i] = [from
 
 If multiple such cities, return the one with the greatest number. 
 
-#### Examples
+### Examples
 ```
 n = 5 
 edges = [
@@ -3090,7 +3097,7 @@ edges = [
     [3, 4, 1],
 ]
 k = 1
-Output: 4
+output = 4
 Why: reachable counts: 0 -> 1, 1 -> 2, 2 -> 2, 4 -> 1 
 ```
 """,
