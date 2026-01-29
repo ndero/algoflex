@@ -2908,4 +2908,75 @@ test_cases = [
 ]
 """,
     },
+79: {
+        "markdown": """
+### Connected cities
+Given an `n * n` adjacency matrix of connected cities with each cell having values 1 or 0 where 0 indicate city i is not connected to city j and 1 indicate otherwise. 
+
+Return the number of connected groups of cities.  
+
+#### Example
+```
+input: [[1,0,0],[0,1,0],[0,0,1]]
+output: 3
+```
+""",
+        "title": "Connected cities",
+        "level": "Steady",
+        "code": """def connected_cities(adj_mat: list[list[int]]) -> int:
+""",
+        "test_cases": """
+m1 = [[1]]
+m2 = [
+    [1, 1],
+    [1, 1],
+]
+m3 = [[1,0,0],[0,1,0],[0,0,1]]
+m4 = [
+    [1, 1, 1, 1],
+    [1, 1, 1, 1],
+    [1, 1, 1, 1],
+    [1, 1, 1, 1],
+]
+m5 = [
+    [1, 1, 0, 0],
+    [1, 1, 1, 0],
+    [0, 1, 1, 1],
+    [0, 0, 1, 1],
+]
+m6 = [
+    [1, 1, 0, 0, 0],
+    [1, 1, 0, 0, 0],
+    [0, 0, 1, 1, 0],
+    [0, 0, 1, 1, 0],
+    [0, 0, 0, 0, 1],
+]
+m7 = [
+    [1, 1, 0],
+    [0, 1, 1],
+    [0, 0, 1],
+]
+m8 = [
+    [0, 1, 0],
+    [1, 0, 0],
+    [0, 0, 0],
+]
+n = 100
+m9 = [[1 if i == j else 0 for j in range(n)] for i in range(n)]
+n = 200
+m10 = [[1] * n for _ in range(n)]
+test_cases = [
+    [connected_cities(m1), 1],
+    [connected_cities(m2), 1],
+    [connected_cities(m3), 3],
+    [connected_cities(m4), 1],
+    [connected_cities(m5), 1],
+    [connected_cities(m6), 3],
+    [connected_cities(m7), 1],
+    [connected_cities(m8), 2],
+    [connected_cities(m9), 100],
+    [connected_cities(m10), 1],
+]
+""",
+    },
 }
