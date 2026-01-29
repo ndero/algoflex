@@ -1424,31 +1424,125 @@ test_cases = [
     },
 38: {
         "markdown": """
-### Bubble sort
-Given an array of integers `nums`, use bubble sort algorithm to return an array of all the integers sorted in non decreasing order.
+### Minimum connection cost
+You are given `n` cities numbered from 1 to n and an array `connections` where connections[i] = [x, y, cost] indicates a weighted bidirectional connection between cities x and y. 
+
+Return the minimum cost to connect all the n cities such that there is at least one path between each pair of cities. 
+
+> The cost is the sum of the connections’ costs used.
+
+Return -1 if it isn't possible to connect all n cities. 
 
 #### Example
 ```
-input: [8, 2, 4, 9, 12, 18, 16, 13]
-output: [2, 4, 8, 9, 12, 13, 16, 18]
+n = 3, 
+connections = [
+        [1, 2, 10],
+        [1, 2, 1],
+        [2, 3, 2],
+]
+output: 3
 ```
 """,
-        "test_cases": """
-from random import shuffle
-nums = [i for i in range(-1000, 1000)]
-shuffle(nums)
-test_cases = [
-    [bubble_sort([8, 2, 4, 9, 12, 18, 16, 13]), [2, 4, 8, 9, 12, 13, 16, 18]],
-    [bubble_sort([i for i in range(1000, -1, -1)]), [i for i in range(1001)]],
-    [bubble_sort([i for i in range(1000)]), [i for i in range(1000)]],
-    [bubble_sort([8, 1, 5] * 1000), [1] * 1000 + [5] * 1000 + [8] * 1000],
-    [bubble_sort([3]), [3]],
-    [bubble_sort(nums), [i for i in range(-1000, 1000)]]
-]
+        "title": "Minimum connection cost",
+        "level": "Steady",
+        "code": """def minimum_cost(n: int, connections: list[list[int]]) -> int:
 """,
-        "title": "Bubble sort",
-        "level": "Breezy",
-        "code": """def bubble_sort(nums: list[int]) -> list[int]:
+        "test_cases": """
+# Trivial / edge cases
+g1_n = 1
+g1 = []
+
+g2_n = 2
+g2 = [[1, 2, 10]]
+
+g3_n = 2
+g3 = []
+
+# Disconnected
+g4_n = 4
+g4 = [
+    [1, 2, 3],
+    [2, 3, 4],
+]
+
+# Multiple edges between same cities
+g5_n = 3
+g5 = [
+    [1, 2, 10],
+    [1, 2, 1],
+    [2, 3, 2],
+]
+
+# Simple cycle
+g6_n = 4
+g6 = [
+    [1, 2, 1],
+    [2, 3, 1],
+    [3, 4, 1],
+    [4, 1, 10],
+]
+
+# Dense cyclic graph
+g7_n = 4
+g7 = [
+    [1, 2, 5],
+    [1, 3, 6],
+    [1, 4, 4],
+    [2, 3, 2],
+    [2, 4, 3],
+    [3, 4, 1],
+]
+
+# Negative weights
+g8_n = 3
+g8 = [
+    [1, 2, -5],
+    [2, 3, 2],
+    [1, 3, 10],
+]
+
+# Star topology
+g9_n = 5
+g9 = [
+    [1, 2, 1],
+    [1, 3, 1],
+    [1, 4, 1],
+    [1, 5, 1],
+]
+
+# Linear chain
+g10_n = 6
+g10 = [
+    [1, 2, 1],
+    [2, 3, 1],
+    [3, 4, 1],
+    [4, 5, 1],
+    [5, 6, 1],
+]
+
+# Greedy trap
+g11_n = 4
+g11 = [
+    [1, 2, 1],
+    [2, 3, 100],
+    [1, 3, 2],
+    [3, 4, 1],
+]
+
+test_cases = [
+    [minimum_cost(g1_n, g1), 0],
+    [minimum_cost(g2_n, g2), 10],
+    [minimum_cost(g3_n, g3), -1],
+    [minimum_cost(g4_n, g4), -1],
+    [minimum_cost(g5_n, g5), 3],
+    [minimum_cost(g6_n, g6), 3],
+    [minimum_cost(g7_n, g7), 7],
+    [minimum_cost(g8_n, g8), -3],
+    [minimum_cost(g9_n, g9), 4],
+    [minimum_cost(g10_n, g10), 5],
+    [minimum_cost(g11_n, g11), 4],
+]
 """,
     },
 39: {
