@@ -15,7 +15,6 @@ from algoflex.db import get_db
 from algoflex.utils import time_ago, fmt_secs
 from tinydb import Query
 from heapq import nlargest, nsmallest
-from collections import Counter
 
 KV = Query()
 attempts = get_db()
@@ -109,8 +108,6 @@ class Dashboard(Widget):
                 yield ProgressBar(total=self.total, show_eta=False, id="all")
             with Collapsible(title="Recent attempts", collapsed=False):
                 yield Markdown(id="recent")
-            with Collapsible(title="Frequent Problems"):
-                yield Markdown(id="frequent")
             with Collapsible(title="Speedy Solves"):
                 yield Markdown(id="best")
             with Collapsible(title="Slow Solves"):
@@ -145,10 +142,9 @@ class Dashboard(Widget):
 
     def get_stats(self, docs):
         # get recent, frequent, fast and forever.
-        latest, best, worst, counts = {}, {}, {}, Counter()
+        latest, best, worst = {}, {}, {}
         for d in docs:
             pid = d["problem_id"]
-            counts[pid] += 1
             latest[pid] = max(d["created_at"], latest.get(pid, (0, 0))[0]), d["passed"]
             if d["passed"]:
                 if d["elapsed"] <= 30 * 60:
@@ -179,20 +175,14 @@ class Dashboard(Widget):
             )
             for id, (tm, passed) in nlargest(6, latest.items(), key=lambda x: x[1][0])
         ]
-        frequent = [
-            (q.get(id, {}).get("title", ""), q.get(id, {}).get("level", ""), count)
-            for id, count in counts.most_common(6)
-        ]
-        return recent, frequent, fast, forever
+        return recent, fast, forever
 
     def update_md(self, docs) -> None:
-        recent, frequent, fast, forever = self.get_stats(docs)
+        recent, fast, forever = self.get_stats(docs)
         latest = self.md_table(["Question", "Level", "When"], recent)
-        popular = self.md_table(["Question", "Level", "Attempts"], frequent)
         best = self.md_table(["Question", "Level", "Best time"], fast)
         worst = self.md_table(["Question", "Level", "Best time"], forever)
         self.query_one("#recent", Markdown).update(latest)
-        self.query_one("#frequent", Markdown).update(popular)
         self.query_one("#best", Markdown).update(best)
         self.query_one("#worst", Markdown).update(worst)
 
