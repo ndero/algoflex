@@ -6,7 +6,7 @@
 - [ ] Add support for in any order checks.
 - [x] Add support for class based questions.
 - [x] Dashboard - show current user progress/(per level e.g x/91), correct attempts/ total attempts, fast five, forever five.
-- [ ] Refine individual question tests.
+- [x] Refine individual question tests.
 - [ ] Add types.
 - [x] New best time - User is alerted when the current attempt is the best so far.
 - [ ] Tips/hints

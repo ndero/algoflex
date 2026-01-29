@@ -5,3 +5,4 @@ _questions.py
 dist/
 *.egg-info
 test.*
+algorithms.py

@@ -3073,4 +3073,132 @@ test_cases = [
 ]
 """,
     },
+80: {
+        "markdown": """
+### Reachable cities
+Given `n` cities labelled 0 to n - 1 and an array `edges` where edges[i] = [from, to, weight] represents a weighted bidirectional edge between cities `from` and `to`.  Return city with the smallest number of cities that are reachable and whose distance is at most `k`. 
+
+If multiple such cities, return the one with the greatest number. 
+
+#### Examples
+```
+n = 5 
+edges = [
+    [0, 1, 1],
+    [1, 2, 1],
+    [2, 3, 1],
+    [3, 4, 1],
+]
+k = 1
+Output: 4
+Why: reachable counts: 0 -> 1, 1 -> 2, 2 -> 2, 4 -> 1 
+```
+""",
+        "title": "Reachable cities",
+        "level": "Steady",
+        "code": """def reachable_cities(n: int, edges: list[list[int]], k: int) -> int:
+""",
+        "test_cases": """
+n1 = 1
+e1 = []
+k1 = 0
+# expected: 0
+n2 = 2
+e2 = [[0, 1, 3]]
+k2 = 5
+# expected: 1  (tie: both have 1 neighbor -> pick larger index)
+n3 = 2
+e3 = [[0, 1, 10]]
+k3 = 5
+# expected: 1  (both have 0 neighbors -> pick larger index)
+n4 = 5
+e4 = [
+    [0, 1, 1],
+    [1, 2, 1],
+    [2, 3, 1],
+    [3, 4, 1],
+]
+k4 = 1
+# reachable counts:
+# 0=1, 1=2, 2=2, 3=2, 4=1
+# expected: 4
+n5 = 5
+e5 = [
+    [0, 1, 1],
+    [0, 2, 1],
+    [0, 3, 1],
+    [0, 4, 1],
+]
+k5 = 1
+# counts: 0=4, others=1
+# expected: 4
+n6 = 6
+e6 = [
+    [0, 1, 1],
+    [1, 2, 1],
+    [3, 4, 1],
+]
+k6 = 2
+# counts: 0=2,1=2,2=2,3=1,4=1,5=0
+# expected: 5
+n7 = 4
+e7 = [
+    [0, 1, 1],
+    [0, 2, 1],
+    [0, 3, 1],
+    [1, 2, 1],
+    [1, 3, 1],
+    [2, 3, 1],
+]
+k7 = 2
+# all cities see 3 neighbors
+# expected: 3
+n8 = 4
+e8 = [
+    [0, 1, 10],
+    [0, 2, 1],
+    [2, 1, 1],
+    [1, 3, 1],
+]
+k8 = 2
+# distances from 0 → {1,2} via 2
+# counts: 0=2, 1=2, 2=2, 3=1
+# expected: 3
+n9 = 3
+e9 = [
+    [0, 1, 10],
+    [0, 1, 1],
+    [1, 2, 1],
+]
+k9 = 2
+# counts: 0=2, 1=2, 2=1
+# expected: 2
+n10 = 5
+e10 = [
+    [0, 1, 5],
+    [1, 2, 5],
+    [2, 3, 5],
+    [3, 4, 5],
+]
+k10 = 100
+# all cities see 4 neighbors
+# expected: 4
+cities = [[0, 4, 10], [0, 8, 25], [0, 1, 10], [0, 2, 30], [0, 3, 20], [8, 4, 60], [4, 5, 60], [5, 3, 70], [3, 6, 10], [6, 7, 5], [1, 7, 50]]
+test_cases = [
+    [reachable_cities(9, cities, 5), 8],
+    [reachable_cities(9, cities, 70), 5],
+    [reachable_cities(9, cities, 1), 8],
+    [reachable_cities(n1, e1, k1), 0],
+    [reachable_cities(n2, e2, k2), 1],
+    [reachable_cities(n3, e3, k3), 1],
+    [reachable_cities(n4, e4, k4), 4],
+    [reachable_cities(n5, e5, k5), 4],
+    [reachable_cities(n6, e6, k6), 5],
+    [reachable_cities(n7, e7, k7), 3],
+    [reachable_cities(n8, e8, k8), 3],
+    [reachable_cities(n9, e9, k9), 2],
+    [reachable_cities(n10, e10, k10), 4],
+]
+""",
+    },
 }
