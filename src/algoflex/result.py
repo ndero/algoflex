@@ -4,10 +4,11 @@ from algoflex.questions import questions
 from algoflex.db import get_db
 from algoflex.utils import fmt_secs
 from tinydb import Query
+from pathlib import Path
 import tempfile
-import subprocess
 import os
 import time
+import asyncio
 
 KV = Query()
 
@@ -64,55 +65,99 @@ if __name__ == "__main__":
         self.elapsed = elapsed
         self.best = best
 
-    def on_mount(self):
-        self.run_user_code()
+    def on_mount(self) -> None:
+        asyncio.create_task(self.run_user_code())
 
     def compose(self):
         yield RichLog(markup=True, wrap=True, max_lines=1_000)
         yield Footer()
 
-    def run_user_code(self):
-        attempts, passed, now = get_db(), False, time.time()
-        user_code = self.user_code.strip()
+    async def run_user_code(self) -> None:
+        attempts = get_db()
+        now = time.time()
+        passed = False
+
         output_log = self.query_one(RichLog)
+        output_log.loading = True
+
+        user_code = self.user_code.strip()
         question = questions.get(self.problem_id, {})
         test_cases = question.get("test_cases", [])
         test_code = question.get("test_code", self.TEST_CODE)
         full_code = f"{user_code}\n\n{test_cases}\n\n{test_code}"
-        with tempfile.NamedTemporaryFile(
-            delete=False, suffix=".py", mode="w+", encoding="utf-8"
-        ) as tmp_file:
-            tmp_file.write(full_code)
+
+        tmp_path = None
+
         try:
-            result = subprocess.run(
-                ["python", tmp_file.name], capture_output=True, text=True, timeout=9
+            with tempfile.NamedTemporaryFile(
+                delete=False,
+                suffix=".py",
+                mode="w",
+                encoding="utf-8",
+            ) as f:
+                f.write(full_code)
+                tmp_path = f.name
+
+            # spawn async subprocess
+            proc = await asyncio.create_subprocess_exec(
+                "python",
+                tmp_path,
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE,
             )
-            if result.stdout:
-                output_log.write(result.stdout, animate=True)
-            if result.stderr:
-                output_log.write(result.stderr, animate=True)
-            if result.returncode == 0:
+
+            async def stream(pipe, is_err=False):
+                while True:
+                    line = await pipe.readline()
+                    if not line:
+                        break
+                    text = line.decode().rstrip()
+                    if is_err:
+                        output_log.write(f"[red]{text}[/]", animate=True)
+                    else:
+                        output_log.write(text, animate=True)
+
+            # stream output with timeout
+            try:
+                await asyncio.wait_for(
+                    asyncio.gather(
+                        stream(proc.stdout),
+                        stream(proc.stderr, is_err=True),
+                    ),
+                    timeout=9,
+                )
+            except asyncio.TimeoutError:
+                proc.kill()
+                await proc.wait()
+                output_log.write(
+                    "[red]Execution timed out[/]\n\tYour solution must run within 9 seconds"
+                )
+                return
+
+            rc = await proc.wait()
+
+            if rc == 0:
                 passed = True
                 if not self.best or self.elapsed < self.best:
                     self.new_best()
-        except subprocess.TimeoutExpired:
-            output_log.write(
-                "[red]Execution timed out[/]\\n\\tYour solution must run within 9 seconds"
-            )
-        except Exception as e:
-            return output_log.write(f"[red]Error running code[/]\\n\\t{e}")
-        finally:
-            os.remove(tmp_file.name)
 
-        attempts.insert(
-            {
-                "problem_id": self.problem_id,
-                "passed": passed,
-                "elapsed": self.elapsed,
-                "created_at": now,
-                "code": user_code if passed else "",
-            },
-        )
+        except Exception as e:
+            output_log.write(f"[red]Error running code[/]\n\t{e}")
+
+        finally:
+            if tmp_path and Path(tmp_path).exists():
+                os.remove(tmp_path)
+            output_log.loading = False
+
+            attempts.insert(
+                {
+                    "problem_id": self.problem_id,
+                    "passed": passed,
+                    "elapsed": self.elapsed,
+                    "created_at": now,
+                    "code": user_code if passed else "",
+                }
+            )
 
     def new_best(self):
         widget = Static(f"[b]New best time! --> {fmt_secs(self.elapsed)}[/]")

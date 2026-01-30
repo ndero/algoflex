@@ -20,7 +20,7 @@ class AttemptScreen(Screen):
     BINDINGS = [
         Binding("a", "back", "back", tooltip="Go to home"),
         Binding("s", "submit", "submit", tooltip="Submit your solution"),
-        Binding('m', 'maximize', 'max/min editor', tooltip="maximize/minimize editor"),
+        Binding("m", "maximize", "max/min editor", tooltip="maximize/minimize editor"),
     ]
     DEFAULT_CSS = """
     Horizontal {

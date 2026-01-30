@@ -90,7 +90,7 @@ def same_list(head1, head2):
     return head1 is None and head2 is None
 """
 questions = {
-0: {
+    0: {
         "markdown": """
 ### Score tally
 Given an array of `scores` e.g `[ '5', '2', 'C', 'D', '+', '+', 'C' ]`, calculate the total points where:
@@ -139,7 +139,7 @@ test_cases = [
         "code": """def score(scores: list[str]) -> int:
 """,
     },
-1: {
+    1: {
         "markdown": """
 ### Repeated letters
 Given a string `s` of lower-case letters. Find all substrings of `s` that contains at least three consecutive identical letters. Return an array of the indices `[start, end]` of the substrings. Order the indices by the start index in ascending order.  
@@ -173,7 +173,7 @@ test_cases = [
         "code": """def repeated(s: str) -> list[list[int]]:
 """,
     },
-2: {
+    2: {
         "markdown": """
 ### Valid matching brackets
 Given a string `s` of brackets that can either be `[]`, `()` or `{}`.
@@ -212,7 +212,7 @@ test_cases = [
         "code": """def is_valid(s: str) -> bool:
 """,
     },
-3: {
+    3: {
         "markdown": """
 ### Max sum sub array
 Given a non empty integer array `nums`, find a contiguous non-empty subarray within the array that has the largest sum and return the sum.
@@ -246,7 +246,7 @@ test_cases = [
         "code": """def max_sum(nums: list[int]) -> int:
 """,
     },
-4: {
+    4: {
         "markdown": """
 ### Max product sub array
 Given a non empty integer array `nums`, find a contiguous non-empty subarray within the array that has the largest product and return the product.
@@ -284,7 +284,7 @@ test_cases = [
         "code": """def max_product(nums: list[int]) -> int:
 """,
     },
-5: {
+    5: {
         "markdown": """
 ### Symmetric difference
 Create a function that takes two or more `arrays` and returns a `set` of their symmetric difference.
@@ -318,7 +318,7 @@ test_cases = [
 
 """,
     },
-6: {
+    6: {
         "markdown": """
 ### Pairwise
 Given an array `arr`, find element pairs whose sum equal the second argument `target` and return the sum of their indices.
@@ -353,7 +353,7 @@ test_cases = [
         "code": """def pairwise(arr: list[int], target: int) -> int:
 """,
     },
-7: {
+    7: {
         "markdown": """
 ### Min length sub array
 Given an array of positive integers `nums` and a positive integer `target`, return the minimal length of a subarray whose sum is greater than or equal to target.
@@ -388,7 +388,7 @@ test_cases = [
         "code": """def min_len_arr(arr: list[int], target: int) -> int:
 """,
     },
-8: {
+    8: {
         "markdown": """
 ### Min in rotated array
 Given a sorted (ascending order) but rotated array `nums`, return the minimum element of this array. You must write an algorithm that runs in **O(log n)** time. 
@@ -416,7 +416,7 @@ test_cases = [
         "code": """def rotated_min(arr: list[int]) -> int:
 """,
     },
-9: {
+    9: {
         "markdown": """
 ### Count primes
 Given a positive integer `n`, write an algorithm to return the number of prime numbers in `[0, n]`.
@@ -445,7 +445,7 @@ test_cases = [
         "code": """def count_primes(n: int) -> int:
 """,
     },
-10: {
+    10: {
         "markdown": """
 ### Single number
 Given a non-empty array of integers `nums` where every element appears twice except for one. Return the element that appears once.
@@ -473,7 +473,7 @@ test_cases =  [
         "code": """def single_num(arr: list[int]) -> int:
 """,
     },
-11: {
+    11: {
         "markdown": """
 ### Powers of 2
 Given an integer `n`, find whether it is a power of `2`.
@@ -504,7 +504,7 @@ test_cases = [
         "code": """def is_power(n: int) -> bool:
 """,
     },
-12: {
+    12: {
         "markdown": """
 ### Reverse Polish Notation
 Evaluate the value of an arithmetic expression in Reverse Polish Notation. Valid operators are `+`, `-`, `*`, and `/`. Each operand may be an integer or another expression.
@@ -537,7 +537,7 @@ test_cases = [
         "code": """def rpn(v: list[str]) -> int:
 """,
     },
-13: {
+    13: {
         "markdown": """
 ### Roman numerals
 Convert a given integer, `n`,  to its equivalent roman numerals for `0 < n < 4000`.
@@ -579,7 +579,7 @@ test_cases = [
 ]
 """,
     },
-14: {
+    14: {
         "markdown": """
 ### Longest common substring (LCS)
 Given two strings `text1` and `text2`, return their longest common substring. If there is no common substring, return ''.
@@ -607,7 +607,7 @@ test_cases = [
 ]
 """,
     },
-15: {
+    15: {
         "markdown": """
 ### Happy number
 Given a positive integer `n`, return whether it is a happy number or not. 
@@ -642,7 +642,7 @@ test_cases = [
 ]
 """,
     },
-16: {
+    16: {
         "markdown": """
 ### Trie/Prefix tree
 Given an array `roots` of strings and a `sentence` of words separated by spaces. Replace all the words in the sentence with the root forming it. If a word can be replaced by more than one root, replace it with the shortest length root. 
@@ -673,7 +673,7 @@ test_cases = [
 ]
 """,
     },
-17: {
+    17: {
         "markdown": """
 ### Fractional knapsack
 Given a knapsack `capacity` and two arrays, the first one for `weights` and the second one for `values`. Add items to the knapsack to maximize the sum of the values of the items that can be added so that the sum of the weights is less than or equal to the knapsack capacity.
@@ -704,7 +704,7 @@ test_cases = [
 ]
 """,
     },
-18: {
+    18: {
         "markdown": """
 ### Subarrays with sum
 Given an array `arr` and `target`, return the total number of contigous subarrays inside the array whose sum is equal to `target`
@@ -731,7 +731,7 @@ test_cases = [
 ]
 """,
     },
-19: {
+    19: {
         "markdown": """
 ### Paths with sum
 Given the `root` of a binary tree and an integer `target`, return the number of paths where the sum of the values along the path equals `target`.
@@ -768,7 +768,7 @@ test_cases = [
         "code": """def count_paths(root, target):
 """,
     },
-20: {
+    20: {
         "markdown": """
 ### Spinal case
 Given a string `s`. Convert it to spinal case
@@ -797,7 +797,7 @@ test_cases = [
 ]
 """,
     },
-21: {
+    21: {
         "markdown": """
 ### 0/1 knapsack
 Given a knapsack `capacity` and two arrays, the first one for `weights` and the second one for `values`. Add items to the knapsack to maximize the sum of the values of the items that can be added so that the sum of the weights is less than or equal to the knapsack capacity.
@@ -828,7 +828,7 @@ test_cases = [
 ]
 """,
     },
-22: {
+    22: {
         "markdown": """
 ### Equal array partitions
 Given an integer array `nums`, return true if you can partition the array into two subsets such that the sum of the elements in both subsets is equal or false otherwise.
@@ -856,7 +856,7 @@ test_cases = [
 ]
 """,
     },
-23: {
+    23: {
         "markdown": """
 ### Climb stairs
 You are climbing a staircase. It takes `n` steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
@@ -894,7 +894,7 @@ test_cases = [
 ]
 """,
     },
-24: {
+    24: {
         "markdown": """
 ### Ways to make change
 Write an algorithm to determine how many ways there are to make change for a given input, `cents` of US currency. 
@@ -934,7 +934,7 @@ test_cases = [
 ]
 """,
     },
-25: {
+    25: {
         "markdown": """
 ### Has path sum
 Given the `root` of a binary tree and an integer `target`, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals `target`.
@@ -978,7 +978,7 @@ test_cases = [
         "code": """def has_path_sum(root, target):
 """,
     },
-26: {
+    26: {
         "markdown": """
 ### Has node BST
 Given the `root` of a binary search tree and a value `x`, check whether x is in the tree and return `True` or `False`
@@ -1016,7 +1016,7 @@ test_cases = [
         "code": """def has_node_bst(root, x):
 """,
     },
-27: {
+    27: {
         "markdown": """
 ### BST min
 Given the `root` of a binary search tree find the minimum value and return it
@@ -1049,7 +1049,7 @@ test_cases = [
         "code": """def min_bst(root):
 """,
     },
-28: {
+    28: {
         "markdown": """
 ### Balanced tree
 Given the `root` of a binary tree, return `True` if it is balanced or `False` otherwise
@@ -1096,7 +1096,7 @@ test_cases = [
         "code": """def is_balanced(root):
 """,
     },
-29: {
+    29: {
         "markdown": """
 ### Tree in-order traversal
 Given the `root` of a binary tree, traverse the tree in order and return the values as an array.
@@ -1134,7 +1134,7 @@ test_cases = [
         "code": """def in_order(root):
 """,
     },
-30: {
+    30: {
         "markdown": """
 ### Valid BST
 Given the `root` of a binary tree, check whether it is a valid binary search tree.
@@ -1178,7 +1178,7 @@ test_cases = [
         "code": """def valid_bst(root):
 """,
     },
-31: {
+    31: {
         "markdown": """
 ### Tree level-order traversal
 Given the `root` of a binary tree, traverse the tree using level order traversal and return the values as an array.
@@ -1214,7 +1214,7 @@ test_cases = [
         "code": """def level_order(root):
 """,
     },
-32: {
+    32: {
         "markdown": """
 ### Tree leaves
 Given the `root` of a binary tree, return all the leaves as an array ordered from left to right.
@@ -1252,7 +1252,7 @@ test_cases = [
         "code": """def get_leaves(root):
 """,
     },
-33: {
+    33: {
         "markdown": """
 ### Sum right nodes
 Given the `root` of a binary tree, return the sum of all the right nodes
@@ -1294,7 +1294,7 @@ test_cases = [
         "code": """def sum_right(root):
 """,
     },
-34: {
+    34: {
         "markdown": """
 ### Value in array
 Given an array of integers `arr` sorted in a non decreasing order, and a target `y`. Return `True` if y is in the array or `False` otherwise
@@ -1322,7 +1322,7 @@ test_cases = [
         "code": """def has_value(arr: list[int], target: int) -> bool:
 """,
     },
-35: {
+    35: {
         "markdown": """
 ### Merge sort
 Given an array of integers `nums`, use merge sort algorithm to return an array of all the integers sorted in non decreasing order.
@@ -1351,7 +1351,7 @@ test_cases = [
         "code": """def merge_sort(nums: list[int]) -> list[int]:
 """,
     },
-36: {
+    36: {
         "markdown": """
 ### Heap sort
 Given an array of integers `nums`, use heap sort algorithm to return an array of all the integers sorted in non decreasing order.
@@ -1380,7 +1380,7 @@ test_cases = [
         "code": """def heap_sort(nums: list[int]) -> list[int]:
 """,
     },
-37: {
+    37: {
         "markdown": """
 ### Generate parentheses
 Given a positive integer `n`, generate all combinations of well formed parentheses with n pairs. 
@@ -1428,7 +1428,7 @@ test_cases = [
         "code": """def generate_parentheses(n: int) -> list[str]:
 """,
     },
-38: {
+    38: {
         "markdown": """
 ### Minimum connection cost
 You are given `n` cities numbered from 1 to n and an array `connections` where connections[i] = [x, y, cost] indicates a weighted bidirectional connection between cities x and y. 
@@ -1551,7 +1551,7 @@ test_cases = [
 ]
 """,
     },
-39: {
+    39: {
         "markdown": """
 ### Smaller to the right
 Given an integer array `nums`, return an integer array counts where counts[i] is the number of smaller elements to the right of nums[i].
@@ -1577,7 +1577,7 @@ test_cases = [
         "code": """def count_smaller(nums: list[int]) -> list[int]:
 """,
     },
-40: {
+    40: {
         "markdown": """
 ### Majority element 
 Given an array `nums` of size n, return the majority element.
@@ -1609,7 +1609,7 @@ test_cases = [
         "code": """def majority(nums: list[int]) -> int:
 """,
     },
-41: {
+    41: {
         "markdown": """
 ### Max profit
 Given an array `prices` where `prices[i]` is the price of a given stock on the ith day. Return the maximum profit that can be made by choosing a single day to buy and choosing a different day in the future to sell that stock. 
@@ -1642,7 +1642,7 @@ test_cases = [
         "code": """def max_profit(prices: list[int]) -> int:
 """,
     },
-42: {
+    42: {
         "markdown": """
 ### Pair sum equal target
 Find two numbers in an array `nums` that add up to a specific `target`. Return the indices `[i, j]` such that `nums[i] + nums[j] = target`. 
@@ -1670,7 +1670,7 @@ test_cases = [
         "code": """def pair_sum(nums: list[int], target: int) -> int:
 """,
     },
-43: {
+    43: {
         "markdown": """
 ### Longest common subsequence (LCS) 
 Given two strings `str1` and `str2`, both lowercase, return their longest common subsequence. 
@@ -1701,7 +1701,7 @@ test_cases = [
 ]
 """,
     },
-44: {
+    44: {
         "markdown": """
 ### Can you reach the last index?
 Given an integer array `nums` where `nums[i]` represents the maximum forward jump length from index `i`. Determine if, starting from the first index (0), you can reach the last index. 
@@ -1731,7 +1731,7 @@ test_cases = [
 ]
 """,
     },
-45: {
+    45: {
         "markdown": """
 ### Min jumps to reach last index
 Given an integer array `nums` where `nums[i]` represents the maximum forward jump length from index `i`. Return the minimum jumps to get from the first index (0) to the last index. 
@@ -1764,7 +1764,7 @@ test_cases = [
 ]
 """,
     },
-46: {
+    46: {
         "markdown": """
 ### Jump to zero
 Given an integer array `nums` where `nums[i]` represents the maximum forward or backward jump length from index `i` and a starting index `start`. Check if you can jump to an index where the value is 0.
@@ -1795,7 +1795,7 @@ test_cases = [
 ]
 """,
     },
-47: {
+    47: {
         "markdown": """
 ### Max loot 
 Given an integer array `nums` where each `nums[i]` represents the amount of cash stashed in a boat, return the maximum amount that you can steal from the boats given that you cannot steal from any two adjacent boats.  
@@ -1826,7 +1826,7 @@ test_cases = [
 ]
 """,
     },
-48: {
+    48: {
         "markdown": """
 ### Max loot circle
 Given an integer array `nums` where each `nums[i]` represents the amount of cash stashed in a boat, return the maximum amount that you can steal from the boats given that you cannot steal from any two adjacent boats and the boats are arranged in a circle i.e the last boat is adjacent to the first one. 
@@ -1853,7 +1853,7 @@ test_cases = [
 ]
 """,
     },
-49: {
+    49: {
         "markdown": """
 ### Course schedule 
 Given an array of `courses` representing the courses you have to take where courses[i] = [a, b] indicates that you must take course b in order to take course a. And an integer `n` representing the total number of courses with the courses being labelled from 0 to n - 1. Determine the order in which you can do all the courses. Return [] if you can't do all the courses. 
@@ -1883,7 +1883,7 @@ test_cases = [
 ]
 """,
     },
-50: {
+    50: {
         "markdown": """
 ### Minimum height trees (MHTs) 
 Given an integer `n` representing number of nodes in a tree and an array of `n-1` edges where edges[i] = [a, b] represent an undirected edge between nodes a and b. Return a list of minimum height trees root labels sorted in a non decreasing order. 
@@ -1920,7 +1920,7 @@ test_cases = [
 ]
 """,
     },
-51: {
+    51: {
         "markdown": """
 ### Longest common prefix
 Given an array of strings `strs` return the longest common prefix of all the strings. 
@@ -1952,7 +1952,7 @@ test_cases = [
 ]
 """,
     },
-52: {
+    52: {
         "markdown": """
 ### Cheapest flight with at most k stops
 You are given `n` cities connected by a number of `flights` represented as an array where flights[i] = [from, to, cost] indicate a flight from city `from` to city `to` that costs `cost`. 
@@ -1986,7 +1986,7 @@ test_cases = [
 ]
 """,
     },
-53: {
+    53: {
         "markdown": """
 ### Network delay time 
 Given a network of `n` nodes, labelled 1 to n and a list of travel `times` as directed edges where times[i] = (u, v, w) with u being the source, v the target and w the time it takes for a signal to travel from u to v. 
@@ -2020,7 +2020,7 @@ test_cases = [
 ]
 """,
     },
-54: {
+    54: {
         "markdown": """
 ### Critical connections
 Given `n` servers labelled 0 to n - 1 connected by undirected `connections` where connections[i] = [a, b] indicates a connection between servers a and b. Return all the critical connections in the network in any order. 
@@ -2054,7 +2054,7 @@ test_cases = [
 ]
 """,
     },
-55: {
+    55: {
         "markdown": """
 ### Job scheduling
 Given arrays `start_time`, `end_time` and `profit` representing `n` jobs with the ith job scheduled to be done from start_time[i] to end_time[i] generating profit[i]. Find the maximum profit you can make from the jobs
@@ -2085,7 +2085,7 @@ test_cases = [
 ]
 """,
     },
-56: {
+    56: {
         "markdown": """
 ### Fewest coins to make change
 Given an integer array `coins` representing coins of different denominations and an integer `amount` representing the total amount of money, return the minimum number of coints that you need to make up that amount. 
@@ -2120,7 +2120,7 @@ test_cases = [
 ]
 """,
     },
-57: {
+    57: {
         "markdown": """
 ### Min cost tickets
 Given an array `days` representing planned annual train travalling days and `costs` where costs = [daily, weekly, monthly] indicating the daily (1 day), weekly (7 days) and monthly (30 days) ticket costs respectively, return the minimum cost for travelling every day in the given list of days. 
@@ -2150,7 +2150,7 @@ test_cases = [
 ]
 """,
     },
-58: {
+    58: {
         "markdown": """
 ### Max loot binary tree
 Given the `root` of a binary tree where each node represents the amount of cash stashed in a boat, return the maximum amount that you can steal from the boats given that you cannot steal from any directly connected boats i.e parent node and child node. 
@@ -2190,7 +2190,7 @@ test_cases = [
         "code": """def max_loot_tree(root):
 """,
     },
-59: {
+    59: {
         "markdown": """
 ### Lowest common ancestor 
 Given the `root` of a binary tree and two nodes `p` and `q`, find the lowest common ancestor (LCA) of p and q.
@@ -2222,7 +2222,7 @@ test_cases = [
         "code": """def lca(root, p, q):
 """,
     },
-60: {
+    60: {
         "markdown": """
 ### Same binary tree 
 Check if two binary trees `p` and `q` are the same given their roots. 
@@ -2263,7 +2263,7 @@ test_cases = [
         "code": """def same_tree(p, q):
 """,
     },
-61: {
+    61: {
         "markdown": """
 ### Binary tree cousins
 Given the `root` of a binary tree with unique values and the value of two different nodes in the tree `x` and `y`, check whether x and y are cousins. 
@@ -2297,7 +2297,7 @@ test_cases = [
         "code": """def are_cousins(root, x, y):
 """,
     },
-62: {
+    62: {
         "markdown": """
 ### How many islands
 Given an `m x n grid` where each value is either 1 or 0 with 1 indicating land and 0 indicating water, return the number of islands in the grid. You may assume all four edges of the grid are surrounded by water. 
@@ -2335,7 +2335,7 @@ test_cases = [
         "code": """def count_islands(grid: list[list[int]]) -> int:
 """,
     },
-63: {
+    63: {
         "markdown": """
 ### Merge intervals
 Given an array of `intervals` merge all overlapping intervals. 
@@ -2370,7 +2370,7 @@ test_cases = [
 ]
 """,
     },
-64: {
+    64: {
         "markdown": """
 ### longest increasing subsequence
 Given an array `nums` of integers return the length of the longest strictly increasing subsequence
@@ -2402,7 +2402,7 @@ test_cases = [
 ]
 """,
     },
-65: {
+    65: {
         "markdown": """
 ### Longest palidromic substring
 Given a string `s`, return the longest palindromic substring in s. 
@@ -2434,7 +2434,7 @@ test_cases = [
 ]
 """,
     },
-66: {
+    66: {
         "markdown": """
 ### Permutations
 Given a string `s` all lowercase characters and a positive integer `k`, return all the possible permutations of string `s` of size k.  
@@ -2451,6 +2451,25 @@ output = ['ar', 'at', 'ra', 'rt', 'ta', 'tr']
 ```
 """,
         "test_cases": """
+def PERMUTATIONS(s, k=None):
+    results, n = [], len(s)
+    k = n if not k else k
+
+    def backtrack(path, used):
+        if len(path) == k:
+            return results.append(path)
+        for i in range(n):
+            if used[i]:
+                continue
+            path += s[i]
+            used[i] = True
+            backtrack(path, used)
+            path = path[:-1]
+            used[i] = False
+
+    backtrack('', [False for _ in range(n)])
+    return results
+
 s1, k1 = 'art', 2
 s2, k2 = '', 3
 s3, k3 = 'rat', 3 
@@ -2476,7 +2495,7 @@ test_cases = [
         "code": """def perms(nums: str, k: int) -> list[str]:
 """,
     },
-67: {
+    67: {
         "markdown": """
 ### Combinations
 Given a string `s` and a positive integer `k`, return all possible combinations of s of size k.
@@ -2531,7 +2550,7 @@ test_cases = [
         "code": """def combs(s: str, k: int) -> list[str]:
 """,
     },
-68: {
+    68: {
         "markdown": """
 ### Calendar add event
 Design `MyCalendar` with a method `book(start: int, end: int) -> bool` that can add an event to the calendar. The book method should return true if an event can be successfully added or false otherwise.
@@ -2576,7 +2595,7 @@ test_cases = [
         "code": """class MyCalendar:
 """,
     },
-69: {
+    69: {
         "markdown": """
 ### Range frequency query 
 Given an `arr` design a data structure `RangeFreq` with a method `query(left: int, right: int, value: int) -> int` that returns the number of times the given value occurs in the subarray arr[left...right] (both left and right inclusive)
@@ -2629,7 +2648,7 @@ test_cases = [
         "code": """class RangeFreq:
 """,
     },
-70: {
+    70: {
         "markdown": """
 ### Invert binary tree
 Given the `root` of a binary tree, invert the tree, and return its root.
@@ -2678,7 +2697,7 @@ test_cases = [
         "code": """def invert_tree(root):
 """,
     },
-71: {
+    71: {
         "markdown": """
 ### Min Stack
 
@@ -2727,7 +2746,7 @@ test_cases = [
         "code": """class Stack:
 """,
     },
-72: {
+    72: {
         "markdown": """
 ### LRU Cache
 Design a data structure that follows the constraints of a Least Recently Used (LRU) cache:
@@ -2769,7 +2788,7 @@ test_cases = [
         "code": """class LRUCache:
 """,
     },
-73: {
+    73: {
         "markdown": """
 ### Reverse a linked list
 Given the `head` of a linked list, reverse the list, and return its head
@@ -2820,7 +2839,7 @@ test_cases = [
         "code": """def reverse_list(head)
 """,
     },
-74: {
+    74: {
         "markdown": """
 ### Merge two sorted linked lists
 Given two sorted linked lists, `head1` and `head2`. Merge them into one sorted linked list and return the head of the merged list. 
@@ -2861,7 +2880,7 @@ test_cases = [
         "code": """def list_merge(head1, head2):
 """,
     },
-75: {
+    75: {
         "markdown": """
 ### Sum linked lists
 You are given two non-empty linked lists, `head2` and `head2` representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit.
@@ -2901,7 +2920,7 @@ test_cases = [
         "code": """def list_add(head1, head2):
 """,
     },
-76: {
+    76: {
         "markdown": """
 ### Triplet sum equals zero
 Given an array `nums` of integers, find all unique triplets that sum to zero. 
@@ -2969,7 +2988,7 @@ test_cases = [
 ]
 """,
     },
-77: {
+    77: {
         "markdown": """
 ### Max water held
 Given an array `nums` where each number represents the height of a vertical wall, find two walls that hold the most water between them and return the units of water contained. 
@@ -3009,7 +3028,7 @@ test_cases = [
 ]
 """,
     },
-78: {
+    78: {
         "markdown": """
 ### Trapping rain water
 Given `n` positive integers `nums` representing elevation heights where the width of each bar is 1, return how much water can be trapped after rain. 
@@ -3046,7 +3065,7 @@ test_cases = [
 ]
 """,
     },
-79: {
+    79: {
         "markdown": """
 ### Connected cities
 Given an `n * n` adjacency matrix of connected cities with each cell having values 1 or 0 where 0 indicate city i is not connected to city j and 1 indicate otherwise. 
@@ -3117,7 +3136,7 @@ test_cases = [
 ]
 """,
     },
-80: {
+    80: {
         "markdown": """
 ### Reachable cities
 Given `n` cities labelled 0 to n - 1 and an array `edges` where edges[i] = [from, to, weight] represents a weighted bidirectional edge between cities `from` and `to`.  Return city with the smallest number of cities that are reachable and whose distance is at most `k`. 
