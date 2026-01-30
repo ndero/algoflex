@@ -147,7 +147,10 @@ class Dashboard(Widget):
             pid = d["problem_id"]
             latest[pid] = max(d["created_at"], latest.get(pid, (0, 0))[0]), d["passed"]
             if d["passed"]:
-                if d["elapsed"] <= 30 * 60:
+                level = q.get(pid, {}).get("level", "")
+                if (level in ("Breezy", "Steady") and d["elapsed"] <= 15 * 60) or (
+                    level == "Edgy" and d["elapsed"] <= 30 * 60
+                ):
                     best[pid] = min(d["elapsed"], best.get(pid, float("inf")))
                 else:
                     worst[pid] = min(d["elapsed"], worst.get(pid, float("inf")))
