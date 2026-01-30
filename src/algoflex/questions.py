@@ -1972,17 +1972,79 @@ output = 700
         "code": """def cheapest_flight(n: int, flights: list[list[int]], src: int, dst: int, k: int) -> int:
 """,
         "test_cases": """
-flights = [[i, i + 1, i * 100] for i in range(10)] + [[i, i + 2, 100] for i in range(0, 10, 2)] + [[10, 0, 10_000]]
+f1 = {  # basic
+    "n": 4,
+    "flights": [[0, 1, 100], [1, 2, 100], [2, 0, 100], [1, 3, 600], [2, 3, 200]],
+    "src": 0,
+    "dst": 3,
+    "k": 1,
+    "expected": 700,  # 0→2→1→3
+}
+f2 = {  # cheaper path requires more stops
+    "n": 4,
+    "flights": [[0, 1, 100], [1, 3, 100], [0, 2, 50], [2, 1, 10], [2, 3, 200]],
+    "src": 0,
+    "dst": 3,
+    "k": 2,
+    "expected": 160,  # 0→2→1→3
+}
+f3 = {  # fails if heap isn't sorted by cost
+    "n": 4,
+    "flights": [[0, 1, 1], [1, 2, 100], [0, 2, 50], [2, 3, 1], [1, 3, 100]],
+    "src": 0,
+    "dst": 3,
+    "k": 2,
+    "expected": 51,  # 0→2→3
+}
+f4 = {  # same node reached with fewer stops but higher cost
+    "n": 5,
+    "flights": [[0, 1, 10], [1, 2, 10], [0, 2, 50], [2, 3, 10], [3, 4, 10]],
+    "src": 0,
+    "dst": 4,
+    "k": 3,
+    "expected": 40,  # 0→1→2→3→4
+}
+f5 = {  # cycles present
+    "n": 3,
+    "flights": [[0, 1, 1], [1, 0, 1], [1, 2, 1]],
+    "src": 0,
+    "dst": 2,
+    "k": 10,
+    "expected": 2,
+}
+f6 = {  # large k but unreachable destination
+    "n": 4,
+    "flights": [[0, 1, 10], [1, 2, 10]],
+    "src": 0,
+    "dst": 3,
+    "k": 100,
+    "expected": -1,
+}
 test_cases = [
-    [cheapest_flight(4, [[0, 1, 100], [1, 2, 100], [2, 0, 100], [1, 3, 600], [2, 3, 200]], 0, 3, 1), 700],
-    [cheapest_flight(4, [[0, 1, 100], [1, 2, 100], [2, 0, 100], [1, 3, 600], [2, 3, 200]], 0, 3, 2), 400],
-    [cheapest_flight(3, [[0, 1, 200]], 0, 1, 0), 200],
-    [cheapest_flight(3, [[0, 1, 100], [1, 2, 100], [0, 2, 500]], 0, 2, 1), 200],
-    [cheapest_flight(3, [[0, 1, 100], [1, 2, 100], [0, 2, 500]], 0, 2, 0), 500],
-    [cheapest_flight(11, flights, 4, 7, 1), 700],
-    [cheapest_flight(11, flights, 0, 9, 10), 1200],
-    [cheapest_flight(11, flights, 1, 0, 4), -1],
-    [cheapest_flight(11, flights, 1, 0, 5), 10500],
+    [
+        cheapest_flight(f1["n"], f1["flights"], f1["src"], f1["dst"], f1["k"]),
+        f1["expected"],
+    ],
+    [
+        cheapest_flight(f2["n"], f2["flights"], f2["src"], f2["dst"], f2["k"]),
+        f2["expected"],
+    ],
+    [
+        cheapest_flight(f3["n"], f3["flights"], f3["src"], f3["dst"], f3["k"]),
+        f3["expected"],
+    ],
+    [
+        cheapest_flight(f4["n"], f4["flights"], f4["src"], f4["dst"], f4["k"]),
+        f4["expected"],
+    ],
+    [
+        cheapest_flight(f5["n"], f5["flights"], f5["src"], f5["dst"], f5["k"]),
+        f5["expected"],
+    ],
+    [
+        cheapest_flight(f6["n"], f6["flights"], f6["src"], f6["dst"], f6["k"]),
+        f6["expected"],
+    ],
 ]
 """,
     },
