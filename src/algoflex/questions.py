@@ -2437,7 +2437,7 @@ test_cases = [
 66: {
         "markdown": """
 ### Permutations
-Given a string `s` all lowercase characters and an integer `k`, return all the possible permutations of string `s` of size k.  
+Given a string `s` all lowercase characters and a positive integer `k`, return all the possible permutations of string `s` of size k.  
 
 Return the permutations in any order. 
 
@@ -2451,25 +2451,37 @@ output = ['ar', 'at', 'ra', 'rt', 'ta', 'tr']
 ```
 """,
         "test_cases": """
+s1, k1 = 'art', 2
+s2, k2 = '', 3
+s3, k3 = 'rat', 3 
+s4, k4 = 'rat', 1 
+s5, k5 = 'rat', 0
+s6, k6 = 'abcdefghijklmnopqrstuvwxyz', 1
+s7, k7 = 'abcdefghijk', 5
+s8, k8 = 'xyz', 4
+from collections import Counter 
 test_cases = [
-    [perms([1, 2]), [[1, 2], [2, 1]]],
-    [perms([i for i in range(1, 5)]), [[1, 2, 3, 4], [1, 2, 4, 3], [1, 3, 2, 4], [1, 3, 4, 2], [1, 4, 2, 3], [1, 4, 3, 2], [2, 1, 3, 4], [2, 1, 4, 3], [2, 3, 1, 4], [2, 3, 4, 1], [2, 4, 1, 3], [2, 4, 3, 1], [3, 1, 2, 4], [3, 1, 4, 2], [3, 2, 1, 4], [3, 2, 4, 1], [3, 4, 1, 2], [3, 4, 2, 1], [4, 1, 2, 3], [4, 1, 3, 2], [4, 2, 1, 3], [4, 2, 3, 1], [4, 3, 1, 2], [4, 3, 2, 1]]],
-    [perms([1]), [[1]]],
-    [perms([1, 2, 3]), [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]]],
-    [perms([]), [[]]],
-    [perms([1, 2, 3, 4]), [[1, 2, 3, 4], [1, 2, 4, 3], [1, 3, 2, 4], [1, 3, 4, 2], [1, 4, 2, 3], [1, 4, 3, 2], [2, 1, 3, 4], [2, 1, 4, 3], [2, 3, 1, 4], [2, 3, 4, 1], [2, 4, 1, 3], [2, 4, 3, 1], [3, 1, 2, 4], [3, 1, 4, 2], [3, 2, 1, 4], [3, 2, 4, 1], [3, 4, 1, 2], [3, 4, 2, 1], [4, 1, 2, 3], [4, 1, 3, 2], [4, 2, 1, 3], [4, 2, 3, 1], [4, 3, 1, 2], [4, 3, 2, 1]]],
+    [Counter(perms(s1, k1)), Counter(PERMUTATIONS(s1, k1))],
+    [Counter(perms(s2, k2)), Counter(PERMUTATIONS(s2, k2))],
+    [Counter(perms(s3, k3)), Counter(PERMUTATIONS(s3, k3))],
+    [Counter(perms(s4, k4)), Counter(PERMUTATIONS(s4, k4))],
+    [Counter(perms(s5, k5)), Counter(PERMUTATIONS(s5, k5))],
+    [Counter(perms(s6, k6)), Counter(PERMUTATIONS(s6, k6))],
+    [Counter(perms(s7, k7)), Counter(PERMUTATIONS(s7, k7))],
+    [Counter(perms(s8, k8)), Counter(PERMUTATIONS(s8, k8))],
 ]
 """,
         "title": "Permutations",
         "level": "Steady",
-        "code": """def perms(nums: list[int]) -> list[list[int]]:
+        "code": """def perms(nums: str, k: int) -> list[str]:
 """,
     },
 67: {
         "markdown": """
 ### Combinations
-Given a string `s` and a positive integer `k`, return all possible combinations of characters of size k.
-Return the combinations sorted in a non decreasing order.
+Given a string `s` and a positive integer `k`, return all possible combinations of s of size k.
+
+Return the combinations in any order.
 
 Are your hands tied without python's itertools 😅?
 
@@ -2480,13 +2492,38 @@ output = ['abc', 'abd', 'acd', 'bcd']
 ```
 """,
         "test_cases": """
+def COMBINATIONS(s, k):
+    results = []
+
+    def backtrack(start, temp):
+        if len(temp) == k:
+            return results.append(temp)
+        for i in range(start, len(s)):
+            temp += s[i]
+            backtrack(i + 1, temp)
+            temp = temp[:-1]
+
+    backtrack(0, "")
+    return results
+
+s1, k1 = 'abcd', 3
+s2, k2 = '', 2 
+s3, k3 = 'rat', 3 
+s4, k4 = 'rat', 1 
+s5, k5 = 'rat', 0
+s6, k6 = 'abcdefghijklmnopqrstuvwxyz', 1
+s7, k7 = 'abcdefghijklmnopqrstuvwxyz', 5
+s8, k8 = 'abcd', 5
+from collections import Counter 
 test_cases = [
-    [combs("abcd", 3), ["abc", "abd", "acd", "bcd"]],
-    [combs("combinations", 2), ["co", "cm", "cb", "ci", "cn", "ca", "ct", "ci", "co", "cn", "cs", "om", "ob", "oi", "on", "oa", "ot", "oi", "oo", "on", "os", "mb", "mi", "mn", "ma", "mt", "mi", "mo", "mn", "ms", "bi", "bn", "ba", "bt", "bi", "bo", "bn", "bs", "in", "ia", "it", "ii", "io", "in", "is", "na", "nt", "ni", "no", "nn", "ns", "at", "ai", "ao", "an", "as", "ti", "to", "tn", "ts", "io", "in", "is", "on", "os", "ns"]],
-    [combs("rat", 3), ["rat"]],
-    [combs("rat", 1), ["r", "a", "t"]],
-    [combs("rat", 0), []],
-    [combs("abcdefghijklmnopqrstuvwxyz", 1),  ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']],
+    [Counter(combs(s1, k1)), Counter(COMBINATIONS(s1, k1))],
+    [Counter(combs(s2, k2)), Counter(COMBINATIONS(s2, k2))],
+    [Counter(combs(s3, k3)), Counter(COMBINATIONS(s3, k3))],
+    [Counter(combs(s4, k4)), Counter(COMBINATIONS(s4, k4))],
+    [Counter(combs(s5, k5)), Counter(COMBINATIONS(s5, k5))],
+    [Counter(combs(s6, k6)), Counter(COMBINATIONS(s6, k6))],
+    [Counter(combs(s7, k7)), Counter(COMBINATIONS(s7, k7))],
+    [Counter(combs(s8, k8)), Counter(COMBINATIONS(s8, k8))],
 ]
 """,
         "title": "Combinations",
