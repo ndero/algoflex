@@ -2310,6 +2310,8 @@ root5 = array_to_tree([])
 root6 = array_to_tree([])
 root7 = array_to_tree([1, 2])
 root8 = array_to_tree([1, None, 2])
+root9 = array_to_tree([1, 2, 3, 4, 5, None, 6])
+root10 = array_to_tree([[1, 2, 3, 4, 5, 7, 6]])
 test_cases = [
     [same_tree(root1, root2), True],
     [same_tree(root3, root4), True],
@@ -2318,6 +2320,7 @@ test_cases = [
     [same_tree(root4, root6), False],
     [same_tree(root7, root8), False],
     [same_tree(root8, root8), True],
+    [same_tree(root9, root10), False],
 ]
 """,
         "title": "Same binary tree",
