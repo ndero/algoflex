@@ -44,7 +44,7 @@ class Dashboard(Widget):
         align-horizontal: center;
         dock: top;
         offset-x: 100vw;
-        transition: offset 200ms;  
+        transition: offset 100ms;  
         &.-visible {
             offset-x: 48vw;
         }
