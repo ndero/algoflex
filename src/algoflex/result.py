@@ -23,10 +23,11 @@ class ResultModal(ModalScreen):
         align: center middle;
         RichLog {
             width: 1fr;
-            height: 12;
-            padding: 1 0;
-            padding-left: 2;
-            overflow-x: auto;
+            height: auto;
+            max-height: 80fr;
+            min-height: 5;
+            padding: 1 2;
+            overflow-y: auto;
             background: $boost;
         }
     }

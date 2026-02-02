@@ -2370,12 +2370,14 @@ Given an `m x n grid` where each value is either 1 or 0 with 1 indicating land a
 > An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically.
 
 ### Examples
-Input: grid = [
+```
+grid = [
     ['1', '1', '1', '1'], 
     ['0', '0', '0', '0'], 
     ['1', '1', '1', '1'],
 ]
-output = 2  # 2 horizontal islands. 
+output = 2  # 2 horizontal islands.
+``` 
 """,
         "test_cases": f"""
 g1 = [['1', '1', '1', '1'], ['0', '0', '0', '0'], ['1', '1', '1', '1']]
