@@ -2370,7 +2370,11 @@ Given an `m x n grid` where each value is either 1 or 0 with 1 indicating land a
 > An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically.
 
 ### Examples
-Input: grid = [[1, 1, 1, 1], [0, 0, 0, 0], [1, 1, 1, 1]]
+Input: grid = [
+    ['1', '1', '1', '1'], 
+    ['0', '0', '0', '0'], 
+    ['1', '1', '1', '1'],
+]
 output = 2  # 2 horizontal islands. 
 """,
         "test_cases": f"""
@@ -2383,6 +2387,13 @@ g6 = [['1', '0', '1', '0', '1'] * 10_000]
 g7 = [[('1' if (i + j) % 2 else '0') for i in range(6_000)] for j in range(4)]
 g8 = [['1']]
 g9 = [['0']]
+g10 = [
+    ['1', '1', '1', '1', '1'],
+    ['1', '0', '0', '0', '1'],
+    ['1', '0', '0', '0', '0'],
+    ['1', '0', '0', '0', '1'],
+    ['1', '1', '1', '1', '1'],
+]
 test_cases = [
     [count_islands(g1), 2],
     [count_islands(g2), 2],
@@ -2393,6 +2404,7 @@ test_cases = [
     [count_islands(g7), 12000],
     [count_islands(g8), 1],
     [count_islands(g9), 0],
+    [count_islands(g10), 1],
 ]
 """,
         "title": "How many islands",
@@ -2901,7 +2913,7 @@ test_cases = [
 """,
         "title": "Reverse linked list",
         "level": "Steady",
-        "code": """def reverse_list(head)
+        "code": """def reverse_list(head):
 """,
     },
     74: {
