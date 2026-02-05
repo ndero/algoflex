@@ -2150,7 +2150,7 @@ test_cases = [
     56: {
         "markdown": """
 ### Fewest coins to make change
-Given an integer array `coins` representing coins of different denominations and an integer `amount` representing the total amount of money, return the minimum number of coints that you need to make up that amount. 
+Given an integer array `coins` representing coins of different denominations and an integer `amount` representing the total amount of money, return the minimum number of coins that you need to make up that amount. 
 
 Return -1 if `amount` cannot be made by any combination of the coins. 
 
@@ -2163,7 +2163,7 @@ output = 3
 How: 11 = 5 + 5 + 1
 ```
 """,
-        "title": "Coin change I",
+        "title": "Fewest coins to make change",
         "level": "Steady",
         "code": """def min_coins(coins: list[int], amount: int) -> int:
 """,
