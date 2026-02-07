@@ -158,7 +158,7 @@ class Dashboard(Widget):
                     worst[pid] = min(d["elapsed"], worst.get(pid, float("inf")))
         fast = [
             (
-                "🟢 " + q.get(id, {}).get("title", ""),
+                "✓ " + q.get(id, {}).get("title", ""),
                 q.get(id, {}).get("level", ""),
                 fmt_secs(tm),
             )
@@ -166,19 +166,19 @@ class Dashboard(Widget):
         ]
         forever = [
             (
-                "🟢 " + q.get(id, {}).get("title", ""),
+                "✓ " + q.get(id, {}).get("title", ""),
                 q.get(id, {}).get("level", ""),
                 fmt_secs(tm),
             )
-            for id, tm in nlargest(6, worst.items(), key=lambda x: x[1])
+            for id, tm in worst.items()
         ]
         recent = [
             (
-                ("🟢 " if passed else "🔴 ") + q.get(id, {}).get("title", ""),
+                ("✓ " if passed else "x ") + q.get(id, {}).get("title", ""),
                 q.get(id, {}).get("level", ""),
                 time_ago(tm),
             )
-            for id, (tm, passed) in nlargest(6, latest.items(), key=lambda x: x[1][0])
+            for id, (tm, passed) in nlargest(9, latest.items(), key=lambda x: x[1][0])
         ]
         return recent, fast, forever
 
