@@ -2119,22 +2119,22 @@ test_cases = [
     55: {
         "markdown": """
 ### Job scheduling
-Given arrays `start_time`, `end_time` and `profit` representing `n` jobs with the ith job scheduled to be done from start_time[i] to end_time[i] generating profit[i]. Find the maximum profit you can make from the jobs
+Given arrays `start`, `end` and `profit` representing `n` jobs with the ith job scheduled to be done from start[i] to end[i] generating profit[i]. Find the maximum profit you can make from the jobs
 
 If you choose a job that ends at time x you can be able to choose another one that starts at time x. 
 
 ### Example
 ```
-Input: start_time = [1,2,3,3], end_time = [3,4,5,6], profit = [50,10,40,70]
+Input: start = [1,2,3,3], end = [3,4,5,6], profit = [50,10,40,70]
 output = 120
 
-Input: start_time = [1,1,1], end_time = [2,3,4], profit = [5,6,4]
+Input: start = [1,1,1], end = [2,3,4], profit = [5,6,4]
 output = 6
 ```
 """,
         "title": "Job scheduling",
         "level": "Steady",
-        "code": """def job_schedule(start_time: list[int], end_time: list[int], profit: list[int]) -> int:
+        "code": """def job_schedule(start: list[int], end: list[int], profit: list[int]) -> int:
 """,
         "test_cases": """
 test_cases = [
