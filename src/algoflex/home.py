@@ -74,8 +74,8 @@ class HomeScreen(App):
     problem_id = reactive(0, always_update=True)
     index = reactive(0, bindings=True)
     show_dashboard: reactive[bool] = reactive(False)
-    PROBLEMS_COUNT = len(questions.keys())
-    PROBLEMS = [i for i in range(PROBLEMS_COUNT)]
+    PROBLEMS = [k for k in questions.keys()]
+    PROBLEMS_COUNT = len(PROBLEMS)
 
     def compose(self):
         yield Title()
