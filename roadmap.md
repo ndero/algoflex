@@ -1,6 +1,6 @@
 ### In the pipeline
 
-- [ ] Search for a specific question - with a selector for levels that allows one to browse questions by level.
+- [x] Search for a specific question
 - [x] Past solutions - User can see their correct submitted solutions.
 - [x] Attempts timeline - User can see their attempt history.
 - [x] Add support for in any order checks.

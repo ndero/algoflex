@@ -6,6 +6,7 @@ from textual.binding import Binding
 from textual.reactive import reactive
 from algoflex.questions import questions
 from algoflex.attempt import AttemptScreen
+from algoflex.search import SearchScreen
 from algoflex.custom_widgets import Title, Problem
 from algoflex.dashboard import Dashboard
 from algoflex.db import get_db
@@ -51,6 +52,7 @@ class HomeScreen(App):
         Binding("a", "attempt", "attempt", tooltip="Attempt this question"),
         Binding("p", "previous", "previous", tooltip="Previous question"),
         Binding("n", "next", "next", tooltip="Next question"),
+        Binding("s", "search", "search"),
         Binding("d", "dashboard", "dashboard", tooltip="Show dashboard"),
     ]
     DEFAULT_CSS = """
@@ -151,6 +153,16 @@ class HomeScreen(App):
             self.index -= 1
         self.problem_id = self.PROBLEMS[self.index]
 
+    def action_search(self):
+        def on_close(result):
+            if result is None:
+                return
+            if result in self.PROBLEMS:
+                self.index = self.PROBLEMS.index(result)
+                self.problem_id = result
+
+        self.push_screen(SearchScreen(), on_close)
+
     def action_dashboard(self):
         self.show_dashboard = not self.show_dashboard
 
@@ -160,6 +172,7 @@ class HomeScreen(App):
                 action == "attempt"
                 or action == "next"
                 or action == "previous"
+                or action == "search"
                 or action == "dashboard"
             ):
                 return False
