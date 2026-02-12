@@ -161,6 +161,8 @@ class HomeScreen(App):
                 self.index = self.PROBLEMS.index(result)
                 self.problem_id = result
 
+        if self.show_dashboard:
+            self.show_dashboard = False
         self.push_screen(SearchScreen(), on_close)
 
     def action_dashboard(self):
