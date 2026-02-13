@@ -3,6 +3,11 @@ from textual.widgets import Input, ListView, ListItem, Label, Footer
 from textual.containers import Vertical
 from textual.reactive import reactive
 from algoflex.questions import questions
+from algoflex.db import get_db
+from tinydb import Query
+
+KV = Query()
+attempts = get_db()
 
 
 class SearchScreen(ModalScreen):
@@ -12,6 +17,7 @@ class SearchScreen(ModalScreen):
 
     matches = reactive([], recompose=True)
     target = reactive("")
+    passed = set(doc["problem_id"] for doc in attempts.search(KV.passed == True))
     DEFAULT_CSS = """
     SearchScreen {
         align: center middle;
@@ -43,9 +49,9 @@ class SearchScreen(ModalScreen):
                 select_on_focus=False,
             )
             with ListView():
-                for pid, title in self.matches:
+                for passed, pid, title in self.matches:
                     yield ListItem(
-                        Label(f"[b]{title}[/]"),
+                        Label(f"{passed} [b]{title}[/]"),
                         id=f"item-{pid}",
                     )
         yield Footer()
@@ -60,7 +66,7 @@ class SearchScreen(ModalScreen):
             []
             if len(self.target) < 2
             else [
-                (pid, q["title"])
+                ("✓" if pid in self.passed else " ", pid, q["title"])
                 for pid, q in questions.items()
                 if (self.target in q["title"].lower())
             ]
