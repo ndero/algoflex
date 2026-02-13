@@ -1,3 +1,4 @@
+from textual.events import Mount
 from textual.screen import ModalScreen
 from textual.widgets import Input, ListView, ListItem, Label, Footer
 from textual.containers import Vertical
@@ -17,7 +18,7 @@ class SearchScreen(ModalScreen):
 
     matches = reactive([], recompose=True)
     target = reactive("")
-    passed = set(doc["problem_id"] for doc in attempts.search(KV.passed == True))
+    passed = reactive(set)
     DEFAULT_CSS = """
     SearchScreen {
         align: center middle;
@@ -55,6 +56,11 @@ class SearchScreen(ModalScreen):
                         id=f"item-{pid}",
                     )
         yield Footer()
+
+    def on_mount(self) -> None:
+        self.passed = set(
+            doc["problem_id"] for doc in attempts.search(KV.passed == True)
+        )
 
     def on_input_changed(self, event: Input.Changed) -> None:
         self.target = event.value.strip().lower() or ""
