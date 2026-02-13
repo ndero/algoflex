@@ -109,7 +109,7 @@ class Dashboard(Widget):
                 yield ProgressBar(total=self.total, show_eta=False, id="all")
             with Collapsible(title="Recent attempts", collapsed=False):
                 yield Markdown(id="recent")
-            with Collapsible(title="Frequent Problems"):
+            with Collapsible(title="Most Solved"):
                 yield Markdown(id="frequent")
             with Collapsible(title="Speedy Solves"):
                 yield Markdown(id="best")
@@ -145,12 +145,12 @@ class Dashboard(Widget):
 
     def get_stats(self, docs):
         # get recent, frequent, fast and forever.
-        latest, best, worst, attempts = {}, {}, {}, Counter()
+        latest, best, worst, completed = {}, {}, {}, Counter()
         for d in docs:
             pid = d["problem_id"]
-            attempts[pid] += 1
             latest[pid] = max(d["created_at"], latest.get(pid, (0, 0))[0]), d["passed"]
             if d["passed"]:
+                completed[pid] += 1
                 level = q.get(pid, {}).get("level", "")
                 if (
                     (level == "Breezy" and d["elapsed"] <= 15 * 60)
@@ -158,8 +158,11 @@ class Dashboard(Widget):
                     or (level == "Edgy" and d["elapsed"] <= 35 * 60)
                 ):
                     best[pid] = min(d["elapsed"], best.get(pid, float("inf")))
+                    if worst.get(pid, 0):
+                        del worst[pid]
                 else:
-                    worst[pid] = min(d["elapsed"], worst.get(pid, float("inf")))
+                    if not best.get(pid, 0):
+                        worst[pid] = min(d["elapsed"], worst.get(pid, float("inf")))
         fast = [
             (
                 "✓ " + q.get(id, {}).get("title", ""),
@@ -186,14 +189,14 @@ class Dashboard(Widget):
         ]
         frequent = [
             (q.get(id, {}).get("title", ""), q.get(id, {}).get("level", ""), count)
-            for id, count in attempts.most_common(9)
+            for id, count in completed.most_common(9)
         ]
         return recent, frequent, fast, forever
 
     def update_md(self, docs) -> None:
         recent, frequent, fast, forever = self.get_stats(docs)
         latest = self.md_table(["Question", "Level", "When"], recent)
-        popular = self.md_table(["Question", "Level", "Attempts"], frequent)
+        popular = self.md_table(["Question", "Level", "Passed"], frequent)
         best = self.md_table(["Question", "Level", "Best time"], fast)
         worst = self.md_table(["Question", "Level", "Best time"], forever)
         self.query_one("#recent", Markdown).update(latest)
