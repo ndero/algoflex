@@ -2185,7 +2185,7 @@ test_cases = [
     57: {
         "markdown": """
 ### Min cost tickets
-Given an array `days` representing planned annual train travalling days and `costs` where costs = [daily, weekly, monthly] indicating the daily (1 day), weekly (7 days) and monthly (30 days) ticket costs respectively, return the minimum cost for travelling every day in the given list of days. 
+Given an array `days` representing planned annual train travelling days and `costs` where costs = [daily, weekly, monthly] indicating the daily (1 day), weekly (7 days) and monthly (30 days) ticket costs respectively, return the minimum cost for travelling every day in the given list of days. 
 
 Each day is an integer between 1 and 365.
 
@@ -2208,7 +2208,7 @@ test_cases = [
     [min_cost_tickets([1, 4, 6], [2, 7, 15]), 6],
     [min_cost_tickets([5, 6, 7, 8, 9, 10, 11], [2, 7, 15]), 7],
     [min_cost_tickets([5, 6, 7, 8, 9, 10, 11, 210, 211, 212, 213, 365], [2, 7, 15]), 16],
-    [min_cost_tickets([i for i in range(1, 366)], [2, 7, 15]), 190],
+    [min_cost_tickets([i for i in range(1, 366)], [2, 7, 15]), 187],
 ]
 """,
     },
