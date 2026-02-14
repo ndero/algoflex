@@ -2840,27 +2840,36 @@ Design a data structure that follows the constraints of a Least Recently Used (L
 ```python
 cache = LRUCache(3)
 cache.put(1, 10) # {1:10}
-cache.put(2, 20) # {1:10, 2:20}
-cache.put(3, 30) # {1:10, 2:20, 3:30}
-cache.get(3)     # return 30
-cache.get(4)     # return -1 
-cache.get(2)     # return 20
-cache.put(4, 40) # {2:20, 3:30, 4:40}  # evict LRU key 1:10
+cache.put(2, 20) # {2:20, 1:10}
+cache.put(3, 30) # {3:30, 2:20, 1:10}
+cache.get(3)     # return 30 {3:30, 2:20, 1:10}
+cache.get(4)     # return -1 {3:30, 2:20, 1:10}
+cache.get(2)     # return 20 {2:20, 3:30, 1:10}
+cache.put(4, 40) # evict LRU key 1:10 {4:40, 2:20, 3:30}
 cache.get(1)     # return -1
 ```
 """,
         "test_cases": f"""
-cache = LRUCache(100_000)
+cache = LRUCache(3)
+cache1 = LRUCache(100_000)
 for i in range(1, 150_000):
-    cache.put(i, i * 10) # 49,999 - 149,999
+    cache1.put(i, i * 10) # 49,999 - 149,999
 test_cases = [
-    [cache.get(100_000), 1_000_000],
-    [cache.get(49_999), -1],
-    [cache.get(49_998), -1],
-    [cache.get(10), -1],
-    [cache.get(149_999), 1_499_990],
+    [cache.put(1, 10), None],
     [cache.put(2, 20), None],
-    [cache.get(49_999), -1],
+    [cache.put(3, 30), None],
+    [cache.get(3), 30],
+    [cache.get(4), -1],
+    [cache.get(2), 20],
+    [cache.put(4, 20), None],
+    [cache.get(1), -1],
+    [cache1.get(100_000), 1_000_000],
+    [cache1.get(49_999), -1],
+    [cache1.get(49_998), -1],
+    [cache1.get(10), -1],
+    [cache1.get(149_999), 1_499_990],
+    [cache1.put(2, 20), None],
+    [cache1.get(49_999), -1],
 ]
 """,
         "title": "LRU Cache",
