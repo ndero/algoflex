@@ -2846,7 +2846,7 @@ cache.get(3)     # return 30 {3:30, 2:20, 1:10}
 cache.get(4)     # return -1 {3:30, 2:20, 1:10}
 cache.get(2)     # return 20 {2:20, 3:30, 1:10}
 cache.put(4, 40) # evict LRU key 1:10 {4:40, 2:20, 3:30}
-cache.get(1)     # return -1
+cache.get(1)     # return -1 {4:40, 2:20, 3:30}
 ```
 """,
         "test_cases": f"""
