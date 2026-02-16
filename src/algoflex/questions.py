@@ -561,7 +561,7 @@ output = 'XXIII'
 ```
 """,
         "title": "Roman numerals",
-        "level": "Steady",
+        "level": "Breezy",
         "code": """def int_to_roman(n: int) -> str:
 """,
         "test_cases": """
@@ -717,7 +717,7 @@ How: [13, -1], [12] and [3, 9]
 ```
 """,
         "title": "Subarrays with sum",
-        "level": "Steady",
+        "level": "Breezy",
         "code": """def count_arrs(arr: list[int], target: int) -> int:
 """,
         "test_cases": """
@@ -1013,7 +1013,7 @@ test_cases = [
 ]
 """,
         "title": "Has node BST",
-        "level": "Steady",
+        "level": "Breezy",
         "code": """def has_node_bst(root, x):
 """,
     },
@@ -1046,7 +1046,7 @@ test_cases = [
 ]
 """,
         "title": "BST min",
-        "level": "Steady",
+        "level": "Breezy",
         "code": """def min_bst(root):
 """,
     },
@@ -1131,7 +1131,7 @@ test_cases = [
 ]
 """,
         "title": "Tree in-order traversal",
-        "level": "Steady",
+        "level": "Breezy",
         "code": """def in_order(root):
 """,
     },
@@ -1717,7 +1717,7 @@ output = false
 ```
 """,
         "title": "Can you reach the last index?",
-        "level": "Steady",
+        "level": "Breezy",
         "code": """def can_reach_end(nums: list[int]) -> bool:
 """,
         "test_cases": """
@@ -1813,7 +1813,7 @@ How:  Only one boat, no adjacent boats to worry about.
 ```
 """,
         "title": "Max loot",
-        "level": "Steady",
+        "level": "Breezy",
         "code": """def max_loot(nums: list[int]) -> int:
 """,
         "test_cases": """
@@ -1840,7 +1840,7 @@ How: Cannot rob boats 1 and 3 for total of 6 because they are adjacent. So rob b
 ```
 """,
         "title": "Max loot circle",
-        "level": "Steady",
+        "level": "Breezy",
         "code": """def max_loot_circle(nums: list[int]) -> int:
 """,
         "test_cases": """
@@ -2773,7 +2773,7 @@ test_cases = [
 ]
 """,
         "title": "Invert binary tree",
-        "level": "Steady",
+        "level": "Breezy",
         "code": """def invert_tree(root):
 """,
     },
@@ -2822,7 +2822,7 @@ test_cases = [
 ]
 """,
         "title": "Min stack",
-        "level": "Steady",
+        "level": "Breezy",
         "code": """class Stack:
 """,
     },
@@ -2924,7 +2924,7 @@ test_cases = [
 ]
 """,
         "title": "Reverse linked list",
-        "level": "Steady",
+        "level": "Breezy",
         "code": """def reverse_list(head):
 """,
     },
