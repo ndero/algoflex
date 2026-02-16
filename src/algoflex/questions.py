@@ -2308,7 +2308,12 @@ Given the `root` of a binary tree where each node represents the amount of cash 
 
 ### Example
 ```
-Input: root = [9, 8, 16]
+root = [9, 8, 16]
+
+      9
+     / \\
+    8   16
+
 output = 24
 How: Maximum amount of cash is 8 + 16 = 24 
 ```
@@ -2350,7 +2355,12 @@ Given the `root` of a binary tree and two nodes `p` and `q`, find the lowest com
 
 ### Example
 ```
-Input: root = [9, 8, 16], p = 8, q = 16
+root = [9, 8, 16], p = 8, q = 16
+
+      9
+     / \\
+    8   16
+
 output = 9
 ```
 """,
