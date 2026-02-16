@@ -741,7 +741,16 @@ The path does not need to start or end at the root or a leaf, but it must go dow
 
 ### Example
 ```
-inputs: root = [10, 5, -3, 3, 2, None, 11, 3, -2, None, 1], target = 8
+root = [10, 5, -3, 3, 2, None, 11, 3, -2, None, 1], target = 8
+
+                10
+               /  \\
+              5   -3
+             / \    \\
+            3   2    11
+           / \    \\
+          3  -2    1
+
 output = 3
 ```
 """,
@@ -944,7 +953,16 @@ Given the `root` of a binary tree and an integer `target`, return true if the tr
 
 ### Example
 ```
-input: root = [5, 4, 8, 11, None, 13, 4, 7, 2, None, None, None, None, None, 1], target = 18
+root = [5, 4, 8, 11, None, 13, 4, 7, 2, None, None, None, None, None, 1], target = 18
+
+                    5
+                   / \\
+                  4   8
+                 /   / \\
+                11  13  4
+               /  \        \\
+              7    2        1
+
 output = True
 ```
 """,
@@ -986,10 +1004,20 @@ Given the `root` of a binary search tree and a value `x`, check whether x is in 
 
 ### Example
 ```
-input: root = [9, 8, 16], x = 5
+root = [9, 8, 16], x = 5
+
+      9
+     / \\
+    8   16
+
 output = False
 
-input: root = [12, 3, 20], x = 3
+root = [12, 3, 20], x = 3
+
+      12
+     /  \\
+    3    20
+
 output = True
 ```
 """,
@@ -1024,7 +1052,12 @@ Given the `root` of a binary search tree find the minimum value and return it
 
 ### Example
 ```
-input: [12, 3, 20]
+root = [12, 3, 20]
+
+      12
+     /  \\
+    3    20
+
 output = 3
 ```
 """,
@@ -1059,10 +1092,26 @@ Given the `root` of a binary tree, return `True` if it is balanced or `False` ot
 
 ### Example
 ```
-input: [12, 8, 16, 4, 9, 13, 18, 11]
+root = [12, 8, 16, 4, 9, 13, 18, 11]
+
+                12
+               /  \\
+              8    16
+             / \   / \\
+            4   9 13  18
+           /
+          11
+
 output = True
 
-input: [4, None, 9, None, None, None, 12]
+root = [4, None, 9, None, None, None, 12]
+
+    4
+     \\
+      9
+       \\
+        12
+
 output = False
 ```
 """,
@@ -1104,7 +1153,16 @@ Given the `root` of a binary tree, traverse the tree in order and return the val
 
 ### Example
 ```
-input: [12, 8, 16, 4, 9, 13, 18, 1]
+root = [12, 8, 16, 4, 9, 13, 18, 1]
+
+                12
+               /  \\
+              8    16
+             / \   / \\
+            4   9 13  18
+           /
+          1
+
 output = [1, 4, 8, 9, 12, 13, 16, 18]
 ```
 """,
@@ -1144,7 +1202,12 @@ Given the `root` of a binary tree, check whether it is a valid binary search tre
 
 ### Example
 ```
-input: [9, 8, 16]
+root = [9, 8, 16]
+
+      9
+     / \\
+    8   16
+
 output = true
 ```
 """,
@@ -1186,7 +1249,16 @@ Given the `root` of a binary tree, traverse the tree using level order traversal
 
 ### Example
 ```
-input: [12, 8, 16, 4, 9, 13, 18, 1]
+root = [12, 8, 16, 4, 9, 13, 18, 1]
+
+                12
+               /  \\
+              8    16
+             / \   / \\
+            4   9 13  18
+           /
+          1
+
 output = [12, 8, 16, 4, 9, 13, 18, 1]
 ```
 """,
@@ -1224,7 +1296,14 @@ Given the `root` of a binary tree, return all the leaves as an array ordered fro
 
 ### Example
 ```
-input: [100, 50, 600, 45, 55, 500, 1000]
+root = [100, 50, 600, 45, 55, 500, 1000]
+
+                 100
+               /     \\
+             50       600
+            /  \     /    \\
+          45   55   500   1000
+
 output = [45, 55, 500, 1000]
 ```
 """,
@@ -1260,8 +1339,17 @@ Given the `root` of a binary tree, return the sum of all the right nodes
 
 ### Example
 ```
-input: [12, 8, 16, 4, 9, 13, 18, 11]
-output = 25
+root =  [12, 8, 16, 4, 9, 13, 18, 11]
+
+                12
+               /  \\
+              8    16
+             / \   / \\
+            4   9 13  18
+           /
+          11
+
+output = 43
 ```
 """,
         "test_cases": f"""
@@ -2295,10 +2383,28 @@ Check if two binary trees `p` and `q` are the same given their roots.
 ### Example
 ```
 Input: p = [1,2,3], q = [1,2,3]
-output = true
 
-Input: p = [1,2], q = [1,null,2]
-output = false
+p =     1
+       / \\
+      2   3
+
+q =     1
+       / \\
+      2   3
+
+output = True
+
+Input: p = [1,2], q = [1,None,2]
+
+p =     1
+       /
+      2
+
+q =    1
+        \\
+        2
+
+output = False
 ```
 """,
         "test_cases": f"""
@@ -2337,10 +2443,15 @@ Given the `root` of a binary tree with unique values and the value of two differ
 > Two nodes of a binary tree are cousins if they have the same depth with different parents.
 
 ### Example
-```python
-# Input: root = [100, 50, 600, 45, 55, 500, 1000]), x = 45, y = 500
-# output = True
-# Why: both are at the same level and 45's parent is 50 while 500's parent is 600
+root = [100, 50, 600, 45, 55, 500, 1000], x = 45, y = 500
+
+                 100
+               /     \\
+             50       600
+            /  \     /    \\
+          45   55   500   1000
+
+output = True
 ```
 """,
         "test_cases": f"""
@@ -2734,11 +2845,17 @@ test_cases = [
 Given the `root` of a binary tree, invert the tree, and return its root.
 
 ### Examples
-Input: root = [2,1,3]
-output = [2,3,1]
+root = [2,1,3]
 
-Input: root = []
-output = []
+      2
+     / \\
+    1   3
+
+output = [2,3,1]
+  
+      2
+     / \\
+    3   1    
 """,
         "test_cases": f"""
 {binary_tree}
