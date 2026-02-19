@@ -16,6 +16,8 @@ from algoflex.utils import time_ago, fmt_secs
 from tinydb import Query
 from heapq import nlargest, nsmallest
 from collections import Counter
+from datetime import datetime
+import random
 
 KV = Query()
 attempts = get_db()
@@ -86,6 +88,16 @@ class Dashboard(Widget):
         #progress {
             height: 3;
         }
+
+        #today {
+            display: none;
+            border: round white 50%;
+            padding: 1 2;
+            margin-bottom: 2;
+            margin-left: 2;
+            margin-right: 2;
+            color: white 70%;
+        }
     }
     """
 
@@ -107,6 +119,8 @@ class Dashboard(Widget):
                     yield Center(Label(f"of {len(self.edgy)}"))
             with Center(id="progress"):
                 yield ProgressBar(total=self.total, show_eta=False, id="all")
+            with Center():
+                yield Static("", id="today")
             with Collapsible(title="Recent attempts", collapsed=False):
                 yield Markdown(id="recent")
             with Collapsible(title="Most Solved"):
@@ -123,10 +137,58 @@ class Dashboard(Widget):
             breezy, steady, edgy = self.get_complete(docs)
             self.update_digits(ids, [breezy, steady // 2, edgy // 4])
             self.update_progress(breezy + steady + edgy)
+            self.update_highlight(docs)
             self.update_md(docs)
 
     def update_digit(self, id, value):
         self.query_one(f"{id}", Digits).update(f"{value}")
+
+    def update_highlight(self, docs):
+        comment, completed, attempts = self.get_highlights(docs)
+        if not attempts:
+            return
+        desc = f"[$primary]{comment}![/] Solved [$primary]{completed}[/] problem{'s' if completed != 1 else ''} in [$primary]{attempts}[/] attempt{'s' if attempts != 1 else ''} today."
+        today = self.query_one("#today", Static)
+        today.update(desc)
+        today.border_title = "Today's highlight"
+        today.display = True
+
+    def get_highlights(self, docs):
+        start = self.midnight()
+        total_attempts = 0
+        passed_problems = set()
+
+        for d in docs:
+            if d["created_at"] < start:
+                continue
+            total_attempts += 1
+            if d["passed"]:
+                passed_problems.add(d["problem_id"])
+
+        completed = len(passed_problems)
+        rank = self.rank_today(completed, total_attempts)
+        return rank, completed, total_attempts
+
+    def rank_today(self, passed, attempts):
+        low = ["Solid", "Great", "Cool", "Good"]
+        mid = ["Excellent", "Super", "Brill", "Fab", "Legit", "Smooth"]
+        high = ["Badass", "Wizard", "Maestro", "Stellar", "Hotshot", "Ninja", "Pro"]
+
+        if passed == 0:
+            return "Not bad" if attempts < 6 else "D for dust"
+        if passed < 3:
+            return random.choice(low)
+        elif passed < 5:
+            return random.choice(mid)
+        elif passed < 9:
+            return random.choice(high)
+        else:
+            return "Ace"
+
+    def midnight(self):
+        now = datetime.now()
+        midnight = datetime(now.year, now.month, now.day)
+        return midnight.timestamp()
 
     def md_table(self, headers, rows):
         if not rows:
