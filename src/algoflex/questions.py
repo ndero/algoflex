@@ -3098,7 +3098,7 @@ test_cases = [
     75: {
         "markdown": """
 ### Sum linked lists
-You are given two non-empty linked lists, `head2` and `head2` representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit.
+You are given two non-empty linked lists, `head1` and `head2` representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit.
 
 Add the two numbers and return the sum as a linked list. You may assume the two numbers do not contain any leading zero, except the number 0 itself.
 
