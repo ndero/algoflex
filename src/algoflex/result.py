@@ -14,7 +14,7 @@ KV = Query()
 
 
 class ResultModal(ModalScreen):
-    BINDINGS = [("s", "dismiss", "dismiss")]
+    BINDINGS = [("escape", "dismiss", "dismiss")]
     DEFAULT_CSS = """
     ResultModal {
         &>* {
