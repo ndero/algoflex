@@ -441,7 +441,7 @@ test_cases = [
 ]
 """,
         "title": "Count primes",
-        "level": "Steady",
+        "level": "Breezy",
         "code": """def count_primes(n: int) -> int:
 """,
     },
@@ -2023,7 +2023,7 @@ output = ""
 ```
 """,
         "title": "Longest common prefix",
-        "level": "Steady",
+        "level": "Breezy",
         "code": """def longest_common_prefix(strs: list[str]) -> str:
 """,
         "test_cases": """
