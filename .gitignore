@@ -4,5 +4,5 @@ __pycache__/
 _questions.py
 dist/
 *.egg-info
-test.*
+test*.*
 algorithms.py
