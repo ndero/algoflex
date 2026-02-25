@@ -3488,4 +3488,100 @@ test_cases = [
 ]
 """,
     },
+    81: {
+        "markdown": """
+### Largest rectangle in histogram
+Given an array of integers `heights` representing a histogram's bar height where the width of each bar is 1, find the area of the largest rectangle that can be formed within the histogram.
+
+### Example
+```
+input: [3, 1, 2, 5, 4, 1]
+
+ 7 |    
+ 6 |      
+ 5 |      █
+ 4 |      █ █
+ 3 |█     █ █
+ 2 |█   █ █ █
+ 1 |█ █ █ █ █ █
+   +-------------
+    0 1 2 3 4 5
+
+output = 8 (formed by bars at indices 3 and 4 with a height of 4)
+```
+""",
+        "title": "Largest rectangle in histogram",
+        "level": "Edgy",
+        "code": """def max_rectangle(heights: list[int]) -> int:
+""",
+        "test_cases": """
+test_cases = [
+    # Basic test cases
+    [max_rectangle([1]), 1],
+    [max_rectangle([3, 1, 2, 5, 4, 1]), 8],
+    [max_rectangle([2, 4]), 4],
+    # Empty and edge cases
+    [max_rectangle([]), 0],
+    [max_rectangle([0]), 0],
+    [max_rectangle([0, 0, 0]), 0],
+    # Increasing heights
+    [max_rectangle([1, 2, 3, 4, 5]), 9],
+    [max_rectangle([1, 2, 3, 4, 5, 6]), 12],
+    # Decreasing heights
+    [max_rectangle([5, 4, 3, 2, 1]), 9],
+    [max_rectangle([6, 5, 4, 3, 2, 1]), 12],
+    # Plateau (equal heights)
+    [max_rectangle([5, 5, 5, 5]), 20],
+    [max_rectangle([3, 3, 3, 3, 3]), 15],
+    # Valley shapes
+    [max_rectangle([5, 4, 1, 4, 5]), 8],
+    [max_rectangle([6, 5, 2, 5, 6]), 10],
+    # Peak shapes
+    [max_rectangle([1, 3, 5, 3, 1]), 9],
+    [max_rectangle([2, 4, 6, 4, 2]), 12],
+    # Single tall bar with smaller surroundings
+    [max_rectangle([1, 2, 10, 2, 1]), 10],
+    [max_rectangle([1, 2, 3, 10, 3, 2, 1]), 10],
+    # Multiple valleys
+    [max_rectangle([2, 1, 4, 5, 1, 3, 3]), 8],
+    [max_rectangle([3, 2, 5, 4, 2, 3, 4]), 14],
+    # Alternating heights
+    [max_rectangle([1, 3, 2, 4, 3, 5]), 10],
+    [max_rectangle([2, 1, 3, 2, 4, 3]), 8],
+    # Large differences
+    [max_rectangle([100, 1, 100]), 100],
+    [max_rectangle([1000, 1, 1000, 1, 1000]), 1000],
+    # Zero in middle
+    [max_rectangle([3, 2, 0, 2, 3]), 4],
+    [max_rectangle([4, 3, 2, 0, 2, 3, 4]), 6], 
+    # Very large array
+    [max_rectangle(list(range(1, 10001))), 25005000],
+    [max_rectangle(list(range(10000, 0, -1))), 25005000],
+    # Random combinations
+    [max_rectangle([2, 1, 2, 3, 1, 2, 3, 2]), 8],
+    [max_rectangle([4, 2, 0, 3, 2, 5, 4, 3]), 10],
+    # Boundary tests
+    [max_rectangle([1] * 10000), 10000],
+    [max_rectangle([10**5] * 100), 10**7],
+    # Mountain shape
+    [max_rectangle([1, 2, 3, 4, 5, 4, 3, 2, 1]), 15],
+    # Staircase pattern
+    [max_rectangle([1, 2, 3, 4, 5, 6, 7, 8]), 20],
+    [max_rectangle([8, 7, 6, 5, 4, 3, 2, 1]), 20],
+    # Complex patterns
+    [max_rectangle([6, 2, 5, 4, 5, 1, 6]), 12],
+    [max_rectangle([3, 6, 5, 7, 4, 8, 1, 0]), 20],
+    # Single element with zero
+    [max_rectangle([5, 0, 5, 0, 5]), 5],
+    # Long increasing then long decreasing
+    [max_rectangle(list(range(1, 5001)) + list(range(5000, 0, -1))), 12505000],
+    # Checkerboard pattern
+    [max_rectangle([10, 1, 10, 1, 10, 1, 10]), 10],
+    # All same except one dip
+    [max_rectangle([5] * 100 + [1] + [5] * 100), 500],
+    # Maximum values with constraints
+    [max_rectangle([10**5] * 10**4), 10**9],
+]
+""",
+    },
 }
