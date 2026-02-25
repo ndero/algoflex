@@ -3912,4 +3912,91 @@ test_cases = [
 ]
 """,
     },
+    85: {
+        "markdown": """
+### Find all missing numbers in array
+Given an array `nums` of length `n` where every value is an integer in the range [1, n] inclusive. Return an array of all integers in [1, n] that do not appear in `nums`
+
+### Example
+```
+nums = [2, 1, 2, 4]
+output = [3]
+```
+""",
+        "title": "Find all missing numbers in array",
+        "level": "Breezy",
+        "code": """def find_missing(nums: list[int]) -> list[int]:
+""",
+        "test_cases": """
+test_cases = [
+    # Minimal Edge Cases
+    [find_missing([1]), []],  # n=1, nothing missing
+    [find_missing([1, 1]), [2]],  # smallest missing
+    # Small Basic Cases
+    [find_missing([1, 2, 3, 4]), []],  # complete
+    [find_missing([4, 3, 2, 7, 8, 2, 3, 1]), [5, 6]],
+    [find_missing([1, 1]), [2]],
+    [find_missing([2, 2]), [1]],
+    # Single Missing
+    [find_missing([1, 2, 2, 4]), [3]],
+    [find_missing([2, 3, 4, 4, 5]), [1]],
+    [find_missing([1, 2, 3, 3, 5]), [4]],
+    [find_missing([1, 1, 2, 3, 4]), [5]],
+    # Multiple Missing
+    [find_missing([2, 2, 3, 3]), [1, 4]],
+    [find_missing([4, 4, 4, 4]), [1, 2, 3]],
+    [find_missing([1, 3, 3, 5, 5]), [2, 4]],
+    [find_missing([2, 2, 2, 2, 5, 5]), [1, 3, 4, 6]],
+    # Missing at Boundaries
+    [find_missing([2, 3, 4, 5, 5]), [1]],
+    [find_missing([1, 1, 2, 3, 4]), [5]],
+    [find_missing([5, 4, 3, 2, 2]), [1]],
+    # All Same Number
+    [find_missing([3, 3, 3]), [1, 2]],
+    [find_missing([1, 1, 1, 1]), [2, 3, 4]],
+    # Already Sorted with Gaps
+    [find_missing([1, 2, 4, 6, 6, 6, 7]), [3, 5]],
+    [find_missing([1, 3, 5, 7, 7, 7, 7]), [2, 4, 6]],
+    # Reverse Order with Duplicates
+    [find_missing([5, 4, 3, 2, 2]), [1]],
+    [find_missing([6, 5, 4, 3, 2, 2]), [1]],
+    # Random Distributions
+    [find_missing([3, 1, 2, 5, 3]), [4]],
+    [find_missing([6, 1, 1, 2, 4, 6]), [3, 5]],
+    [find_missing([7, 3, 2, 1, 8, 2, 3, 1]), [4, 5, 6]],
+    # Stress: Large n, No Missing
+    [find_missing(list(range(1, 100001))), []],
+    # Stress: Large n, One Missing
+    [find_missing(list(range(1, 100001))[:-1] + [99999]), [100000]],
+    # Stress: Large n, Missing First
+    [find_missing([i for i in range(2, 100001)] + [100000]), [1]],
+    # Stress: Half Missing
+    [
+        find_missing([i for i in range(1, 50001)] + [i for i in range(1, 50001)]),
+        list(range(50001, 100001)),
+    ],
+    # Stress: Heavy Duplication
+    [
+        find_missing([50000] * 100000),
+        [i for i in range(1, 100001) if i != 50000],
+    ],
+    # Long Gap in Middle
+    [
+        find_missing(
+            list(range(1, 40001)) + [40000] * 20000 + list(range(60001, 100001))
+        ),
+        list(range(40001, 60001)),
+    ],
+    # Patterned Duplicates
+    [
+        find_missing([i if i % 2 == 0 else 2 for i in range(1, 21)]),
+        [i for i in range(1, 21) if i % 2 != 0 and i != 2],
+    ],
+    # Repeated Small Subset
+    [find_missing([1, 2, 3, 4, 5] * 20000), list(range(6, 100001))],
+    # Sparse Unique Values
+    [find_missing([100000] * 99999 + [1]), list(range(2, 100000))],
+]
+""",
+    },
 }
