@@ -3584,4 +3584,108 @@ test_cases = [
 ]
 """,
     },
+    82: {
+        "markdown": """
+### Daily temperatures
+Given an array of daily temperatures, return an array answer such that answer[i] is the number of days you have to wait until a warmer temperature. If there is no future day with warmer temperature, set answer[i] = 0.
+
+### Example
+```
+input: [3, 1, 2]
+output = [0, 1, 0]
+how: no day in future higher than 3, 1 day in future higher than 1 and no day in future after 2. 
+```
+""",
+        "title": "Daily temperatures",
+        "level": "Breezy",
+        "code": """def daily_temperatures(temps: list[int]) -> int:
+""",
+        "test_cases": """
+test_cases = [
+    # Basic test cases 
+    [
+        daily_temperatures([73, 74, 75, 71, 69, 72, 76, 73]),
+        [1, 1, 4, 2, 1, 1, 0, 0],
+    ],  # 1
+    [daily_temperatures([30, 40, 50, 60]), [1, 1, 1, 0]],  # 2
+    [daily_temperatures([60, 50, 40, 30]), [0, 0, 0, 0]],  # 3
+    [daily_temperatures([70, 70, 70, 70]), [0, 0, 0, 0]],  # 4
+    # Edge cases 
+    [daily_temperatures([30]), [0]],  # 5
+    [daily_temperatures([]), []],  # 6
+    [daily_temperatures([30, 31]), [1, 0]],  # 7
+    [daily_temperatures([31, 30]), [0, 0]],  # 8
+    # Complex patterns 
+    [daily_temperatures([80, 70, 90, 60, 85, 75, 95]), [2, 1, 4, 1, 2, 1, 0]],  # 9
+    [
+        daily_temperatures([73, 72, 71, 70, 74, 73, 72, 75]),
+        [4, 3, 2, 1, 3, 2, 1, 0],
+    ],  # 10
+    [daily_temperatures([40, 45, 50, 55, 50, 45, 40]), [1, 1, 1, 0, 0, 0, 0]],  # 11
+    [daily_temperatures([60, 50, 40, 30, 40, 50, 60]), [0, 5, 3, 1, 1, 1, 0]],  # 12
+    [daily_temperatures([50, 50, 50, 60, 50, 70]), [3, 2, 1, 2, 1, 0]],  # 13
+    # Special scenarios 
+    [
+        daily_temperatures([100, 50, 51, 52, 53, 54]),
+        [0, 1, 1, 1, 1, 0],
+    ],  # 14 - Warmest first
+    [
+        daily_temperatures([30, 31, 32, 33, 34, 35, 36, 29]),
+        [1, 1, 1, 1, 1, 1, 0, 0],
+    ],  # 15 - Long wait
+    [
+        daily_temperatures([50, 49, 48, 47, 46, 51]),
+        [5, 4, 3, 2, 1, 0],
+    ],  # 16 - Last day warmer
+    [
+        daily_temperatures([90, 50, 91, 51, 92, 52, 93]),
+        [2, 1, 2, 1, 2, 1, 0],
+    ],  # 17 - Alternating
+    [daily_temperatures([0, 100, 0, 100]), [1, 0, 1, 0]],  # 18 - Temperature extremes
+    # Stress Test 1: Strictly increasing (10,000 elements)
+    [daily_temperatures(list(range(1, 10001))), [1] * 9999 + [0]],  # 19
+    # Stress Test 2: Strictly decreasing (10,000 elements)
+    [daily_temperatures(list(range(10000, 0, -1))), [0] * 10000],  # 20
+    # Stress Test 3: Constant temperature (10,000 elements)
+    [daily_temperatures([70] * 10000), [0] * 10000],  # 21
+    # Stress Test 4: Mountain pattern (10,000 elements)
+    [
+        daily_temperatures(list(range(1, 5001)) + list(range(5000, 0, -1))),
+        [1] * 4999 + [0] * 5001,
+    ],  # 22
+    # Stress Test 5: Valley pattern (10,000 elements)
+    [
+        daily_temperatures(list(range(5000, 0, -1)) + list(range(1, 5001))),
+        [0] + list(range(9998, 0, -2)) + [1] * 4999 + [0],
+    ],  # 23
+    # Stress Test 6: Alternating high-low (10,000 elements)
+    [
+        daily_temperatures([100 if i % 2 == 0 else 0 for i in range(10000)]),
+        [
+            0 if i % 2 == 0 and i < 9998 else 1 if i % 2 == 1 and i < 9999 else 0
+            for i in range(10000)
+        ],
+    ],  # 24
+    # Stress Test 8: Worst-case for stack (strictly decreasing then one spike)
+    [
+        daily_temperatures(list(range(10000, 0, -1)) + [100001]),
+        list(range(10000, -1, -1)),
+    ],  # 25
+    # Stress Test 9: Extreme values (10,000 elements)
+    [
+        daily_temperatures([10**6] * 5000 + [10**6 + 1] + [10**6] * 4999),
+        list(range(5000, -1, -1)) + [0] * 4999,
+    ],  # 26
+    [
+        daily_temperatures([1, 10**6, 2, 10**6 - 1, 3, 10**6 - 2]),
+        [1, 0, 1, 0, 1, 0],
+    ],  # 27
+    # Stress Test 12: Performance validation - maximum array size
+    [
+        daily_temperatures([i % 100 for i in range(10**5)]) is not None,
+        True,
+    ],  # 28
+]
+""",
+    },
 }
