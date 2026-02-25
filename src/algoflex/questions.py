@@ -3999,4 +3999,88 @@ test_cases = [
 ]
 """,
     },
+    86: {
+        "markdown": """
+### Find the town judge
+There are `n` people in a town labelled `1` to `n`. Among these `n` people there may exist a judge. The town judge is trusted by everybody in the town (except the judge) and the town judge trusts nobody. 
+
+Given `n` and an array `trust` with trust[i] = [a, b] meaning person `a` trusts person `b`, return the label of the town judge if they exist else return -1
+
+There can only be one judge. 
+
+### Example
+```
+input: n = 3, trust = [[1,  2], [3, 2]]
+output = 2
+```
+""",
+        "title": "Find the town judge",
+        "level": "Breezy",
+        "code": """def find_judge(n: int, trust: list[list[int]]) -> int:
+""",
+        "test_cases": """
+test_cases = [
+    # Minimal / Edge Cases
+    [find_judge(1, []), 1],  # single person
+    [find_judge(2, []), -1],  # no trust
+    [find_judge(2, [[1, 2]]), 2],  # simple valid
+    [find_judge(2, [[2, 1]]), 1],  # reversed
+    # Basic Valid Cases
+    [find_judge(3, [[1, 3], [2, 3]]), 3],
+    [find_judge(3, [[2, 1], [3, 1]]), 1],
+    [find_judge(4, [[1, 4], [2, 4], [3, 4]]), 4],
+    [find_judge(5, [[1, 5], [2, 5], [3, 5], [4, 5]]), 5],
+    # Judge trusts someone (invalid)
+    [find_judge(3, [[1, 3], [2, 3], [3, 1]]), -1],
+    [find_judge(4, [[1, 4], [2, 4], [3, 4], [4, 1]]), -1],
+    # Cycles
+    [find_judge(3, [[1, 2], [2, 3], [3, 1]]), -1],
+    [find_judge(4, [[1, 2], [2, 3], [3, 4], [4, 1]]), -1],
+    # Incomplete trust
+    [find_judge(4, [[1, 4], [2, 4]]), -1],  # missing one
+    [find_judge(5, [[1, 5], [2, 5], [3, 5]]), -1],  # missing one
+    # Multiple high in-degree but invalid
+    [find_judge(4, [[1, 3], [2, 3], [1, 4], [2, 4]]), -1],
+    [find_judge(5, [[1, 4], [2, 4], [3, 4], [1, 5], [2, 5], [3, 5]]), -1],
+    # Disconnected graphs
+    [find_judge(4, [[1, 2], [3, 4]]), -1],
+    [find_judge(6, [[1, 2], [2, 3], [4, 5]]), -1],
+    # Chain graphs
+    [find_judge(4, [[1, 2], [2, 3], [3, 4]]), -1],
+    [find_judge(5, [[1, 2], [2, 3], [3, 4], [4, 5]]), -1],
+    # Extra noise but valid judge
+    [find_judge(5, [[1, 5], [2, 5], [3, 5], [4, 5], [1, 2], [2, 3]]), 5],
+    [
+        find_judge(6, [[1, 6], [2, 6], [3, 6], [4, 6], [5, 6], [1, 2], [2, 3], [3, 4]]),
+        6,
+    ],
+    # Stress: Medium Large
+    [find_judge(100, [[i, 100] for i in range(1, 100)]), 100],
+    [find_judge(200, [[i, 200] for i in range(1, 200)]), 200],
+    # Stress: Maximum n
+    [find_judge(1000, [[i, 1000] for i in range(1, 1000)]), 1000],
+    # Stress: Large but no judge
+    [find_judge(1000, [[i, i + 1] for i in range(1, 1000)]), -1],
+    [find_judge(1000, [[i, 1000] for i in range(1, 999)]), -1],  # missing one trust
+    # Dense Graph Under Limit
+    [
+        find_judge(
+            100,
+            [[i, 100] for i in range(1, 100)]
+            + [[i, j] for i in range(1, 50) for j in range(51, 60)],
+        ),
+        100,
+    ],
+    # Near trust.length limit (~10^4)
+    [
+        find_judge(
+            150,
+            [[i, 150] for i in range(1, 150)]
+            + [[i, j] for i in range(1, 75) for j in range(76, 86)],
+        ),
+        150,
+    ],
+]
+""",
+    },
 }
