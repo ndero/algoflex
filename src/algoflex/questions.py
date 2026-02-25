@@ -3688,4 +3688,159 @@ test_cases = [
 ]
 """,
     },
+    83: {
+        "markdown": """
+### Cycles in linked list 
+Given the `head` of a linked list, return true if there is a cycle in the linked list or false otherwise
+
+### Example
+```
+input: 3 -> 2 -> 1
+output = False 
+
+input: 3 -> 2 -> 1
+            ↑____↓
+output = True 
+```
+""",
+        "title": "Cycles in linked list",
+        "level": "Breezy",
+        "code": """
+from typing import Optional
+
+class ListNode:
+    __slots__ = ("val", "next")
+
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+def has_cycle(head: Optional[ListNode]) -> bool:
+""",
+        "test_cases": """
+def create_cycle_list(arr, pos):
+    if not arr:
+        return None
+
+    # Create all nodes
+    nodes = [ListNode(val) for val in arr]
+
+    # Link them
+    for i in range(len(nodes) - 1):
+        nodes[i].next = nodes[i + 1]
+
+    # Create cycle 
+    if pos >= 0 and pos < len(nodes):
+        nodes[-1].next = nodes[pos]
+
+    return nodes[0] if nodes else None
+
+test_cases = [
+    # Basic test cases - no cycle (8)
+    [hasCycle(array_to_list([])), False],  # 1 - Empty list
+    [hasCycle(array_to_list([1])), False],  # 2 - Single node, no cycle
+    [hasCycle(array_to_list([1, 2])), False],  # 3 - Two nodes, no cycle
+    [hasCycle(array_to_list([1, 2, 3])), False],  # 4 - Three nodes, no cycle
+    [hasCycle(array_to_list([1, 2, 3, 4, 5])), False],  # 5 - Five nodes, no cycle
+    # Basic test cases - with cycle (8)
+    [hasCycle(create_cycle_list([1], 0)), True],  # 6 - Single node pointing to itself
+    [hasCycle(create_cycle_list([1, 2], 0)), True],  # 7 - Two nodes, cycle at head
+    [hasCycle(create_cycle_list([1, 2], 1)), True],  # 8 - Two nodes, cycle at tail
+    [
+        hasCycle(create_cycle_list([3, 2, 0, -4], 1)),
+        True,
+    ],  # 9 - Standard example from LeetCode
+    [hasCycle(create_cycle_list([1, 2, 3, 4, 5], 2)), True],  # 10 - Cycle in middle
+    # Edge cases - cycle positions (5)
+    [hasCycle(create_cycle_list([1, 2, 3, 4, 5], 0)), True],  # 11 - Cycle to head
+    [
+        hasCycle(create_cycle_list([1, 2, 3, 4, 5], 4)),
+        True,
+    ],  # 12 - Cycle to last node (tail to itself)
+    [
+        hasCycle(create_cycle_list([1, 2, 3, 4, 5], 3)),
+        True,
+    ],  # 13 - Cycle to node before last
+    [
+        hasCycle(create_cycle_list([1, 2, 3, 4, 5], 1)),
+        True,
+    ],  # 14 - Cycle to second node
+    [
+        hasCycle(create_cycle_list([1], -1)),
+        False,
+    ],  # 15 - Single node, no cycle (explicit -1)
+    # Lists with duplicate values (4)
+    [
+        hasCycle(array_to_list([1, 1, 1, 1, 1])),
+        False,
+    ],  # 16 - Duplicate values, no cycle
+    [
+        hasCycle(create_cycle_list([1, 1, 1, 1, 1], 2)),
+        True,
+    ],  # 17 - Duplicate values with cycle
+    [hasCycle(array_to_list([1, 2, 2, 3, 3])), False],  # 18 - Duplicate values pattern
+    [
+        hasCycle(create_cycle_list([1, 2, 2, 3, 3], 1)),
+        True,
+    ],  # 19 - Duplicate values with cycle
+    # Large lists (4)
+    [hasCycle(array_to_list(list(range(1000)))), False],  # 20 - Large list, no cycle
+    [
+        hasCycle(create_cycle_list(list(range(1000)), 500)),
+        True,
+    ],  # 21 - Large list with cycle in middle
+    [
+        hasCycle(create_cycle_list(list(range(10000)), 0)),
+        True,
+    ],  # 22 - Very large list, cycle to head
+    [
+        hasCycle(create_cycle_list(list(range(10000)), 9999)),
+        True,
+    ],  # 23 - Very large list, cycle to last
+    # Special patterns (5)
+    [
+        hasCycle(create_cycle_list([-1, -2, -3, -4], 2)),
+        True,
+    ],  # 24 - Negative values with cycle
+    [hasCycle(create_cycle_list([0, 0, 0, 0], 1)), True],  # 25 - All zeros with cycle
+    [
+        hasCycle(create_cycle_list([10**6, 10**6, 10**6], 0)),
+        True,
+    ],  # 26 - Large values, cycle at head
+    [
+        hasCycle(create_cycle_list([1], 0)),
+        True,
+    ],  # 27 - Single node self-cycle (repeated for emphasis)
+    [
+        hasCycle(create_cycle_list([1, 2, 3, 4, 5], -1)),
+        False,
+    ],  # 28 - Explicit no cycle with -1
+    # Test 29: Cycle length 1 (self-loop at tail)
+    [hasCycle(create_cycle_list([1, 2, 3, 4], 3)), True],
+    # Test 30: Cycle length 2
+    [hasCycle(create_cycle_list([1, 2, 3, 4, 5], 3)), True],  # 3->4->5->3
+    # Test 31: Cycle length n-1 (almost entire list is cycle)
+    [hasCycle(create_cycle_list([1, 2, 3, 4, 5], 1)), True],  # 2->3->4->5->2
+    # Test 32: Cycle at head with long tail
+    [hasCycle(create_cycle_list([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 0)), True],
+    # Test 33: Cycle at position 1 with many nodes
+    [hasCycle(create_cycle_list([i for i in range(100)], 1)), True],
+    # Test 34: Alternating values with cycle
+    [hasCycle(create_cycle_list([1, -1, 2, -2, 3, -3], 2)), True],
+    # Test 35: Extremely long list with no cycle (10^5 nodes)
+    [hasCycle(array_to_list(list(range(100000)))), False],
+    # Test 36: Extremely long list with cycle at beginning (10^5 nodes)
+    [hasCycle(create_cycle_list(list(range(100000)), 0)), True],
+    # Test 37: Extremely long list with cycle at middle (10^5 nodes)
+    [hasCycle(create_cycle_list(list(range(100000)), 50000)), True],
+    # Test 38: Extremely long list with cycle at end (10^5 nodes)
+    [hasCycle(create_cycle_list(list(range(100000)), 99999)), True],
+    # Test 39: Maximum values (assuming LeetCode constraints)
+    [
+        hasCycle(create_cycle_list([10**4] * 10**4, 5000)),
+        True,
+    ],  # 10^4 nodes with value 10^4
+]
+""",
+    },
 }
