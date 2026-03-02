@@ -4205,4 +4205,113 @@ test_cases = [
 ]
 """,
     },
+    88: {
+        "markdown": """
+### Design a hashmap 
+Design a hashmap, class `MyHashMap` with methods put, get and remove that adds, gets and removes key value pairs. 
+
+Both the key and value are all be positive integers. 
+
+Don't use the inbuilt {} or `dict`, obviously.
+
+### Example
+```
+hm = MyHashMap()
+hm.put(1, 10)  # adds key value pair (1, 10), returns nothing
+hm.put(2, 20)  
+hm.get(1)      # return 10
+hm.get(3)      # returns -1, not present 
+hm.remove(1)   # removes (1, 10) from hashmap, returns nothing 
+hm.get(1)      # returns -1   
+```
+""",
+        "title": "Design hashmap",
+        "level": "Steady",
+        "code": """class MyHashMap:
+""",
+        "test_cases": """
+hm = MyHashMap()
+test_cases = [
+    # ----------------------
+    # Basic put/get
+    # ----------------------
+    [hm.put(1, 10), None],
+    [hm.put(2, 20), None],
+    [hm.get(1), 10],
+    [hm.get(2), 20],
+    [hm.get(3), -1],  # not present
+    # ----------------------
+    # Overwrite value
+    # ----------------------
+    [hm.put(1, 100), None],
+    [hm.get(1), 100],
+    # ----------------------
+    # Remove key
+    # ----------------------
+    [hm.remove(1), None],
+    [hm.get(1), -1],
+    # ----------------------
+    # Remove non-existing
+    # ----------------------
+    [hm.remove(999), None],
+    [hm.get(999), -1],
+    # ----------------------
+    # Key = 0 edge case
+    # ----------------------
+    [hm.put(0, 5), None],
+    [hm.get(0), 5],
+    [hm.remove(0), None],
+    [hm.get(0), -1],
+    # ----------------------
+    # Max key boundary
+    # ----------------------
+    [hm.put(10**6, 123), None],
+    [hm.get(10**6), 123],
+    [hm.put(10**6, 456), None],
+    [hm.get(10**6), 456],
+    [hm.remove(10**6), None],
+    [hm.get(10**6), -1],
+    # ----------------------
+    # Value = 0 edge case
+    # ----------------------
+    [hm.put(50, 0), None],
+    [hm.get(50), 0],
+    # ----------------------
+    # Multiple inserts
+    # ----------------------
+    [hm.put(10, 1), None],
+    [hm.put(20, 2), None],
+    [hm.put(30, 3), None],
+    [hm.get(10), 1],
+    [hm.get(20), 2],
+    [hm.get(30), 3],
+    # ----------------------
+    # Interleaving remove
+    # ----------------------
+    [hm.remove(20), None],
+    [hm.get(20), -1],
+    [hm.get(10), 1],
+    [hm.get(30), 3],
+    # ----------------------
+    # Reinsert removed key
+    # ----------------------
+    [hm.put(20, 200), None],
+    [hm.get(20), 200],
+    # ----------------------
+    # Many sequential inserts (collision-like)
+    # ----------------------
+    [hm.put(1001, 1), None],
+    [hm.put(2001, 2), None],
+    [hm.put(3001, 3), None],
+    [hm.get(1001), 1],
+    [hm.get(2001), 2],
+    [hm.get(3001), 3],
+    # ----------------------
+    # Overwrite after many ops
+    # ----------------------
+    [hm.put(10, 999), None],
+    [hm.get(10), 999],
+]
+""",
+    },
 }
