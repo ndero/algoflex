@@ -4562,4 +4562,88 @@ test_cases = [
 ]
 """,
     },
+    90: {
+        "markdown": """
+### LFU cache
+Design an LFU cache with constant put and get. 
+
+### Example
+```
+cache = LFUCache(3)  # LFU cache with capacity three
+cache.put(1, 10)     # returns None 
+cache.get(1)         # returns 10 
+```
+""",
+        "title": "LFU cache",
+        "level": "Edgy",
+        "code": """class LFUCache:
+""",
+        "test_cases": """
+cache0 = LFUCache(0)
+cache1 = LFUCache(1)
+cache2 = LFUCache(2)
+cache3 = LFUCache(3)
+test_cases = [
+    # Capacity 0 Edge Case
+    [cache0.put(1, 10), None],
+    [cache0.get(1), -1],
+    # Capacity 1 Basic
+    [cache1.put(1, 100), None],
+    [cache1.get(1), 100],
+    [cache1.put(2, 200), None],  # evicts key 1
+    [cache1.get(1), -1],
+    [cache1.get(2), 200],
+    # Capacity 2 Basic LFU
+    [cache2.put(1, 10), None],
+    [cache2.put(2, 20), None],
+    [cache2.get(1), 10],  # freq(1)=2
+    [cache2.put(3, 30), None],  # evict key 2
+    [cache2.get(2), -1],
+    [cache2.get(3), 30],
+    [cache2.get(1), 10],
+    # Tie-break by LRU
+    [cache2.put(4, 40), None],  # evict key 3 (freq 1)
+    [cache2.get(3), -1],
+    [cache2.get(4), 40],
+    # Update Existing Key
+    [cache2.put(1, 111), None],
+    [cache2.get(1), 111],
+    # Capacity 3 Complex
+    [cache3.put(1, 10), None],
+    [cache3.put(2, 20), None],
+    [cache3.put(3, 30), None],
+    [cache3.get(1), 10],  # freq1=2
+    [cache3.get(2), 20],  # freq2=2
+    [cache3.put(4, 40), None],  # evict key 3
+    [cache3.get(3), -1],
+    [cache3.get(4), 40],
+    # Increase frequency heavily
+    [cache3.get(4), 40],
+    [cache3.get(4), 40],
+    [cache3.get(4), 40],  # freq4 high
+    [cache3.put(5, 50), None],  # evict lowest freq among 1 or 2
+    [cache3.get(5), 50],
+    # Reinsertion after eviction
+    [cache3.put(6, 60), None],
+    [cache3.get(6), 60],
+    # Large Key/Value
+    [cache3.put(100000, 10**9), None],
+    [cache3.get(100000), 10**9],
+    # Multiple Gets
+    [cache3.get(100000), 10**9],
+    [cache3.get(100000), 10**9],
+    # Insert triggers eviction
+    [cache3.put(7, 70), None],
+    [cache3.get(7), 70],
+    # Repeated updates
+    [cache3.put(7, 700), None],
+    [cache3.get(7), 700],
+    # Access order affects LRU tie
+    [cache3.put(8, 80), None],
+    [cache3.get(8), 80],
+    # Stress small sequence
+    [cache3.get(1), cache3.get(1)],  # frequency bump
+]
+""",
+    },
 }
