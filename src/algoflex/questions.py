@@ -4232,85 +4232,333 @@ hm.get(1)      # returns -1
         "test_cases": """
 hm = MyHashMap()
 test_cases = [
-    # ----------------------
     # Basic put/get
-    # ----------------------
     [hm.put(1, 10), None],
     [hm.put(2, 20), None],
     [hm.get(1), 10],
     [hm.get(2), 20],
     [hm.get(3), -1],  # not present
-    # ----------------------
     # Overwrite value
-    # ----------------------
     [hm.put(1, 100), None],
     [hm.get(1), 100],
-    # ----------------------
     # Remove key
-    # ----------------------
     [hm.remove(1), None],
     [hm.get(1), -1],
-    # ----------------------
     # Remove non-existing
-    # ----------------------
     [hm.remove(999), None],
     [hm.get(999), -1],
-    # ----------------------
     # Key = 0 edge case
-    # ----------------------
     [hm.put(0, 5), None],
     [hm.get(0), 5],
     [hm.remove(0), None],
     [hm.get(0), -1],
-    # ----------------------
     # Max key boundary
-    # ----------------------
     [hm.put(10**6, 123), None],
     [hm.get(10**6), 123],
     [hm.put(10**6, 456), None],
     [hm.get(10**6), 456],
     [hm.remove(10**6), None],
     [hm.get(10**6), -1],
-    # ----------------------
     # Value = 0 edge case
-    # ----------------------
     [hm.put(50, 0), None],
     [hm.get(50), 0],
-    # ----------------------
     # Multiple inserts
-    # ----------------------
     [hm.put(10, 1), None],
     [hm.put(20, 2), None],
     [hm.put(30, 3), None],
     [hm.get(10), 1],
     [hm.get(20), 2],
     [hm.get(30), 3],
-    # ----------------------
     # Interleaving remove
-    # ----------------------
     [hm.remove(20), None],
     [hm.get(20), -1],
     [hm.get(10), 1],
     [hm.get(30), 3],
-    # ----------------------
     # Reinsert removed key
-    # ----------------------
     [hm.put(20, 200), None],
     [hm.get(20), 200],
-    # ----------------------
     # Many sequential inserts (collision-like)
-    # ----------------------
     [hm.put(1001, 1), None],
     [hm.put(2001, 2), None],
     [hm.put(3001, 3), None],
     [hm.get(1001), 1],
     [hm.get(2001), 2],
     [hm.get(3001), 3],
-    # ----------------------
     # Overwrite after many ops
-    # ----------------------
     [hm.put(10, 999), None],
     [hm.get(10), 999],
+]
+""",
+    },
+    89: {
+        "markdown": """
+### Articulation points
+> In graphs, a node is an articulation point if removing it increases the number of connected components.
+### Example
+```
+inputs: n = 3, edges = [[0, 1], [1, 2]]
+output: [1]
+```
+""",
+        "title": "Articulation points",
+        "level": "Edgy",
+        "code": """def articulation_points(n: int, edges: list[list[int]]) -> list[int]:
+""",
+        "test_cases": """
+test_cases = [
+    # Minimal Edge Cases
+    [articulation_points(2, [[0, 1]]), []],
+    [articulation_points(3, [[0, 1], [1, 2]]), [1]],
+    [articulation_points(3, [[0, 1], [1, 2], [2, 0]]), []],
+    # Simple Chains
+    [articulation_points(4, [[0, 1], [1, 2], [2, 3]]), [1, 2]],
+    [articulation_points(6, [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5]]), [1, 2, 3, 4]],
+    [
+        articulation_points(
+            10, [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7], [7, 8], [8, 9]]
+        ),
+        [1, 2, 3, 4, 5, 6, 7, 8],
+    ],
+    # Cycles
+    [articulation_points(4, [[0, 1], [1, 2], [2, 3], [3, 0]]), []],
+    [articulation_points(5, [[0, 1], [1, 2], [2, 3], [3, 4], [4, 0]]), []],
+    # Star Graphs
+    [articulation_points(5, [[0, 1], [0, 2], [0, 3], [0, 4]]), [0]],
+    [articulation_points(5, [[3, 0], [3, 1], [3, 2], [3, 4]]), [3]],
+    # Complete Graphs
+    [articulation_points(4, [[0, 1], [0, 2], [0, 3], [1, 2], [1, 3], [2, 3]]), []],
+    [
+        articulation_points(
+            5,
+            [
+                [0, 1],
+                [0, 2],
+                [0, 3],
+                [0, 4],
+                [1, 2],
+                [1, 3],
+                [1, 4],
+                [2, 3],
+                [2, 4],
+                [3, 4],
+            ],
+        ),
+        [],
+    ],
+    # Cycle + Leaf
+    [articulation_points(5, [[0, 1], [1, 2], [2, 3], [3, 0], [2, 4]]), [2]],
+    # Two Cycles Connected by Bridge
+    [
+        articulation_points(
+            6, [[0, 1], [1, 2], [2, 0], [3, 4], [4, 5], [5, 3], [2, 3]]
+        ),
+        [2, 3],
+    ],
+    # Tree Structures
+    [articulation_points(5, [[0, 1], [1, 2], [1, 3], [3, 4]]), [1, 3]],
+    [
+        articulation_points(7, [[0, 1], [0, 2], [1, 3], [1, 4], [2, 5], [2, 6]]),
+        [0, 1, 2],
+    ],
+    # Root Special Cases
+    [articulation_points(4, [[0, 1], [0, 2], [2, 3]]), [0, 2]],
+    [articulation_points(4, [[0, 1], [1, 2], [2, 3], [3, 1]]), [1]],
+    # Mixed Structures
+    [articulation_points(5, [[0, 1], [1, 2], [2, 0], [1, 3], [3, 4]]), [1, 3]],
+    [
+        articulation_points(
+            7, [[0, 1], [1, 2], [2, 3], [3, 0], [3, 4], [4, 5], [5, 6]]
+        ),
+        [3, 4, 5],
+    ],
+    [
+        articulation_points(6, [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [1, 3]]),
+        [1, 3, 4],
+    ],
+    # Diamond (No articulation)
+    [articulation_points(4, [[0, 1], [1, 3], [3, 2], [2, 0], [1, 2]]), []],
+    # Multiple Branches
+    [articulation_points(6, [[0, 1], [1, 2], [1, 3], [1, 4], [4, 5]]), [1, 4]],
+    # Cycle inside Tree
+    [
+        articulation_points(6, [[0, 1], [1, 2], [2, 0], [2, 3], [3, 4], [4, 5]]),
+        [2, 3, 4],
+    ],
+    # Large Split Node
+    [
+        articulation_points(
+            8, [[0, 1], [1, 2], [2, 3], [1, 4], [4, 5], [1, 6], [6, 7]]
+        ),
+        [1, 2, 4, 6],
+    ],
+    # Dense + Leaf
+    [
+        articulation_points(
+            5, [[0, 1], [0, 2], [0, 3], [1, 2], [1, 3], [2, 3], [3, 4]]
+        ),
+        [3],
+    ],
+    # Cross Edge Blocking Articulation
+    [articulation_points(5, [[0, 1], [1, 2], [2, 3], [3, 4], [1, 3]]), [1, 3]],
+    # Star + Chain
+    [
+        articulation_points(7, [[0, 1], [0, 2], [0, 3], [0, 4], [4, 5], [5, 6]]),
+        [0, 4, 5],
+    ],
+    # Deep Branch Tree
+    [
+        articulation_points(
+            8, [[0, 1], [1, 2], [2, 3], [3, 4], [2, 5], [5, 6], [6, 7]]
+        ),
+        [1, 2, 3, 5, 6],
+    ],
+    # Cycle + Two Tails
+    [
+        articulation_points(
+            7, [[0, 1], [1, 2], [2, 0], [1, 3], [3, 4], [2, 5], [5, 6]]
+        ),
+        [1, 2, 3, 5],
+    ],
+    # Minimal Dense + Branch
+    [articulation_points(4, [[0, 1], [1, 2], [2, 0], [2, 3]]), [2]],
+    # Chain with Extra Edges
+    [
+        articulation_points(
+            6, [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [0, 2], [3, 5]]
+        ),
+        [2, 3],
+    ],
+    # Larger Tree
+    [
+        articulation_points(
+            9, [[0, 1], [1, 2], [1, 3], [2, 4], [3, 5], [1, 6], [6, 7], [7, 8]]
+        ),
+        [1, 2, 3, 6, 7],
+    ],
+    # Central Node with Cycles
+    [
+        articulation_points(
+            7, [[0, 1], [1, 2], [2, 0], [2, 3], [3, 4], [4, 5], [5, 3], [3, 6]]
+        ),
+        [2, 3],
+    ],
+    # Long Cycle (No articulation)
+    [
+        articulation_points(
+            10,
+            [
+                [0, 1],
+                [1, 2],
+                [2, 3],
+                [3, 4],
+                [4, 5],
+                [5, 6],
+                [6, 7],
+                [7, 8],
+                [8, 9],
+                [9, 0],
+            ],
+        ),
+        [],
+    ],
+    # # Long Chain (Worst DFS Depth) — 10^4 nodes
+    # # Every internal node is articulation
+    # [
+    #     articulation_points(10_000, [[i, i + 1] for i in range(9_999)]),
+    #     list(range(1, 9_999)),
+    # ],
+    # # Large Star — 10^4 nodes
+    # # Only root is articulation
+    # [articulation_points(10_000, [[0, i] for i in range(1, 10_000)]), [0]],
+    # # Large Cycle — 10^4 nodes
+    # # No articulation points
+    # [
+    #     articulation_points(10_000, [[i, i + 1] for i in range(9_999)] + [[9_999, 0]]),
+    #     [],
+    # ],
+    # # Cycle with Long Tail
+    # # Tests low-link correctly handling bridge after cycle
+    # [
+    #     articulation_points(
+    #         10_000,
+    #         (
+    #             [[i, i + 1] for i in range(4_999)]
+    #             + [[4_999, 0]]  # cycle of 5000
+    #             + [[4_999, i] for i in range(5_000, 10_000)]
+    #         ),
+    #     ),
+    #     [4_999],
+    # ],
+    # # Balanced Binary Tree (~8191 nodes)
+    # # All internal nodes articulation
+    # [
+    #     articulation_points(
+    #         8191,
+    #         [[i, 2 * i + 1] for i in range(4095)]
+    #         + [[i, 2 * i + 2] for i in range(4095)],
+    #     ),
+    #     list(range(4095)),
+    # ],
+    # # Two Large Cycles Connected by Single Bridge
+    # [
+    #     articulation_points(
+    #         10_000,
+    #         (
+    #             [[i, i + 1] for i in range(4_999)]
+    #             + [[4_999, 0]]
+    #             + [[i, i + 1] for i in range(5_000, 9_999)]
+    #             + [[9_999, 5_000]]
+    #             + [[4_999, 5_000]]
+    #         ),
+    #     ),
+    #     [4_999, 5_000],
+    # ],
+    # # Complete Graph of 1000 nodes (dense stress)
+    # # No articulation points
+    # [
+    #     articulation_points(
+    #         1000, [[i, j] for i in range(1000) for j in range(i + 1, 1000)]
+    #     ),
+    #     [],
+    # ],
+    # # Star + Deep Chain Hybrid
+    # # Root + chain internal nodes
+    # [
+    #     articulation_points(
+    #         10_000,
+    #         (
+    #             [[0, i] for i in range(1, 5_000)]
+    #             + [[5_000 + i, 5_001 + i] for i in range(4_998)]
+    #             + [[0, 5_000]]
+    #         ),
+    #     ),
+    #     [0] + list(range(5_001, 9_999)),
+    # ],
+    # # Large Comb Structure
+    # # Long spine with leaf at every node
+    # [
+    #     articulation_points(
+    #         10_000,
+    #         (
+    #             [[i, i + 1] for i in range(4_999)]
+    #             + [[i, i + 5_000] for i in range(5_000)]
+    #         ),
+    #     ),
+    #     list(range(1, 4_999)),
+    # ],
+    # # Single Critical Hub in Dense Graph
+    # # Node 0 connects two large cliques
+    # [
+    #     articulation_points(
+    #         2000,
+    #         (
+    #             [[i, j] for i in range(1, 1000) for j in range(i + 1, 1000)]
+    #             + [[i, j] for i in range(1000, 2000) for j in range(i + 1, 2000)]
+    #             + [[0, i] for i in range(1, 2000)]
+    #         ),
+    #     ),
+    #     [0],
+    # ],
 ]
 """,
     },
