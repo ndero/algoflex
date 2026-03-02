@@ -2948,7 +2948,7 @@ test_cases = [
 ]
 """,
         "title": "Min stack",
-        "level": "Breezy",
+        "level": "Steady",
         "code": """class Stack:
 """,
     },
@@ -4079,6 +4079,128 @@ test_cases = [
             + [[i, j] for i in range(1, 75) for j in range(76, 86)],
         ),
         150,
+    ],
+]
+""",
+    },
+    87: {
+        "markdown": """
+### Reorder log files
+Given a `logs` array containing logs, sort it such that all letter logs come before digit logs and letter logs are sorted by content first then identifier if there is a tie. 
+
+Make sure the digit logs stay in their original order (stable sort).
+
+> letter logs - content starts with a letter
+> digit logs - content starts with a digit. 
+> first word of each log is the identifier. i.e each log looks like: 'identifier content...'
+
+### Example
+```
+logs = ["l2 abc def", "l1 abc def", "d1 1 2"]
+output = ["l1 abc def", "l2 abc def", "d1 1 2"]
+```
+""",
+        "title": "Reorder log files",
+        "level": "Breezy",
+        "code": """def reorder_log_files(logs: list[str]) -> list[str]:
+""",
+        "test_cases": """
+test_cases = [
+    [reorder_log_files(["a1 9 2 3 1"]), ["a1 9 2 3 1"]],
+    [reorder_log_files(["a1 act car"]), ["a1 act car"]],
+    [
+        reorder_log_files(
+            [
+                "dig1 8 1 5 1",
+                "let1 art can",
+                "dig2 3 6",
+                "let2 own kit dig",
+                "let3 art zero",
+            ]
+        ),
+        [
+            "let1 art can",
+            "let3 art zero",
+            "let2 own kit dig",
+            "dig1 8 1 5 1",
+            "dig2 3 6",
+        ],
+    ],
+    # All digit logs
+    [
+        reorder_log_files(["d1 1 2 3", "d2 4 5 6", "d3 7 8 9"]),
+        ["d1 1 2 3", "d2 4 5 6", "d3 7 8 9"],
+    ],
+    # All letter logs
+    [
+        reorder_log_files(["l1 abc def", "l2 abc deg", "l3 bcd efg"]),
+        ["l1 abc def", "l2 abc deg", "l3 bcd efg"],
+    ],
+    # Same content, different identifiers
+    [
+        reorder_log_files(["l2 abc def", "l1 abc def", "d1 1 2"]),
+        ["l1 abc def", "l2 abc def", "d1 1 2"],
+    ],
+    # Content tie-break by identifier
+    [
+        reorder_log_files(["a2 same content", "a1 same content", "d1 4 5"]),
+        ["a1 same content", "a2 same content", "d1 4 5"],
+    ],
+    # Digit logs maintain order
+    [
+        reorder_log_files(["d1 3 4", "d2 1 2", "l1 abc def"]),
+        ["l1 abc def", "d1 3 4", "d2 1 2"],
+    ],
+    # Letter content sorting
+    [
+        reorder_log_files(["l1 zoo alpha", "l2 apple pie", "l3 zoo beta"]),
+        ["l2 apple pie", "l1 zoo alpha", "l3 zoo beta"],
+    ],
+    # Mixed with similar prefixes
+    [
+        reorder_log_files(
+            ["let1 art zero", "let2 art can", "let3 art apple", "dig1 3 6"]
+        ),
+        ["let3 art apple", "let2 art can", "let1 art zero", "dig1 3 6"],
+    ],
+    # Single word content
+    [
+        reorder_log_files(["l1 apple", "l2 banana", "d1 5"]),
+        ["l1 apple", "l2 banana", "d1 5"],
+    ],
+    # Long content strings
+    [
+        reorder_log_files(
+            ["l1 this is a long log message", "l2 another long log message", "d1 9 8 7"]
+        ),
+        ["l2 another long log message", "l1 this is a long log message", "d1 9 8 7"],
+    ],
+    # Mixed ordering
+    [
+        reorder_log_files(["d1 4 2", "l1 abc def", "l2 abc deg", "d2 0 1"]),
+        ["l1 abc def", "l2 abc deg", "d1 4 2", "d2 0 1"],
+    ],
+    # Many digit logs at end
+    [
+        reorder_log_files(["l1 aa bb", "d1 1 1", "d2 2 2", "d3 3 3"]),
+        ["l1 aa bb", "d1 1 1", "d2 2 2", "d3 3 3"],
+    ],
+    # Identifiers affect final order
+    [
+        reorder_log_files(["x9 alpha beta", "x1 alpha beta", "x3 alpha beta"]),
+        ["x1 alpha beta", "x3 alpha beta", "x9 alpha beta"],
+    ],
+    # 100 logs
+    [
+        reorder_log_files(
+            [f"let{i} content {i}" for i in range(50)]
+            + [f"dig{i} {i} {i+1}" for i in range(50)]
+        ),
+        sorted(
+            [f"let{i} content {i}" for i in range(50)],
+            key=lambda x: (x.split(" ", 1)[1], x.split(" ", 1)[0]),
+        )
+        + [f"dig{i} {i} {i+1}" for i in range(50)],
     ],
 ]
 """,
