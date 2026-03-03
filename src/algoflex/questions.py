@@ -5293,4 +5293,88 @@ test_cases = [
 ]
 """,
     },
+    97: {
+        "markdown": """
+### Alien order
+
+### Example
+```
+words = ["za", "yb", "xc"]
+output = "zabcyx"
+```
+""",
+        "title": "Alien order",
+        "level": "Edgy",
+        "code": """def alien_order(words: list[str]) -> str:
+""",
+        "test_cases": """
+test_cases = [
+    # ===== Minimal =====
+    [alien_order(["a"]), "a"],
+    [alien_order(["abc"]), "abc"],
+    # ===== Two Words =====
+    [alien_order(["a", "b"]), "ab"],
+    [alien_order(["z", "x"]), "zx"],
+    # ===== Classic Unique Example =====
+    [alien_order(["wrt", "wrf", "er", "ett", "rftt"]), "wertf"],
+    # ===== Simple Linear =====
+    [alien_order(["a", "b", "c"]), "abc"],
+    # ===== Prefix Valid =====
+    [alien_order(["abc", "abc"]), "abc"],
+    [alien_order(["abc", "abcd"]), "abcd"],
+    [alien_order(["a", "ab", "abc"]), "abc"],
+    # ===== Invalid Prefix (Must Return "") =====
+    [alien_order(["abc", "ab"]), ""],
+    [alien_order(["abcd", "abc"]), ""],
+    [alien_order(["zxy", "zx"]), ""],
+    # ===== Simple Cycles =====
+    [alien_order(["z", "x", "z"]), ""],
+    [alien_order(["a", "b", "a"]), ""],
+    [alien_order(["ab", "bc", "ca"]), "abc"],
+    # ===== Multiple Valid Orders =====
+    [alien_order(["ab", "ac"]), "abc"],
+    [alien_order(["za", "zb", "ca", "cb"]), "zacb"],
+    # ===== Disconnected Components =====
+    [alien_order(["a", "b", "c", "d"]), "abcd"],
+    [alien_order(["za", "yb", "xc"]), "zabcyx"],
+    # ===== No Ordering Constraint =====
+    [alien_order(["aaa", "aaa"]), "a"],
+    [alien_order(["abc", "abc", "abc"]), "abc"],
+    # ===== Deep Difference =====
+    [alien_order(["abc", "abd", "abf"]), "abcdf"],
+    [alien_order(["xza", "xzb", "yzb"]), "xzayb"],
+    # ===== Long Words =====
+    [alien_order(["abcdefghijkl", "abcdefghijkm"]), "abcdefghijklm"],
+    # ===== Complex DAG =====
+    [alien_order(["baa", "abcd", "abca", "cab", "cad"]), "bdac"],
+    [alien_order(["caa", "aaa", "aab"]), "cab"],
+    # ===== Subtle Cycle =====
+    [alien_order(["abc", "bca", "cab", "abc"]), ""],
+    # ===== Single Letter Repeats =====
+    [alien_order(["aaa", "aaab"]), "ab"],
+    # ===== Middle Character Ordering =====
+    [alien_order(["abx", "aby", "abz"]), "abxyz"],
+    # ===== All Letters Used =====
+    [alien_order(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]), "abcdefghij"],
+    # ===== Independent Groups =====
+    [alien_order(["abc", "def", "ghi"]), "abcefhidg"],
+    # ===== Chain With Shared Suffix =====
+    [alien_order(["az", "bz", "cz"]), "azbc"],
+    # ===== Many Constraints Same Pattern =====
+    [alien_order(["ax", "bx", "cx", "dx"]), "axbcd"],
+    # ===== Indirect Cycle =====
+    [alien_order(["ab", "bc", "cd", "da"]), "abcd"],
+    # ===== Larger Structured DAG =====
+    [alien_order(["za", "zb", "ya", "yb", "xa", "xb"]), "zaybx"],
+    # ===== Ordering From Later Position =====
+    [alien_order(["mnop", "mnqr", "mnqs"]), "mnoprqs"],
+    # ===== Deep Nested Ordering =====
+    [alien_order(["aaaab", "aaaac", "aaaad"]), "abcd"],
+    # ===== Multiple Levels =====
+    [alien_order(["zaa", "zab", "zac", "zba"]), "zabc"],
+    # ===== Large Alphabet Subset =====
+    [alien_order(["q", "w", "e", "r", "t", "y"]), "qwerty"],
+]
+""",
+    },
 }
