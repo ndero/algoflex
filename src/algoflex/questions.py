@@ -5377,4 +5377,100 @@ test_cases = [
 ]
 """,
     },
+    98: {
+        "markdown": """
+### First missing positive
+
+### Example
+```
+nums = [1, 2, 0]
+output = 3
+
+nums = [1, 1, 2, 2]
+output = 3
+```
+""",
+        "title": "First missing positive",
+        "level": "Edgy",
+        "code": """def first_missing_positive(nums: list[int]) -> int:
+""",
+        "test_cases": """
+test_cases = [
+    # ===== Minimal =====
+    [first_missing_positive([1]), 2],
+    [first_missing_positive([2]), 1],
+    [first_missing_positive([0]), 1],
+    [first_missing_positive([-1]), 1],
+    # ===== Small Basics =====
+    [first_missing_positive([1, 2, 0]), 3],
+    [first_missing_positive([3, 4, -1, 1]), 2],
+    [first_missing_positive([7, 8, 9, 11, 12]), 1],
+    [first_missing_positive([1, 1]), 2],
+    [first_missing_positive([2, 2]), 1],
+    # ===== Duplicates =====
+    [first_missing_positive([1, 1, 2, 2]), 3],
+    [first_missing_positive([2, 3, 2, 1]), 4],
+    [first_missing_positive([1, 2, 3, 3, 4]), 5],
+    [first_missing_positive([2, 1, 1, 2]), 3],
+    # ===== All Negative =====
+    [first_missing_positive([-1, -2, -3]), 1],
+    [first_missing_positive([-5, -10, 0]), 1],
+    # ===== Mixed Large Numbers =====
+    [first_missing_positive([100000, 1]), 2],
+    [first_missing_positive([1, 100000]), 2],
+    [first_missing_positive([2**31 - 1, 1]), 2],
+    [first_missing_positive([-(2**31), 1, 2]), 3],
+    # ===== Missing 1 =====
+    [first_missing_positive([2, 3, 4]), 1],
+    [first_missing_positive([0, 2, 2]), 1],
+    # ===== Consecutive Sequence =====
+    [first_missing_positive([1, 2, 3, 4]), 5],
+    [first_missing_positive([1, 2, 3, 4, 5]), 6],
+    [first_missing_positive([1, 2]), 3],
+    [first_missing_positive([1, 2, 3]), 4],
+    # ===== Unsorted =====
+    [first_missing_positive([4, 3, 2, 1]), 5],
+    [first_missing_positive([2, 4, 1, 3]), 5],
+    [first_missing_positive([5, 4, 3, 2, 1]), 6],
+    # ===== With Zeros =====
+    [first_missing_positive([0, 1, 2, 3]), 4],
+    [first_missing_positive([0, 0, 1]), 2],
+    [first_missing_positive([0, 2, 1]), 3],
+    # ===== Gaps Inside =====
+    [first_missing_positive([1, 3]), 2],
+    [first_missing_positive([2, 3, 4, 5]), 1],
+    [first_missing_positive([1, 2, 4, 5]), 3],
+    [first_missing_positive([1, 2, 5, 6]), 3],
+    # ===== Large Gaps =====
+    [first_missing_positive([1, 100, 1000]), 2],
+    [first_missing_positive([2, 100, 1000]), 1],
+    # ===== Repeated Large Pattern =====
+    [first_missing_positive([1, 2, 2, 3, 3, 4, 4]), 5],
+    [first_missing_positive([3, 3, 3, 3]), 1],
+    # ===== Complex Mix =====
+    [first_missing_positive([10, 1, 2, 3, 4, 5]), 6],
+    [first_missing_positive([1, 2, 6, 3, 5, 4]), 7],
+    [first_missing_positive([9, 8, 7, 6, 5, 4, 3, 2, 1]), 10],
+    # ===== Edge Near Length =====
+    [first_missing_positive([1] * 100), 2],
+    [first_missing_positive([2] * 100), 1],
+    # ===== Alternating Pattern =====
+    [first_missing_positive([1, 3, 5, 7, 9]), 2],
+    [first_missing_positive([2, 4, 6, 8]), 1],
+    # ===== Large Valid Prefix =====
+    [first_missing_positive(list(range(1, 51))), 51],
+    [first_missing_positive(list(range(2, 51))), 1],
+    # ===== Shuffled Large Prefix =====
+    [first_missing_positive([3, 4, 1, 2, 5, 7, 6]), 8],
+    # ===== Contains INT Bounds =====
+    [first_missing_positive([2**31 - 1]), 1],
+    [first_missing_positive([-(2**31)]), 1],
+    [first_missing_positive([1, -(2**31), 2**31 - 1]), 2],
+    # ===== Random Mix =====
+    [first_missing_positive([4, 2, 1, 6, 5]), 3],
+    [first_missing_positive([8, 7, 6, 1, 2, 3, 4]), 5],
+    [first_missing_positive([2, 5, 3, 1, 4]), 6],
+]
+""",
+    },
 }
