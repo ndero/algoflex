@@ -6123,4 +6123,92 @@ test_cases = [
 ]
 """,
     },
+    104: {
+        "markdown": """
+### First and last position of element in sorted array
+
+### Example
+```
+nums = [2, 2, 2, 2], target = 2
+output = [0, 3]
+
+nums = [1, 2, 3], target = 1
+output = [0, 0]
+
+```
+""",
+        "title": "First and last position of element in sorted array",
+        "level": "Steady",
+        "code": """def search_range(nums: list[int], target: int) -> list[int]:
+""",
+        "test_cases": """
+test_cases = [
+    # ---- Empty ----
+    [search_range([], 1), [-1, -1]],
+    # ---- Single Element ----
+    [search_range([1], 1), [0, 0]],
+    [search_range([1], 0), [-1, -1]],
+    # ---- Two Elements ----
+    [search_range([1, 2], 1), [0, 0]],
+    [search_range([1, 2], 2), [1, 1]],
+    [search_range([1, 2], 3), [-1, -1]],
+    # ---- All Same ----
+    [search_range([2, 2, 2, 2], 2), [0, 3]],
+    [search_range([2, 2, 2, 2], 3), [-1, -1]],
+    # ---- Basic Examples ----
+    [search_range([5, 7, 7, 8, 8, 10], 8), [3, 4]],
+    [search_range([5, 7, 7, 8, 8, 10], 6), [-1, -1]],
+    # ---- Target At Beginning ----
+    [search_range([1, 1, 2, 3, 4], 1), [0, 1]],
+    [search_range([1, 2, 3, 4], 1), [0, 0]],
+    # ---- Target At End ----
+    [search_range([1, 2, 3, 4, 4], 4), [3, 4]],
+    [search_range([1, 2, 3, 4], 4), [3, 3]],
+    # ---- Middle Large Block ----
+    [search_range([1, 2, 3, 3, 3, 3, 4, 5], 3), [2, 5]],
+    # ---- No Occurrence Between Values ----
+    [search_range([1, 3, 5, 7], 4), [-1, -1]],
+    # ---- Negative Numbers ----
+    [search_range([-5, -4, -4, -4, -3, -1], -4), [1, 3]],
+    [search_range([-5, -4, -4, -4, -3, -1], -2), [-1, -1]],
+    # ---- Mixed Neg/Pos ----
+    [search_range([-10, -5, 0, 0, 0, 5, 10], 0), [2, 4]],
+    [search_range([-10, -5, 0, 0, 0, 5, 10], -10), [0, 0]],
+    # ---- Extreme Values ----
+    [search_range([-(10**9), 0, 10**9], -(10**9)), [0, 0]],
+    [search_range([-(10**9), 0, 10**9], 10**9), [2, 2]],
+    [search_range([-(10**9), 0, 10**9], 1), [-1, -1]],
+    # ---- Large Duplicate Block ----
+    [search_range([1] * 1000, 1), [0, 999]],
+    [search_range([1] * 1000, 2), [-1, -1]],
+    # ---- Increasing Sequence ----
+    [search_range(list(range(1000)), 500), [500, 500]],
+    [search_range(list(range(1000)), 1001), [-1, -1]],
+    # ---- Large Middle Block ----
+    [
+        search_range(list(range(500)) + [500] * 1000 + list(range(501, 1000)), 500),
+        [500, 1499],
+    ],
+    # ---- Stress Near 10^5 ----
+    [search_range([1] * 50000 + [2] * 50000, 2), [50000, 99999]],
+    [search_range([1] * 50000 + [2] * 50000, 1), [0, 49999]],
+    # ---- Target Smaller Than All ----
+    [search_range([5, 6, 7, 8], 1), [-1, -1]],
+    # ---- Target Larger Than All ----
+    [search_range([5, 6, 7, 8], 10), [-1, -1]],
+    # ---- Alternating Small Blocks ----
+    [search_range([1, 1, 2, 2, 3, 3, 4, 4], 3), [4, 5]],
+    # ---- Large Sparse ----
+    [search_range(list(range(0, 200000, 2)), 100000), [50000, 50000]],
+    [search_range(list(range(0, 200000, 2)), 99999), [-1, -1]],
+    # ---- Single Large Block Center ----
+    [search_range([0] * 10000 + [1] * 80000 + [2] * 10000, 1), [10000, 89999]],
+    # ---- Edge Binary Trap ----
+    [search_range([2, 2, 2, 3, 4, 5], 2), [0, 2]],
+    [search_range([1, 2, 3, 4, 4, 4], 4), [3, 5]],
+    # ---- Very Large Values ----
+    [search_range([10**9] * 100000, 10**9), [0, 99999]],
+]
+""",
+    },
 }
