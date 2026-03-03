@@ -4920,4 +4920,71 @@ test_cases = [
 ]
 """,
     },
+    93: {
+        "markdown": """
+### Minimum window substring
+
+### Example
+```
+s = "abc", t = 'ac'
+output = "abc" 
+```
+""",
+        "title": "Minimum window substring",
+        "level": "Edgy",
+        "code": """def min_window(s: str, t: str) -> str:
+""",
+        "test_cases": """
+test_cases = [
+    # ===== Minimal Edge Cases =====
+    [min_window("a", "a"), "a"],  # single char exact
+    [min_window("a", "b"), ""],  # single char no match
+    [min_window("ab", "a"), "a"],  # match at start
+    [min_window("ab", "b"), "b"],  # match at end
+    [min_window("aa", "aa"), "aa"],  # full string match
+    [min_window("aa", "aaa"), ""],  # t longer than s
+    # ===== Classic Example =====
+    [min_window("ADOBECODEBANC", "ABC"), "BANC"],
+    # ===== Case Sensitivity =====
+    [min_window("aAaAaA", "Aa"), "aA"],  # case matters
+    [min_window("aAaAaA", "aa"), "aAa"],  # lowercase only
+    [min_window("ABC", "abc"), ""],  # no lowercase match
+    # ===== Window At Beginning =====
+    [min_window("ABCXYZ", "ABC"), "ABC"],
+    [min_window("AABCXYZ", "AABC"), "AABC"],
+    # ===== Window At End =====
+    [min_window("XYZABC", "ABC"), "ABC"],
+    [min_window("XYZAAABC", "AABC"), "AABC"],
+    # ===== Window In Middle =====
+    [min_window("XYZABCXYZ", "ABC"), "ABC"],
+    [min_window("ZZZABCZZZ", "ABC"), "ABC"],
+    # ===== Repeated Characters In T =====
+    [min_window("AAABBC", "AABC"), "AABBC"],
+    [min_window("ABAACBAB", "ABC"), "ACB"],
+    [min_window("ABAACBAB", "AABC"), "BAAC"],
+    # ===== All Characters Same =====
+    [min_window("aaaaaaa", "aaa"), "aaa"],
+    [min_window("aaaaaaa", "aaaaaa"), "aaaaaa"],
+    [min_window("aaaaaaa", "aaaaaaaa"), ""],
+    # ===== No Possible Window =====
+    [min_window("abcdef", "gh"), ""],
+    [min_window("short", "longer"), ""],
+    # ===== Tight Windows =====
+    [min_window("abc", "ac"), "abc"],
+    [min_window("cab", "ab"), "ab"],
+    [min_window("bba", "ab"), "ba"],
+    # ===== Many Extra Characters =====
+    [min_window("aaaaaaaaaabbbbbcdd", "abcdd"), "abbbbbcdd"],
+    [min_window("xyyzyzyx", "xyz"), "zyx"],
+    # ===== Multiple Possible Windows (choose smallest) =====
+    [min_window("aaflslflsldkalskaaa", "aaa"), "aaa"],
+    [min_window("abdabca", "abc"), "abc"],
+    # ===== Large Duplicate Stress Style =====
+    [min_window("ABABABABABABABABAB", "AABB"), "ABAB"],
+    [min_window("AAABBBCCC", "ABC"), "ABBBC"],
+    # ===== Exact Full Coverage =====
+    [min_window("abc", "abc"), "abc"],
+]
+""",
+    },
 }
