@@ -6000,4 +6000,127 @@ test_cases = [
 ]
 """,
     },
+    103: {
+        "markdown": """
+### Count SCCs
+
+### Example
+```
+n = 2, edges = [[0, 1], [1, 0]]
+output = 1
+
+n = 3, edges = [[0, 1], [1, 0], [1, 2]]
+output = 2
+```
+""",
+        "title": "Count SCCs",
+        "level": "Steady",
+        "code": """def count_SCC(n: int, edges: list[list[int]]) -> int:
+""",
+        "test_cases": """
+test_cases = [
+    # ===== Minimal Cases =====
+    [count_SCC(1, []), 1],
+    [count_SCC(2, []), 2],
+    [count_SCC(2, [[0, 1]]), 2],
+    [count_SCC(2, [[0, 1], [1, 0]]), 1],
+    # ===== Small Simple Cycles =====
+    [count_SCC(3, [[0, 1], [1, 2], [2, 0]]), 1],
+    [count_SCC(3, [[0, 1], [1, 2]]), 3],
+    [count_SCC(3, [[0, 1], [1, 0], [1, 2]]), 2],
+    [count_SCC(4, [[0, 1], [1, 2], [2, 3], [3, 0]]), 1],
+    # ===== Disconnected Graphs =====
+    [count_SCC(4, []), 4],
+    [count_SCC(5, [[0, 1], [1, 0], [3, 4], [4, 3]]), 3],
+    [count_SCC(6, [[0, 1], [1, 0], [2, 3], [3, 2], [4, 5]]), 4],
+    # ===== Self Loops =====
+    [count_SCC(3, [[0, 0], [1, 1], [2, 2]]), 3],
+    [count_SCC(3, [[0, 1], [1, 0], [2, 2]]), 2],
+    # ===== Chain Graph (Worst DFS Depth) =====
+    [count_SCC(5, [[0, 1], [1, 2], [2, 3], [3, 4]]), 5],
+    [count_SCC(10, [[i, i + 1] for i in range(9)]), 10],
+    # ===== Reverse Chain =====
+    [count_SCC(5, [[4, 3], [3, 2], [2, 1], [1, 0]]), 5],
+    # ===== Two Large Cycles =====
+    [count_SCC(6, [[0, 1], [1, 2], [2, 0], [3, 4], [4, 5], [5, 3]]), 2],
+    # ===== Cycle With Tail =====
+    [count_SCC(5, [[0, 1], [1, 2], [2, 0], [2, 3], [3, 4]]), 3],
+    [count_SCC(6, [[0, 1], [1, 2], [2, 0], [3, 4], [4, 3], [4, 5]]), 3],
+    # ===== Star Patterns =====
+    [count_SCC(5, [[0, 1], [0, 2], [0, 3], [0, 4]]), 5],
+    [count_SCC(5, [[1, 0], [2, 0], [3, 0], [4, 0]]), 5],
+    # ===== Fully Connected (Complete Digraph) =====
+    [count_SCC(4, [[i, j] for i in range(4) for j in range(4) if i != j]), 1],
+    # ===== Sparse Random-like =====
+    [count_SCC(7, [[0, 1], [1, 2], [2, 0], [3, 4], [4, 5], [5, 3], [6, 5]]), 3],
+    [count_SCC(8, [[0, 1], [1, 2], [2, 0], [3, 4], [4, 3], [5, 6]]), 5],
+    # ===== Diamond DAG =====
+    [count_SCC(4, [[0, 1], [0, 2], [1, 3], [2, 3]]), 4],
+    # ===== Bidirectional Components =====
+    [count_SCC(5, [[0, 1], [1, 0], [2, 3], [3, 2], [3, 4], [4, 3]]), 2],
+    # ===== Large Single SCC =====
+    [count_SCC(10, [[i, (i + 1) % 10] for i in range(10)]), 1],
+    # ===== Large Two SCC Blocks =====
+    [
+        count_SCC(
+            10,
+            [[i, (i + 1) % 5] for i in range(5)]
+            + [[i, (i + 1) % 5 + 5] for i in range(5, 10)],
+        ),
+        2,
+    ],
+    # ===== Alternating Connections =====
+    [count_SCC(6, [[0, 1], [1, 0], [2, 3], [3, 2], [4, 5]]), 4],
+    # ===== Bridge Between Cycles =====
+    [count_SCC(6, [[0, 1], [1, 2], [2, 0], [3, 4], [4, 5], [5, 3], [2, 3]]), 2],
+    # ===== Stress: Long Chain + Back Edge =====
+    [count_SCC(20, [[i, i + 1] for i in range(19)] + [[19, 0]]), 1],
+    # ===== Stress: Many Tiny SCCs =====
+    [count_SCC(20, [[i, i] for i in range(20)]), 20],
+    # ===== Stress: Dense But Not Fully Connected =====
+    [count_SCC(6, [[0, 1], [1, 2], [2, 0], [3, 4], [4, 5], [5, 3], [0, 3]]), 2],
+    # ===== Stress: Large Sparse =====
+    [count_SCC(50, [[i, i + 1] for i in range(49)]), 50],
+    # ===== Stress: Large One Big Cycle =====
+    [count_SCC(50, [[i, (i + 1) % 50] for i in range(50)]), 1],
+    # ===== Stress: Two Large Cycles Connected One Way =====
+    [
+        count_SCC(
+            20,
+            [[i, (i + 1) % 10] for i in range(10)]
+            + [[i, (i + 1) % 10 + 10] for i in range(10, 20)]
+            + [[5, 15]],
+        ),
+        2,
+    ],
+    # ===== Many Isolated + One Cycle =====
+    [count_SCC(10, [[0, 1], [1, 2], [2, 0]]), 8],
+    # ===== Bidirectional Line =====
+    [count_SCC(6, [[i, i + 1] for i in range(5)] + [[i + 1, i] for i in range(5)]), 1],
+    # ===== Complex Mixed =====
+    [
+        count_SCC(
+            12,
+            [
+                [0, 1],
+                [1, 2],
+                [2, 0],
+                [3, 4],
+                [4, 5],
+                [5, 3],
+                [6, 7],
+                [8, 9],
+                [9, 8],
+                [10, 11],
+            ],
+        ),
+        7,
+    ],
+    # ===== Stress: Near Quadratic Edges (Medium n) =====
+    [count_SCC(15, [[i, j] for i in range(15) for j in range(15) if i != j]), 1],
+    # ===== DAG Large =====
+    [count_SCC(30, [[i, j] for i in range(30) for j in range(i + 1, 30)]), 30],
+]
+""",
+    },
 }
