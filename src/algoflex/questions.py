@@ -6211,4 +6211,90 @@ test_cases = [
 ]
 """,
     },
+    105: {
+        "markdown": """
+### Longest valid parentheses
+
+### Example
+```
+s = "(())"
+output = 4
+
+s = "((("
+output = 0
+```
+""",
+        "title": "Longest valid parentheses",
+        "level": "Edgy",
+        "code": """def longest_valid_parentheses(s: str) -> int:
+""",
+        "test_cases": """
+test_cases = [
+    # ---- Minimal ----
+    [longest_valid_parentheses(""), 0],
+    [longest_valid_parentheses("("), 0],
+    [longest_valid_parentheses(")"), 0],
+    [longest_valid_parentheses("()"), 2],
+    [longest_valid_parentheses(")("), 0],
+    # ---- Simple Cases ----
+    [longest_valid_parentheses("()()"), 4],
+    [longest_valid_parentheses("(())"), 4],
+    [longest_valid_parentheses("(()"), 2],
+    [longest_valid_parentheses("())"), 2],
+    # ---- Nested ----
+    [longest_valid_parentheses("((()))"), 6],
+    [longest_valid_parentheses("(()())"), 6],
+    [longest_valid_parentheses("((())())"), 8],
+    # ---- Consecutive Blocks ----
+    [longest_valid_parentheses("()()()"), 6],
+    [longest_valid_parentheses("(())(())"), 8],
+    # ---- Broken Middle ----
+    [longest_valid_parentheses("()(()"), 2],
+    [longest_valid_parentheses(")()())"), 4],
+    [longest_valid_parentheses("(()))())("), 4],
+    # ---- Prefix Invalid ----
+    [longest_valid_parentheses(")))()()"), 4],
+    [longest_valid_parentheses("))))"), 0],
+    # ---- Suffix Invalid ----
+    [longest_valid_parentheses("()()((("), 4],
+    [longest_valid_parentheses("(((()"), 2],
+    # ---- Alternating Patterns ----
+    [longest_valid_parentheses("()()(()())"), 10],
+    [longest_valid_parentheses("(()()(()))"), 10],
+    # ---- Complex Mixed ----
+    [longest_valid_parentheses("()(())(()())"), 12],
+    [longest_valid_parentheses("(()())())(()())"), 8],
+    [longest_valid_parentheses("())(())()()("), 8],
+    # ---- Single Long Valid ----
+    [longest_valid_parentheses("(" * 1000 + ")" * 1000), 2000],
+    # ---- Large Balanced Pattern ----
+    [longest_valid_parentheses("()" * 5000), 10000],
+    # ---- Large Nested ----
+    [longest_valid_parentheses("(" * 5000 + ")" * 5000), 10000],
+    # ---- Large All Open ----
+    [longest_valid_parentheses("(" * 10000), 0],
+    # ---- Large All Close ----
+    [longest_valid_parentheses(")" * 10000), 0],
+    # ---- Stress Near Limit (~30k) Balanced ----
+    [longest_valid_parentheses("(" * 15000 + ")" * 15000), 30000],
+    # ---- Stress Near Limit Alternating ----
+    [longest_valid_parentheses("()" * 15000), 30000],
+    # ---- Stress Broken Large ----
+    [longest_valid_parentheses("(" * 14999 + ")" * 14998), 29996],
+    # ---- Large With One Break ----
+    [longest_valid_parentheses("(" * 10000 + ")" * 10000 + "("), 20000],
+    # ---- Complex Long Pattern ----
+    [longest_valid_parentheses("()(()())" * 2000), 16000],
+    # ---- Random-ish Mixed ----
+    [longest_valid_parentheses("(()())()(()(()))"), 16],
+    [longest_valid_parentheses("())(()(()))()"), 10],
+    # ---- Small Edge Chains ----
+    [longest_valid_parentheses("()(()())"), 8],
+    [longest_valid_parentheses("((())())()"), 10],
+    # ---- Multiple Invalid Segments ----
+    [longest_valid_parentheses(")()()(()())(()"), 10],
+    [longest_valid_parentheses("(()))(()())"), 6],
+]
+""",
+    },
 }
