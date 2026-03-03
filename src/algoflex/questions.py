@@ -5556,4 +5556,185 @@ test_cases = [
 ]
 """,
     },
+    100: {
+        "markdown": """
+### Pick cherries
+
+### Example
+```
+grid = [[1, 1], [1, 1]]
+output = 4
+
+grid = [[1, -1], [1, 1]]
+output = 3
+
+grid = [[1, -1], [-1, 1]]
+output = 0
+```
+""",
+        "title": "Pick cherries",
+        "level": "Edgy",
+        "code": """def pick_cherries(grid: list[list[int]]):
+""",
+        "test_cases": """
+test_cases = [
+    # 1. Single cell (empty)
+    [pick_cherries([[0]]), 0],
+    # 2. Single cell (one cherry)
+    [pick_cherries([[1]]), 1],
+    # 3. 2x2 simple full cherries
+    [pick_cherries([[1, 1], [1, 1]]), 4],
+    # 4. 2x2 with one obstacle
+    [pick_cherries([[1, -1], [1, 1]]), 3],
+    # 5. 2x2 blocked path
+    [pick_cherries([[1, -1], [-1, 1]]), 0],
+    # 6. Classic example
+    [pick_cherries([[0, 1, -1], [1, 0, -1], [1, 1, 1]]), 5],
+    # 7. No valid path
+    [pick_cherries([[1, 1, -1], [-1, 1, -1], [1, 1, 1]]), 5],
+    # 8. Narrow corridor
+    [pick_cherries([[1, 1, 1], [-1, -1, 1], [1, 1, 1]]), 5],
+    # 9. Only one path
+    [pick_cherries([[1, 0, 0], [1, -1, 0], [1, 1, 1]]), 5],
+    # 10. All zeros
+    [pick_cherries([[0, 0, 0], [0, 0, 0], [0, 0, 0]]), 0],
+    # 11. Full 4x4 cherries
+    [pick_cherries([[1] * 4 for _ in range(4)]), 12],
+    # 12. 4x4 diagonal obstacles
+    [pick_cherries([[1, 1, 1, 1], [1, -1, 1, 1], [1, 1, -1, 1], [1, 1, 1, 1]]), 12],
+    # 13. Many obstacles
+    [pick_cherries([[1, 1, 1, 1], [-1, -1, -1, 1], [1, 1, 1, 1], [1, -1, 1, 1]]), 7],
+    # 14. Cherry islands
+    [pick_cherries([[1, 0, 1, 0], [0, -1, 0, 1], [1, 0, 1, 0], [0, 1, 0, 1]]), 6],
+    # 15. Snake path
+    [
+        pick_cherries(
+            [
+                [1, 1, 1, 1, 1],
+                [-1, -1, -1, -1, 1],
+                [1, 1, 1, 1, 1],
+                [1, -1, -1, -1, -1],
+                [1, 1, 1, 1, 1],
+            ]
+        ),
+        0,
+    ],
+    # 16. Thin vertical corridor
+    [pick_cherries([[1, 0, 0], [1, -1, 0], [1, 0, 0]]), 3],
+    # 17. Thin horizontal corridor
+    [pick_cherries([[1, 1, 1], [0, -1, 0], [0, 0, 0]]), 3],
+    # 18. All cherries except center
+    [pick_cherries([[1, 1, 1], [1, -1, 1], [1, 1, 1]]), 8],
+    # 19. Obstacle wall but one gap
+    [pick_cherries([[1, 1, 1, 1], [-1, -1, 1, -1], [1, 1, 1, 1], [1, 1, 1, 1]]), 8],
+    # 20. Random 5x5
+    [
+        pick_cherries(
+            [
+                [1, 0, 1, 0, 1],
+                [0, 1, -1, 1, 0],
+                [1, 1, 1, 0, 1],
+                [0, -1, 1, 1, 0],
+                [1, 0, 1, 0, 1],
+            ]
+        ),
+        10,
+    ],
+    # 21. Full cherries 10x10
+    [pick_cherries([[1] * 10 for _ in range(10)]), 36],
+    # 22. Checkerboard pattern
+    [pick_cherries([[(i + j) % 2 for j in range(10)] for i in range(10)]), 18],
+    # 23. Vertical obstacle stripes
+    [
+        pick_cherries(
+            [[-1 if j % 3 == 0 and j != 0 else 1 for j in range(10)] for i in range(10)]
+        ),
+        0,
+    ],
+    # 24. Full cherries 50x50 (max case)
+    [pick_cherries([[1] * 50 for _ in range(50)]), 196],
+    # 25. All zeros 50x50
+    [pick_cherries([[0] * 50 for _ in range(50)]), 0],
+    # 26. Sparse cherries 50x50
+    [
+        pick_cherries(
+            [[1 if (i + j) % 7 == 0 else 0 for j in range(50)] for i in range(50)]
+        ),
+        28,
+    ],
+    # 27. Diagonal obstacle barrier
+    [
+        pick_cherries(
+            [
+                [-1 if i == j and i not in (0, 49) else 1 for j in range(50)]
+                for i in range(50)
+            ]
+        ),
+        196,
+    ],
+    # 28. Thick obstacle band in middle
+    [
+        pick_cherries(
+            [[-1 if 20 <= i <= 25 else 1 for j in range(50)] for i in range(50)]
+        ),
+        0,
+    ],
+    # 29. Zigzag obstacle corridor
+    [
+        pick_cherries(
+            [
+                [-1 if (i % 4 == 0 and j < 45) else 1 for j in range(50)]
+                for i in range(50)
+            ]
+        ),
+        0,
+    ],
+    # 30. Random deterministic pattern
+    [
+        pick_cherries(
+            [[(i * 17 + j * 13) % 3 // 2 for j in range(50)] for i in range(50)]
+        ),
+        97,
+    ],
+    # 31. Only outer border valid
+    [
+        pick_cherries(
+            [
+                [1 if i in (0, 49) or j in (0, 49) else -1 for j in range(50)]
+                for i in range(50)
+            ]
+        ),
+        196,
+    ],
+    # 32. Only one zigzag path
+    [
+        pick_cherries(
+            [
+                [-1 if j != (i if i % 2 == 0 else 49 - i) else 1 for j in range(50)]
+                for i in range(50)
+            ]
+        ),
+        0,
+    ],
+    # 33. Dense thorns except random cherries
+    [
+        pick_cherries(
+            [[-1 if (i + j) % 5 == 0 else 1 for j in range(50)] for i in range(50)]
+        ),
+        0,
+    ],
+    # 34. Two separate cherry regions
+    [pick_cherries([[1 if i < 25 else 0 for j in range(50)] for i in range(50)]), 146],
+    # 35. Bottom half cherries
+    [pick_cherries([[1 if i >= 25 else 0 for j in range(50)] for i in range(50)]), 146],
+    # 36. Mixed dense obstacles
+    [
+        pick_cherries(
+            [[-1 if (i + j) % 6 == 0 else 1 for j in range(50)] for i in range(50)]
+        ),
+        0,
+    ],
+]
+""",
+    },
 }
