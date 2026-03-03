@@ -5473,4 +5473,87 @@ test_cases = [
 ]
 """,
     },
+    99: {
+        "markdown": """
+### Maximum coins
+
+### Example
+```
+nums = [1, 2]
+output = 4
+
+nums = [1, 2, 3]
+output = 12
+```
+""",
+        "title": "Maximum coins",
+        "level": "Edgy",
+        "code": """def max_coins(nums: list[int]) -> int:
+""",
+        "test_cases": """
+test_cases = [
+    # ===== Empty / Minimal =====
+    [max_coins([]), 0],
+    [max_coins([1]), 1],
+    [max_coins([5]), 5],
+    [max_coins([0]), 0],
+    # ===== Two Elements =====
+    [max_coins([1, 2]), 4],  # 1*1*2 + 1*2*1
+    [max_coins([2, 1]), 4],
+    [max_coins([3, 4]), 16],  # best: 3 first -> 1*3*4 + 1*4*1
+    [max_coins([0, 5]), 5],
+    [max_coins([5, 0]), 5],
+    # ===== Classic Examples =====
+    [max_coins([3, 1, 5, 8]), 167],
+    [max_coins([1, 5]), 10],
+    # ===== All Same Values =====
+    [max_coins([1, 1, 1]), 3],
+    [max_coins([2, 2, 2]), 14],
+    [max_coins([3, 3, 3]), 39],
+    [max_coins([1, 1, 1, 1]), 4],
+    # ===== With Zeros =====
+    [max_coins([0, 1, 2]), 4],
+    [max_coins([2, 0, 2]), 6],
+    [max_coins([0, 0, 5]), 5],
+    [max_coins([5, 0, 0]), 5],
+    [max_coins([0, 5, 0]), 5],
+    # ===== Increasing =====
+    [max_coins([1, 2, 3]), 12],
+    [max_coins([1, 2, 3, 4]), 40],
+    [max_coins([1, 2, 3, 4, 5]), 110],
+    # ===== Decreasing =====
+    [max_coins([5, 4, 3]), 80],
+    [max_coins([5, 4, 3, 2]), 105],
+    # ===== Alternating High/Low =====
+    [max_coins([1, 100, 1]), 300],
+    [max_coins([1, 100, 1, 100]), 20200],
+    [max_coins([2, 9, 2]), 45],
+    [max_coins([9, 1, 9]), 171],
+    # ===== Large Values =====
+    [max_coins([100, 100]), 10100],
+    [max_coins([100, 1, 100]), 20100],
+    [max_coins([100, 100, 100]), 1010100],
+    # ===== Gaps =====
+    [max_coins([1, 3, 1, 5]), 40],
+    [max_coins([2, 4, 3, 5]), 115],
+    [max_coins([8, 2, 6, 8]), 552],
+    # ===== Random Medium =====
+    [max_coins([7, 9, 8, 0, 7]), 1001],
+    [max_coins([4, 2, 3, 7, 1]), 150],
+    [max_coins([6, 1, 4, 2]), 90],
+    # ===== Many Ones =====
+    [max_coins([1] * 5), 5],
+    [max_coins([1] * 8), 8],
+    # ===== Mixed Zeros and Large =====
+    [max_coins([0, 100, 0, 100]), 10100],
+    [max_coins([100, 0, 100, 0, 100]), 1010100],
+    # ===== Edge Structured =====
+    [max_coins([2, 3, 7, 9]), 270],
+    [max_coins([9, 7, 3, 2]), 270],
+    # ===== Stress-ish Pattern =====
+    [max_coins([5, 1, 5, 1, 5]), 205],
+    [max_coins([1, 2, 1, 2, 1, 2]), 24],
+]
+""",
+    },
 }
