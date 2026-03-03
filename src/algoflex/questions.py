@@ -4723,4 +4723,201 @@ test_cases = [
 ]
 """,
     },
+    92: {
+        "markdown": """
+### Merge k sorted linked lists
+
+### Example
+```
+inputs: [1], [3, 4, 6], [2, 5]
+output = [1, 2, 3, 4, 5, 6]
+```
+""",
+        "title": "Merge k sorted linked lists",
+        "level": "Edgy",
+        "code": """
+from typing import Optional 
+
+
+class ListNode:
+    __slots__ = ("val", "next")
+
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+        
+def merge_k_lists(lists: list[Optional[ListNode]]) -> Optional[ListNode]:
+""",
+        "test_cases": """
+{linked_list}
+test_cases = [
+    # Minimal Edge Cases
+    [list_to_array(merge_k_lists([])), []],  # k = 0
+    [list_to_array(merge_k_lists([None])), []],  # single empty list
+    [list_to_array(merge_k_lists([None, None])), []],
+    # Single List
+    [list_to_array(merge_k_lists([array_to_list([1, 2, 3])])), [1, 2, 3]],
+    [list_to_array(merge_k_lists([array_to_list([-1, 0, 1])])), [-1, 0, 1]],
+    # Two Lists
+    [
+        list_to_array(
+            merge_k_lists([array_to_list([1, 4, 5]), array_to_list([1, 3, 4])])
+        ),
+        [1, 1, 3, 4, 4, 5],
+    ],
+    [list_to_array(merge_k_lists([array_to_list([1]), array_to_list([2])])), [1, 2]],
+    [list_to_array(merge_k_lists([array_to_list([2]), array_to_list([1])])), [1, 2]],
+    # Different Lengths
+    [
+        list_to_array(
+            merge_k_lists(
+                [array_to_list([1, 2, 3]), array_to_list([4]), array_to_list([5, 6])]
+            )
+        ),
+        [1, 2, 3, 4, 5, 6],
+    ],
+    [
+        list_to_array(merge_k_lists([array_to_list([1]), array_to_list([2, 3, 4, 5])])),
+        [1, 2, 3, 4, 5],
+    ],
+    # Duplicates
+    [
+        list_to_array(
+            merge_k_lists(
+                [array_to_list([1, 1, 1]), array_to_list([1, 1]), array_to_list([1])]
+            )
+        ),
+        [1, 1, 1, 1, 1, 1],
+    ],
+    [
+        list_to_array(
+            merge_k_lists(
+                [array_to_list([2, 2, 2]), array_to_list([2]), array_to_list([2, 2])]
+            )
+        ),
+        [2, 2, 2, 2, 2, 2],
+    ],
+    # Negative Values
+    [
+        list_to_array(
+            merge_k_lists([array_to_list([-10, -5, -1]), array_to_list([-6, -2, 0])])
+        ),
+        [-10, -6, -5, -2, -1, 0],
+    ],
+    [
+        list_to_array(
+            merge_k_lists([array_to_list([-3, -2, -1]), array_to_list([1, 2, 3])])
+        ),
+        [-3, -2, -1, 1, 2, 3],
+    ],
+    # Mixed Positive/Negative
+    [
+        list_to_array(
+            merge_k_lists([array_to_list([-1, 3, 5]), array_to_list([0, 2, 4])])
+        ),
+        [-1, 0, 2, 3, 4, 5],
+    ],
+    # Many Small Lists
+    [
+        list_to_array(merge_k_lists([array_to_list([i]) for i in range(10)])),
+        list(range(10)),
+    ],
+    [
+        list_to_array(merge_k_lists([array_to_list([i]) for i in range(9, -1, -1)])),
+        list(range(10)),
+    ],
+    # Empty Lists Mixed In
+    [
+        list_to_array(
+            merge_k_lists([array_to_list([1, 3, 5]), None, array_to_list([2, 4, 6])])
+        ),
+        [1, 2, 3, 4, 5, 6],
+    ],
+    [
+        list_to_array(
+            merge_k_lists([None, array_to_list([1]), None, array_to_list([0])])
+        ),
+        [0, 1],
+    ],
+    # All Same Values
+    [
+        list_to_array(
+            merge_k_lists(
+                [array_to_list([5] * 3), array_to_list([5] * 2), array_to_list([5] * 4)]
+            )
+        ),
+        [5] * 9,
+    ],
+    # Boundary Values
+    [
+        list_to_array(
+            merge_k_lists([array_to_list([-10_000]), array_to_list([10_000])])
+        ),
+        [-10_000, 10_000],
+    ],
+    [
+        list_to_array(
+            merge_k_lists(
+                [array_to_list([-10_000, -10_000]), array_to_list([10_000, 10_000])]
+            )
+        ),
+        [-10_000, -10_000, 10_000, 10_000],
+    ],
+    # Interleaving Complex
+    [
+        list_to_array(
+            merge_k_lists(
+                [
+                    array_to_list([1, 4, 7, 10]),
+                    array_to_list([2, 5, 8, 11]),
+                    array_to_list([3, 6, 9, 12]),
+                ]
+            )
+        ),
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    ],
+    # Large Continuous Blocks
+    [
+        list_to_array(
+            merge_k_lists(
+                [array_to_list(list(range(0, 50))), array_to_list(list(range(50, 100)))]
+            )
+        ),
+        list(range(100)),
+    ],
+    [
+        list_to_array(
+            merge_k_lists(
+                [
+                    array_to_list(list(range(0, 100, 2))),
+                    array_to_list(list(range(1, 100, 2))),
+                ]
+            )
+        ),
+        list(range(100)),
+    ],
+    # Uneven k
+    [
+        list_to_array(merge_k_lists([None, None, array_to_list([1, 2, 3]), None])),
+        [1, 2, 3],
+    ],
+    # Stress: 100 lists of size 1
+    [
+        list_to_array(merge_k_lists([array_to_list([i]) for i in range(100)])),
+        list(range(100)),
+    ],
+    # Stress: 20 lists of 50 elements
+    # Total length = 1000
+    [
+        list_to_array(
+            merge_k_lists(
+                [array_to_list(list(range(i * 50, (i + 1) * 50))) for i in range(20)]
+            )
+        ),
+        list(range(1000)),
+    ],
+]
+""",
+    },
 }
