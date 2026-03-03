@@ -6297,4 +6297,39 @@ test_cases = [
 ]
 """,
     },
+    106: {
+        "markdown": """
+### N Queens
+
+### Example
+```
+n = 1
+output = 1
+
+n = 4
+output = 2
+```
+""",
+        "title": "N Queens",
+        "level": "Edgy",
+        "code": """def n_queens(n: int):
+""",
+        "test_cases": """
+test_cases = [
+    # ---- Minimal Edge Cases ----
+    [len(n_queens(1)), 1],
+    [len(n_queens(2)), 0],
+    [len(n_queens(3)), 0],
+    # ---- Small Valid ----
+    [len(n_queens(4)), 2],
+    [len(n_queens(5)), 10],
+    # ---- Medium ----
+    [len(n_queens(6)), 4],
+    [len(n_queens(7)), 40],
+    # ---- Larger ----
+    [len(n_queens(8)), 92],
+    [len(n_queens(9)), 352],
+]
+""",
+    },
 }
