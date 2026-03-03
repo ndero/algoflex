@@ -5867,4 +5867,137 @@ test_cases = [
 ]
 """,
     },
+    102: {
+        "markdown": """
+### Common free time
+
+### Example
+```
+schedule = [[[1, 2]]]
+output = []
+
+schedule = [[[1, 2]], [[3, 4]]]
+output = [[2, 3]]
+```
+""",
+        "title": "Common free time",
+        "level": "Edgy",
+        "code": """def common_free_time(schedule: list[list[list[int]]]) -> list:
+""",
+        "test_cases": """
+test_cases = [
+    # ===== Minimal Cases =====
+    [common_free_time([[[1, 2]]]), []],  # single employee
+    [common_free_time([[[1, 2]], [[3, 4]]]), [[2, 3]]],
+    [common_free_time([[[1, 3]], [[2, 4]]]), []],
+    [common_free_time([[[1, 5]], [[2, 3]]]), []],
+    # ===== Simple Gaps =====
+    [common_free_time([[[1, 2], [5, 6]], [[1, 3]], [[4, 10]]]), [[3, 4]]],
+    [
+        common_free_time([[[1, 3], [6, 7]], [[2, 4]], [[2, 5], [9, 12]]]),
+        [[5, 6], [7, 9]],
+    ],
+    [common_free_time([[[1, 3], [6, 9]], [[2, 5]], [[5, 7]]]), []],
+    [common_free_time([[[1, 2], [3, 4]], [[2, 3]]]), []],
+    # ===== Touching Boundaries =====
+    [common_free_time([[[1, 2]], [[2, 3]], [[3, 4]]]), []],
+    [common_free_time([[[1, 2], [3, 5]], [[2, 3]]]), []],
+    [common_free_time([[[1, 2], [5, 6]], [[2, 5]]]), []],
+    # ===== Multiple Free Slots =====
+    [
+        common_free_time(
+            [[[1, 2], [5, 6], [9, 10]], [[2, 3], [6, 7]], [[3, 5], [7, 9]]]
+        ),
+        [],
+    ],
+    [
+        common_free_time(
+            [[[1, 2], [4, 5], [7, 8]], [[2, 3], [5, 6]], [[3, 4], [6, 7]]]
+        ),
+        [],
+    ],
+    # ===== One Large Gap =====
+    [common_free_time([[[1, 2]], [[5, 6]]]), [[2, 5]]],
+    [common_free_time([[[1, 3]], [[6, 8]], [[2, 4]]]), [[4, 6]]],
+    # ===== Nested Intervals =====
+    [common_free_time([[[1, 10]], [[2, 3]], [[4, 5]], [[6, 7]]]), []],
+    [common_free_time([[[1, 4], [6, 10]], [[2, 3], [5, 7]]]), [[4, 5]]],
+    # ===== Staggered Intervals =====
+    [common_free_time([[[1, 4], [7, 9]], [[2, 5]], [[3, 6]]]), [[6, 7]]],
+    [common_free_time([[[1, 3], [8, 10]], [[2, 6]], [[4, 7]]]), [[7, 8]]],
+    # ===== Multiple Employees =====
+    [common_free_time([[[1, 2]], [[1, 2]], [[1, 2]]]), []],
+    [common_free_time([[[1, 2], [4, 6]], [[2, 4]], [[6, 8]]]), []],
+    [common_free_time([[[1, 3], [6, 8]], [[2, 4], [7, 9]], [[5, 6]]]), [[4, 5]]],
+    # ===== Large Gap In Middle =====
+    [
+        common_free_time([[[1, 2], [10, 12]], [[2, 3], [8, 9]], [[3, 4], [6, 7]]]),
+        [[4, 6], [7, 8], [9, 10]],
+    ],
+    # ===== Edge Time Distribution =====
+    [common_free_time([[[0, 1], [3, 4]], [[1, 2]], [[2, 3]]]), []],
+    [common_free_time([[[0, 2], [5, 7]], [[2, 5]]]), []],
+    # ===== Complex Overlaps =====
+    [
+        common_free_time([[[1, 5], [10, 14]], [[2, 6], [8, 10]], [[3, 4], [7, 8]]]),
+        [[6, 7]],
+    ],
+    [
+        common_free_time([[[1, 3], [9, 12]], [[2, 4], [6, 8]], [[5, 6]]]),
+        [[4, 5], [8, 9]],
+    ],
+    # ===== Large Values =====
+    [common_free_time([[[1, 1000000]], [[2000000, 3000000]]]), [[1000000, 2000000]]],
+    # ===== Many Small Gaps =====
+    [common_free_time([[[1, 2], [3, 4], [5, 6]], [[2, 3], [4, 5]]]), []],
+    # ===== Alternating Employees =====
+    [
+        common_free_time(
+            [[[1, 2], [4, 5], [7, 8]], [[2, 3], [5, 6]], [[3, 4], [6, 7]]]
+        ),
+        [],
+    ],
+    # ===== Larger Structured =====
+    [
+        common_free_time(
+            [
+                [[i, i + 1] for i in range(1, 10, 2)],
+                [[i, i + 1] for i in range(2, 11, 2)],
+            ]
+        ),
+        [],
+    ],
+    # ===== Single Shared Gap =====
+    [common_free_time([[[1, 3], [6, 8]], [[2, 4], [7, 9]], [[4, 6]]]), []],
+    # ===== Deep Overlap =====
+    [common_free_time([[[1, 10]], [[2, 9]], [[3, 8]], [[4, 7]]]), []],
+    # ===== Disconnected Blocks =====
+    [common_free_time([[[1, 2], [8, 9]], [[3, 4], [6, 7]]]), [[2, 3], [4, 6], [7, 8]]],
+    # ===== Random-like Deterministic =====
+    [
+        common_free_time(
+            [[[1, 4], [6, 7], [9, 11]], [[2, 5], [8, 10]], [[3, 6], [7, 8]]]
+        ),
+        [],
+    ],
+    # ===== Large n Pattern =====
+    [
+        common_free_time(
+            [
+                [[i, i + 2] for i in range(0, 20, 4)],
+                [[i + 1, i + 3] for i in range(0, 20, 4)],
+            ]
+        ),
+        [[3, 4], [7, 8], [11, 12], [15, 16]],
+    ],
+    # ===== Single Employee Large =====
+    [
+        common_free_time([[[i, i + 1] for i in range(0, 20, 2)]]),
+        [[i, i + 1] for i in range(1, 18, 2)],
+    ],
+    # ===== Maximum Overlap =====
+    [common_free_time([[[1, 100]], [[1, 100]], [[1, 100]]]), []],
+]
+""",
+    },
 }
