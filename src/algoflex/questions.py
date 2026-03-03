@@ -4646,4 +4646,81 @@ test_cases = [
 ]
 """,
     },
+    91: {
+        "markdown": """
+### Median of two sorted arrays
+
+### Example
+```
+inputs: arr1 = [1, 2], arr2 = [3]
+output: 2.0
+```
+""",
+        "title": "Median of two sorted arrays",
+        "level": "Edgy",
+        "code": """def sorted_arrays_median(arr1: list[int], arr2: list[int]) -> float:
+""",
+        "test_cases": """
+test_cases = [
+    # Minimal Edge Cases
+    [sorted_arrays_median([1], []), 1.0],
+    [sorted_arrays_median([], [2]), 2.0],
+    [sorted_arrays_median([1], [2]), 1.5],
+    [sorted_arrays_median([1], [2, 3]), 2.0],
+    [sorted_arrays_median([1, 2], [3]), 2.0],
+    # Even total length
+    [sorted_arrays_median([1, 3], [2, 4]), 2.5],
+    [sorted_arrays_median([1, 2], [3, 4]), 2.5],
+    [sorted_arrays_median([0, 0], [0, 0]), 0.0],
+    # Odd total length
+    [sorted_arrays_median([1, 2], [3, 4, 5]), 3.0],
+    [sorted_arrays_median([1, 3, 5], [2, 4]), 3.0],
+    [sorted_arrays_median([1, 2, 3], [4, 5, 6, 7]), 4.0],
+    # One array empty
+    [sorted_arrays_median([], [1, 2, 3, 4]), 2.5],
+    [sorted_arrays_median([5, 6, 7], []), 6.0],
+    # All elements equal
+    [sorted_arrays_median([2, 2, 2], [2, 2]), 2.0],
+    [sorted_arrays_median([1, 1, 1, 1], [1, 1]), 1.0],
+    # Negative numbers
+    [sorted_arrays_median([-5, -3, -1], [-2]), -2.5],
+    [sorted_arrays_median([-10, -5], [-3, -1]), -4.0],
+    [sorted_arrays_median([-2, -1], [1, 2]), 0.0],
+    # Mixed positive/negative
+    [sorted_arrays_median([-3, -2, -1], [1, 2, 3]), 0.0],
+    [sorted_arrays_median([-5, -4, 100], [1, 2, 3]), 1.5],
+    # Duplicates
+    [sorted_arrays_median([1, 2, 2], [2, 2, 3]), 2.0],
+    [sorted_arrays_median([1, 1, 1], [1, 2, 3]), 1.0],
+    [sorted_arrays_median([1, 2, 3], [3, 3, 3]), 3.0],
+    # One much larger than other
+    [sorted_arrays_median([1], list(range(2, 1001))), 500.5],
+    [sorted_arrays_median(list(range(1, 1001)), [1001]), 501],
+    # Partition edge cases
+    [sorted_arrays_median([1, 2, 3, 4], [5, 6, 7, 8, 9]), 5.0],
+    [sorted_arrays_median([5, 6, 7, 8], [1, 2, 3, 4, 9]), 5.0],
+    # Interleaving values
+    [sorted_arrays_median([1, 4, 7], [2, 3, 6, 8]), 4.0],
+    [sorted_arrays_median([10, 20, 30], [5, 15, 25, 35]), 20.0],
+    # Large magnitude values
+    [sorted_arrays_median([-(10**6)], [10**6]), 0.0],
+    [sorted_arrays_median([-(10**6), -(10**5)], [10**5, 10**6]), 0.0],
+    [sorted_arrays_median([-(10**6)], [-(10**6)]), -(10**6) * 1.0],
+    # Sequential continuous arrays
+    [sorted_arrays_median(list(range(0, 1000)), list(range(1000, 2000))), 999.5],
+    [sorted_arrays_median(list(range(1000)), list(range(1000))), 499.5],
+    # Extreme imbalance
+    [sorted_arrays_median([1, 2, 3, 4, 5], [100]), 3.5],
+    [sorted_arrays_median([100], [1, 2, 3, 4, 5]), 3.5],
+    # Single element overlapping
+    [sorted_arrays_median([2], [1, 3, 4, 5, 6]), 3.5],
+    [sorted_arrays_median([4], [1, 2, 3, 5, 6]), 3.5],
+    # Many duplicates around median
+    [sorted_arrays_median([1, 2, 2, 2, 3], [2, 2, 4, 5]), 2.0],
+    [sorted_arrays_median([0, 0, 0, 0, 1], [0, 0, 0, 2]), 0.0],
+    # Large identical arrays
+    [sorted_arrays_median([5] * 1000, [5] * 1000), 5.0],
+]
+""",
+    },
 }
