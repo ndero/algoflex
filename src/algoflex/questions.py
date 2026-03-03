@@ -5201,4 +5201,96 @@ test_cases = [
 ]
 """,
     },
+    96: {
+        "markdown": """
+### Justify text
+
+### Example
+```
+words = ["Longword", "tiny", "mid"], max_width = 8
+output: ["Longword", "tiny mid"]
+```
+""",
+        "title": "Justify text",
+        "level": "Edgy",
+        "code": """def full_justify(words: list[str], max_width: int) -> list[str]:
+""",
+        "test_cases": """
+test_cases = [
+    [
+        full_justify(
+            ["This", "is", "an", "example", "of", "text", "justification."], 16
+        ),
+        ["This    is    an", "example  of text", "justification.  "],
+    ],
+    # ===== Single Word =====
+    [full_justify(["Hello"], 10), ["Hello     "]],
+    # ===== Width Equals Word Length =====
+    [full_justify(["Hello"], 5), ["Hello"]],
+    # ===== Two Words Exact Fit =====
+    [full_justify(["Hello", "World"], 11), ["Hello World"]],
+    # ===== Two Words Needs Padding =====
+    [full_justify(["Hello", "World"], 12), ["Hello World "]],
+    # ===== Uneven Space Distribution =====
+    [full_justify(["a", "b", "c"], 6), ["a b c "]],
+    # ===== Last Line Left Justified =====
+    [
+        full_justify(["What", "must", "be", "acknowledgment", "shall", "be"], 16),
+        ["What   must   be", "acknowledgment  ", "shall be        "],
+    ],
+    # ===== One Word Per Line =====
+    [full_justify(["Longword", "tiny", "mid"], 8), ["Longword", "tiny mid"]],
+    # ===== maxWidth = 1 =====
+    [full_justify(["a", "b", "c"], 1), ["a", "b", "c"]],
+    # ===== Exact Fill Multiple Lines =====
+    [full_justify(["aa", "bb", "cc", "dd"], 5), ["aa bb", "cc dd"]],
+    # ===== Large Width =====
+    [full_justify(["short", "words"], 20), ["short words         "]],
+    # ===== Symbols Included =====
+    [full_justify(["$", "$", "$"], 5), ["$ $ $"]],
+    # ===== Mixed Symbols =====
+    [full_justify(["Hello,", "world!"], 15), ["Hello, world!  "]],
+    # ===== Long Word Near Limit =====
+    [full_justify(["abcdefghijklmnopqrst"], 20), ["abcdefghijklmnopqrst"]],
+    # ===== Uneven Gap Large =====
+    [full_justify(["a", "b", "c", "d"], 10), ["a b c d   "]],
+    # ===== Multiple Lines Complex =====
+    [
+        full_justify(["Science", "is", "what", "we", "understand", "well"], 20),
+        ["Science  is  what we", "understand well     "],
+    ],
+    # ===== Many Small Words =====
+    [full_justify(["a"] * 10, 10), ["a  a a a a", "a a a a a "]],
+    # ===== One Long + Shorts =====
+    [full_justify(["longword", "a", "b"], 12), ["longword a b"]],
+    # ===== Space Distribution Left Bias =====
+    [full_justify(["a", "b", "c", "d", "e"], 9), ["a b c d e"]],
+    # ===== All Same Length =====
+    [full_justify(["ab", "cd", "ef", "gh"], 8), ["ab cd ef", "gh      "]],
+    # ===== Edge Alignment =====
+    [full_justify(["fit", "exact", "width"], 14), ["fit      exact", "width         "]],
+    # ===== Three Lines Mixed =====
+    [
+        full_justify(["one", "two", "three", "four", "five", "six"], 10),
+        ["one    two", "three four", "five six  "],
+    ],
+    # ===== Trailing Spaces Critical =====
+    [full_justify(["end", "line"], 10), ["end line  "]],
+    # ===== Big Width Small Words =====
+    [full_justify(["tiny", "set", "of", "words"], 25), ["tiny set of words        "]],
+    # ===== Long Sequence =====
+    [full_justify(["w"] * 15, 10), ["w  w w w w", "w  w w w w", "w w w w w "]],
+    # ===== Just One Gap =====
+    [full_justify(["gap", "test"], 9), ["gap test "]],
+    # ===== Complex Uneven =====
+    [full_justify(["a", "bb", "ccc", "dd", "e"], 10), ["a  bb  ccc", "dd e      "]],
+    # ===== Words Exactly Fill Lines =====
+    [full_justify(["abc", "de", "fgh", "ij"], 9), ["abc    de", "fgh ij   "]],
+    # ===== Max Width 100 Small Case =====
+    [full_justify(["a", "b", "c"], 100), ["a b c" + " " * 95]],
+    # ===== All Words Length = maxWidth =====
+    [full_justify(["abcdefghij", "klmnopqrst"], 10), ["abcdefghij", "klmnopqrst"]],
+]
+""",
+    },
 }
