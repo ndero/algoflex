@@ -5100,4 +5100,105 @@ test_cases = [
 ]
 """,
     },
+    95: {
+        "markdown": """
+### Remove invalid parentheses
+
+### Example
+```
+s = "a)b(c)d""
+output = "ab(c)d"" 
+```
+""",
+        "title": "Remove invalid parentheses",
+        "level": "Edgy",
+        "code": """def remove_invalid_parentheses(s: str) -> list[str]:
+""",
+        "test_cases": """
+test_cases = [
+    # ===== Minimal =====
+    [sorted(remove_invalid_parentheses("()")), ["()"]],
+    [sorted(remove_invalid_parentheses("(")), [""]],
+    [sorted(remove_invalid_parentheses(")")), [""]],
+    [sorted(remove_invalid_parentheses("a")), ["a"]],
+    [sorted(remove_invalid_parentheses(")(")), [""]],
+    # ===== Simple Invalid =====
+    [sorted(remove_invalid_parentheses("(()")), ["()"]],
+    [sorted(remove_invalid_parentheses("())")), ["()"]],
+    [sorted(remove_invalid_parentheses("())(")), ["()"]],
+    [sorted(remove_invalid_parentheses(")))")), [""]],
+    [sorted(remove_invalid_parentheses("(((")), [""]],
+    # ===== Classic LeetCode Cases =====
+    [sorted(remove_invalid_parentheses("()())()")), ["(())()", "()()()"]],
+    [sorted(remove_invalid_parentheses("(a)())()")), ["(a())()", "(a)()()"]],
+    [sorted(remove_invalid_parentheses(")(")), [""]],
+    # ===== Already Valid =====
+    [sorted(remove_invalid_parentheses("(())")), ["(())"]],
+    [sorted(remove_invalid_parentheses("()()")), ["()()"]],
+    [sorted(remove_invalid_parentheses("(a)(b)")), ["(a)(b)"]],
+    [sorted(remove_invalid_parentheses("((a))")), ["((a))"]],
+    # ===== Letters Mixed =====
+    [sorted(remove_invalid_parentheses("a)b(c)d")), ["ab(c)d"]],
+    [sorted(remove_invalid_parentheses("(a(b)c)d")), ["(a(b)c)d"]],
+    [sorted(remove_invalid_parentheses("a(b(c)d")), ["a(bc)d", "ab(c)d"]],
+    # ===== Multiple Minimal Results =====
+    [
+        sorted(remove_invalid_parentheses("()())())")),
+        sorted(["(()())", "(())()", "()(())", "()()()"]),
+    ],
+    [sorted(remove_invalid_parentheses("(())())")), ["(()())", "(())()"]],
+    # ===== Edge Balanced But Tricky =====
+    [sorted(remove_invalid_parentheses("(()())")), ["(()())"]],
+    [sorted(remove_invalid_parentheses("())()")), ["()()"]],
+    # ===== Heavy Closing =====
+    [sorted(remove_invalid_parentheses("())())")), ["(())", "()()"]],
+    [sorted(remove_invalid_parentheses("())))")), ["()"]],
+    # ===== Heavy Opening =====
+    [sorted(remove_invalid_parentheses("((())")), ["(())"]],
+    [sorted(remove_invalid_parentheses("((()")), ["()"]],
+    # ===== Nested Complex =====
+    [
+        sorted(remove_invalid_parentheses("((())())())")),
+        ["((()())())", "((())()())", "((())())()"],
+    ],
+    # ===== Letters + Complex =====
+    [sorted(remove_invalid_parentheses("(a()")), ["(a)", "a()"]],
+    [sorted(remove_invalid_parentheses("((a))())")), ["((a)())", "((a))()"]],
+    # ===== All Letters =====
+    [sorted(remove_invalid_parentheses("abc")), ["abc"]],
+    # ===== Valid After Removing Middle =====
+    [sorted(remove_invalid_parentheses("(()))(")), ["(())"]],
+    # ===== Alternating Invalid =====
+    [sorted(remove_invalid_parentheses(")()(")), ["()"]],
+    # ===== Complex Balanced Variants =====
+    [sorted(remove_invalid_parentheses("((())()")), ["((()))", "(())()"]],
+    [sorted(remove_invalid_parentheses("()(()")), ["()()"]],
+    [sorted(remove_invalid_parentheses("())(()")), ["()()"]],
+    # ===== Maximum Length Style (Stress ~25 chars) =====
+    [
+        sorted(remove_invalid_parentheses("((a)())())((b))")),
+        ["((a())())((b))", "((a)()())((b))", "((a)())()((b))"],
+    ],
+    [
+        sorted(remove_invalid_parentheses("(((())))())())")),
+        [
+            "(((())())())",
+            "(((()))()())",
+            "(((()))())()",
+            "(((())))(())",
+            "(((())))()()",
+        ],
+    ],
+    # ===== Many Letters =====
+    [
+        sorted(remove_invalid_parentheses("a(b)c)d(e)f)")),
+        ["a(b)cd(e)f", "a(b)cd(ef)", "a(bc)d(e)f", "a(bc)d(ef)", "a(bcd(e)f)"],
+    ],
+    [
+        sorted(remove_invalid_parentheses("(a(b)c(d)e))(")),
+        ["(a(b)c(d)e)", "(a(b)c(de))", "(a(bc(d)e))"],
+    ],
+]
+""",
+    },
 }
