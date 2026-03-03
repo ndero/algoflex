@@ -4987,4 +4987,117 @@ test_cases = [
 ]
 """,
     },
+    94: {
+        "markdown": """
+### Number to words
+
+### Example
+```
+n = 123456
+output: "One Hundred Twenty Three Thousand Four Hundred Fifty Six"
+```
+""",
+        "title": "Number to words",
+        "level": "Edgy",
+        "code": """def number_to_words(n: int) -> str:
+""",
+        "test_cases": """
+test_cases = [
+    # ===== Zero =====
+    [number_to_words(0), "Zero"],
+    # ===== 1–9 =====
+    [number_to_words(1), "One"],
+    [number_to_words(2), "Two"],
+    [number_to_words(5), "Five"],
+    [number_to_words(9), "Nine"],
+    # ===== 10–19 (Teens) =====
+    [number_to_words(10), "Ten"],
+    [number_to_words(11), "Eleven"],
+    [number_to_words(13), "Thirteen"],
+    [number_to_words(15), "Fifteen"],
+    [number_to_words(19), "Nineteen"],
+    # ===== Tens =====
+    [number_to_words(20), "Twenty"],
+    [number_to_words(21), "Twenty One"],
+    [number_to_words(30), "Thirty"],
+    [number_to_words(45), "Forty Five"],
+    [number_to_words(58), "Fifty Eight"],
+    [number_to_words(80), "Eighty"],
+    [number_to_words(99), "Ninety Nine"],
+    # ===== Hundreds =====
+    [number_to_words(100), "One Hundred"],
+    [number_to_words(101), "One Hundred One"],
+    [number_to_words(110), "One Hundred Ten"],
+    [number_to_words(115), "One Hundred Fifteen"],
+    [number_to_words(200), "Two Hundred"],
+    [number_to_words(342), "Three Hundred Forty Two"],
+    [number_to_words(999), "Nine Hundred Ninety Nine"],
+    # ===== Thousand Boundaries =====
+    [number_to_words(1000), "One Thousand"],
+    [number_to_words(1001), "One Thousand One"],
+    [number_to_words(1010), "One Thousand Ten"],
+    [number_to_words(1100), "One Thousand One Hundred"],
+    [number_to_words(1111), "One Thousand One Hundred Eleven"],
+    [number_to_words(2000), "Two Thousand"],
+    [number_to_words(9999), "Nine Thousand Nine Hundred Ninety Nine"],
+    [number_to_words(10000), "Ten Thousand"],
+    [number_to_words(10001), "Ten Thousand One"],
+    [number_to_words(10101), "Ten Thousand One Hundred One"],
+    [number_to_words(20000), "Twenty Thousand"],
+    [number_to_words(54321), "Fifty Four Thousand Three Hundred Twenty One"],
+    [number_to_words(99999), "Ninety Nine Thousand Nine Hundred Ninety Nine"],
+    [number_to_words(100000), "One Hundred Thousand"],
+    [number_to_words(100001), "One Hundred Thousand One"],
+    [number_to_words(100010), "One Hundred Thousand Ten"],
+    [number_to_words(100100), "One Hundred Thousand One Hundred"],
+    [
+        number_to_words(123456),
+        "One Hundred Twenty Three Thousand Four Hundred Fifty Six",
+    ],
+    [
+        number_to_words(999999),
+        "Nine Hundred Ninety Nine Thousand Nine Hundred Ninety Nine",
+    ],
+    # ===== Million Boundaries =====
+    [number_to_words(1000000), "One Million"],
+    [number_to_words(1000001), "One Million One"],
+    [number_to_words(1001000), "One Million One Thousand"],
+    [number_to_words(1000005), "One Million Five"],
+    [number_to_words(1010000), "One Million Ten Thousand"],
+    [
+        number_to_words(1234567),
+        "One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven",
+    ],
+    [number_to_words(2000000), "Two Million"],
+    [number_to_words(50000000), "Fifty Million"],
+    [
+        number_to_words(9999999),
+        "Nine Million Nine Hundred Ninety Nine Thousand Nine Hundred Ninety Nine",
+    ],
+    [number_to_words(10000000), "Ten Million"],
+    [number_to_words(100000000), "One Hundred Million"],
+    [number_to_words(100000001), "One Hundred Million One"],
+    [number_to_words(305000000), "Three Hundred Five Million"],
+    [
+        number_to_words(987654321),
+        "Nine Hundred Eighty Seven Million Six Hundred Fifty Four Thousand Three Hundred Twenty One",
+    ],
+    [
+        number_to_words(999999999),
+        "Nine Hundred Ninety Nine Million Nine Hundred Ninety Nine Thousand Nine Hundred Ninety Nine",
+    ],
+    # ===== Billion Boundaries =====
+    [number_to_words(1000000000), "One Billion"],
+    [number_to_words(1000000001), "One Billion One"],
+    [number_to_words(1000001000), "One Billion One Thousand"],
+    [number_to_words(1001000000), "One Billion One Million"],
+    [number_to_words(1230000000), "One Billion Two Hundred Thirty Million"],
+    [number_to_words(2000000000), "Two Billion"],
+    [
+        number_to_words(2147483647),
+        "Two Billion One Hundred Forty Seven Million Four Hundred Eighty Three Thousand Six Hundred Forty Seven",
+    ],
+]
+""",
+    },
 }
