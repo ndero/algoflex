@@ -6501,4 +6501,148 @@ test_cases = [
 ]
 """,
     },
+    109: {
+        "markdown": """
+### Palindrome pairs
+
+
+### Example
+```
+words = ['ab', 'ba']
+output = [[0, 1], [1, 0]]
+how = 'abba' and 'baab'
+```
+""",
+        "title": "Palindrome pairs",
+        "level": "Edgy",
+        "code": """def palindrome_pairs(words: list[str]) -> list[list[int]]:
+""",
+        "test_cases": """
+test_cases = [
+    # ---- Minimal Cases ----
+    [palindrome_pairs(["a", ""]), [[0, 1], [1, 0]]],
+    [palindrome_pairs(["a", "b"]), []],
+    [palindrome_pairs(["ab", "ba"]), [[0, 1], [1, 0]]],
+    [palindrome_pairs(["abc", "cba"]), [[0, 1], [1, 0]]],
+    # ---- Basic Examples ----
+    [palindrome_pairs(["bat", "tab", "cat"]), [[0, 1], [1, 0]]],
+    [
+        palindrome_pairs(["abcd", "dcba", "lls", "s", "sssll"]),
+        [[0, 1], [1, 0], [2, 4], [3, 2]],
+    ],
+    # ---- Empty String Edge Cases ----
+    [palindrome_pairs(["", "aba"]), [[0, 1], [1, 0]]],
+    [palindrome_pairs(["", "abc"]), []],
+    [
+        palindrome_pairs(["", "a", "b", "c"]),
+        [[0, 1], [0, 2], [0, 3], [1, 0], [2, 0], [3, 0]],
+    ],
+    # ---- Single Character Words ----
+    [palindrome_pairs(["a", "b", "c", "aa"]), sorted([[0, 3], [3, 0]])],
+    [
+        palindrome_pairs(["a", "aa", "aaa"]),
+        [[0, 1], [0, 2], [1, 0], [1, 2], [2, 0], [2, 1]],
+    ],
+    # ---- Prefix / Suffix Cases ----
+    [palindrome_pairs(["abcd", "dcba", "abc"]), [[0, 1], [1, 0], [2, 1]]],
+    [palindrome_pairs(["abc", "cba", "bc"]), [[0, 1], [1, 0], [1, 2]]],
+    [palindrome_pairs(["lls", "s", "sssll"]), [[0, 2], [1, 0]]],
+    # ---- No Valid Pairs ----
+    [palindrome_pairs(["abc", "def", "ghi"]), []],
+    [palindrome_pairs(["xyz", "zyxw"]), [[1, 0]]],
+    # ---- Duplicate Words ----
+    [palindrome_pairs(["a", "a"]), [[1, 0]]],
+    [palindrome_pairs(["abc", "cba", "abc"]), [[1, 0], [1, 2], [2, 1]]],
+    # ---- Mixed Complex ----
+    [
+        palindrome_pairs(["race", "car", "ecar", "ace"]),
+        [[0, 1], [0, 2], [2, 0], [2, 3]],
+    ],
+    [
+        palindrome_pairs(["gab", "bag", "g", ""]),
+        [[0, 1], [1, 0], [2, 3], [3, 2]],
+    ],
+    [palindrome_pairs(["aab", "baa", "aa"]), [[0, 1], [0, 2], [1, 0], [2, 1]]],
+    # ---- Palindrome Word Self + Others ----
+    [palindrome_pairs(["aba", ""]), [[0, 1], [1, 0]]],
+    [palindrome_pairs(["aba", "xyz", "zyx"]), [[1, 2], [2, 1]]],
+    # ---- Overlapping Chains ----
+    [
+        palindrome_pairs(["a", "ab", "ba", "abc", "cba"]),
+        [[0, 2], [1, 0], [1, 2], [1, 4], [2, 1], [3, 2], [3, 4], [4, 3]],
+    ],
+    # ---- Long Word Reversal ----
+    [palindrome_pairs(["a" * 1000, "a" * 1000]), [[1, 0]]],
+    # ---- Long Non-Palindrome ----
+    [palindrome_pairs(["a" * 999 + "b", "b" + "a" * 999]), [[0, 1], [1, 0]]],
+    # ---- Stress: Many Small Words ----
+    [palindrome_pairs(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]), []],
+    # ---- Stress: Multiple Combinations ----
+    [
+        palindrome_pairs(["a", "aa", "aaa", "aaaa"]),
+        [
+            [0, 1],
+            [0, 2],
+            [0, 3],
+            [1, 0],
+            [1, 2],
+            [1, 3],
+            [2, 0],
+            [2, 1],
+            [2, 3],
+            [3, 0],
+            [3, 1],
+            [3, 2],
+        ],
+    ],
+    # ---- Long Chain Matching ----
+    [
+        palindrome_pairs(["abc", "cba", "bc", "cb"]),
+        [[0, 1], [1, 0], [1, 2], [2, 3], [3, 0], [3, 2]],
+    ],
+    # ---- Mixed Edge Large ----
+    [
+        palindrome_pairs(["a" * 500, "b", "a" * 500 + "b", "b" + "a" * 500]),
+        [[0, 3], [1, 2], [2, 0], [2, 3], [3, 1], [3, 2]],
+    ],
+    # ---- Full Reverse Among Many ----
+    [
+        palindrome_pairs(["abcd", "efg", "dcba", "gfed"]),
+        [[0, 2], [2, 0], [3, 1]],
+    ],
+    # ---- Palindrome Center Split ----
+    [
+        palindrome_pairs(["aaa", "aa", "a"]),
+        [[0, 1], [0, 2], [1, 0], [1, 2], [2, 0], [2, 1]],
+    ],
+    # ---- Larger Random No Pairs ----
+    [palindrome_pairs(["abcde", "fghij", "klmno", "pqrst", "uvwxy"]), []],
+    # ---- Asymmetric Prefix ----
+    [palindrome_pairs(["abcd", "dcb", "a"]), [[1, 0]]],
+    # ---- Edge: One Large List ----
+    [
+        palindrome_pairs(
+            ["a" * 300, "b" * 300, "a" * 300 + "b" * 300, "b" * 300 + "a" * 300]
+        ),
+        [[0, 3], [1, 2], [2, 0], [2, 3], [3, 1], [3, 2]],
+    ],
+    # ---- Complex Mix ----
+    [
+        palindrome_pairs(["abcd", "dcba", "lls", "s", "sssll", ""]),
+        [[0, 1], [1, 0], [2, 4], [3, 2], [3, 5], [5, 3]],
+    ],
+    # ---- Nearly Matching ----
+    [
+        palindrome_pairs(["abc", "cba", "ab", "ba", "a"]),
+        [[0, 1], [0, 3], [1, 0], [2, 1], [2, 3], [2, 4], [3, 2], [4, 3]],
+    ],
+    # ---- Large Single Palindrome ----
+    [palindrome_pairs(["a" * 2000]), []],
+    # ---- Large Palindrome + Empty ----
+    [palindrome_pairs(["a" * 2000, ""]), [[0, 1], [1, 0]]],
+    # ---- Different Length Reversals ----
+    [palindrome_pairs(["abcd", "dcba", "abcddcba"]), [[0, 1], [1, 0]]],
+]
+""",
+    },
 }
