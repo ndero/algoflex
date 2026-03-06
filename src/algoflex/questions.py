@@ -6645,4 +6645,110 @@ test_cases = [
 ]
 """,
     },
+    110: {
+        "markdown": """
+### Rotting oranges
+
+
+### Example
+```
+grid = [[1]]
+output = -1  
+
+grid = [[1, 2]]
+output = 1
+
+grid = [
+    [2, 1, 1], 
+    [1, 1, 0], 
+    [0, 1, 1]
+]
+output = 4 
+```
+""",
+        "title": "Rotting oranges",
+        "level": "Steady",
+        "code": """def oranges_rotting(grid: list[list[int]]) -> int:
+""",
+        "test_cases": """
+test_cases = [
+    # --- Minimal Cases ---
+    [oranges_rotting([[0]]), 0],
+    [oranges_rotting([[1]]), -1],
+    [oranges_rotting([[2]]), 0],
+    [oranges_rotting([[2, 1]]), 1],
+    [oranges_rotting([[1, 2]]), 1],
+    # --- Simple small grids ---
+    [oranges_rotting([[2, 1, 1], [1, 1, 0], [0, 1, 1]]), 4],
+    [oranges_rotting([[2, 1, 1], [0, 1, 1], [1, 0, 1]]), -1],
+    [oranges_rotting([[0, 2]]), 0],
+    [oranges_rotting([[1, 1, 1]]), -1],
+    [oranges_rotting([[2, 2, 2]]), 0],
+    # --- All fresh ---
+    [oranges_rotting([[1, 1], [1, 1]]), -1],
+    [oranges_rotting([[1, 1, 1], [1, 1, 1], [1, 1, 1]]), -1],
+    # --- All rotten ---
+    [oranges_rotting([[2, 2], [2, 2]]), 0],
+    [oranges_rotting([[2, 2, 2], [2, 2, 2]]), 0],
+    # --- No oranges ---
+    [oranges_rotting([[0, 0], [0, 0]]), 0],
+    # --- Single row propagation ---
+    [oranges_rotting([[2, 1, 1, 1, 1]]), 4],
+    [oranges_rotting([[1, 1, 1, 1, 2]]), 4],
+    [oranges_rotting([[2, 0, 1, 1, 1]]), -1],
+    # --- Single column propagation ---
+    [oranges_rotting([[2], [1], [1], [1]]), 3],
+    [oranges_rotting([[1], [1], [1], [2]]), 3],
+    [oranges_rotting([[2], [0], [1], [1]]), -1],
+    # --- Multiple rotten sources ---
+    [oranges_rotting([[2, 1, 1], [1, 2, 1], [1, 1, 2]]), 2],
+    [oranges_rotting([[2, 1, 1, 1], [1, 1, 1, 2]]), 2],
+    [oranges_rotting([[2, 1, 1, 1, 2]]), 2],
+    # --- Barriers (zeros blocking spread) ---
+    [oranges_rotting([[2, 0, 1]]), -1],
+    [oranges_rotting([[2, 1, 0, 1]]), -1],
+    [oranges_rotting([[2, 1, 0, 1, 2]]), 1],
+    [oranges_rotting([[2, 1, 0, 1, 1, 1]]), -1],
+    # --- Complex medium grids ---
+    [oranges_rotting([[2, 1, 1, 0], [1, 1, 0, 1], [0, 1, 1, 1]]), 6],
+    [oranges_rotting([[2, 1, 0, 2], [1, 0, 1, 1], [1, 1, 1, 0]]), 3],
+    [oranges_rotting([[2, 1, 1], [1, 0, 1], [1, 1, 1]]), 4],
+    # --- Diagonal isolation (should fail) ---
+    [oranges_rotting([[2, 0, 0], [0, 1, 0], [0, 0, 1]]), -1],
+    # --- Center source ---
+    [oranges_rotting([[1, 1, 1], [1, 2, 1], [1, 1, 1]]), 2],
+    # --- Corners only ---
+    [oranges_rotting([[2, 1, 1, 1, 2]]), 2],
+    # --- Long snake path ---
+    [
+        oranges_rotting(
+            [[2, 1, 0, 0, 0], [0, 1, 1, 1, 0], [0, 0, 0, 1, 0], [0, 0, 0, 1, 1]]
+        ),
+        7,
+    ],
+    # --- Larger stress-style grids ---
+    [oranges_rotting([[2] + [1] * 9] + [[1] * 10 for _ in range(9)]), 18],
+    [oranges_rotting([[1] * 10 for _ in range(10)]), -1],
+    [oranges_rotting([[2] * 10 for _ in range(10)]), 0],
+    # --- 20x20 stress (single source corner) ---
+    [oranges_rotting([[2] + [1] * 19] + [[1] * 20 for _ in range(19)]), 38],
+    # --- 20x20 with isolated pocket ---
+    [
+        oranges_rotting(
+            [[2] + [1] * 18 + [0]] + [[1] * 20 for _ in range(18)] + [[0] * 19 + [1]]
+        ),
+        38,
+    ],
+    # --- Multiple sources far apart ---
+    [
+        oranges_rotting(
+            [[2] + [1] * 18 + [2]]
+            + [[1] * 20 for _ in range(18)]
+            + [[2] + [1] * 18 + [2]]
+        ),
+        18,
+    ],
+]
+""",
+    },
 }
