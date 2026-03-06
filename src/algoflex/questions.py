@@ -659,7 +659,7 @@ output = "a a b c"
 ```
 """,
         "title": "Trie/Prefix tree",
-        "level": "Steady",
+        "level": "Edgy",
         "code": """def replace(roots: list[str], sentence: str) -> str:
 """,
         "test_cases": """
@@ -6329,6 +6329,90 @@ test_cases = [
     # ---- Larger ----
     [len(n_queens(8)), 92],
     [len(n_queens(9)), 352],
+]
+""",
+    },
+    107: {
+        "markdown": """
+### Split array largest sum
+
+
+### Example
+```
+s = "babad"
+output = "bab" 
+
+s = "abcde"
+output = "a"
+```
+""",
+        "title": "Split array largest sum",
+        "level": "Edgy",
+        "code": """def split_array(nums: list[int], k: int) -> int:
+""",
+        "test_cases": """
+test_cases = [
+    # ---- Minimal Cases ----
+    [split_array([1], 1), 1],
+    [split_array([0], 1), 0],
+    [split_array([5, 5], 1), 10],
+    [split_array([5, 5], 2), 5],
+    # ---- Basic Examples ----
+    [split_array([7, 2, 5, 10, 8], 2), 18],
+    [split_array([1, 2, 3, 4, 5], 2), 9],
+    [split_array([1, 4, 4], 3), 4],
+    # ---- k = 1 (entire sum) ----
+    [split_array([1, 2, 3, 4, 5], 1), 15],
+    [split_array([100, 200, 300], 1), 600],
+    [split_array([0, 0, 0, 0], 1), 0],
+    # ---- k = n (max element) ----
+    [split_array([1, 2, 3, 4, 5], 5), 5],
+    [split_array([10, 1, 1, 1], 4), 10],
+    [split_array([0, 0, 5, 0], 4), 5],
+    # ---- All Zeros ----
+    [split_array([0, 0, 0, 0, 0], 3), 0],
+    [split_array([0] * 50, 10), 0],
+    # ---- Uniform Arrays ----
+    [split_array([5] * 10, 5), 10],
+    [split_array([3] * 9, 3), 9],
+    [split_array([8] * 8, 4), 16],
+    # ---- Increasing Arrays ----
+    [split_array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 3), 21],
+    [split_array(list(range(1, 21)), 5), 46],
+    # ---- Decreasing Arrays ----
+    [split_array([10, 9, 8, 7, 6, 5, 4, 3, 2, 1], 2), 28],
+    [split_array([20, 18, 16, 14, 12, 10], 3), 36],
+    # ---- Large Values Near Limit ----
+    [split_array([10**6] * 10, 5), 2 * 10**6],
+    [split_array([10**6, 1, 10**6, 1], 2), 1000001],
+    [split_array([10**6, 10**6, 10**6], 2), 2000000],
+    # ---- Mixed Large/Small ----
+    [split_array([1, 1000000, 1, 1000000, 1], 3), 1000001],
+    [split_array([1000000, 1, 1, 1, 1000000], 2), 1000002],
+    # ---- Edge Partitioning ----
+    [split_array([1, 2, 3, 100, 1, 2, 3], 2), 106],
+    [split_array([1, 100, 1, 100, 1], 3), 101],
+    [split_array([2, 3, 1, 2, 4, 3], 5), 4],
+    # ---- Larger Length (~1000) ----
+    [split_array([1] * 1000, 50), 20],
+    [split_array([2] * 1000, 50), 40],
+    [split_array([i % 10 for i in range(1000)], 25), 180],
+    # ---- Stress Near Constraints ----
+    [split_array([10**6] * 1000, 50), 20000000],
+    [split_array([10**6] * 999 + [1], 50), 20000000],
+    # ---- Binary Search Trap Cases ----
+    [split_array([5, 1, 1, 1, 1, 1, 1, 1], 2), 6],
+    [split_array([1, 1, 1, 1, 5], 2), 5],
+    [split_array([1, 1, 10, 1, 1], 2), 12],
+    # ---- k close to n ----
+    [split_array([3, 1, 4, 1, 5, 9, 2], 6), 9],
+    [split_array([3, 1, 4, 1, 5, 9, 2], 7), 9],
+    # ---- Random-like Mixed ----
+    [split_array([8, 16, 24, 32, 40, 48], 4), 48],
+    [split_array([9, 1, 9, 1, 9, 1, 9, 1], 3), 19],
+    # ---- Extreme Skew ----
+    [split_array([1] * 999 + [10**6], 2), 1000000],
+    [split_array([10**6] + [1] * 999, 2), 1000000],
 ]
 """,
     },
