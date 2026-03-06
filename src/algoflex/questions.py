@@ -3587,13 +3587,15 @@ test_cases = [
     82: {
         "markdown": """
 ### Daily temperatures
-Given an array of daily temperatures, return an array answer such that answer[i] is the number of days you have to wait until a warmer temperature. If there is no future day with warmer temperature, set answer[i] = 0.
+Given an array of daily temperatures, return an array answer such that `answer[i]` is the number of days you have to wait until a warmer temperature. If there is no future day with warmer temperature, set answer[i] = 0.
 
 ### Example
 ```
-input: [3, 1, 2]
+temps = [3, 1, 2]
 output = [0, 1, 0]
-how: no day in future higher than 3, 1 day in future higher than 1 and no day in future after 2. 
+how: no day in future higher than 3, 
+     1 day in future higher than 1 and 
+     no day in future after 2. 
 ```
 """,
         "title": "Daily temperatures",
@@ -4210,9 +4212,17 @@ test_cases = [
 ### Design a hashmap 
 Design a hashmap, class `MyHashMap` with methods put, get and remove that adds, gets and removes key value pairs. 
 
-Both the key and value are all be positive integers. 
+Implement the MyHashMap class:
 
-Don't use the inbuilt {} or `dict`, obviously.
+    `MyHashMap()` Initializes the object with an empty map.
+
+    `void put(int key, int value)` Inserts a (key, value) pair into the HashMap. If the key already exists in the map, update the corresponding value.
+
+   ` int get(int key)` Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key.
+
+    `void remove(int key)` Removes the key and its corresponding value if the map contains the mapping for the key.
+
+Don't use the inbuilt hash table libraries, `{}` or `dict`.
 
 ### Example
 ```
@@ -4293,11 +4303,22 @@ test_cases = [
     89: {
         "markdown": """
 ### Articulation points
+Given an undirected connected graph with n vertices and m edges, find all articulation points in the graph. Return them in any order.
+
 > In graphs, a node is an articulation point if removing it increases the number of connected components.
+
 ### Example
 ```
-inputs: n = 3, edges = [[0, 1], [1, 2]]
-output: [1]
+Input: n = 5, edges = [[0,1], [1,2], [2,0], [1,3], [3,4]]
+Output: [1, 3]
+Explanation: 
+- Removing vertex 1 disconnects vertices 0,2 from 3,4
+- Removing vertex 3 disconnects vertex 4 from the rest
+- The graph looks like:
+    0 --- 1 --- 3 --- 4
+     \   /      \\
+      \ /        \\
+       2            (no connection to 4 without 3)
 ```
 """,
         "title": "Articulation points",
@@ -4565,13 +4586,30 @@ test_cases = [
     90: {
         "markdown": """
 ### LFU cache
-Design an LFU cache with constant put and get. 
+Design a Least Frequently Used (LFU) cache. 
+Implement the LFUCache class:
+
+    `LFUCache(int capacity)` Initializes the object with the capacity of the data structure.
+
+    `int get(int key)` Gets the value of the key if the key exists in the cache. Otherwise, returns -1.
+
+    `void put(int key, int value)` Updates the value of the key if present, or inserts the key if not already present. When the cache reaches its capacity, it should invalidate and remove the least frequently used key before inserting a new item.
+
+Both `get` and `put` operations must run in O(1) average time complexity 
 
 ### Example
 ```
-cache = LFUCache(3)  # LFU cache with capacity three
-cache.put(1, 10)     # returns None 
-cache.get(1)         # returns 10 
+LFUCache cache = new LFUCache(2);
+cache.put(1, 1);
+cache.put(2, 2);
+cache.get(1);       // returns 1
+cache.put(3, 3);    // evicts key 2
+cache.get(2);       // returns -1 (not found)
+cache.get(3);       // returns 3
+cache.put(4, 4);    // evicts key 1
+cache.get(1);       // returns -1 (not found)
+cache.get(3);       // returns 3
+cache.get(4);       // returns 4
 ```
 """,
         "title": "LFU cache",
@@ -4649,16 +4687,22 @@ test_cases = [
     91: {
         "markdown": """
 ### Median of two sorted arrays
+Given two sorted arrays `nums1` and `nums2` of size `m` and `n` respectively, return the median of the two sorted arrays .
+
+> The median is the middle value in an ordered list of numbers. If the total number of elements is odd, the median is the middle element. If the total number of elements is even, the median is the average of the two middle elements
+
+You must do this in O(log (m+n)). 
 
 ### Example
 ```
-inputs: arr1 = [1, 2], arr2 = [3]
-output: 2.0
+Input: nums1 = [1,3], nums2 = [2]
+Output: 2.00000
+How: merged array = [1,2,3] and median is 2
 ```
 """,
         "title": "Median of two sorted arrays",
         "level": "Edgy",
-        "code": """def sorted_arrays_median(arr1: list[int], arr2: list[int]) -> float:
+        "code": """def sorted_arrays_median(nums1: list[int], nums2: list[int]) -> float:
 """,
         "test_cases": """
 test_cases = [
@@ -4726,11 +4770,22 @@ test_cases = [
     92: {
         "markdown": """
 ### Merge k sorted linked lists
+You are given an array of `k` linked-lists `lists`, each linked-list is sorted in ascending order.
+
+Merge all the linked-lists into one sorted linked-list and return it.
 
 ### Example
 ```
-inputs: [1], [3, 4, 6], [2, 5]
-output = [1, 2, 3, 4, 5, 6]
+Input: lists = [[1,4,5],[1,3,4],[2,6]]
+Output: [1,1,2,3,4,4,5,6]
+How: The linked-lists are:
+[
+  1->4->5,
+  1->3->4,
+  2->6
+]
+Merging them into one sorted list:
+1->1->2->3->4->4->5->6
 ```
 """,
         "title": "Merge k sorted linked lists",
@@ -4923,11 +4978,22 @@ test_cases = [
     93: {
         "markdown": """
 ### Minimum window substring
+ Given two strings `s` and `t` of lengths `m` and `n` respectively, return the minimum window substring of `s` such that every character in `t` (including duplicates) is included in the window. If there is no such substring, return the empty string `""`.
+
+The testcases will be generated such that the answer is unique.
 
 ### Example
 ```
-s = "abc", t = 'ac'
-output = "abc" 
+Input: s = "ADOBECODEBANC", t = "ABC"
+Output: "BANC"
+How: The minimum window substring "BANC" 
+      includes 'A', 'B', and 'C' from string t.
+
+Input: s = "aabdec", t = "aabc"
+Output: "abdec"
+How: Need two 'a's, one 'b', one 'c'. 
+     The window "abdec" contains 
+     'a','b','c' with the required counts.
 ```
 """,
         "title": "Minimum window substring",
@@ -4990,16 +5056,29 @@ test_cases = [
     94: {
         "markdown": """
 ### Number to words
+Convert a non-negative integer `num` into its English words representation.
 
 ### Example
 ```
-n = 123456
-output: "One Hundred Twenty Three Thousand Four Hundred Fifty Six"
+Input: num = 123
+Output: "One Hundred Twenty Three"
+
+Input: num = 12345
+Output: "Twelve Thousand Three Hundred Forty Five"
+
+Input: num = 1234567
+Output: "One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven"
+
+Input: num = 1234567891
+Output: "One Billion Two Hundred Thirty Four Million Five Hundred Sixty Seven Thousand Eight Hundred Ninety One"
+
+Input: num = 0
+Output: "Zero"
 ```
 """,
         "title": "Number to words",
         "level": "Edgy",
-        "code": """def number_to_words(n: int) -> str:
+        "code": """def number_to_words(num: int) -> str:
 """,
         "test_cases": """
 test_cases = [
@@ -5103,11 +5182,32 @@ test_cases = [
     95: {
         "markdown": """
 ### Remove invalid parentheses
+Given a string `s` that contains parentheses and letters, remove the minimum number of invalid parentheses to make the input string valid. Return all possible results in any order.
 
 ### Example
 ```
-s = "a)b(c)d""
-output = "ab(c)d"" 
+Input: s = "()())()"
+Output: ["(())()","()()()"]
+How: 
+- Remove the parenthesis at index 1 → "(())()"
+- Remove the parenthesis at index 3 → "()()()"
+Both are valid and have the same length.
+
+Input: s = "(a)())()"
+Output: ["(a())()","(a)()()"]
+How: 
+- Remove the extra closing parenthesis after the first 'a)' → "(a())()"
+- Remove the extra closing parenthesis after the second ')(' → "(a)()()"
+
+Input: s = ")("
+Output: [""]
+How: 
+- Remove both parentheses to get an empty string
+- The only valid string is empty
+
+Input: s = "()"
+Output: ["()"]
+How: The string is already valid.
 ```
 """,
         "title": "Remove invalid parentheses",
@@ -5204,11 +5304,24 @@ test_cases = [
     96: {
         "markdown": """
 ### Justify text
+Given an array of strings `words` and a width `max_width`, format the text such that each line has exactly `max_width` characters and is fully (left and right) justified.
+
+You should pack your words in a greedy approach; that is, pack as many words as you can in each line. Pad extra spaces `' '` when necessary so that each line has exactly `max_width` characters.
+
+Extra spaces between words should be distributed as evenly as possible. If the number of spaces on a line does not divide evenly between words, the empty slots on the left will be assigned more spaces than the slots on the right.
+
+For the last line of text, it should be left-justified, and no extra space is inserted between words.
 
 ### Example
 ```
-words = ["Longword", "tiny", "mid"], max_width = 8
-output: ["Longword", "tiny mid"]
+Input: words = ["This", "is", "an", "example", "of", "text", "justification."], 
+       max_width = 16
+Output:
+[
+   "This    is    an",
+   "example  of text",
+   "justification.  "
+]
 ```
 """,
         "title": "Justify text",
@@ -5296,11 +5409,28 @@ test_cases = [
     97: {
         "markdown": """
 ### Alien order
+In an alien language, they use the Latin alphabet (English lowercase letters) but possibly in a different order than the one we're familiar with. Given a list of `words` from an alien dictionary, where these words are sorted lexicographically according to the rules of the alien language, your task is to derive the order of letters in this alien alphabet
 
 ### Example
 ```
-words = ["za", "yb", "xc"]
-output = "zabcyx"
+Input: words = ["z","x"]
+Output: "zx"
+How: Since "z" comes before "x" in the dictionary, 
+     the order is 'z' before 'x'
+
+Input: words = ["wrt","wrf","er","ett","rftt"]
+Output: "wertf"
+How: From the sequence, we can deduce that 'w' 
+     comes before 'e', 'e' before 'r', 'r' before
+     't', and 't' before 'f', resulting in "wertf"
+
+Input: words = ["z","x","z"]
+Output: ""
+How: Sequence is contradictory. 
+     The first pair "z" and "x" suggests 'z' comes 
+     before 'x', but the last pair "x" and "z" 
+     suggests 'x' comes before 'z'. 
+     Therefore, no valid order exists
 ```
 """,
         "title": "Alien order",
@@ -5380,14 +5510,31 @@ test_cases = [
     98: {
         "markdown": """
 ### First missing positive
+Given an unsorted integer array `nums`, return the smallest positive integer that is not present in nums.
+
+You must implement an algorithm that runs in O(n) time and uses O(1) auxiliary space (constant extra space, excluding the input array).
 
 ### Example
 ```
-nums = [1, 2, 0]
-output = 3
+Input: nums = [1,2,0]
+Output: 3
+How: The numbers present are 0, 1, 2. 
+     The smallest missing positive integer is 3.
 
-nums = [1, 1, 2, 2]
-output = 3
+Input: nums = [3,4,-1,1]
+Output: 2
+How: The numbers present are -1, 1, 3, 4. 
+     The smallest missing positive integer is 2.
+
+Input: nums = [1,2,3,4,5]
+Output: 6
+How: All positive integers from 1 to 5 are present, 
+     so the next is 6.
+
+Input: nums = [1,1,2,2,3,3]
+Output: 4
+How: Duplicates don't affect the result. 
+     Present: 1,2,3; Missing: 4.
 ```
 """,
         "title": "First missing positive",
@@ -5476,14 +5623,27 @@ test_cases = [
     99: {
         "markdown": """
 ### Maximum coins
+Given `n` balloons, indexed from 0 to n-1. Each balloon is painted with a number on it represented by an array `nums`. Your task is to burst the balloons. 
+
+If you burst the `i`-th balloon, you will get `nums[left] * nums[i] * nums[right]` coins. Here `left` and `right` are adjacent indices of `i`. After the burst, the `left` and `right` then become adjacent.
+
+Find the maximum coins you can collect by bursting the balloons.
+
+*Note:* You can imagine nums[-1] = nums[n] = 1.
 
 ### Example
 ```
-nums = [1, 2]
-output = 4
+Input: nums = [3,1,5,8]
+Output: 167
+How:
+    nums = [3,1,5,8] --> [3,5,8] --> [3,8] --> [8] --> []
+    coins =  3*1*5    +   3*5*8   +  1*3*8  + 1*8*1 = 167
 
-nums = [1, 2, 3]
-output = 12
+Input: nums = [1,5]
+Output: 10
+How:
+    nums = [1,5] --> [5] --> []
+    coins = 1*1*5 + 1*5*1 = 5 + 5 = 10
 ```
 """,
         "title": "Maximum coins",
@@ -5559,17 +5719,43 @@ test_cases = [
     100: {
         "markdown": """
 ### Pick cherries
+Given an `n x n` grid representing a field of cherries. Each cell in the grid can have one of three possible integer values:
+
+    `0` means the cell is empty, so you can pass through
+
+    `1` means the cell contains a cherry that you can pick up and pass through
+
+    `-1` means the cell contains a thorn that blocks your way
+
+Your task is to find the maximum number of cherries you can collect by following these rules:
+
+    Start at position `(0, 0)` and reach `(n - 1, n - 1)` by only moving right or down through valid path cells (cells with value `0` or `1`)
+
+    After reaching `(n - 1, n - 1)`, return to `(0, 0)` by only moving left or up through valid path cells
+
+    When passing through a path cell containing a cherry, you pick it up, and the cell becomes an empty cell `0`
+
+    If there is no valid path between `(0, 0)` and `(n - 1, n - 1)`, then no cherries can be collected (return `0`)
+
 
 ### Example
 ```
-grid = [[1, 1], [1, 1]]
-output = 4
+Input: grid = [[0,1,-1],
+               [1,0,-1],
+               [1,1,1]]
+Output: 5
+How:
+    Start at (0, 0) and go down, down, right, right to reach (2, 2)
 
-grid = [[1, -1], [1, 1]]
-output = 3
+    4 cherries are picked up during this trip, and the matrix becomes 
+    
+    [[0,1,-1],
+     [0,0,-1],
+     [0,0,0]]
 
-grid = [[1, -1], [-1, 1]]
-output = 0
+    Then, go left, up, up, left to return home, picking up one more cherry
+
+    Total cherries picked: 5 (maximum possible)
 ```
 """,
         "title": "Pick cherries",
@@ -5740,14 +5926,53 @@ test_cases = [
     101: {
         "markdown": """
 ### Get skyline
+A city's skyline is the outer contour of the silhouette formed by all the buildings in that city when viewed from a distance. Given the locations and heights of all the buildings, return the skyline formed by these buildings collectively.
+
+The geometric information of each building is given in the array `buildings` where `buildings[i] = [lefti, righti, heighti]`:
+
+    `lefti` is the x coordinate of the left edge of the ith building
+
+    `righti` is the x coordinate of the right edge of the ith building
+
+    `heighti` is the height of the ith building
+
+You may assume all buildings are perfect rectangles grounded on an absolutely flat surface at height 0
+
+#### Output Format
+
+The skyline should be represented as a list of key points sorted by their x-coordinate in the form `[[x1,y1],[x2,y2],...]`. Each key point is the left endpoint of some horizontal segment in the skyline except the last point in the list, which always has a y-coordinate 0 and is used to mark the skyline's termination where the rightmost building ends.
+
+Note: There must be no consecutive horizontal lines of equal height in the output skyline. For instance, the three lines of height 5 in [...,[2,3],[4,5],[7,5],[11,5],[12,7],...] should be merged into one in the final output as such: [...,[2,3],[4,5],[12,7],...].
 
 ### Example
 ```
-buildings = [[1, 2, 1]]
-output = [[1, 1], [2, 0]]
+Input: buildings = [[2,9,10],[3,7,15],[5,12,12],[15,20,10],[19,24,8]]
+Output: [[2,10],[3,15],[7,12],[12,0],[15,10],[20,8],[24,0]]
+How: 
+ ^
+ |    +-----+
+ |    |     |
+ |    |     |
+ |    |  +--+------+
+ |    |  |         |
+ |  +-+--+----+    |   +------+
+ |  |         |    |   |      |
+ |  |         |    |   |    +-+--+
+ |  |         |    |   |    |    |
+ |  |         |    |   |    |    |
+ +--+---------+----+---+----+----+--->
 
-buildings = [[1, 2, 1], [3, 4, 1]]
-output = [[1, 1], [2, 0], [3, 1], [4, 0]]
+Input: buildings = [[0,2,3],[2,5,3]]
+Output: [[0,3],[5,0]]
+How: Two adjacent buildings of the same height produce a flat skyline.
+
+Input: buildings = [[1,2,5],[2,3,8]]
+Output: [[1,5],[2,8],[3,0]]
+How: The taller building starts where the shorter one ends.
+
+Input: buildings = [[1,5,10],[2,4,5]]
+Output: [[1,10],[5,0]]
+How: The taller building completely overshadows the shorter one.
 ```
 """,
         "title": "Get skyline",
@@ -5870,14 +6095,27 @@ test_cases = [
     102: {
         "markdown": """
 ### Common free time
+Given a list `schedule` of employees, which represents the working time for each employee. Each employee has a list of non-overlapping intervals sorted by start time. These intervals represent the employee's working hours.
+
+Return the list of finite intervals representing common, positive-length free time for all employees, also sorted in order of start time.
 
 ### Example
 ```
-schedule = [[[1, 2]]]
-output = []
+Input: schedule = [[[1,2],[5,6]],[[1,3]],[[4,10]]]
+Output: [[3,4]]
+How: 
+- Employee 1 works: [1,2] and [5,6]
+- Employee 2 works: [1,3]
+- Employee 3 works: [4,10]
+The only common free time across all employees is [3,4].
 
-schedule = [[[1, 2]], [[3, 4]]]
-output = [[2, 3]]
+Input: schedule = [[[1,2],[3,4]],[[2,3]],[[4,5]]]
+Output: []
+How: 
+- Employee 1 works: [1,2] and [3,4]
+- Employee 2 works: [2,3]
+- Employee 3 works: [4,5]
+The schedule covers [1,5] continuously with no gaps.
 ```
 """,
         "title": "Common free time",
@@ -6003,19 +6241,31 @@ test_cases = [
     103: {
         "markdown": """
 ### Count SCCs
+Given a directed graph with `V` vertices and `E` edges, find the number of Strongly Connected Components (SCCs) in the graph.
+
+> A Strongly Connected Component of a directed graph is a maximal set of vertices such that for every pair of vertices `u` and `v` in the component, there is a directed path from `u` to `v` and a directed path from `v` to `u`. In other words, every vertex in an SCC is reachable from every other vertex in that component.
 
 ### Example
 ```
-n = 2, edges = [[0, 1], [1, 0]]
-output = 1
+Input: V = 5, edges = [[1,3], [1,4], [2,1], [3,2], [4,5]]
+Output: 3
+How:
+    1 → 3 → 2
+    ↑    ↓
+    └────┘
+    ↓
+    4 → 5
 
-n = 3, edges = [[0, 1], [1, 0], [1, 2]]
-output = 2
+    the SCCs are {1, 2, 3}, {4} and {5}
+
+Input: V = 4, edges = [[1,2], [2,3], [3,4]]
+Output: 4
+How: simple path, each vertex is its own SCC. 
 ```
 """,
         "title": "Count SCCs",
         "level": "Steady",
-        "code": """def count_SCC(n: int, edges: list[list[int]]) -> int:
+        "code": """def count_SCC(V: int, edges: list[list[int]]) -> int:
 """,
         "test_cases": """
 test_cases = [
@@ -6126,15 +6376,17 @@ test_cases = [
     104: {
         "markdown": """
 ### First and last position of element in sorted array
+Given an array of integers `nums` sorted in non-decreasing order, find the starting and ending position of a given `target` value.
+
+If the target is not found in the array, return `[-1, -1]`.
+
+You must write an algorithm with O(log n) runtime complexity.
 
 ### Example
 ```
-nums = [2, 2, 2, 2], target = 2
-output = [0, 3]
-
-nums = [1, 2, 3], target = 1
-output = [0, 0]
-
+Input: nums = [5,7,7,8,8,10], target = 8
+Output: [3,4]
+How: The target 8 appears at indices 3 and 4.
 ```
 """,
         "title": "First and last position of element in sorted array",
@@ -6214,15 +6466,17 @@ test_cases = [
     105: {
         "markdown": """
 ### Longest valid parentheses
+Given a string containing just the characters '(' and ')', return the length of the longest valid (well-formed) parentheses substring.
 
 ### Example
 ```
-s = "(())"
-output = 4
+Input: s = "(()"
+Output: 2
+How: The longest valid parentheses substring is "()".
 
-s = "((("
-output = 0
-```
+Input: s = "()(())"
+Output: 6
+How: The entire string is valid: "()(())" length 6.```
 """,
         "title": "Longest valid parentheses",
         "level": "Edgy",
@@ -6300,14 +6554,20 @@ test_cases = [
     106: {
         "markdown": """
 ### N Queens
+You have `n` queens and you need to place them on an `n * n` board such that no two queens are attacking each other.  Return the number of distinct ways in which the n queens can be placed.
+
+> In chess a queen can attack any piece that lies on the same row, column or diagonal. 
 
 ### Example
 ```
-n = 1
-output = 1
-
-n = 4
-output = 2
+Input: n = 4
+Output: 2
+How: 
+    Solution 1:          Solution 2:
+    . Q . .              . . Q .
+    . . . Q              Q . . .
+    Q . . .              . . . Q
+    . . Q .              . Q . .
 ```
 """,
         "title": "N Queens",
@@ -6335,15 +6595,24 @@ test_cases = [
     107: {
         "markdown": """
 ### Split array largest sum
+Given an integer array `nums` and an integer `k`, split the array into k non-empty subarrays such that the largest sum among these subarrays is minimized.
 
+Return the minimized largest sum.
 
 ### Example
 ```
-nums = [1], k = 1
-output = 1
+Input: nums = [7,2,5,10,8], k = 2
+Output: 18
+How: 
+There are four ways to split nums into two subarrays:
+- [7,2,5] and [10,8] with sums 14 and 18 → largest sum = 18
+- [7,2,5,10] and [8] with sums 24 and 8 → largest sum = 24
+- [7,2] and [5,10,8] with sums 9 and 23 → largest sum = 23
+- [7] and [2,5,10,8] with sums 7 and 25 → largest sum = 25
+The minimum among these largest sums is 18.
 
-nums = [1, 2, 3, 4, 5], k = 2 
-output = 9
+Input: nums = [1], k = 1
+Output: 1
 ```
 """,
         "title": "Split array largest sum",
@@ -6419,15 +6688,24 @@ test_cases = [
     108: {
         "markdown": """
 ### Reaching points
+Given four integers `sx`, `sy`, `tx`, and `ty`, return `true` if it is possible to convert the starting point `(sx, sy)` to the target point `(tx, ty)` through a series of moves, and `false` otherwise.
 
+The allowed move operations are:
+ 1. From point `(x, y)`, you can move to `(x, x + y)`
+ 2. From point `(x, y)`, you can move to `(x + y, y)`
 
 ### Example
 ```
-sx = 1, xy = 1, tx = 1, ty = 1
-output = True 
+Input: sx = 1, sy = 1, tx = 3, ty = 5
+Output: true
+How: 
+(1, 1) → (1, 2) → (3, 2) → (3, 5)
 
-sx = 1, xy = 2, tx = 2, ty = 1
-output = False
+Input: sx = 1, xy = 2, tx = 2, ty = 1
+Output: false
+How: 
+    Cannot reach (2, 1) from (1, 2) 
+    using the allowed operations.
 ```
 """,
         "title": "Reaching points",
@@ -6504,13 +6782,18 @@ test_cases = [
     109: {
         "markdown": """
 ### Palindrome pairs
+Given a list of unique `words`, find all pairs of distinct indices `(i, j)` in the given list such that the concatenation of the two words, i.e., `words[i] + words[j]`, forms a palindrome. Return the indices sorted in ascending order. 
 
+> A palindrome is a string that reads the same forwards and backwards (e.g., "abba", "racecar").
 
 ### Example
 ```
-words = ['ab', 'ba']
-output = [[0, 1], [1, 0]]
-how = 'abba' and 'baab'
+Input: words = ["bat","tab","cat"]
+Output: [[0,1],[1,0]]
+How: 
+- "bat" + "tab" = "battab" (palindrome)
+- "tab" + "bat" = "tabbat" (palindrome)
+- No pairs involve "cat" as it doesn't form a palindrome with any other word
 ```
 """,
         "title": "Palindrome pairs",
@@ -6648,22 +6931,35 @@ test_cases = [
     110: {
         "markdown": """
 ### Rotting oranges
+Given an `m * n` grid where each cell can have a value of `0`, `1` or `2`:
+- 0 - empty cell
+- 1 - fresh orange
+- 2 - rotten orange
 
+Any fresh orange that is next (up, down, left, right) to a rotten one rots within a minute. 
+
+Return the minimum time within which all the oranges in the grid become rotten. Return -1 if it's impossible for all to get rotten. 
 
 ### Example
 ```
-grid = [[1]]
-output = -1  
+Input: grid = [[1]]
+Output: -1  
 
-grid = [[1, 2]]
-output = 1
+Input: grid = [[1, 2]]
+Output: 1
 
-grid = [
-    [2, 1, 1], 
-    [1, 1, 0], 
-    [0, 1, 1]
-]
-output = 4 
+Input: 
+    grid = [
+        [2, 1, 1], 
+        [1, 1, 0], 
+        [0, 1, 1]
+    ]
+Output: 4
+How:
+Minute 0:    Minute 1:    Minute 2:    Minute 3:    Minute 4:
+2 1 1        2 2 1        2 2 2        2 2 2        2 2 2
+1 1 0   →    2 1 0   →    2 2 0   →    2 2 0   →    2 2 0
+0 1 1        0 1 1        0 1 1        0 2 1        0 2 2
 ```
 """,
         "title": "Rotting oranges",
