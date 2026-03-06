@@ -34,7 +34,7 @@ class Dashboard(Widget):
             steady.add(k)
         else:
             edgy.add(k)
-    total = len(breezy) + (len(steady) * 2) + (len(edgy) * 4)
+    total = len(breezy) + len(steady) + (len(edgy) * 1.5)
 
     DEFAULT_CSS = """
     Dashboard {
@@ -135,7 +135,7 @@ class Dashboard(Widget):
         if self.show_dashboard:
             docs = attempts.all()
             breezy, steady, edgy = self.get_complete(docs)
-            self.update_digits(ids, [breezy, steady // 2, edgy // 4])
+            self.update_digits(ids, [breezy, steady, int(edgy // 1.5)])
             self.update_progress(breezy + steady + edgy)
             self.update_highlight(docs)
             self.update_md(docs)
@@ -203,7 +203,7 @@ class Dashboard(Widget):
         breezy = len(self.breezy.intersection(passed))
         steady = len(self.steady.intersection(passed))
         edgy = len(self.edgy.intersection(passed))
-        return breezy, steady * 2, edgy * 4
+        return breezy, steady, edgy * 1.5
 
     def get_stats(self, docs):
         # get recent, frequent, fast and forever.
