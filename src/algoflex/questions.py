@@ -6339,11 +6339,11 @@ test_cases = [
 
 ### Example
 ```
-s = "babad"
-output = "bab" 
+nums = [1], k = 1
+output = 1
 
-s = "abcde"
-output = "a"
+nums = [1, 2, 3, 4, 5], k = 2 
+output = 9
 ```
 """,
         "title": "Split array largest sum",
@@ -6413,6 +6413,91 @@ test_cases = [
     # ---- Extreme Skew ----
     [split_array([1] * 999 + [10**6], 2), 1000000],
     [split_array([10**6] + [1] * 999, 2), 1000000],
+]
+""",
+    },
+    108: {
+        "markdown": """
+### Reaching points
+
+
+### Example
+```
+sx = 1, xy = 1, tx = 1, ty = 1
+output = True 
+
+sx = 1, xy = 2, tx = 2, ty = 1
+output = False
+```
+""",
+        "title": "Reaching points",
+        "level": "Edgy",
+        "code": """def reaching_points(sx: int, sy: int, tx: int, ty: int) -> bool:
+""",
+        "test_cases": """
+test_cases = [
+    # ---- Minimal Edge Cases ----
+    [reaching_points(1, 1, 1, 1), True],
+    [reaching_points(1, 1, 2, 1), True],
+    [reaching_points(1, 1, 1, 2), True],
+    [reaching_points(1, 1, 2, 2), False],
+    # ---- Simple Reachable ----
+    [reaching_points(1, 1, 3, 5), True],
+    [reaching_points(1, 1, 5, 3), True],
+    [reaching_points(1, 2, 3, 2), True],
+    [reaching_points(2, 1, 2, 3), True],
+    # ---- Simple Unreachable ----
+    [reaching_points(1, 2, 2, 1), False],
+    [reaching_points(2, 2, 4, 2), True],
+    [reaching_points(3, 3, 6, 6), False],
+    # ---- Exact Match After Several Steps ----
+    [reaching_points(2, 3, 13, 8), True],
+    [reaching_points(3, 7, 3, 28), True],
+    [reaching_points(3, 7, 10, 7), True],
+    # ---- Target Smaller Than Start ----
+    [reaching_points(5, 5, 3, 3), False],
+    [reaching_points(10, 4, 5, 4), False],
+    # ---- One Coordinate Matches ----
+    [reaching_points(1, 5, 1, 1000000000), True],
+    [reaching_points(5, 1, 1000000000, 1), True],
+    [reaching_points(2, 4, 2, 16), True],
+    [reaching_points(4, 2, 16, 2), True],
+    # ---- Parity / Modulo Traps ----
+    [reaching_points(1, 3, 10, 3), True],
+    [reaching_points(1, 3, 9, 3), False],
+    [reaching_points(2, 5, 19, 5), False],
+    [reaching_points(2, 5, 18, 5), False],
+    # ---- Classic LeetCode Edge ----
+    [reaching_points(9, 10, 9, 19), True],
+    [reaching_points(9, 10, 18, 10), False],
+    # ---- Larger Reachable ----
+    [reaching_points(3, 4, 999999999, 4), True],
+    [reaching_points(4, 3, 4, 999999999), True],
+    # ---- Larger Unreachable ----
+    [reaching_points(3, 4, 999999998, 4), False],
+    [reaching_points(4, 3, 4, 999999998), False],
+    # ---- Near Upper Constraint ----
+    [reaching_points(1, 1, 1000000000, 1), True],
+    [reaching_points(1, 1, 1, 1000000000), True],
+    [reaching_points(1, 1, 1000000000, 1000000000), False],
+    # ---- Stress: Fibonacci-like Growth ----
+    [reaching_points(1, 1, 832040, 1346269), True],
+    [reaching_points(1, 1, 1346269, 832040), True],
+    # ---- Stress: Large Coprime ----
+    [reaching_points(7, 11, 999999937, 11), False],
+    [reaching_points(7, 11, 999999938, 11), False],
+    # ---- Both Large ----
+    [reaching_points(123456789, 987654321, 123456789, 987654321), True],
+    [reaching_points(123456789, 987654321, 111111111, 987654321), False],
+    # ---- Asymmetric Growth ----
+    [reaching_points(8, 5, 8, 45), True],
+    [reaching_points(8, 5, 8, 44), False],
+    # ---- Another Modulo Edge ----
+    [reaching_points(5, 9, 5, 59), True],
+    [reaching_points(5, 9, 5, 58), False],
+    # ---- Extreme Stress ----
+    [reaching_points(1, 999999999, 1, 1000000000), True],
+    [reaching_points(999999999, 1, 1000000000, 1), True],
 ]
 """,
     },
