@@ -612,7 +612,7 @@ test_cases = [
 ### Happy number
 Given a positive integer `n`, return whether it is a happy number or not. 
 
-> A happy number is a number which if you repeatedly sum the squares of its digits the process will eventually lead to 1. For example, 19 → `1²+9²=82` → `8²+2²=68` → `6²+8²=100` → `1`.
+> A happy number is a number which if you repeatedly sum the squares of its digits the process will eventually lead to 1. For example, 19 -> `1²+9²=82` -> `8²+2²=68` -> `6²+8²=100` -> `1`.
 ### Example
 ```
 input: 19
@@ -2066,7 +2066,7 @@ f1 = {  # basic
     "src": 0,
     "dst": 3,
     "k": 1,
-    "expected": 700,  # 0→2→1→3
+    "expected": 700,  # 0->2->1->3
 }
 f2 = {  # cheaper path requires more stops
     "n": 4,
@@ -2074,7 +2074,7 @@ f2 = {  # cheaper path requires more stops
     "src": 0,
     "dst": 3,
     "k": 2,
-    "expected": 160,  # 0→2→1→3
+    "expected": 160,  # 0->2->1->3
 }
 f3 = {  # fails if heap isn't sorted by cost
     "n": 4,
@@ -2082,7 +2082,7 @@ f3 = {  # fails if heap isn't sorted by cost
     "src": 0,
     "dst": 3,
     "k": 2,
-    "expected": 51,  # 0→2→3
+    "expected": 51,  # 0->2->3
 }
 f4 = {  # same node reached with fewer stops but higher cost
     "n": 5,
@@ -2090,7 +2090,7 @@ f4 = {  # same node reached with fewer stops but higher cost
     "src": 0,
     "dst": 4,
     "k": 3,
-    "expected": 40,  # 0→1→2→3→4
+    "expected": 40,  # 0->1->2->3->4
 }
 f5 = {  # cycles present
     "n": 3,
@@ -2914,7 +2914,7 @@ Design a stack `Stack` that supports:
 - `top` - returns the top element of the stack
 - `get_min` - returns the minimum element in the stack
 
-  All in **O(1)** time.
+All in **O(1)** time.
 
 ### Example
 ```
@@ -3448,7 +3448,7 @@ e8 = [
     [1, 3, 1],
 ]
 k8 = 2
-# distances from 0 → {1,2} via 2
+# distances from 0 -> {1,2} via 2
 # counts: 0=2, 1=2, 2=2, 3=1
 # expected: 3
 n9 = 3
@@ -4214,13 +4214,10 @@ Design a hashmap, class `MyHashMap` with methods put, get and remove that adds, 
 
 Implement the MyHashMap class:
 
-    `MyHashMap()` Initializes the object with an empty map.
-
-    `void put(int key, int value)` Inserts a (key, value) pair into the HashMap. If the key already exists in the map, update the corresponding value.
-
-   ` int get(int key)` Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key.
-
-    `void remove(int key)` Removes the key and its corresponding value if the map contains the mapping for the key.
+- `MyHashMap()` Initializes the object with an empty map.
+- `void put(int key, int value)` Inserts a (key, value) pair into the HashMap. If the key already exists in the map, update the corresponding value.
+- ` int get(int key)` Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key.
+- `void remove(int key)` Removes the key and its corresponding value if the map contains the mapping for the key.
 
 Don't use the inbuilt hash table libraries, `{}` or `dict`.
 
@@ -4311,14 +4308,15 @@ Given an undirected connected graph with n vertices and m edges, find all articu
 ```
 Input: n = 5, edges = [[0,1], [1,2], [2,0], [1,3], [3,4]]
 Output: [1, 3]
-Explanation: 
+How: 
 - Removing vertex 1 disconnects vertices 0,2 from 3,4
 - Removing vertex 3 disconnects vertex 4 from the rest
 - The graph looks like:
+
     0 --- 1 --- 3 --- 4
      \   /      \\
       \ /        \\
-       2            (no connection to 4 without 3)
+       2           (no connection to 4 without 3)
 ```
 """,
         "title": "Articulation points",
@@ -4587,29 +4585,28 @@ test_cases = [
         "markdown": """
 ### LFU cache
 Design a Least Frequently Used (LFU) cache. 
+
 Implement the LFUCache class:
 
-    `LFUCache(int capacity)` Initializes the object with the capacity of the data structure.
-
-    `int get(int key)` Gets the value of the key if the key exists in the cache. Otherwise, returns -1.
-
-    `void put(int key, int value)` Updates the value of the key if present, or inserts the key if not already present. When the cache reaches its capacity, it should invalidate and remove the least frequently used key before inserting a new item.
+- `LFUCache(int capacity)` Initializes the object with the capacity of the data structure.
+- `int get(int key)` Gets the value of the key if the key exists in the cache. Otherwise, returns -1.
+- `void put(int key, int value)` Updates the value of the key if present, or inserts the key if not already present. When the cache reaches its capacity, it should invalidate and remove the least frequently used key before inserting a new item.
 
 Both `get` and `put` operations must run in O(1) average time complexity 
 
 ### Example
 ```
-LFUCache cache = new LFUCache(2);
+cache = LFUCache(2);
 cache.put(1, 1);
 cache.put(2, 2);
-cache.get(1);       // returns 1
-cache.put(3, 3);    // evicts key 2
-cache.get(2);       // returns -1 (not found)
-cache.get(3);       // returns 3
-cache.put(4, 4);    // evicts key 1
-cache.get(1);       // returns -1 (not found)
-cache.get(3);       // returns 3
-cache.get(4);       // returns 4
+cache.get(1);       # returns 1
+cache.put(3, 3);    # evicts key 2
+cache.get(2);       # returns -1 (not found)
+cache.get(3);       # returns 3
+cache.put(4, 4);    # evicts key 1
+cache.get(1);       # returns -1 (not found)
+cache.get(3);       # returns 3
+cache.get(4);       # returns 4
 ```
 """,
         "title": "LFU cache",
@@ -4989,6 +4986,7 @@ Output: "BANC"
 How: The minimum window substring "BANC" 
       includes 'A', 'B', and 'C' from string t.
 
+
 Input: s = "aabdec", t = "aabc"
 Output: "abdec"
 How: Need two 'a's, one 'b', one 'c'. 
@@ -5189,15 +5187,15 @@ Given a string `s` that contains parentheses and letters, remove the minimum num
 Input: s = "()())()"
 Output: ["(())()","()()()"]
 How: 
-- Remove the parenthesis at index 1 → "(())()"
-- Remove the parenthesis at index 3 → "()()()"
+- Remove the parenthesis at index 1 -> "(())()"
+- Remove the parenthesis at index 3 -> "()()()"
 Both are valid and have the same length.
 
 Input: s = "(a)())()"
 Output: ["(a())()","(a)()()"]
 How: 
-- Remove the extra closing parenthesis after the first 'a)' → "(a())()"
-- Remove the extra closing parenthesis after the second ')(' → "(a)()()"
+- Remove the extra closing parenthesis after the first 'a)' -> "(a())()"
+- Remove the extra closing parenthesis after the second ')(' -> "(a)()()"
 
 Input: s = ")("
 Output: [""]
@@ -5721,21 +5719,19 @@ test_cases = [
 ### Pick cherries
 Given an `n x n` grid representing a field of cherries. Each cell in the grid can have one of three possible integer values:
 
-    `0` means the cell is empty, so you can pass through
-
-    `1` means the cell contains a cherry that you can pick up and pass through
-
-    `-1` means the cell contains a thorn that blocks your way
+- `0` means the cell is empty, so you can pass through
+- `1` means the cell contains a cherry that you can pick up and pass through
+- `-1` means the cell contains a thorn that blocks your way
 
 Your task is to find the maximum number of cherries you can collect by following these rules:
 
-    Start at position `(0, 0)` and reach `(n - 1, n - 1)` by only moving right or down through valid path cells (cells with value `0` or `1`)
+Start at position `(0, 0)` and reach `(n - 1, n - 1)` by only moving right or down through valid path cells (cells with value `0` or `1`)
 
-    After reaching `(n - 1, n - 1)`, return to `(0, 0)` by only moving left or up through valid path cells
+After reaching `(n - 1, n - 1)`, return to `(0, 0)` by only moving left or up through valid path cells
 
-    When passing through a path cell containing a cherry, you pick it up, and the cell becomes an empty cell `0`
+When passing through a path cell containing a cherry, you pick it up, and the cell becomes an empty cell `0`
 
-    If there is no valid path between `(0, 0)` and `(n - 1, n - 1)`, then no cherries can be collected (return `0`)
+If there is no valid path between `(0, 0)` and `(n - 1, n - 1)`, then no cherries can be collected (return `0`)
 
 
 ### Example
@@ -5930,25 +5926,24 @@ A city's skyline is the outer contour of the silhouette formed by all the buildi
 
 The geometric information of each building is given in the array `buildings` where `buildings[i] = [lefti, righti, heighti]`:
 
-    `lefti` is the x coordinate of the left edge of the ith building
-
-    `righti` is the x coordinate of the right edge of the ith building
-
-    `heighti` is the height of the ith building
+- `lefti` is the x coordinate of the left edge of the ith building
+- `righti` is the x coordinate of the right edge of the ith building
+- `heighti` is the height of the ith building
 
 You may assume all buildings are perfect rectangles grounded on an absolutely flat surface at height 0
 
-#### Output Format
+##### Output Format
 
 The skyline should be represented as a list of key points sorted by their x-coordinate in the form `[[x1,y1],[x2,y2],...]`. Each key point is the left endpoint of some horizontal segment in the skyline except the last point in the list, which always has a y-coordinate 0 and is used to mark the skyline's termination where the rightmost building ends.
 
-Note: There must be no consecutive horizontal lines of equal height in the output skyline. For instance, the three lines of height 5 in [...,[2,3],[4,5],[7,5],[11,5],[12,7],...] should be merged into one in the final output as such: [...,[2,3],[4,5],[12,7],...].
+Note: There must be no consecutive horizontal lines of equal height in the output skyline. For instance, the three lines of height `5` in `[...,[2,3],[4,5],[7,5],[11,5],[12,7],...]` should be merged into one in the final output as such: `[...,[2,3],[4,5],[12,7],...]`.
 
 ### Example
 ```
 Input: buildings = [[2,9,10],[3,7,15],[5,12,12],[15,20,10],[19,24,8]]
 Output: [[2,10],[3,15],[7,12],[12,0],[15,10],[20,8],[24,0]]
 How: 
+
  ^
  |    +-----+
  |    |     |
@@ -6250,11 +6245,11 @@ Given a directed graph with `V` vertices and `E` edges, find the number of Stron
 Input: V = 5, edges = [[1,3], [1,4], [2,1], [3,2], [4,5]]
 Output: 3
 How:
-    1 → 3 → 2
+    1 -> 3 -> 2
     ↑    ↓
     └────┘
     ↓
-    4 → 5
+    4 -> 5
 
     the SCCs are {1, 2, 3}, {4} and {5}
 
@@ -6476,7 +6471,8 @@ How: The longest valid parentheses substring is "()".
 
 Input: s = "()(())"
 Output: 6
-How: The entire string is valid: "()(())" length 6.```
+How: The entire string is valid: "()(())" length 6.
+```
 """,
         "title": "Longest valid parentheses",
         "level": "Edgy",
@@ -6605,10 +6601,10 @@ Input: nums = [7,2,5,10,8], k = 2
 Output: 18
 How: 
 There are four ways to split nums into two subarrays:
-- [7,2,5] and [10,8] with sums 14 and 18 → largest sum = 18
-- [7,2,5,10] and [8] with sums 24 and 8 → largest sum = 24
-- [7,2] and [5,10,8] with sums 9 and 23 → largest sum = 23
-- [7] and [2,5,10,8] with sums 7 and 25 → largest sum = 25
+- [7,2,5] and [10,8] with sums 14 and 18 -> largest sum = 18
+- [7,2,5,10] and [8] with sums 24 and 8 -> largest sum = 24
+- [7,2] and [5,10,8] with sums 9 and 23 -> largest sum = 23
+- [7] and [2,5,10,8] with sums 7 and 25 -> largest sum = 25
 The minimum among these largest sums is 18.
 
 Input: nums = [1], k = 1
@@ -6699,7 +6695,7 @@ The allowed move operations are:
 Input: sx = 1, sy = 1, tx = 3, ty = 5
 Output: true
 How: 
-(1, 1) → (1, 2) → (3, 2) → (3, 5)
+(1, 1) -> (1, 2) -> (3, 2) -> (3, 5)
 
 Input: sx = 1, xy = 2, tx = 2, ty = 1
 Output: false
@@ -6958,7 +6954,7 @@ Output: 4
 How:
 Minute 0:    Minute 1:    Minute 2:    Minute 3:    Minute 4:
 2 1 1        2 2 1        2 2 2        2 2 2        2 2 2
-1 1 0   →    2 1 0   →    2 2 0   →    2 2 0   →    2 2 0
+1 1 0   ->    2 1 0   ->    2 2 0   ->    2 2 0   ->    2 2 0
 0 1 1        0 1 1        0 1 1        0 2 1        0 2 2
 ```
 """,
