@@ -776,7 +776,20 @@ test_cases = [
 """,
         "title": "Paths with sum",
         "level": "Steady",
-        "code": """def count_paths(root, target):
+        "code": """
+from typing import Optional
+
+
+class TreeNode:
+    __slots__ = ("val", "left", "right")
+
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+        
+def count_paths(root: Optional[TreeNode], target: int) -> int:
 """,
     },
     20: {
@@ -994,7 +1007,20 @@ test_cases = [
 """,
         "title": "Has path sum",
         "level": "Steady",
-        "code": """def has_path_sum(root, target):
+        "code": """
+from typing import Optional
+
+
+class TreeNode:
+    __slots__ = ("val", "left", "right")
+
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+        
+        
+def has_path_sum(root: Optional[TreeNode], target: int) -> bool:
 """,
     },
     26: {
@@ -1042,7 +1068,20 @@ test_cases = [
 """,
         "title": "Has node BST",
         "level": "Breezy",
-        "code": """def has_node_bst(root, x):
+        "code": """
+from typing import Optional
+
+
+class TreeNode:
+    __slots__ = ("val", "left", "right")
+
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+        
+        
+def has_node_bst(root: Optional[TreeNode], x: int) -> bool:
 """,
     },
     27: {
@@ -1080,7 +1119,20 @@ test_cases = [
 """,
         "title": "BST min",
         "level": "Breezy",
-        "code": """def min_bst(root):
+        "code": """
+from typing import Optional
+
+
+class TreeNode:
+    __slots__ = ("val", "left", "right")
+
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+        
+        
+def min_bst(root: Optional[TreeNode]) -> int:
 """,
     },
     28: {
@@ -1143,7 +1195,20 @@ test_cases = [
 """,
         "title": "Balanced tree",
         "level": "Steady",
-        "code": """def is_balanced(root):
+        "code": """
+from typing import Optional
+
+
+class TreeNode:
+    __slots__ = ("val", "left", "right")
+
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+        
+        
+def is_balanced(root: Optional[TreeNode]) -> bool:
 """,
     },
     29: {
@@ -1190,7 +1255,20 @@ test_cases = [
 """,
         "title": "Tree in-order traversal",
         "level": "Breezy",
-        "code": """def in_order(root):
+        "code": """
+from typing import Optional
+
+
+class TreeNode:
+    __slots__ = ("val", "left", "right")
+
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+        
+        
+def in_order(root: Optional[TreeNode]) -> list[int]:
 """,
     },
     30: {
@@ -1239,7 +1317,20 @@ test_cases = [
 """,
         "title": "Valid BST",
         "level": "Steady",
-        "code": """def valid_bst(root):
+        "code": """
+from typing import Optional
+
+
+class TreeNode:
+    __slots__ = ("val", "left", "right")
+
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+        
+        
+def valid_bst(root: Optional[TreeNode]) -> bool:
 """,
     },
     31: {
@@ -1284,7 +1375,20 @@ test_cases = [
 """,
         "title": "Tree level-order traversal",
         "level": "Steady",
-        "code": """def level_order(root):
+        "code": """
+from typing import Optional
+
+
+class TreeNode:
+    __slots__ = ("val", "left", "right")
+
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+        
+        
+def level_order(root: Optional[TreeNode]) -> list[int]:
 """,
     },
     32: {
@@ -1329,7 +1433,20 @@ test_cases = [
 """,
         "title": "Tree leaves",
         "level": "Steady",
-        "code": """def get_leaves(root):
+        "code": """
+from typing import Optional
+
+
+class TreeNode:
+    __slots__ = ("val", "left", "right")
+
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+        
+        
+def get_leaves(root: Optional[TreeNode]) -> list[int]:
 """,
     },
     33: {
@@ -1380,7 +1497,20 @@ test_cases = [
 """,
         "title": "Sum right nodes",
         "level": "Steady",
-        "code": """def sum_right(root):
+        "code": """
+from typing import Optional
+
+
+class TreeNode:
+    __slots__ = ("val", "left", "right")
+
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+        
+        
+def sum_right(root: Optional[TreeNode]) -> int:
 """,
     },
     34: {
@@ -2343,7 +2473,20 @@ test_cases = [
 """,
         "title": "Max loot binary tree",
         "level": "Steady",
-        "code": """def max_loot_tree(root):
+        "code": """
+from typing import Optional
+
+
+class TreeNode:
+    __slots__ = ("val", "left", "right")
+
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+        
+        
+def max_loot_tree(root: Optional[TreeNode]) -> int:
 """,
     },
     59: {
@@ -2380,7 +2523,20 @@ test_cases = [
 """,
         "title": "Lowest common ancestor",
         "level": "Steady",
-        "code": """def lca(root, p, q):
+        "code": """
+from typing import Optional
+
+
+class TreeNode:
+    __slots__ = ("val", "left", "right")
+
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+        
+        
+def lca(root: Optional[TreeNode], p: int, q: int) -> int:
 """,
     },
     60: {
@@ -2442,7 +2598,20 @@ test_cases = [
 """,
         "title": "Same binary tree",
         "level": "Breezy",
-        "code": """def same_tree(p, q):
+        "code": """
+from typing import Optional
+
+
+class TreeNode:
+    __slots__ = ("val", "left", "right")
+
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+        
+        
+def same_tree(p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
 """,
     },
     61: {
@@ -2481,7 +2650,20 @@ test_cases = [
 """,
         "title": "Binary tree cousins",
         "level": "Steady",
-        "code": """def are_cousins(root, x, y):
+        "code": """
+from typing import Optional
+
+
+class TreeNode:
+    __slots__ = ("val", "left", "right")
+
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+        
+        
+def are_cousins(root: Optional[TreeNode], x: int, y: int) -> bool:
 """,
     },
     62: {
@@ -2901,7 +3083,20 @@ test_cases = [
 """,
         "title": "Invert binary tree",
         "level": "Breezy",
-        "code": """def invert_tree(root):
+        "code": """
+from typing import Optional
+
+
+class TreeNode:
+    __slots__ = ("val", "left", "right")
+
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+        
+        
+def invert_tree(root: Optional[TreeNode]) -> Optional[TreeNode]:
 """,
     },
     71: {
