@@ -3051,7 +3051,19 @@ test_cases = [
 """,
         "title": "Reverse linked list",
         "level": "Breezy",
-        "code": """def reverse_list(head):
+        "code": """
+from typing import Optional 
+
+
+class ListNode:
+    __slots__ = ("val", "next")
+
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+        
+def reverse_list(head: Optional[ListNode]) -> Optional[ListNode]:
 """,
     },
     74: {
@@ -3092,7 +3104,19 @@ test_cases = [
 """,
         "title": "Merge sorted linked lists",
         "level": "Steady",
-        "code": """def list_merge(head1, head2):
+        "code": """
+from typing import Optional 
+
+
+class ListNode:
+    __slots__ = ("val", "next")
+
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+        
+def list_merge(head1: Optional[ListNode], head2: Optional[ListNode]) -> Optional[ListNode]:
 """,
     },
     75: {
@@ -3132,7 +3156,19 @@ test_cases = [
 """,
         "title": "Sum linked lists",
         "level": "Steady",
-        "code": """def list_add(head1, head2):
+        "code": """
+from typing import Optional 
+
+
+class ListNode:
+    __slots__ = ("val", "next")
+
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+        
+def list_add(head1: Optional[ListNode], head2: Optional[ListNode]) -> Optional[ListNode]:
 """,
     },
     76: {
