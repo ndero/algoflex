@@ -381,6 +381,7 @@ test_cases = [
     [min_len_arr([i for i in range(100)], 60), 1],
     [min_len_arr([i for i in range(100_000)], 60_000_000), 602],
     [min_len_arr([i for i in range(1_000_000)], 60_000_000), 61],
+    [min_len_arr([1, 1, 1, 1, 1], 6), 0],
 ]
 """,
         "title": "Min length sub array",
