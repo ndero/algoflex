@@ -1,6 +1,6 @@
 from textual import on
 from textual.app import App
-from textual.widgets import TextArea, Footer, TabbedContent, Button, Markdown, Static
+from textual.widgets import TextArea, Footer, TabbedContent, Markdown, Static
 from textual.containers import Horizontal, Vertical, ScrollableContainer
 from textual.screen import Screen
 from textual.binding import Binding
@@ -19,8 +19,8 @@ attempts = get_db()
 class AttemptScreen(Screen):
     BINDINGS = [
         Binding("a", "back", "back", tooltip="Go to home"),
-        Binding("s", "submit", "submit", tooltip="Submit your solution"),
         Binding("m", "maximize", "max/min editor", tooltip="maximize/minimize editor"),
+        Binding("s", "submit", "submit", tooltip="Submit your solution"),
     ]
     DEFAULT_CSS = """
     Horizontal {
@@ -84,8 +84,6 @@ class AttemptScreen(Screen):
                         compact=True,
                         tab_behavior="indent",
                     )
-                    with Horizontal():
-                        yield Button(id="submit", label="Submit", flat=True)
                 yield ScrollableContainer(Static(id="timeline"))
                 yield Markdown(id="solutions")
         yield Footer()
@@ -97,10 +95,6 @@ class AttemptScreen(Screen):
         docs = attempts.search(KV.problem_id == self.problem_id)
         self.update_timeline(docs)
         self.update_solutions(docs)
-
-    @on(Button.Pressed, "#submit")
-    def submit_code(self):
-        self.attempt()
 
     def attempt(self):
         def update(_id):
