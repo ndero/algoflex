@@ -144,7 +144,7 @@ class Dashboard(Widget):
         self.query_one(f"{id}", Digits).update(f"{value}")
 
     def update_highlight(self, docs):
-        comment, completed, attempts = self.get_highlights(docs)
+        _, _, _, _, comment, completed, attempts = self.get_stats(docs)
         if not attempts:
             return
         desc = f"[$primary]{comment}![/] Solved [$primary]{completed}[/] problem{'s' if completed != 1 else ''} in [$primary]{attempts}[/] attempt{'s' if attempts != 1 else ''} today."
@@ -153,23 +153,7 @@ class Dashboard(Widget):
         today.border_title = "Today's highlight"
         today.display = True
 
-    def get_highlights(self, docs):
-        start = self.midnight()
-        total_attempts = 0
-        passed_problems = set()
-
-        for d in docs:
-            if d["created_at"] < start:
-                continue
-            total_attempts += 1
-            if d["passed"]:
-                passed_problems.add(d["problem_id"])
-
-        completed = len(passed_problems)
-        rank = self.rank_today(completed, total_attempts)
-        return rank, completed, total_attempts
-
-    def rank_today(self, passed, attempts):
+    def rank_highlight(self, passed, attempts):
         low = ["Solid", "Great", "Cool", "Good"]
         mid = ["Excellent", "Super", "Brill", "Fab", "Legit", "Smooth"]
         high = ["Badass", "Wizard", "Maestro", "Stellar", "Hotshot", "Ninja", "Pro"]
@@ -208,7 +192,14 @@ class Dashboard(Widget):
     def get_stats(self, docs):
         # get recent, frequent, fast and forever.
         latest, best, worst, completed = {}, {}, {}, Counter()
+        # get highlights - today's, week's or month's
+        h_attempts, h_passed = 0, set() 
         for d in docs:
+            if d["created_at"] >= self.midnight():
+                h_attempts += 1 
+                if d["passed"]:
+                    h_passed.add(d["problem_id"]) 
+
             pid = d["problem_id"]
             latest[pid] = max(d["created_at"], latest.get(pid, (0, 0))[0]), d["passed"]
             if d["passed"]:
@@ -253,10 +244,12 @@ class Dashboard(Widget):
             (q.get(id, {}).get("title", ""), q.get(id, {}).get("level", ""), count)
             for id, count in completed.most_common(9)
         ]
-        return recent, frequent, fast, forever
+        h_completed = len(h_passed)
+        h_rank = self.rank_highlight(h_completed, h_attempts)
+        return recent, frequent, fast, forever, h_rank, h_completed, h_attempts
 
     def update_md(self, docs) -> None:
-        recent, frequent, fast, forever = self.get_stats(docs)
+        recent, frequent, fast, forever, _, _, _ = self.get_stats(docs)
         latest = self.md_table(["Question", "Level", "When"], recent)
         popular = self.md_table(["Question", "Level", "Passed"], frequent)
         best = self.md_table(["Question", "Level", "Best time"], fast)
