@@ -18,9 +18,9 @@ attempts = get_db()
 
 class AttemptScreen(Screen):
     BINDINGS = [
-        Binding("a", "back", "back", tooltip="Go to home"),
-        Binding("m", "maximize", "max/min editor", tooltip="maximize/minimize editor"),
-        Binding("s", "submit", "submit", tooltip="Submit your solution"),
+        Binding("ctrl+s", "submit", "submit", tooltip="Submit your solution"),
+        Binding("ctrl+l", "maximize", "max/min editor", tooltip="maximize/minimize editor"),
+        Binding("ctrl+b", "back", "back", tooltip="Go to home"),
     ]
     DEFAULT_CSS = """
     Horizontal {
