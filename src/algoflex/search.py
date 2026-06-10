@@ -16,6 +16,7 @@ class SearchScreen(ModalScreen):
         ("escape", "dismiss", "dismiss"),
     ]
 
+    problems = reactive([])  # all problems
     matches = reactive([], recompose=True)
     target = reactive("")
     passed = reactive(set)
@@ -61,23 +62,16 @@ class SearchScreen(ModalScreen):
         self.passed = set(
             doc["problem_id"] for doc in attempts.search(KV.passed == True)
         )
+        self.problems = [("✓" if pid in self.passed else " ", pid, q["title"]) for pid, q in questions.items()]
+        self.matches = self.problems
 
-    def on_input_changed(self, event: Input.Changed) -> None:
+    async def on_input_changed(self, event: Input.Changed) -> None:
         self.target = event.value.strip().lower() or ""
-        self.update_results()
+        await self.update_results()
         self.query_one("#search", Input).focus()
 
-    def update_results(self):
-        matches = (
-            []
-            if len(self.target) < 2
-            else [
-                ("✓" if pid in self.passed else " ", pid, q["title"])
-                for pid, q in questions.items()
-                if (self.target in q["title"].lower())
-            ]
-        )
-        self.matches = matches
+    async def update_results(self):
+        self.matches = [p for p in self.problems if (self.target in p[2].lower())]
 
     def on_list_view_selected(self, event: ListView.Selected):
         selected = event.item.id or ""
