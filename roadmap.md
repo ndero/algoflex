@@ -12,4 +12,4 @@
 - [ ] Add test cases for questions with a few of them
 - [ ] Line wrap past solutions
 - [ ] Autosave non passing/ non submitted solutions
-- [ ] Fix search - freezing if updating search term too quickly. Also add categories
+- [x] Fix search - freezing if updating search term too quickly.

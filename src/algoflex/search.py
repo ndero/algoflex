@@ -17,9 +17,7 @@ class SearchScreen(ModalScreen):
     ]
 
     problems = reactive([])  # all problems
-    matches = reactive([], recompose=True)
     target = reactive("")
-    passed = reactive(set)
     DEFAULT_CSS = """
     SearchScreen {
         align: center middle;
@@ -47,31 +45,29 @@ class SearchScreen(ModalScreen):
             yield Input(
                 value=f"{self.target}",
                 placeholder="Search problems...",
-                id="search",
-                select_on_focus=False,
             )
-            with ListView():
-                for passed, pid, title in self.matches:
-                    yield ListItem(
-                        Label(f"{passed} [b]{title}[/]"),
-                        id=f"item-{pid}",
-                    )
+            yield ListView(id="results")
         yield Footer()
 
-    def on_mount(self) -> None:
-        self.passed = set(
+    async def on_mount(self) -> None:
+        passed = set(
             doc["problem_id"] for doc in attempts.search(KV.passed == True)
         )
-        self.problems = [("✓" if pid in self.passed else " ", pid, q["title"]) for pid, q in questions.items()]
-        self.matches = self.problems
+        self.problems = [("✓" if pid in passed else " ", pid, q["title"]) for pid, q in questions.items()]
+        await self.update_results(self.problems)
 
     async def on_input_changed(self, event: Input.Changed) -> None:
-        self.target = event.value.strip().lower() or ""
-        await self.update_results()
-        self.query_one("#search", Input).focus()
+        self.target = event.value.strip().lower()
+        results = [p for p in self.problems if (self.target in p[2].lower())]
+        await self.update_results(results)
 
-    async def update_results(self):
-        self.matches = [p for p in self.problems if (self.target in p[2].lower())]
+    async def update_results(self, results):
+        list_view = self.query_one("#results", ListView)
+        await list_view.clear()
+        for passed, pid, title in results:
+            list_view.append(
+                ListItem(Label(f"{passed} [b]{title}[/]"), id=f"item-{pid}",)
+            )
 
     def on_list_view_selected(self, event: ListView.Selected):
         selected = event.item.id or ""
