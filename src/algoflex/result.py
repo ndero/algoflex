@@ -1,7 +1,7 @@
 from textual.screen import ModalScreen
 from textual.widgets import RichLog, Static, Footer
 from algoflex.questions import questions
-from algoflex.db import get_db
+from algoflex.db import attempts, delete_draft, save_draft
 from algoflex.utils import fmt_secs
 from tinydb import Query
 from pathlib import Path
@@ -74,7 +74,6 @@ if __name__ == "__main__":
         yield Footer()
 
     async def run_user_code(self) -> None:
-        attempts = get_db()
         now = time.time()
         passed = False
 
@@ -156,9 +155,15 @@ if __name__ == "__main__":
                     "passed": passed,
                     "elapsed": self.elapsed,
                     "created_at": now,
-                    "code": user_code if passed else "",
+                    "code": user_code,
                 }
             )
+            
+            if passed:
+                delete_draft(self.problem_id)
+            else:
+                save_draft(self.problem_id, user_code, self.elapsed)
+
 
     def new_best(self):
         widget = Static(f"[b]New best time!! --> {fmt_secs(self.elapsed)}[/]")
