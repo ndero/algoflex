@@ -11,7 +11,7 @@ from textual.widgets import (
 )
 from textual.widget import Widget
 from algoflex.questions import questions as q
-from algoflex.db import get_db
+from algoflex.db import attempts
 from algoflex.utils import time_ago, fmt_secs
 from tinydb import Query
 from heapq import nlargest, nsmallest
@@ -20,7 +20,6 @@ from datetime import datetime
 import random
 
 KV = Query()
-attempts = get_db()
 
 
 class Dashboard(Widget):
