@@ -4,11 +4,10 @@ from textual.widgets import Input, ListView, ListItem, Label, Footer
 from textual.containers import Vertical
 from textual.reactive import reactive
 from algoflex.questions import questions
-from algoflex.db import get_db
+from algoflex.db import attempts
 from tinydb import Query
 
 KV = Query()
-attempts = get_db()
 
 
 class SearchScreen(ModalScreen):
