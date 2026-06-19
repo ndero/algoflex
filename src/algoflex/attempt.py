@@ -1,4 +1,3 @@
-from textual import on
 from textual.app import App
 from textual.widgets import TextArea, Footer, TabbedContent, Markdown, Static
 from textual.containers import Horizontal, Vertical, ScrollableContainer
@@ -7,13 +6,12 @@ from textual.binding import Binding
 from algoflex.custom_widgets import Title, Problem
 from algoflex.result import ResultModal
 from algoflex.questions import questions
-from algoflex.db import get_db
+from algoflex.db import attempts, load_draft 
 from algoflex.utils import time_ago, fmt_secs
 from tinydb import Query
 from time import monotonic
 
 KV = Query()
-attempts = get_db()
 
 
 class AttemptScreen(Screen):
@@ -64,6 +62,7 @@ class AttemptScreen(Screen):
         super().__init__()
         self.problem_id = problem_id
         self.test_time = monotonic()
+        self.elapsed_before = 0 
         self.best = None
 
     def compose(self):
@@ -89,6 +88,7 @@ class AttemptScreen(Screen):
         yield Footer()
 
     def on_mount(self):
+        self._load_draft()
         self.update()
 
     def update(self):
@@ -101,7 +101,7 @@ class AttemptScreen(Screen):
             self.update()
 
         code = self.query_one("#code", TextArea)
-        elapsed = monotonic() - self.test_time
+        elapsed = (monotonic() - self.test_time) + self.elapsed_before
         self.app.push_screen(
             ResultModal(self.problem_id, code.text, elapsed, self.best), update
         )
@@ -128,6 +128,12 @@ class AttemptScreen(Screen):
         for doc in passed:
             md += f"### {time_ago(doc['created_at'])}\n```python\n{doc['code']}\n```\n"
         self.query_one("#solutions", Markdown).update(md)
+
+    def _load_draft(self):
+        draft = load_draft(self.problem_id)
+        if draft: 
+            self.query_one("#code", TextArea).text = draft["code"]
+            self.elapsed_before = draft["elapsed"]
 
     def action_back(self):
         self.dismiss()
