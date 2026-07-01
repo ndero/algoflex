@@ -11,5 +11,5 @@
 - [ ] Tips/hints - time and space complexity, walk through - make it click, edge cases, 
 - [ ] Add test cases for questions with a few of them
 - [ ] Line wrap past solutions
-- [ ] Autosave non passing/ non submitted solutions
+- [x] Autosave non passing/ non submitted solutions
 - [x] Fix search - freezing if updating search term too quickly.
