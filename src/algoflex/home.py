@@ -1,4 +1,5 @@
 from random import shuffle
+from typing import ClassVar
 
 from textual.app import App
 from textual.binding import Binding
@@ -49,7 +50,7 @@ class StatScreen(Vertical):
 
 
 class HomeScreen(App):
-    BINDINGS = [
+    BINDINGS: ClassVar[list[Binding]] = [
         Binding("a", "attempt", "attempt", tooltip="Attempt this question"),
         Binding("p", "previous", "previous", tooltip="Previous question"),
         Binding("n", "next", "next", tooltip="Next question"),
@@ -77,7 +78,7 @@ class HomeScreen(App):
     problem_id = reactive(0, always_update=True)
     index = reactive(0, bindings=True)
     show_dashboard: reactive[bool] = reactive(False)
-    PROBLEMS = [k for k in questions.keys()]
+    PROBLEMS: ClassVar = [k for k in questions]
     PROBLEMS_COUNT = len(PROBLEMS)
 
     def compose(self):
@@ -106,7 +107,7 @@ class HomeScreen(App):
         )
         last_at = "..."
         if docs:
-            last = sorted(docs, key=lambda x: x["created_at"], reverse=True)[0]
+            last = max(docs, key=lambda x: x["created_at"])
             last_at = ("🟢 " if last["passed"] else "🔴 ") + time_ago(
                 last["created_at"]
             )
@@ -114,7 +115,7 @@ class HomeScreen(App):
         problem_widget.query_one(Markdown).update(markdown=problem)
         problem_widget.scroll_home()
         self.query_one("#passed", Static).update(
-            f"[$primary]{str(passed)}/{str(total_attempts)}[/]"
+            f"[$primary]{passed!s}/{total_attempts!s}[/]"
         )
         last, best = self.query_one("#last", Static), self.query_one("#best", Static)
         last.update(f"[$primary]{last_at}[/]")
@@ -169,15 +170,14 @@ class HomeScreen(App):
         self.show_dashboard = not self.show_dashboard
 
     def check_action(self, action, parameters):
-        if not self.screen.id == "_default":
-            if (
-                action == "attempt"
-                or action == "next"
-                or action == "previous"
-                or action == "search"
-                or action == "dashboard"
-            ):
-                return False
+        if self.screen.id != "_default" and (
+            action == "attempt"
+            or action == "next"
+            or action == "previous"
+            or action == "search"
+            or action == "dashboard"
+        ):
+            return False
         if self.index == self.PROBLEMS_COUNT - 1 and action == "next":
             return
         if self.index == 0 and action == "previous":

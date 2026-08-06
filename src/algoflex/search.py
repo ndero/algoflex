@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from textual.containers import Vertical
 from textual.reactive import reactive
 from textual.screen import ModalScreen
@@ -11,7 +13,7 @@ KV = Query()
 
 
 class SearchScreen(ModalScreen):
-    BINDINGS = [
+    BINDINGS: ClassVar = [
         ("escape", "dismiss", "dismiss"),
     ]
 
@@ -49,7 +51,7 @@ class SearchScreen(ModalScreen):
         yield Footer()
 
     async def on_mount(self) -> None:
-        passed = set(doc["problem_id"] for doc in attempts.search(KV.passed == True))
+        passed = {doc["problem_id"] for doc in attempts.search(KV.passed == True)}
         self.problems = [
             ("✓" if pid in passed else " ", pid, q["title"])
             for pid, q in questions.items()

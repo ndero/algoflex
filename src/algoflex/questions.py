@@ -58,7 +58,7 @@ class ListNode:
         self.next = next
 
 # prefer iterative to recursive for all these helpers
-# - recursive hit depth limit real fast 
+# - recursive hit depth limit real fast
 def array_to_list(arr):
     dummy = ListNode()
     curr = dummy
@@ -114,7 +114,7 @@ How:
     '+' - sum last two scores -> [5, 10, 15]
     '+' - sum last two scores -> [5, 10, 15, 25]
     'C' - cancel last score -> [5, 10, 15]
-    
+
     return sum -> 30
 ```
 """,
@@ -142,7 +142,7 @@ test_cases = [
     1: {
         "markdown": """
 ### Repeated letters
-Given a string `s` of lower-case letters. Find all substrings of `s` that contains at least three consecutive identical letters. Return an array of the indices `[start, end]` of the substrings. Order the indices by the start index in ascending order.  
+Given a string `s` of lower-case letters. Find all substrings of `s` that contains at least three consecutive identical letters. Return an array of the indices `[start, end]` of the substrings. Order the indices by the start index in ascending order.
 
 ### Example
 ```
@@ -392,7 +392,7 @@ test_cases = [
     8: {
         "markdown": """
 ### Min in rotated array
-Given a sorted (ascending order) but rotated array `nums`, return the minimum element of this array. You must write an algorithm that runs in **O(log n)** time. 
+Given a sorted (ascending order) but rotated array `nums`, return the minimum element of this array. You must write an algorithm that runs in **O(log n)** time.
 
 > an example of rotating an array. If `[0, 1, 2, 4, 5, 6, 7]` is rotated 4 times it becomes `[4, 5, 6, 7, 0, 1, 2]`.
 
@@ -585,7 +585,7 @@ test_cases = [
 ### Longest common substring (LCS)
 Given two strings `text1` and `text2`, return their longest common substring. If there is no common substring, return ''.
 
-> A substring of a string is a new string generated from the original string with adjacent characters. For example, "rain" is a substring of "grain". 
+> A substring of a string is a new string generated from the original string with adjacent characters. For example, "rain" is a substring of "grain".
 
 ### Example
 ```
@@ -611,7 +611,7 @@ test_cases = [
     15: {
         "markdown": """
 ### Happy number
-Given a positive integer `n`, return whether it is a happy number or not. 
+Given a positive integer `n`, return whether it is a happy number or not.
 
 > A happy number is a number which if you repeatedly sum the squares of its digits the process will eventually lead to 1. For example, 19 -> `1²+9²=82` -> `8²+2²=68` -> `6²+8²=100` -> `1`.
 ### Example
@@ -646,7 +646,7 @@ test_cases = [
     16: {
         "markdown": """
 ### Trie/Prefix tree
-Given an array `roots` of strings and a `sentence` of words separated by spaces. Replace all the words in the sentence with the root forming it. If a word can be replaced by more than one root, replace it with the shortest length root. 
+Given an array `roots` of strings and a `sentence` of words separated by spaces. Replace all the words in the sentence with the root forming it. If a word can be replaced by more than one root, replace it with the shortest length root.
 
 Return the sentence after the replacement.
 
@@ -747,9 +747,9 @@ root = [10, 5, -3, 3, 2, None, 11, 3, -2, None, 1], target = 8
                 10
                /  \\
               5   -3
-             / \    \\
+             / \\    \\
             3   2    11
-           / \    \\
+           / \\    \\
           3  -2    1
 
 output = 3
@@ -788,7 +788,7 @@ class TreeNode:
         self.left = left
         self.right = right
 
-        
+
 def count_paths(root: Optional[TreeNode], target: int) -> int:
 """,
     },
@@ -921,7 +921,7 @@ test_cases = [
     24: {
         "markdown": """
 ### Ways to make change
-Write an algorithm to determine how many ways there are to make change for a given input, `cents` of US currency. 
+Write an algorithm to determine how many ways there are to make change for a given input, `cents` of US currency.
 
 There are four types of common coins in US currency:
   - quarters (25 cents)
@@ -974,7 +974,7 @@ root = [5, 4, 8, 11, None, 13, 4, 7, 2, None, None, None, None, None, 1], target
                   4   8
                  /   / \\
                 11  13  4
-               /  \      \\
+               /  \\      \\
               7    2      1
 output = True
 ```
@@ -1018,8 +1018,8 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
-        
-        
+
+
 def has_path_sum(root: Optional[TreeNode], target: int) -> bool:
 """,
     },
@@ -1079,8 +1079,8 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
-        
-        
+
+
 def has_node_bst(root: Optional[TreeNode], x: int) -> bool:
 """,
     },
@@ -1130,8 +1130,8 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
-        
-        
+
+
 def min_bst(root: Optional[TreeNode]) -> int:
 """,
     },
@@ -1149,7 +1149,7 @@ root = [12, 8, 16, 4, 9, 13, 18, 11]
                 12
                /  \\
               8    16
-             / \   / \\
+             / \\   / \\
             4   9 13  18
            /
           11
@@ -1206,8 +1206,8 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
-        
-        
+
+
 def is_balanced(root: Optional[TreeNode]) -> bool:
 """,
     },
@@ -1223,7 +1223,7 @@ root = [12, 8, 16, 4, 9, 13, 18, 1]
                 12
                /  \\
               8    16
-             / \   / \\
+             / \\   / \\
             4   9 13  18
            /
           1
@@ -1266,8 +1266,8 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
-        
-        
+
+
 def in_order(root: Optional[TreeNode]) -> list[int]:
 """,
     },
@@ -1276,7 +1276,7 @@ def in_order(root: Optional[TreeNode]) -> list[int]:
 ### Valid BST
 Given the `root` of a binary tree, check whether it is a valid binary search tree.
 
-> **Valid BST:** for every node, all nodes in its left subtree are less than the node value and all nodes in its right subtree are greater than the node value. 
+> **Valid BST:** for every node, all nodes in its left subtree are less than the node value and all nodes in its right subtree are greater than the node value.
 
 ### Example
 ```
@@ -1328,8 +1328,8 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
-        
-        
+
+
 def valid_bst(root: Optional[TreeNode]) -> bool:
 """,
     },
@@ -1345,7 +1345,7 @@ root = [12, 8, 16, 4, 9, 13, 18, 1]
                 12
                /  \\
               8    16
-             / \   / \\
+             / \\   / \\
             4   9 13  18
            /
           1
@@ -1386,8 +1386,8 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
-        
-        
+
+
 def level_order(root: Optional[TreeNode]) -> list[int]:
 """,
     },
@@ -1396,7 +1396,7 @@ def level_order(root: Optional[TreeNode]) -> list[int]:
 ### Tree leaves
 Given the `root` of a binary tree, return all the leaves as an array ordered from left to right.
 
-> A leaf is tree node with no children. 
+> A leaf is tree node with no children.
 
 ### Example
 ```
@@ -1405,7 +1405,7 @@ root = [100, 50, 600, 45, 55, 500, 1000]
                  100
                /     \\
              50       600
-            /  \     /    \\
+            /  \\     /    \\
           45   55   500   1000
 
 output = [45, 55, 500, 1000]
@@ -1444,8 +1444,8 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
-        
-        
+
+
 def get_leaves(root: Optional[TreeNode]) -> list[int]:
 """,
     },
@@ -1461,7 +1461,7 @@ root =  [12, 8, 16, 4, 9, 13, 18, 11]
                 12
                /  \\
               8    16
-             / \   / \\
+             / \\   / \\
             4   9 13  18
            /
           11
@@ -1508,8 +1508,8 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
-        
-        
+
+
 def sum_right(root: Optional[TreeNode]) -> int:
 """,
     },
@@ -1518,7 +1518,7 @@ def sum_right(root: Optional[TreeNode]) -> int:
 ### Value in array
 Given an array of integers `arr` sorted in a non decreasing order, and a target `y`. Return `True` if y is in the array or `False` otherwise
 
-You must write an algorithm that runs in **O(log n)** average time complexity. 
+You must write an algorithm that runs in **O(log n)** average time complexity.
 
 ### Example
 ```
@@ -1602,7 +1602,7 @@ test_cases = [
     37: {
         "markdown": """
 ### Generate parentheses
-Given a positive integer `n`, generate all combinations of well formed parentheses with n pairs. 
+Given a positive integer `n`, generate all combinations of well formed parentheses with n pairs.
 
 ### Example
 ```
@@ -1620,8 +1620,8 @@ def GENERATE_PARENTHESES(n: int) -> list[str]:
     def backtrack(open: int, close: int) -> None:
         if len(path) == 2 * n:
             res.append(''.join(path))
-            return 
-        if open < n: 
+            return
+        if open < n:
             path.append('(')
             backtrack(open + 1, close)
             path.pop()
@@ -1629,9 +1629,9 @@ def GENERATE_PARENTHESES(n: int) -> list[str]:
             path.append(')')
             backtrack(open, close + 1)
             path.pop()
-    
+
     backtrack(0, 0)
-    return res 
+    return res
 
 test_cases = [
     [generate_parentheses(3), GENERATE_PARENTHESES(3)],
@@ -1650,13 +1650,13 @@ test_cases = [
     38: {
         "markdown": """
 ### Minimum connection cost
-You are given `n` cities numbered from 1 to n and an array `connections` where connections[i] = [x, y, cost] indicates a weighted bidirectional connection between cities x and y. 
+You are given `n` cities numbered from 1 to n and an array `connections` where connections[i] = [x, y, cost] indicates a weighted bidirectional connection between cities x and y.
 
-Return the minimum cost to connect all the n cities such that there is at least one path between each pair of cities. 
+Return the minimum cost to connect all the n cities such that there is at least one path between each pair of cities.
 
 > The cost is the sum of the connections’ costs used.
 
-Return -1 if it isn't possible to connect all n cities. 
+Return -1 if it isn't possible to connect all n cities.
 
 ### Example
 ```
@@ -1798,13 +1798,13 @@ test_cases = [
     },
     40: {
         "markdown": """
-### Majority element 
+### Majority element
 Given an array `nums` of size n, return the majority element.
 
 > The majority element is the element that appears more than
 ⌊n / 2⌋ times.
 
-The majority element is guaranteed to exist in the array. 
+The majority element is guaranteed to exist in the array.
 
 ### Example
 ```
@@ -1831,7 +1831,7 @@ test_cases = [
     41: {
         "markdown": """
 ### Max profit
-Given an array `prices` where `prices[i]` is the price of a given stock on the ith day. Return the maximum profit that can be made by choosing a single day to buy and choosing a different day in the future to sell that stock. 
+Given an array `prices` where `prices[i]` is the price of a given stock on the ith day. Return the maximum profit that can be made by choosing a single day to buy and choosing a different day in the future to sell that stock.
 
 If you cannot achieve any profit, return 0.
 
@@ -1864,7 +1864,7 @@ test_cases = [
     42: {
         "markdown": """
 ### Pair sum equal target
-Find two numbers in an array `nums` that add up to a specific `target`. Return the indices `[i, j]` such that `nums[i] + nums[j] = target`. 
+Find two numbers in an array `nums` that add up to a specific `target`. Return the indices `[i, j]` such that `nums[i] + nums[j] = target`.
 
 Each input has exactly one solution.
 
@@ -1891,8 +1891,8 @@ test_cases = [
     },
     43: {
         "markdown": """
-### Longest common subsequence (LCS) 
-Given two strings `str1` and `str2`, both lowercase, return their longest common subsequence. 
+### Longest common subsequence (LCS)
+Given two strings `str1` and `str2`, both lowercase, return their longest common subsequence.
 
 > A subsequence of a string is generated by selecting some characters from the original string while maintaining the relative order of the original characters. e.g 'man' is a subsequence of 'mountain'
 
@@ -1923,7 +1923,7 @@ test_cases = [
     44: {
         "markdown": """
 ### Can you reach the last index?
-Given an integer array `nums` where `nums[i]` represents the maximum forward jump length from index `i`. Determine if, starting from the first index (0), you can reach the last index. 
+Given an integer array `nums` where `nums[i]` represents the maximum forward jump length from index `i`. Determine if, starting from the first index (0), you can reach the last index.
 
 ### Example
 ```
@@ -1953,15 +1953,15 @@ test_cases = [
     45: {
         "markdown": """
 ### Min jumps to reach last index
-Given an integer array `nums` where `nums[i]` represents the maximum forward jump length from index `i`. Return the minimum jumps to get from the first index (0) to the last index. 
+Given an integer array `nums` where `nums[i]` represents the maximum forward jump length from index `i`. Return the minimum jumps to get from the first index (0) to the last index.
 
-You are guaranteed to reach the last index. 
+You are guaranteed to reach the last index.
 
 ### Example
 ```
 Input: nums = [2,5,2,1,4]
 output = 2
-How: jump 1 step to index 1 then 3 steps to the last index. 
+How: jump 1 step to index 1 then 3 steps to the last index.
 
 Input: nums = [2,3,0,1,4,0]
 output = 3
@@ -2016,18 +2016,18 @@ test_cases = [
     },
     47: {
         "markdown": """
-### Max loot 
-Given an integer array `nums` where each `nums[i]` represents the amount of cash stashed in a boat, return the maximum amount that you can steal from the boats given that you cannot steal from any two adjacent boats.  
+### Max loot
+Given an integer array `nums` where each `nums[i]` represents the amount of cash stashed in a boat, return the maximum amount that you can steal from the boats given that you cannot steal from any two adjacent boats.
 
 ### Example
 ```
 Input: nums = [2,2,5,1]
 output = 7
-How: Rob boats 1 (2) and 3 (5) -> total loot 7 
+How: Rob boats 1 (2) and 3 (5) -> total loot 7
 
 Input: nums = [2]
 output = 2
-How:  Only one boat, no adjacent boats to worry about. 
+How:  Only one boat, no adjacent boats to worry about.
 ```
 """,
         "title": "Max loot",
@@ -2048,13 +2048,13 @@ test_cases = [
     48: {
         "markdown": """
 ### Max loot circle
-Given an integer array `nums` where each `nums[i]` represents the amount of cash stashed in a boat, return the maximum amount that you can steal from the boats given that you cannot steal from any two adjacent boats and the boats are arranged in a circle i.e the last boat is adjacent to the first one. 
+Given an integer array `nums` where each `nums[i]` represents the amount of cash stashed in a boat, return the maximum amount that you can steal from the boats given that you cannot steal from any two adjacent boats and the boats are arranged in a circle i.e the last boat is adjacent to the first one.
 
 ### Example
 ```
 Input: nums = [3,5,3]
 output = 5
-How: Cannot rob boats 1 and 3 for total of 6 because they are adjacent. So rob boat 2. 
+How: Cannot rob boats 1 and 3 for total of 6 because they are adjacent. So rob boat 2.
 ```
 """,
         "title": "Max loot circle",
@@ -2074,17 +2074,17 @@ test_cases = [
     },
     49: {
         "markdown": """
-### Course schedule 
-Given an array of `courses` representing the courses you have to take where courses[i] = [a, b] indicates that you must take course b in order to take course a. And an integer `n` representing the total number of courses with the courses being labelled from 0 to n - 1. Determine the order in which you can do all the courses. Return [] if you can't do all the courses. 
+### Course schedule
+Given an array of `courses` representing the courses you have to take where courses[i] = [a, b] indicates that you must take course b in order to take course a. And an integer `n` representing the total number of courses with the courses being labelled from 0 to n - 1. Determine the order in which you can do all the courses. Return [] if you can't do all the courses.
 
 ### Example
 Input: n = 2, courses = [[1,0]]
 output = [0, 1]
-How: Take course 0 then 1. 
+How: Take course 0 then 1.
 
 Input: n = 2, courses = [[1,0],[0,1]]
 output = []
-How: To take course 1 you first need to take course 0 but to take course 0 you need to first take course 1 so no way to take any of them. 
+How: To take course 1 you first need to take course 0 but to take course 0 you need to first take course 1 so no way to take any of them.
 """,
         "title": "Course schedule",
         "level": "Steady",
@@ -2104,16 +2104,16 @@ test_cases = [
     },
     50: {
         "markdown": """
-### Minimum height trees (MHTs) 
-Given an integer `n` representing number of nodes in a tree and an array of `n-1` edges where edges[i] = [a, b] represent an undirected edge between nodes a and b. Return a list of minimum height trees root labels sorted in a non decreasing order. 
+### Minimum height trees (MHTs)
+Given an integer `n` representing number of nodes in a tree and an array of `n-1` edges where edges[i] = [a, b] represent an undirected edge between nodes a and b. Return a list of minimum height trees root labels sorted in a non decreasing order.
 
-The nodes are labelled from 0 to n - 1. 
+The nodes are labelled from 0 to n - 1.
 
-> A tree is an undirected graph in which any two vertices are connected by exactly one path. 
+> A tree is an undirected graph in which any two vertices are connected by exactly one path.
 
-> The minimum height trees (MHTs) are nodes from a tree that if choosen as the root result to the minimum `height` of the tree. 
+> The minimum height trees (MHTs) are nodes from a tree that if choosen as the root result to the minimum `height` of the tree.
 
-> The height of a tree is the number of edges on the path from the root to the the farthest leaf. 
+> The height of a tree is the number of edges on the path from the root to the the farthest leaf.
 
 ### Example
 ```
@@ -2142,7 +2142,7 @@ test_cases = [
     51: {
         "markdown": """
 ### Longest common prefix
-Given an array of strings `strs` return the longest common prefix of all the strings. 
+Given an array of strings `strs` return the longest common prefix of all the strings.
 
 ### Example
 ```
@@ -2174,9 +2174,9 @@ test_cases = [
     52: {
         "markdown": """
 ### Cheapest flight with at most k stops
-You are given `n` cities connected by a number of `flights` represented as an array where flights[i] = [from, to, cost] indicate a flight from city `from` to city `to` that costs `cost`. 
+You are given `n` cities connected by a number of `flights` represented as an array where flights[i] = [from, to, cost] indicate a flight from city `from` to city `to` that costs `cost`.
 
-You are also given three integers `src`, `dst` and `k`. Find the cheapest cost from `src` to `dst` with at most `k` stops. 
+You are also given three integers `src`, `dst` and `k`. Find the cheapest cost from `src` to `dst` with at most `k` stops.
 
 Return -1 if there's no such route.
 
@@ -2269,12 +2269,12 @@ test_cases = [
     },
     53: {
         "markdown": """
-### Network delay time 
-Given a network of `n` nodes, labelled 1 to n and a list of travel `times` as directed edges where times[i] = (u, v, w) with u being the source, v the target and w the time it takes for a signal to travel from u to v. 
+### Network delay time
+Given a network of `n` nodes, labelled 1 to n and a list of travel `times` as directed edges where times[i] = (u, v, w) with u being the source, v the target and w the time it takes for a signal to travel from u to v.
 
-Find the minimum time it takes for a signal from a source node `k` to reach all the other nodes. 
+Find the minimum time it takes for a signal from a source node `k` to reach all the other nodes.
 
-Return -1 if it's impossible for all the nodes to receive the signal. 
+Return -1 if it's impossible for all the nodes to receive the signal.
 
 ### Example
 ```
@@ -2304,9 +2304,9 @@ test_cases = [
     54: {
         "markdown": """
 ### Critical connections
-Given `n` servers labelled 0 to n - 1 connected by undirected `connections` where connections[i] = [a, b] indicates a connection between servers a and b. Return all the critical connections in the network in any order. 
+Given `n` servers labelled 0 to n - 1 connected by undirected `connections` where connections[i] = [a, b] indicates a connection between servers a and b. Return all the critical connections in the network in any order.
 
-> A critical connection is one that, if removed, will make some servers not be able to reach the rest of the server network. 
+> A critical connection is one that, if removed, will make some servers not be able to reach the rest of the server network.
 
 ### Examples
 ```
@@ -2340,7 +2340,7 @@ test_cases = [
 ### Job scheduling
 Given arrays `start`, `end` and `profit` representing `n` jobs with the ith job scheduled to be done from start[i] to end[i] generating profit[i]. Find the maximum profit you can make from the jobs
 
-If you choose a job that ends at time x you can be able to choose another one that starts at time x. 
+If you choose a job that ends at time x you can be able to choose another one that starts at time x.
 
 ### Example
 ```
@@ -2369,9 +2369,9 @@ test_cases = [
     56: {
         "markdown": """
 ### Fewest coins to make change
-Given an integer array `coins` representing coins of different denominations and an integer `amount` representing the total amount of money, return the minimum number of coins that you need to make up that amount. 
+Given an integer array `coins` representing coins of different denominations and an integer `amount` representing the total amount of money, return the minimum number of coins that you need to make up that amount.
 
-Return -1 if `amount` cannot be made by any combination of the coins. 
+Return -1 if `amount` cannot be made by any combination of the coins.
 
 You may assume that you have an infinite number of each kind of coin.
 
@@ -2404,7 +2404,7 @@ test_cases = [
     57: {
         "markdown": """
 ### Min cost tickets
-Given an array `days` representing planned annual train travelling days and `costs` where costs = [daily, weekly, monthly] indicating the daily (1 day), weekly (7 days) and monthly (30 days) ticket costs respectively, return the minimum cost for travelling every day in the given list of days. 
+Given an array `days` representing planned annual train travelling days and `costs` where costs = [daily, weekly, monthly] indicating the daily (1 day), weekly (7 days) and monthly (30 days) ticket costs respectively, return the minimum cost for travelling every day in the given list of days.
 
 Each day is an integer between 1 and 365.
 
@@ -2434,7 +2434,7 @@ test_cases = [
     58: {
         "markdown": """
 ### Max loot binary tree
-Given the `root` of a binary tree where each node represents the amount of cash stashed in a boat, return the maximum amount that you can steal from the boats given that you cannot steal from any directly connected boats i.e parent node and child node. 
+Given the `root` of a binary tree where each node represents the amount of cash stashed in a boat, return the maximum amount that you can steal from the boats given that you cannot steal from any directly connected boats i.e parent node and child node.
 
 ### Example
 ```
@@ -2445,7 +2445,7 @@ root = [9, 8, 16]
     8   16
 
 output = 24
-How: Maximum amount of cash is 8 + 16 = 24 
+How: Maximum amount of cash is 8 + 16 = 24
 ```
 """,
         "test_cases": f"""
@@ -2484,14 +2484,14 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
-        
-        
+
+
 def max_loot_tree(root: Optional[TreeNode]) -> int:
 """,
     },
     59: {
         "markdown": """
-### Lowest common ancestor 
+### Lowest common ancestor
 Given the `root` of a binary tree and two nodes `p` and `q`, find the lowest common ancestor (LCA) of p and q.
 
 > According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in a tree that has both p and q as descendants (where a node can be a descendant of itself).”
@@ -2534,15 +2534,15 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
-        
-        
+
+
 def lca(root: Optional[TreeNode], p: int, q: int) -> int:
 """,
     },
     60: {
         "markdown": """
-### Same binary tree 
-Check if two binary trees `p` and `q` are the same given their roots. 
+### Same binary tree
+Check if two binary trees `p` and `q` are the same given their roots.
 
 > Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
 
@@ -2609,15 +2609,15 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
-        
-        
+
+
 def same_tree(p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
 """,
     },
     61: {
         "markdown": """
 ### Binary tree cousins
-Given the `root` of a binary tree with unique values and the value of two different nodes in the tree `x` and `y`, check whether x and y are cousins. 
+Given the `root` of a binary tree with unique values and the value of two different nodes in the tree `x` and `y`, check whether x and y are cousins.
 
 > Two nodes of a binary tree are cousins if they have the same depth with different parents.
 
@@ -2627,7 +2627,7 @@ root = [100, 50, 600, 45, 55, 500, 1000], x = 45, y = 500
                  100
                /     \\
              50       600
-            /  \     /    \\
+            /  \\     /    \\
           45   55   500   1000
 
 output = True
@@ -2661,29 +2661,29 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
-        
-        
+
+
 def are_cousins(root: Optional[TreeNode], x: int, y: int) -> bool:
 """,
     },
     62: {
         "markdown": """
 ### How many islands
-Given an `m x n grid` where each value is either 1 or 0 with 1 indicating land and 0 indicating water, return the number of islands in the grid. You may assume all four edges of the grid are surrounded by water. 
+Given an `m x n grid` where each value is either 1 or 0 with 1 indicating land and 0 indicating water, return the number of islands in the grid. You may assume all four edges of the grid are surrounded by water.
 
 > An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically.
 
 ### Examples
 ```
 grid = [
-    ['1', '1', '1', '1'], 
-    ['0', '0', '0', '0'], 
+    ['1', '1', '1', '1'],
+    ['0', '0', '0', '0'],
     ['1', '1', '1', '1'],
 ]
 output = 2  # 2 horizontal islands.
-``` 
+```
 """,
-        "test_cases": f"""
+        "test_cases": """
 g1 = [['1', '1', '1', '1'], ['0', '0', '0', '0'], ['1', '1', '1', '1']]
 g2 = [['1', '0', '1', '1'], ['0', '0', '1', '0'], ['1', '1', '1', '1']]
 g3 = [[]]
@@ -2721,7 +2721,7 @@ test_cases = [
     63: {
         "markdown": """
 ### Merge intervals
-Given an array of `intervals` merge all overlapping intervals. 
+Given an array of `intervals` merge all overlapping intervals.
 
 ### Example
 ```
@@ -2762,7 +2762,7 @@ Given an array `nums` of integers return the length of the longest strictly incr
 ```
 input: [10,9,2,5,3,7,101,18]
 output = 4
-How: LIS is [2, 3, 7, 101] with length 4. 
+How: LIS is [2, 3, 7, 101] with length 4.
 ```
 """,
         "title": "Longest increasing subsequence",
@@ -2788,14 +2788,14 @@ test_cases = [
     65: {
         "markdown": """
 ### Longest palidromic substring
-Given a string `s`, return the longest palindromic substring in s. 
+Given a string `s`, return the longest palindromic substring in s.
 
-Return the first one if there are multiple longest palindromic substrings. 
+Return the first one if there are multiple longest palindromic substrings.
 
 ### Example
 ```
 s = "babad"
-output = "bab" 
+output = "bab"
 
 s = "abcde"
 output = "a"
@@ -2820,9 +2820,9 @@ test_cases = [
     66: {
         "markdown": """
 ### Permutations
-Given a string `s` all lowercase characters and a positive integer `k`, return all the possible permutations of string `s` of size k.  
+Given a string `s` all lowercase characters and a positive integer `k`, return all the possible permutations of string `s` of size k.
 
-Return the permutations in any order. 
+Return the permutations in any order.
 
 Can you do it without python's itertools?
 
@@ -2855,13 +2855,13 @@ def PERMUTATIONS(s, k=None):
 
 s1, k1 = 'art', 2
 s2, k2 = '', 3
-s3, k3 = 'rat', 3 
-s4, k4 = 'rat', 1 
+s3, k3 = 'rat', 3
+s4, k4 = 'rat', 1
 s5, k5 = 'rat', 0
 s6, k6 = 'abcdefghijklmnopqrstuvwxyz', 1
 s7, k7 = 'abcdefghijk', 5
 s8, k8 = 'xyz', 4
-from collections import Counter 
+from collections import Counter
 test_cases = [
     [Counter(perms(s1, k1)), Counter(PERMUTATIONS(s1, k1))],
     [Counter(perms(s2, k2)), Counter(PERMUTATIONS(s2, k2))],
@@ -2909,14 +2909,14 @@ def COMBINATIONS(s, k):
     return results
 
 s1, k1 = 'abcd', 3
-s2, k2 = '', 2 
-s3, k3 = 'rat', 3 
-s4, k4 = 'rat', 1 
+s2, k2 = '', 2
+s3, k3 = 'rat', 3
+s4, k4 = 'rat', 1
 s5, k5 = 'rat', 0
 s6, k6 = 'abcdefghijklmnopqrstuvwxyz', 1
 s7, k7 = 'abcdefghijklmnopqrstuvwxyz', 5
 s8, k8 = 'abcd', 5
-from collections import Counter 
+from collections import Counter
 test_cases = [
     [Counter(combs(s1, k1)), Counter(COMBINATIONS(s1, k1))],
     [Counter(combs(s2, k2)), Counter(COMBINATIONS(s2, k2))],
@@ -2947,7 +2947,7 @@ calendar.book(15, 25)  # False - overlapping with [10, 20)
 calendar.book(20, 30)  # True  - new event can start at the end time of another
 ```
 """,
-        "test_cases": f"""
+        "test_cases": """
 calendar = MyCalendar()
 test_cases = [
     [calendar.book(10, 20), True],
@@ -2980,7 +2980,7 @@ test_cases = [
     },
     69: {
         "markdown": """
-### Range frequency query 
+### Range frequency query
 Given an `arr` design a data structure `RangeFreq` with a method `query(left: int, right: int, value: int) -> int` that returns the number of times the given value occurs in the subarray arr[left...right] (both left and right inclusive)
 
 ### Example
@@ -2991,17 +2991,17 @@ rf = RangeFreq(arr)
 input: rf.query(2, 5, 7)
 output = 3  # 7 appears 3 times between indices 1 and 6
 
-input: rf.query(2, 4, 7)  
-output = 3 
+input: rf.query(2, 4, 7)
+output = 3
 
 input: rf.query(0, 8, 1)
-output = 2 
+output = 2
 
 input: rf.query(4, 7, 4)
 output = 1
 ```
 """,
-        "test_cases": f"""
+        "test_cases": """
 arr = [1, 3, 7, 7, 7, 3, 4, 1, 7]
 rf1 = RangeFreq(arr)
 arr2 = [i for i in range(100_000)]
@@ -3044,10 +3044,10 @@ root = [2,1,3]
     1   3
 
 output = [2,3,1]
-  
+
       2
      / \\
-    3   1    
+    3   1
 """,
         "test_cases": f"""
 {binary_tree}
@@ -3094,8 +3094,8 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
-        
-        
+
+
 def invert_tree(root: Optional[TreeNode]) -> Optional[TreeNode]:
 """,
     },
@@ -3115,15 +3115,15 @@ All in **O(1)** time.
 ### Example
 ```
 stack = Stack()
-stack.push(1)   # adds 1 to the stack 
+stack.push(1)   # adds 1 to the stack
 stack.push(2)   # adds 2 to the stack
 stack.push(3)   # adds 3 to the stack
 stack.top()     # returns 3
-stack.pop()     # removes 3 from stack 
-stack.get_min() # returns 1 
+stack.pop()     # removes 3 from stack
+stack.get_min() # returns 1
 ```
 """,
-        "test_cases": f"""
+        "test_cases": """
 stack1 = Stack()
 for i in range(1, 5):
     stack1.push(i)
@@ -3153,7 +3153,7 @@ test_cases = [
 ### LRU Cache
 Design a data structure that follows the constraints of a Least Recently Used (LRU) cache:
 - `LRUCache(capacity: int)` - initialize LRU cache with capacity
-- `put(key: int, value: int)` - add key value pair to cache or update value if key exists. If number of keys exceeds capacity, evict the least recently used key. 
+- `put(key: int, value: int)` - add key value pair to cache or update value if key exists. If number of keys exceeds capacity, evict the least recently used key.
 - `get(key: int)` - return value of key if key exists, else return -1
 
 `get` and `put` must run in constant time **O(1)**
@@ -3171,7 +3171,7 @@ cache.put(4, 40) # evict LRU key 1:10 {4:40, 2:20, 3:30}
 cache.get(1)     # return -1 {4:40, 2:20, 3:30}
 ```
 """,
-        "test_cases": f"""
+        "test_cases": """
 cache = LRUCache(3)
 cache1 = LRUCache(100_000)
 for i in range(1, 150_000):
@@ -3248,7 +3248,7 @@ test_cases = [
         "title": "Reverse linked list",
         "level": "Breezy",
         "code": """
-from typing import Optional 
+from typing import Optional
 
 
 class ListNode:
@@ -3258,14 +3258,14 @@ class ListNode:
         self.val = val
         self.next = next
 
-        
+
 def reverse_list(head: Optional[ListNode]) -> Optional[ListNode]:
 """,
     },
     74: {
         "markdown": """
 ### Merge two sorted linked lists
-Given two sorted linked lists, `head1` and `head2`. Merge them into one sorted linked list and return the head of the merged list. 
+Given two sorted linked lists, `head1` and `head2`. Merge them into one sorted linked list and return the head of the merged list.
 
 ### Example
 ```
@@ -3301,7 +3301,7 @@ test_cases = [
         "title": "Merge sorted linked lists",
         "level": "Steady",
         "code": """
-from typing import Optional 
+from typing import Optional
 
 
 class ListNode:
@@ -3311,7 +3311,7 @@ class ListNode:
         self.val = val
         self.next = next
 
-        
+
 def list_merge(head1: Optional[ListNode], head2: Optional[ListNode]) -> Optional[ListNode]:
 """,
     },
@@ -3353,7 +3353,7 @@ test_cases = [
         "title": "Sum linked lists",
         "level": "Steady",
         "code": """
-from typing import Optional 
+from typing import Optional
 
 
 class ListNode:
@@ -3363,14 +3363,14 @@ class ListNode:
         self.val = val
         self.next = next
 
-        
+
 def list_add(head1: Optional[ListNode], head2: Optional[ListNode]) -> Optional[ListNode]:
 """,
     },
     76: {
         "markdown": """
 ### Triplet sum equals zero
-Given an array `nums` of integers, find all unique triplets that sum to zero. 
+Given an array `nums` of integers, find all unique triplets that sum to zero.
 
 ### Example
 ```
@@ -3400,7 +3400,7 @@ def TRIPLET_SUM(nums: list[int]) -> list[list[int]]:
         if i > 0 and nums[i] == nums[i - 1]:
             continue
         # two pointer search
-        l, r = i + 1, n -1 
+        l, r = i + 1, n -1
         while l < r:
             total = nums[i] + nums[l] + nums[r]
             if total < 0:
@@ -3409,14 +3409,14 @@ def TRIPLET_SUM(nums: list[int]) -> list[list[int]]:
                 r -= 1
             else:
                 res.append([nums[i], nums[l], nums[r]])
-                # skip duplicates for left and right 
-                l += 1 
+                # skip duplicates for left and right
+                l += 1
                 while l < r and nums[l] == nums[l - 1]:
-                    l += 1 
-                r -= 1 
+                    l += 1
+                r -= 1
                 while l < r and nums[r] == nums[r + 1]:
-                    r -= 1 
-    return res 
+                    r -= 1
+    return res
 
 nums1 = [1] * 5000 + [0] * 5000 + [-1] * 5000
 nums2 = [0] * 1000
@@ -3438,7 +3438,7 @@ test_cases = [
     77: {
         "markdown": """
 ### Max water held
-Given an array `nums` where each number represents the height of a vertical wall, find two walls that hold the most water between them and return the units of water contained. 
+Given an array `nums` where each number represents the height of a vertical wall, find two walls that hold the most water between them and return the units of water contained.
 
 > To calculate Units of water held, multiply the `width(base)` by `height`
 
@@ -3459,11 +3459,11 @@ output = 1
         "test_cases": """
 h1 = [3, 1, 2, 7]
 h2 = [i for i in range(100_000)]
-h3 = [0] * 100_000 + h1 
+h3 = [0] * 100_000 + h1
 h4 = [0] * 60_000 + [1]
 h5 = [1] * 100_000
 h6 = [100]
-h7 = [1] + [0] * 50 + h1 
+h7 = [1] + [0] * 50 + h1
 test_cases = [
     [max_water(h1), 9],
     [max_water(h2), 2499950000],
@@ -3478,7 +3478,7 @@ test_cases = [
     78: {
         "markdown": """
 ### Trapping rain water
-Given `n` positive integers `nums` representing elevation heights where the width of each bar is 1, return how much water can be trapped after rain. 
+Given `n` positive integers `nums` representing elevation heights where the width of each bar is 1, return how much water can be trapped after rain.
 
 ### Example
 ```
@@ -3490,10 +3490,10 @@ output = 3
       []
       []
 []    []
-[]  [][] 
+[]  [][]
 [][][][]
 
-how: 2 units at index 1 and 1 unit at index 2 
+how: 2 units at index 1 and 1 unit at index 2
 ```
 """,
         "title": "Trapping rain water",
@@ -3503,11 +3503,11 @@ how: 2 units at index 1 and 1 unit at index 2
         "test_cases": """
 h1 = [3, 1, 2, 7]
 h2 = [i for i in range(100_000)]
-h3 = [0] * 100_000 + h1 
+h3 = [0] * 100_000 + h1
 h4 = [0] * 60_000 + [1]
 h5 = [100] + [0] * 100_000 + [1]
 h6 = [100]
-h7 = [1] + [0] * 50 + h1 
+h7 = [1] + [0] * 50 + h1
 h8 = []
 test_cases = [
     [trap_water(h1), 3],
@@ -3524,9 +3524,9 @@ test_cases = [
     79: {
         "markdown": """
 ### Connected cities
-Given an `n * n` adjacency matrix of connected cities with each cell having values 1 or 0 where 0 indicate city i is not connected to city j and 1 indicate otherwise. 
+Given an `n * n` adjacency matrix of connected cities with each cell having values 1 or 0 where 0 indicate city i is not connected to city j and 1 indicate otherwise.
 
-Return the number of connected groups of cities.  
+Return the number of connected groups of cities.
 
 ### Example
 ```
@@ -3595,13 +3595,13 @@ test_cases = [
     80: {
         "markdown": """
 ### Reachable cities
-Given `n` cities labelled 0 to n - 1 and an array `edges` where edges[i] = [from, to, weight] represents a weighted bidirectional edge between cities `from` and `to`.  Return city with the smallest number of cities that are reachable and whose distance is at most `k`. 
+Given `n` cities labelled 0 to n - 1 and an array `edges` where edges[i] = [from, to, weight] represents a weighted bidirectional edge between cities `from` and `to`.  Return city with the smallest number of cities that are reachable and whose distance is at most `k`.
 
-If multiple such cities, return the one with the greatest number. 
+If multiple such cities, return the one with the greatest number.
 
 ### Examples
 ```
-n = 5 
+n = 5
 edges = [
     [0, 1, 1],
     [1, 2, 1],
@@ -3610,7 +3610,7 @@ edges = [
 ]
 k = 1
 output = 4
-Why: reachable counts: 0 -> 1, 1 -> 2, 2 -> 2, 4 -> 1 
+Why: reachable counts: 0 -> 1, 1 -> 2, 2 -> 2, 4 -> 1
 ```
 """,
         "title": "Reachable cities",
@@ -3729,8 +3729,8 @@ Given an array of integers `heights` representing a histogram's bar height where
 ```
 input: [3, 1, 2, 5, 4, 1]
 
- 7 |    
- 6 |      
+ 7 |
+ 6 |
  5 |      █
  4 |      █ █
  3 |█     █ █
@@ -3785,7 +3785,7 @@ test_cases = [
     [max_rectangle([1000, 1, 1000, 1, 1000]), 1000],
     # Zero in middle
     [max_rectangle([3, 2, 0, 2, 3]), 4],
-    [max_rectangle([4, 3, 2, 0, 2, 3, 4]), 6], 
+    [max_rectangle([4, 3, 2, 0, 2, 3, 4]), 6],
     # Very large array
     [max_rectangle(list(range(1, 10001))), 25005000],
     [max_rectangle(list(range(10000, 0, -1))), 25005000],
@@ -3825,9 +3825,9 @@ Given an array of daily temperatures, return an array answer such that `answer[i
 ```
 temps = [3, 1, 2]
 output = [0, 1, 0]
-how: no day in future higher than 3, 
-     1 day in future higher than 1 and 
-     no day in future after 2. 
+how: no day in future higher than 3,
+     1 day in future higher than 1 and
+     no day in future after 2.
 ```
 """,
         "title": "Daily temperatures",
@@ -3836,7 +3836,7 @@ how: no day in future higher than 3,
 """,
         "test_cases": """
 test_cases = [
-    # Basic test cases 
+    # Basic test cases
     [
         daily_temperatures([73, 74, 75, 71, 69, 72, 76, 73]),
         [1, 1, 4, 2, 1, 1, 0, 0],
@@ -3844,12 +3844,12 @@ test_cases = [
     [daily_temperatures([30, 40, 50, 60]), [1, 1, 1, 0]],  # 2
     [daily_temperatures([60, 50, 40, 30]), [0, 0, 0, 0]],  # 3
     [daily_temperatures([70, 70, 70, 70]), [0, 0, 0, 0]],  # 4
-    # Edge cases 
+    # Edge cases
     [daily_temperatures([30]), [0]],  # 5
     [daily_temperatures([]), []],  # 6
     [daily_temperatures([30, 31]), [1, 0]],  # 7
     [daily_temperatures([31, 30]), [0, 0]],  # 8
-    # Complex patterns 
+    # Complex patterns
     [daily_temperatures([80, 70, 90, 60, 85, 75, 95]), [2, 1, 4, 1, 2, 1, 0]],  # 9
     [
         daily_temperatures([73, 72, 71, 70, 74, 73, 72, 75]),
@@ -3858,7 +3858,7 @@ test_cases = [
     [daily_temperatures([40, 45, 50, 55, 50, 45, 40]), [1, 1, 1, 0, 0, 0, 0]],  # 11
     [daily_temperatures([60, 50, 40, 30, 40, 50, 60]), [0, 5, 3, 1, 1, 1, 0]],  # 12
     [daily_temperatures([50, 50, 50, 60, 50, 70]), [3, 2, 1, 2, 1, 0]],  # 13
-    # Special scenarios 
+    # Special scenarios
     [
         daily_temperatures([100, 50, 51, 52, 53, 54]),
         [0, 1, 1, 1, 1, 0],
@@ -3924,17 +3924,17 @@ test_cases = [
     },
     83: {
         "markdown": """
-### Cycles in linked list 
+### Cycles in linked list
 Given the `head` of a linked list, return true if there is a cycle in the linked list or false otherwise
 
 ### Example
 ```
 input: 3 -> 2 -> 1
-output = False 
+output = False
 
 input: 3 -> 2 -> 1
             ↑____↓
-output = True 
+output = True
 ```
 """,
         "title": "Cycles in linked list",
@@ -3964,7 +3964,7 @@ def create_cycle_list(arr, pos):
     for i in range(len(nodes) - 1):
         nodes[i].next = nodes[i + 1]
 
-    # Create cycle 
+    # Create cycle
     if pos >= 0 and pos < len(nodes):
         nodes[-1].next = nodes[pos]
 
@@ -4070,7 +4070,7 @@ test_cases = [
     [has_cycle(create_cycle_list(list(range(100000)), 50000)), True],
     # Test 38: Extremely long list with cycle at end (10^5 nodes)
     [has_cycle(create_cycle_list(list(range(100000)), 99999)), True],
-    # Test 39: Maximum values 
+    # Test 39: Maximum values
     [
         has_cycle(create_cycle_list([10**4] * 10**4, 5000)),
         True,
@@ -4081,9 +4081,9 @@ test_cases = [
     84: {
         "markdown": """
 ### Find duplicate in array
-Given an array `nums` of length n + 1 where every value is an integer in the range [1,n] inclusive. Find the duplicate in the array.The duplicate is the integer that appear twice or more times. 
+Given an array `nums` of length n + 1 where every value is an integer in the range [1,n] inclusive. Find the duplicate in the array.The duplicate is the integer that appear twice or more times.
 
-Can you craft a solution that does it in less than O(n^2) without using any extra space? 
+Can you craft a solution that does it in less than O(n^2) without using any extra space?
 
 ### Example
 ```
@@ -4237,11 +4237,11 @@ test_cases = [
     86: {
         "markdown": """
 ### Find the town judge
-There are `n` people in a town labelled `1` to `n`. Among these `n` people there may exist a judge. The town judge is trusted by everybody in the town (except the judge) and the town judge trusts nobody. 
+There are `n` people in a town labelled `1` to `n`. Among these `n` people there may exist a judge. The town judge is trusted by everybody in the town (except the judge) and the town judge trusts nobody.
 
 Given `n` and an array `trust` with trust[i] = [a, b] meaning person `a` trusts person `b`, return the label of the town judge if they exist else return -1
 
-There can only be one judge. 
+There can only be one judge.
 
 ### Example
 ```
@@ -4321,12 +4321,12 @@ test_cases = [
     87: {
         "markdown": """
 ### Reorder log files
-Given a `logs` array containing logs, sort it such that all letter logs come before digit logs and letter logs are sorted by content first then identifier if there is a tie. 
+Given a `logs` array containing logs, sort it such that all letter logs come before digit logs and letter logs are sorted by content first then identifier if there is a tie.
 
 Make sure the digit logs stay in their original order (stable sort).
 
 > letter logs - content starts with a letter
-> digit logs - content starts with a digit. 
+> digit logs - content starts with a digit.
 > first word of each log is the identifier. i.e each log looks like: 'identifier content...'
 
 ### Example
@@ -4442,8 +4442,8 @@ test_cases = [
     },
     88: {
         "markdown": """
-### Design a hashmap 
-Design a hashmap, class `MyHashMap` with methods put, get and remove that adds, gets and removes key value pairs. 
+### Design a hashmap
+Design a hashmap, class `MyHashMap` with methods put, get and remove that adds, gets and removes key value pairs.
 
 Implement the MyHashMap class:
 
@@ -4458,11 +4458,11 @@ Don't use the inbuilt hash table libraries, `{}` or `dict`.
 ```
 hm = MyHashMap()
 hm.put(1, 10)  # adds key value pair (1, 10), returns nothing
-hm.put(2, 20)  
+hm.put(2, 20)
 hm.get(1)      # return 10
-hm.get(3)      # returns -1, not present 
-hm.remove(1)   # removes (1, 10) from hashmap, returns nothing 
-hm.get(1)      # returns -1   
+hm.get(3)      # returns -1, not present
+hm.remove(1)   # removes (1, 10) from hashmap, returns nothing
+hm.get(1)      # returns -1
 ```
 """,
         "title": "Design hashmap",
@@ -4541,14 +4541,14 @@ Given an undirected connected graph with n vertices and m edges, find all articu
 ```
 Input: n = 5, edges = [[0,1], [1,2], [2,0], [1,3], [3,4]]
 Output: [1, 3]
-How: 
+How:
 - Removing vertex 1 disconnects vertices 0,2 from 3,4
 - Removing vertex 3 disconnects vertex 4 from the rest
 - The graph looks like:
 
     0 --- 1 --- 3 --- 4
-     \   /      \\
-      \ /        \\
+     \\   /      \\
+      \\ /        \\
        2           (no connection to 4 without 3)
 ```
 """,
@@ -4817,7 +4817,7 @@ test_cases = [
     90: {
         "markdown": """
 ### LFU cache
-Design a Least Frequently Used (LFU) cache. 
+Design a Least Frequently Used (LFU) cache.
 
 Implement the LFUCache class:
 
@@ -4825,7 +4825,7 @@ Implement the LFUCache class:
 - `int get(int key)` Gets the value of the key if the key exists in the cache. Otherwise, returns -1.
 - `void put(int key, int value)` Updates the value of the key if present, or inserts the key if not already present. When the cache reaches its capacity, it should invalidate and remove the least frequently used key before inserting a new item.
 
-Both `get` and `put` operations must run in O(1) average time complexity 
+Both `get` and `put` operations must run in O(1) average time complexity
 
 ### Example
 ```
@@ -4921,7 +4921,7 @@ Given two sorted arrays `nums1` and `nums2` of size `m` and `n` respectively, re
 
 > The median is the middle value in an ordered list of numbers. If the total number of elements is odd, the median is the middle element. If the total number of elements is even, the median is the average of the two middle elements
 
-You must do this in O(log (m+n)). 
+You must do this in O(log (m+n)).
 
 ### Example
 ```
@@ -5021,7 +5021,7 @@ Merging them into one sorted list:
         "title": "Merge k sorted linked lists",
         "level": "Edgy",
         "code": """
-from typing import Optional 
+from typing import Optional
 
 
 class ListNode:
@@ -5031,7 +5031,7 @@ class ListNode:
         self.val = val
         self.next = next
 
-        
+
 def merge_k_lists(lists: list[Optional[ListNode]]) -> Optional[ListNode]:
 """,
         "test_cases": """
@@ -5216,14 +5216,14 @@ The testcases will be generated such that the answer is unique.
 ```
 Input: s = "ADOBECODEBANC", t = "ABC"
 Output: "BANC"
-How: The minimum window substring "BANC" 
+How: The minimum window substring "BANC"
       includes 'A', 'B', and 'C' from string t.
 
 
 Input: s = "aabdec", t = "aabc"
 Output: "abdec"
-How: Need two 'a's, one 'b', one 'c'. 
-     The window "abdec" contains 
+How: Need two 'a's, one 'b', one 'c'.
+     The window "abdec" contains
      'a','b','c' with the required counts.
 ```
 """,
@@ -5419,20 +5419,20 @@ Given a string `s` that contains parentheses and letters, remove the minimum num
 ```
 Input: s = "()())()"
 Output: ["(())()","()()()"]
-How: 
+How:
 - Remove the parenthesis at index 1 -> "(())()"
 - Remove the parenthesis at index 3 -> "()()()"
 Both are valid and have the same length.
 
 Input: s = "(a)())()"
 Output: ["(a())()","(a)()()"]
-How: 
+How:
 - Remove the extra closing parenthesis after the first 'a)' -> "(a())()"
 - Remove the extra closing parenthesis after the second ')(' -> "(a)()()"
 
 Input: s = ")("
 Output: [""]
-How: 
+How:
 - Remove both parentheses to get an empty string
 - The only valid string is empty
 
@@ -5545,7 +5545,7 @@ For the last line of text, it should be left-justified, and no extra space is in
 
 ### Example
 ```
-Input: words = ["This", "is", "an", "example", "of", "text", "justification."], 
+Input: words = ["This", "is", "an", "example", "of", "text", "justification."],
        max_width = 16
 Output:
 [
@@ -5646,21 +5646,21 @@ In an alien language, they use the Latin alphabet (English lowercase letters) bu
 ```
 Input: words = ["z","x"]
 Output: "zx"
-How: Since "z" comes before "x" in the dictionary, 
+How: Since "z" comes before "x" in the dictionary,
      the order is 'z' before 'x'
 
 Input: words = ["wrt","wrf","er","ett","rftt"]
 Output: "wertf"
-How: From the sequence, we can deduce that 'w' 
+How: From the sequence, we can deduce that 'w'
      comes before 'e', 'e' before 'r', 'r' before
      't', and 't' before 'f', resulting in "wertf"
 
 Input: words = ["z","x","z"]
 Output: ""
-How: Sequence is contradictory. 
-     The first pair "z" and "x" suggests 'z' comes 
-     before 'x', but the last pair "x" and "z" 
-     suggests 'x' comes before 'z'. 
+How: Sequence is contradictory.
+     The first pair "z" and "x" suggests 'z' comes
+     before 'x', but the last pair "x" and "z"
+     suggests 'x' comes before 'z'.
      Therefore, no valid order exists
 ```
 """,
@@ -5749,22 +5749,22 @@ You must implement an algorithm that runs in O(n) time and uses O(1) auxiliary s
 ```
 Input: nums = [1,2,0]
 Output: 3
-How: The numbers present are 0, 1, 2. 
+How: The numbers present are 0, 1, 2.
      The smallest missing positive integer is 3.
 
 Input: nums = [3,4,-1,1]
 Output: 2
-How: The numbers present are -1, 1, 3, 4. 
+How: The numbers present are -1, 1, 3, 4.
      The smallest missing positive integer is 2.
 
 Input: nums = [1,2,3,4,5]
 Output: 6
-How: All positive integers from 1 to 5 are present, 
+How: All positive integers from 1 to 5 are present,
      so the next is 6.
 
 Input: nums = [1,1,2,2,3,3]
 Output: 4
-How: Duplicates don't affect the result. 
+How: Duplicates don't affect the result.
      Present: 1,2,3; Missing: 4.
 ```
 """,
@@ -5854,7 +5854,7 @@ test_cases = [
     99: {
         "markdown": """
 ### Maximum coins
-Given `n` balloons, indexed from 0 to n-1. Each balloon is painted with a number on it represented by an array `nums`. Your task is to burst the balloons. 
+Given `n` balloons, indexed from 0 to n-1. Each balloon is painted with a number on it represented by an array `nums`. Your task is to burst the balloons.
 
 If you burst the `i`-th balloon, you will get `nums[left] * nums[i] * nums[right]` coins. Here `left` and `right` are adjacent indices of `i`. After the burst, the `left` and `right` then become adjacent.
 
@@ -5976,8 +5976,8 @@ Output: 5
 How:
     Start at (0, 0) and go down, down, right, right to reach (2, 2)
 
-    4 cherries are picked up during this trip, and the matrix becomes 
-    
+    4 cherries are picked up during this trip, and the matrix becomes
+
     [[0,1,-1],
      [0,0,-1],
      [0,0,0]]
@@ -6175,7 +6175,7 @@ Note: There must be no consecutive horizontal lines of equal height in the outpu
 ```
 Input: buildings = [[2,9,10],[3,7,15],[5,12,12],[15,20,10],[19,24,8]]
 Output: [[2,10],[3,15],[7,12],[12,0],[15,10],[20,8],[24,0]]
-How: 
+How:
 
  ^
  |    +-----+
@@ -6331,7 +6331,7 @@ Return the list of finite intervals representing common, positive-length free ti
 ```
 Input: schedule = [[[1,2],[5,6]],[[1,3]],[[4,10]]]
 Output: [[3,4]]
-How: 
+How:
 - Employee 1 works: [1,2] and [5,6]
 - Employee 2 works: [1,3]
 - Employee 3 works: [4,10]
@@ -6339,7 +6339,7 @@ The only common free time across all employees is [3,4].
 
 Input: schedule = [[[1,2],[3,4]],[[2,3]],[[4,5]]]
 Output: []
-How: 
+How:
 - Employee 1 works: [1,2] and [3,4]
 - Employee 2 works: [2,3]
 - Employee 3 works: [4,5]
@@ -6488,7 +6488,7 @@ How:
 
 Input: V = 4, edges = [[1,2], [2,3], [3,4]]
 Output: 4
-How: simple path, each vertex is its own SCC. 
+How: simple path, each vertex is its own SCC.
 ```
 """,
         "title": "Count SCCs",
@@ -6785,13 +6785,13 @@ test_cases = [
 ### N Queens
 You have `n` queens and you need to place them on an `n * n` board such that no two queens are attacking each other.  Return the number of distinct ways in which the n queens can be placed.
 
-> In chess a queen can attack any piece that lies on the same row, column or diagonal. 
+> In chess a queen can attack any piece that lies on the same row, column or diagonal.
 
 ### Example
 ```
 Input: n = 4
 Output: 2
-How: 
+How:
     Solution 1:          Solution 2:
     . Q . .              . . Q .
     . . . Q              Q . . .
@@ -6832,7 +6832,7 @@ Return the minimized largest sum.
 ```
 Input: nums = [7,2,5,10,8], k = 2
 Output: 18
-How: 
+How:
 There are four ways to split nums into two subarrays:
 - [7,2,5] and [10,8] with sums 14 and 18 -> largest sum = 18
 - [7,2,5,10] and [8] with sums 24 and 8 -> largest sum = 24
@@ -6927,13 +6927,13 @@ The allowed move operations are:
 ```
 Input: sx = 1, sy = 1, tx = 3, ty = 5
 Output: true
-How: 
+How:
 (1, 1) -> (1, 2) -> (3, 2) -> (3, 5)
 
 Input: sx = 1, xy = 2, tx = 2, ty = 1
 Output: false
-How: 
-    Cannot reach (2, 1) from (1, 2) 
+How:
+    Cannot reach (2, 1) from (1, 2)
     using the allowed operations.
 ```
 """,
@@ -7011,7 +7011,7 @@ test_cases = [
     109: {
         "markdown": """
 ### Palindrome pairs
-Given a list of unique `words`, find all pairs of distinct indices `(i, j)` in the given list such that the concatenation of the two words, i.e., `words[i] + words[j]`, forms a palindrome. Return the indices sorted in ascending order. 
+Given a list of unique `words`, find all pairs of distinct indices `(i, j)` in the given list such that the concatenation of the two words, i.e., `words[i] + words[j]`, forms a palindrome. Return the indices sorted in ascending order.
 
 > A palindrome is a string that reads the same forwards and backwards (e.g., "abba", "racecar").
 
@@ -7019,7 +7019,7 @@ Given a list of unique `words`, find all pairs of distinct indices `(i, j)` in t
 ```
 Input: words = ["bat","tab","cat"]
 Output: [[0,1],[1,0]]
-How: 
+How:
 - "bat" + "tab" = "battab" (palindrome)
 - "tab" + "bat" = "tabbat" (palindrome)
 - No pairs involve "cat" as it doesn't form a palindrome with any other word
@@ -7165,22 +7165,22 @@ Given an `m * n` grid where each cell can have a value of `0`, `1` or `2`:
 - 1 - fresh orange
 - 2 - rotten orange
 
-Any fresh orange that is next (up, down, left, right) to a rotten one rots within a minute. 
+Any fresh orange that is next (up, down, left, right) to a rotten one rots within a minute.
 
-Return the minimum time within which all the oranges in the grid become rotten. Return -1 if it's impossible for all to get rotten. 
+Return the minimum time within which all the oranges in the grid become rotten. Return -1 if it's impossible for all to get rotten.
 
 ### Example
 ```
 Input: grid = [[1]]
-Output: -1  
+Output: -1
 
 Input: grid = [[1, 2]]
 Output: 1
 
-Input: 
+Input:
     grid = [
-        [2, 1, 1], 
-        [1, 1, 0], 
+        [2, 1, 1],
+        [1, 1, 0],
         [0, 1, 1]
     ]
 Output: 4

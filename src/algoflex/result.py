@@ -3,6 +3,7 @@ import os
 import tempfile
 import time
 from pathlib import Path
+from typing import ClassVar
 
 from textual.screen import ModalScreen
 from textual.widgets import Footer, RichLog, Static
@@ -16,7 +17,7 @@ KV = Query()
 
 
 class ResultModal(ModalScreen):
-    BINDINGS = [("escape", "dismiss", "dismiss")]
+    BINDINGS: ClassVar = [("escape", "dismiss", "dismiss")]
     DEFAULT_CSS = """
     ResultModal {
         &>* {
@@ -128,7 +129,7 @@ if __name__ == "__main__":
                     ),
                     timeout=9,
                 )
-            except asyncio.TimeoutError:
+            except TimeoutError:
                 proc.kill()
                 await proc.wait()
                 output_log.write(
@@ -143,7 +144,7 @@ if __name__ == "__main__":
                 if not self.best or self.elapsed < self.best:
                     self.new_best()
 
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             output_log.write(f"[red]Error running code[/]\n\t{e}")
 
         finally:

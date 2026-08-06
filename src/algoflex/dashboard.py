@@ -1,6 +1,6 @@
 import random
 from collections import Counter
-from datetime import datetime
+from datetime import UTC, datetime
 from heapq import nlargest, nsmallest
 
 from textual.app import ComposeResult
@@ -44,11 +44,11 @@ class Dashboard(Widget):
         border-left: vkey $boost;
         border-right: vkey $boost;
         padding: 1 2;
-        layer: dashboard; 
+        layer: dashboard;
         align-horizontal: center;
         dock: top;
         offset-x: 100vw;
-        transition: offset 100ms;  
+        transition: offset 100ms;
         &.-visible {
             offset-x: 48vw;
         }
@@ -170,10 +170,14 @@ class Dashboard(Widget):
         else:
             return "Ace"
 
-    def midnight(self):
-        now = datetime.now()
-        midnight = datetime(now.year, now.month, now.day)
-        return midnight.timestamp()
+    def midnight(self) -> float:
+        """Return today's local midnight as a UTC Unix timestamp."""
+        local_tz = datetime.now().astimezone().tzinfo
+        now = datetime.now(local_tz)
+
+        midnight = now.replace(hour=0, minute=0, second=0, microsecond=0)
+
+        return midnight.astimezone(UTC).timestamp()
 
     def md_table(self, headers, rows):
         if not rows:
@@ -181,10 +185,10 @@ class Dashboard(Widget):
         sep = "|" + "|".join(["---"] * len(headers)) + "|"
         head = "|" + "|".join(headers) + "|"
         body = "\n".join("|" + "|".join(map(str, r)) + "|" for r in rows)
-        return "\n".join([head, sep, body])
+        return f"{head}\n{sep}\n{body}"
 
     def get_complete(self, docs):
-        passed = set([doc["problem_id"] for doc in docs if doc["passed"]])
+        passed = {doc["problem_id"] for doc in docs if doc["passed"]}
         breezy = len(self.breezy.intersection(passed))
         steady = len(self.steady.intersection(passed))
         edgy = len(self.edgy.intersection(passed))

@@ -1,4 +1,5 @@
 from time import monotonic
+from typing import ClassVar
 
 from textual.binding import Binding
 from textual.containers import Horizontal, ScrollableContainer, Vertical
@@ -16,7 +17,7 @@ KV = Query()
 
 
 class AttemptScreen(Screen):
-    BINDINGS = [
+    BINDINGS: ClassVar[list[Binding]] = [
         Binding("ctrl+s", "submit", "submit", tooltip="Submit your solution"),
         Binding(
             "ctrl+l", "maximize", "max/min editor", tooltip="maximize/minimize editor"

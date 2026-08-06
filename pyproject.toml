@@ -7,7 +7,7 @@ name = "algoflex"
 version = "1.0.5"
 description = "Algoflex - An algorithm practice TUI"
 readme = "README.md"
-requires-python = ">=3.8.1"
+requires-python = ">=3.12"
 license = "MIT"
 authors = [{name = "ndero", email = "jnderoh@gmail.com"}]
 dependencies = [
