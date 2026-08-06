@@ -1,11 +1,11 @@
-from textual.events import Mount
-from textual.screen import ModalScreen
-from textual.widgets import Input, ListView, ListItem, Label, Footer
 from textual.containers import Vertical
 from textual.reactive import reactive
-from algoflex.questions import questions
-from algoflex.db import attempts
+from textual.screen import ModalScreen
+from textual.widgets import Footer, Input, Label, ListItem, ListView
 from tinydb import Query
+
+from algoflex.db import attempts
+from algoflex.questions import questions
 
 KV = Query()
 

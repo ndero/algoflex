@@ -1,18 +1,19 @@
+from random import shuffle
+
 from textual.app import App
-from textual.screen import Screen
-from textual.containers import Horizontal, Vertical, VerticalScroll, HorizontalScroll
-from textual.widgets import Footer, Markdown, Static
 from textual.binding import Binding
+from textual.containers import Horizontal, Vertical, VerticalScroll
 from textual.reactive import reactive
-from algoflex.questions import questions
+from textual.widgets import Footer, Markdown, Static
+from tinydb import Query
+
 from algoflex.attempt import AttemptScreen
-from algoflex.search import SearchScreen
-from algoflex.custom_widgets import Title, Problem
+from algoflex.custom_widgets import Problem, Title
 from algoflex.dashboard import Dashboard
 from algoflex.db import attempts
-from algoflex.utils import time_ago, fmt_secs
-from random import shuffle
-from tinydb import Query
+from algoflex.questions import questions
+from algoflex.search import SearchScreen
+from algoflex.utils import fmt_secs, time_ago
 
 KV = Query()
 

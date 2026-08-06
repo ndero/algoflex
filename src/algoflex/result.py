@@ -1,14 +1,16 @@
-from textual.screen import ModalScreen
-from textual.widgets import RichLog, Static, Footer
-from algoflex.questions import questions
-from algoflex.db import attempts, delete_draft, save_draft
-from algoflex.utils import fmt_secs
-from tinydb import Query
-from pathlib import Path
-import tempfile
-import os
-import time
 import asyncio
+import os
+import tempfile
+import time
+from pathlib import Path
+
+from textual.screen import ModalScreen
+from textual.widgets import Footer, RichLog, Static
+from tinydb import Query
+
+from algoflex.db import attempts, delete_draft, save_draft
+from algoflex.questions import questions
+from algoflex.utils import fmt_secs
 
 KV = Query()
 

@@ -1,23 +1,25 @@
-from textual.app import ComposeResult
-from textual.containers import Horizontal, Center
-from textual.reactive import reactive
-from textual.widgets import (
-    ProgressBar,
-    Digits,
-    Static,
-    Label,
-    Collapsible,
-    Markdown,
-)
-from textual.widget import Widget
-from algoflex.questions import questions as q
-from algoflex.db import attempts
-from algoflex.utils import time_ago, fmt_secs
-from tinydb import Query
-from heapq import nlargest, nsmallest
+import random
 from collections import Counter
 from datetime import datetime
-import random
+from heapq import nlargest, nsmallest
+
+from textual.app import ComposeResult
+from textual.containers import Center, Horizontal
+from textual.reactive import reactive
+from textual.widget import Widget
+from textual.widgets import (
+    Collapsible,
+    Digits,
+    Label,
+    Markdown,
+    ProgressBar,
+    Static,
+)
+from tinydb import Query
+
+from algoflex.db import attempts
+from algoflex.questions import questions as q
+from algoflex.utils import fmt_secs, time_ago
 
 KV = Query()
 

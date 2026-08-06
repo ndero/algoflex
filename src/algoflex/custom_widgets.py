@@ -1,4 +1,4 @@
-from textual.containers import VerticalScroll, Center
+from textual.containers import Center, VerticalScroll
 from textual.widgets import Markdown, Static
 
 

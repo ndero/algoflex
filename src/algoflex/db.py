@@ -1,7 +1,8 @@
-from tinydb import TinyDB, Query
-from platformdirs import user_data_dir
 from pathlib import Path
 from time import time
+
+from platformdirs import user_data_dir
+from tinydb import Query, TinyDB
 
 _db_instance = None
 KV = Query()

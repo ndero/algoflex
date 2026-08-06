@@ -1,15 +1,16 @@
-from textual.app import App
-from textual.widgets import TextArea, Footer, TabbedContent, Markdown, Static
-from textual.containers import Horizontal, Vertical, ScrollableContainer
-from textual.screen import Screen
-from textual.binding import Binding
-from algoflex.custom_widgets import Title, Problem
-from algoflex.result import ResultModal
-from algoflex.questions import questions
-from algoflex.db import attempts, load_draft
-from algoflex.utils import time_ago, fmt_secs
-from tinydb import Query
 from time import monotonic
+
+from textual.binding import Binding
+from textual.containers import Horizontal, ScrollableContainer, Vertical
+from textual.screen import Screen
+from textual.widgets import Footer, Markdown, Static, TabbedContent, TextArea
+from tinydb import Query
+
+from algoflex.custom_widgets import Problem, Title
+from algoflex.db import attempts, load_draft
+from algoflex.questions import questions
+from algoflex.result import ResultModal
+from algoflex.utils import fmt_secs, time_ago
 
 KV = Query()
 
