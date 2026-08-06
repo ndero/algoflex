@@ -24,7 +24,7 @@ build:
 check: lint format-check test build
 
 run: build
-	uv tool install --reinstall $(firstword $(wildcard dist/*.whl))
+	uv tool install --reinstall --offline $(firstword $(wildcard dist/*.whl))
 	algoflex
 
 clean:
