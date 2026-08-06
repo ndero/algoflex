@@ -192,12 +192,12 @@ class Dashboard(Widget):
         # get recent, frequent, fast and forever.
         latest, best, worst, completed = {}, {}, {}, Counter()
         # get highlights - today's, week's or month's
-        h_attempts, h_passed = 0, set() 
+        h_attempts, h_passed = 0, set()
         for d in docs:
             if d["created_at"] >= self.midnight():
-                h_attempts += 1 
+                h_attempts += 1
                 if d["passed"]:
-                    h_passed.add(d["problem_id"]) 
+                    h_passed.add(d["problem_id"])
 
             pid = d["problem_id"]
             latest[pid] = max(d["created_at"], latest.get(pid, (0, 0))[0]), d["passed"]

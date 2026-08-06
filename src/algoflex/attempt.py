@@ -6,7 +6,7 @@ from textual.binding import Binding
 from algoflex.custom_widgets import Title, Problem
 from algoflex.result import ResultModal
 from algoflex.questions import questions
-from algoflex.db import attempts, load_draft 
+from algoflex.db import attempts, load_draft
 from algoflex.utils import time_ago, fmt_secs
 from tinydb import Query
 from time import monotonic
@@ -17,7 +17,9 @@ KV = Query()
 class AttemptScreen(Screen):
     BINDINGS = [
         Binding("ctrl+s", "submit", "submit", tooltip="Submit your solution"),
-        Binding("ctrl+l", "maximize", "max/min editor", tooltip="maximize/minimize editor"),
+        Binding(
+            "ctrl+l", "maximize", "max/min editor", tooltip="maximize/minimize editor"
+        ),
         Binding("a", "back", "back", tooltip="Go to home"),
     ]
     DEFAULT_CSS = """
@@ -62,7 +64,7 @@ class AttemptScreen(Screen):
         super().__init__()
         self.problem_id = problem_id
         self.test_time = monotonic()
-        self.elapsed_before = 0 
+        self.elapsed_before = 0
         self.best = None
 
     def compose(self):
@@ -131,7 +133,7 @@ class AttemptScreen(Screen):
 
     def _load_draft(self):
         draft = load_draft(self.problem_id)
-        if draft: 
+        if draft:
             self.query_one("#code", TextArea).text = draft["code"]
             self.elapsed_before = draft["elapsed"]
 

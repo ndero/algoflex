@@ -158,12 +158,11 @@ if __name__ == "__main__":
                     "code": user_code,
                 }
             )
-            
+
             if passed:
                 delete_draft(self.problem_id)
             else:
                 save_draft(self.problem_id, user_code, self.elapsed)
-
 
     def new_best(self):
         widget = Static(f"[b]New best time!! --> {fmt_secs(self.elapsed)}[/]")

@@ -49,10 +49,11 @@ class SearchScreen(ModalScreen):
         yield Footer()
 
     async def on_mount(self) -> None:
-        passed = set(
-            doc["problem_id"] for doc in attempts.search(KV.passed == True)
-        )
-        self.problems = [("✓" if pid in passed else " ", pid, q["title"]) for pid, q in questions.items()]
+        passed = set(doc["problem_id"] for doc in attempts.search(KV.passed == True))
+        self.problems = [
+            ("✓" if pid in passed else " ", pid, q["title"])
+            for pid, q in questions.items()
+        ]
         await self.update_results(self.problems)
 
     async def on_input_changed(self, event: Input.Changed) -> None:
@@ -65,7 +66,10 @@ class SearchScreen(ModalScreen):
         await list_view.clear()
         for passed, pid, title in results:
             list_view.append(
-                ListItem(Label(f"{passed} [b]{title}[/]"), id=f"item-{pid}",)
+                ListItem(
+                    Label(f"{passed} [b]{title}[/]"),
+                    id=f"item-{pid}",
+                )
             )
 
     def on_list_view_selected(self, event: ListView.Selected):

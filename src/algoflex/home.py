@@ -9,7 +9,7 @@ from algoflex.attempt import AttemptScreen
 from algoflex.search import SearchScreen
 from algoflex.custom_widgets import Title, Problem
 from algoflex.dashboard import Dashboard
-from algoflex.db import attempts 
+from algoflex.db import attempts
 from algoflex.utils import time_ago, fmt_secs
 from random import shuffle
 from tinydb import Query
