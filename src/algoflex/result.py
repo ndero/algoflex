@@ -1,5 +1,6 @@
 import asyncio
 import os
+import sys
 import tempfile
 import time
 from pathlib import Path
@@ -103,7 +104,7 @@ if __name__ == "__main__":
 
             # spawn async subprocess
             proc = await asyncio.create_subprocess_exec(
-                "python",
+                sys.executable,
                 tmp_path,
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE,
