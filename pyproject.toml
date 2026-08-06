@@ -21,3 +21,9 @@ algoflex = "algoflex.app:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.5",
+    "ruff>=0.16.1",
+]
