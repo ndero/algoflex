@@ -1,8 +1,5 @@
 env/
 .DS_Store
 __pycache__/
-_questions.py
 dist/
 *.egg-info
-test*.*
-algorithms.py

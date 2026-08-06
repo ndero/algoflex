@@ -22,7 +22,7 @@ class AttemptScreen(Screen):
         Binding(
             "ctrl+l", "maximize", "max/min editor", tooltip="maximize/minimize editor"
         ),
-        Binding("a", "back", "back", tooltip="Go to home"),
+        Binding("ctrl+b", "back", "back", tooltip="Go to home"),
     ]
     DEFAULT_CSS = """
     Horizontal {
