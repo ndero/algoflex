@@ -5,15 +5,12 @@ from textual.binding import Binding
 from textual.containers import Horizontal, ScrollableContainer, Vertical
 from textual.screen import Screen
 from textual.widgets import Footer, Markdown, Static, TabbedContent, TextArea
-from tinydb import Query
 
 from algoflex.custom_widgets import Problem, Title
-from algoflex.db import attempts, load_draft
+from algoflex.db import get_attempts, get_draft
 from algoflex.questions import questions
 from algoflex.result import ResultModal
 from algoflex.utils import fmt_secs, time_ago
-
-KV = Query()
 
 
 class AttemptScreen(Screen):
@@ -96,7 +93,7 @@ class AttemptScreen(Screen):
         self.update()
 
     def update(self):
-        docs = attempts.search(KV.problem_id == self.problem_id)
+        docs = get_attempts(problem_id=self.problem_id, lang_id=1)
         self.update_timeline(docs)
         self.update_solutions(docs)
 
@@ -134,7 +131,7 @@ class AttemptScreen(Screen):
         self.query_one("#solutions", Markdown).update(md)
 
     def _load_draft(self):
-        draft = load_draft(self.problem_id)
+        draft = get_draft(problem_id=self.problem_id, lang_id=1)
         if draft:
             self.query_one("#code", TextArea).text = draft["code"]
             self.elapsed_before = draft["elapsed"]

@@ -15,19 +15,16 @@ from textual.widgets import (
     ProgressBar,
     Static,
 )
-from tinydb import Query
 
-from algoflex.db import attempts
+from algoflex.db import get_all_attempts
 from algoflex.questions import questions as q
 from algoflex.utils import fmt_secs, time_ago
-
-KV = Query()
 
 
 class Dashboard(Widget):
     show_dashboard = reactive(False)
     # get completed questions per level
-    docs, breezy, steady, edgy = attempts.all(), set(), set(), set()
+    docs, breezy, steady, edgy = get_all_attempts(), set(), set(), set()
     for k, v in q.items():
         if v["level"] == "Breezy":
             breezy.add(k)
@@ -134,7 +131,7 @@ class Dashboard(Widget):
     def watch_show_dashboard(self) -> None:
         ids = ["#d_breezy", "#d_steady", "#d_edgy"]
         if self.show_dashboard:
-            docs = attempts.all()
+            docs = get_all_attempts()
             breezy, steady, edgy = self.get_complete(docs)
             self.update_digits(ids, [breezy, steady, int(edgy // 1.5)])
             self.update_progress(breezy + steady + edgy)

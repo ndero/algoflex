@@ -8,7 +8,6 @@ version = "1.0.5"
 source = { editable = "." }
 dependencies = [
     { name = "textual", extra = ["syntax"] },
-    { name = "tinydb" },
 ]
 
 [package.dev-dependencies]
@@ -23,7 +22,6 @@ dev = [
 requires-dist = [
     { name = "textual", specifier = ">=3.5.0" },
     { name = "textual", extras = ["syntax"] },
-    { name = "tinydb", specifier = ">=4.8.2" },
 ]
 
 [package.metadata.requires-dev]
@@ -359,15 +357,6 @@ syntax = [
     { name = "tree-sitter-toml" },
     { name = "tree-sitter-xml" },
     { name = "tree-sitter-yaml" },
-]
-
-[[package]]
-name = "tinydb"
-version = "4.8.2"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/a0/79/4af51e2bb214b6ea58f857c51183d92beba85b23f7ba61c983ab3de56c33/tinydb-4.8.2.tar.gz", hash = "sha256:f7dfc39b8d7fda7a1ca62a8dbb449ffd340a117c1206b68c50b1a481fb95181d", size = 32566, upload-time = "2024-10-12T15:24:01.13Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/78/17/853354204e1ca022d6b7d011ca7f3206c4f8faa3cc743e92609b49c1d83f/tinydb-4.8.2-py3-none-any.whl", hash = "sha256:f97030ee5cbc91eeadd1d7af07ab0e48ceb04aa63d4a983adbaca4cba16e86c3", size = 24888, upload-time = "2024-10-12T15:23:59.833Z" },
 ]
 
 [[package]]

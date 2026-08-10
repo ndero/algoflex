@@ -1,42 +1,196 @@
+import sqlite3
 from pathlib import Path
-from time import time
+from typing import TypedDict
 
 from platformdirs import user_data_dir
-from tinydb import Query, TinyDB
 
-_db_instance = None
-KV = Query()
-
-
-def get_db():
-    global _db_instance
-    if _db_instance is None:
-        app_data_dir = Path(user_data_dir("algoflex"))
-        app_data_dir.mkdir(parents=True, exist_ok=True)
-        path = Path(app_data_dir, "attempts.json")
-        _db_instance = TinyDB(path=path)
-    return _db_instance
+APP_NAME = "algoflex"
+_CONNECTION: sqlite3.Connection | None = None
 
 
-attempts = get_db()
-drafts = get_db().table("drafts")
+class Attempt(TypedDict):
+    problem_id: int
+    passed: bool
+    elapsed: float
+    created_at: float
+    code: str
+    lang_id: int
 
 
-def save_draft(problem_id, code, elapsed):
-    drafts.upsert(
-        {
-            "problem_id": problem_id,
-            "code": code,
-            "elapsed": elapsed,
-            "updated_at": time(),
-        },
-        KV.problem_id == problem_id,
+class Draft(TypedDict):
+    problem_id: int
+    lang_id: int
+    code: str
+    elapsed: str
+    updated_at: float
+
+
+def get_db() -> sqlite3.Connection:
+    """Returns Algoflex sqlite3 database connection"""
+    global _CONNECTION
+
+    if _CONNECTION is not None:
+        return _CONNECTION
+
+    db_dir = Path(user_data_dir(APP_NAME))
+    db_dir.mkdir(parents=True, exist_ok=True)
+    db_path = db_dir / "algoflex.db"
+    db = sqlite3.connect(db_path)
+    db.row_factory = sqlite3.Row
+    db.execute("PRAGMA foreign_keys = ON")
+
+    db.executescript(
+        """
+        CREATE TABLE IF NOT EXISTS languages (
+            lang_id INTEGER PRIMARY KEY,
+            lang TEXT NOT NULL UNIQUE
+        );
+
+        CREATE TABLE IF NOT EXISTS attempts (
+            attempt_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            problem_id INTEGER NOT NULL,
+            passed INTEGER NOT NULL,
+            elapsed REAL NOT NULL,
+            created_at REAL NOT NULL,
+            code TEXT NOT NULL,
+            lang_id INTEGER NOT NULL,
+            FOREIGN KEY (lang_id) REFERENCES languages(lang_id)
+        );
+
+        CREATE TABLE IF NOT EXISTS drafts (
+            problem_id INTEGER NOT NULL,
+            lang_id INTEGER NOT NULL,
+            code TEXT NOT NULL,
+            elapsed TEXT NOT NULL,
+            updated_at REAL NOT NULL,
+            PRIMARY KEY (problem_id, lang_id),
+            FOREIGN KEY (lang_id) REFERENCES languages(lang_id)
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_attempts_problem ON attempts(problem_id);
+
+        CREATE INDEX IF NOT EXISTS idx_attempts_created ON attempts(created_at);
+
+        CREATE INDEX IF NOT EXISTS idx_attempts_lang ON attempts(lang_id);
+
+        """
     )
 
+    db.executemany(
+        """
+        INSERT OR IGNORE INTO languages (lang_id, lang)
+        VALUES (?, ?)
+        """,
+        [
+            (1, "python"),
+            (2, "rust"),
+        ],
+    )
 
-def load_draft(problem_id):
-    return drafts.get(KV.problem_id == problem_id)
+    db.commit()
+
+    _CONNECTION = db
+    return db
 
 
-def delete_draft(problem_id):
-    drafts.remove(KV.problem_id == problem_id)
+def add_attempt(attempt: Attempt) -> None:
+    db = get_db()
+    with db:
+        db.execute(
+            """
+            INSERT INTO attempts (
+                problem_id,
+                passed,
+                elapsed,
+                created_at,
+                code,
+                lang_id
+            )
+            VALUES (?, ?, ?, ?, ?, ?)
+            """,
+            (
+                attempt["problem_id"],
+                int(attempt["passed"]),
+                attempt["elapsed"],
+                attempt["created_at"],
+                attempt["code"],
+                attempt["lang_id"],
+            ),
+        )
+
+
+def get_attempts(problem_id: int, lang_id: int = 1) -> list[sqlite3.Row]:
+    db = get_db()
+    return db.execute(
+        """
+        SELECT * FROM attempts
+        WHERE problem_id = ? AND lang_id = ?
+        """,
+        (problem_id, lang_id),
+    ).fetchall()
+
+
+def get_all_attempts() -> list[sqlite3.Row]:
+    db = get_db()
+    return db.execute("SELECT * FROM attempts").fetchall()
+
+
+def get_passed_problems() -> set[int]:
+    db = get_db()
+    rows = db.execute(
+        "SELECT DISTINCT problem_id FROM attempts WHERE passed = 1"
+    ).fetchall()
+    return {row["problem_id"] for row in rows}
+
+
+def add_draft(draft: Draft) -> None:
+    db = get_db()
+    with db:
+        db.execute(
+            """
+            INSERT INTO drafts(
+                problem_id,
+                lang_id,
+                code,
+                elapsed,
+                updated_at
+            )
+            VALUES (?, ?, ?, ?, ?)
+            ON CONFLICT(problem_id, lang_id)
+            DO UPDATE SET
+                code = excluded.code,
+                elapsed = excluded.elapsed,
+                updated_at = excluded.updated_at
+            """,
+            (
+                draft["problem_id"],
+                draft["lang_id"],
+                draft["code"],
+                draft["elapsed"],
+                draft["updated_at"],
+            ),
+        )
+
+
+def get_draft(problem_id: int, lang_id: int = 1) -> sqlite3.Row:
+    db = get_db()
+    return db.execute(
+        """
+        SELECT *
+        FROM drafts
+        WHERE problem_id = ? AND lang_id = ?
+        """,
+        (problem_id, lang_id),
+    ).fetchone()
+
+
+def delete_draft(problem_id: int, lang_id: int = 1) -> None:
+    db = get_db()
+    with db:
+        db.execute(
+            """
+            DELETE FROM drafts
+            WHERE problem_id = ? AND lang_id = ?
+            """,
+            (problem_id, lang_id),
+        )

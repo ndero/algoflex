@@ -4,12 +4,9 @@ from textual.containers import Vertical
 from textual.reactive import reactive
 from textual.screen import ModalScreen
 from textual.widgets import Footer, Input, Label, ListItem, ListView
-from tinydb import Query
 
-from algoflex.db import attempts
+from algoflex.db import get_passed_problems
 from algoflex.questions import questions
-
-KV = Query()
 
 
 class SearchScreen(ModalScreen):
@@ -51,7 +48,7 @@ class SearchScreen(ModalScreen):
         yield Footer()
 
     async def on_mount(self) -> None:
-        passed = {doc["problem_id"] for doc in attempts.search(KV.passed == True)}
+        passed = get_passed_problems()
         self.problems = [
             ("✓" if pid in passed else " ", pid, q["title"])
             for pid, q in questions.items()

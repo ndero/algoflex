@@ -6,17 +6,14 @@ from textual.binding import Binding
 from textual.containers import Horizontal, Vertical, VerticalScroll
 from textual.reactive import reactive
 from textual.widgets import Footer, Markdown, Static
-from tinydb import Query
 
 from algoflex.attempt import AttemptScreen
 from algoflex.custom_widgets import Problem, Title
 from algoflex.dashboard import Dashboard
-from algoflex.db import attempts
+from algoflex.db import get_attempts
 from algoflex.questions import questions
 from algoflex.search import SearchScreen
 from algoflex.utils import fmt_secs, time_ago
-
-KV = Query()
 
 
 class StatScreen(Vertical):
@@ -96,14 +93,14 @@ class HomeScreen(App):
     def watch_problem_id(self, id):
         p = questions.get(id, {})
         problem, level = p.get("markdown", ""), p.get("level", "Breezy")
-        docs = attempts.search(KV.problem_id == id)
+        docs = get_attempts(problem_id=self.problem_id, lang_id=1)
         total_attempts = len(docs)
-        passed_attempts = [doc for doc in docs if doc.get("passed")]
+        passed_attempts = [doc for doc in docs if doc["passed"]]
         passed = len(passed_attempts)
         best_elapsed = (
             "..."
             if not passed_attempts
-            else fmt_secs(min(doc.get("elapsed", "...") for doc in passed_attempts))
+            else fmt_secs(min(doc["elapsed"] for doc in passed_attempts))
         )
         last_at = "..."
         if docs:

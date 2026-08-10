@@ -8,13 +8,10 @@ from typing import ClassVar
 
 from textual.screen import ModalScreen
 from textual.widgets import Footer, RichLog, Static
-from tinydb import Query
 
-from algoflex.db import attempts, delete_draft, save_draft
+from algoflex.db import add_attempt, add_draft, delete_draft
 from algoflex.questions import questions
 from algoflex.utils import fmt_secs
-
-KV = Query()
 
 
 class ResultModal(ModalScreen):
@@ -153,20 +150,29 @@ if __name__ == "__main__":
                 os.remove(tmp_path)
             output_log.loading = False
 
-            attempts.insert(
+            add_attempt(
                 {
                     "problem_id": self.problem_id,
                     "passed": passed,
                     "elapsed": self.elapsed,
                     "created_at": now,
                     "code": user_code,
+                    "lang_id": 1,
                 }
             )
 
             if passed:
-                delete_draft(self.problem_id)
+                delete_draft(self.problem_id, lang_id=1)
             else:
-                save_draft(self.problem_id, user_code, self.elapsed)
+                add_draft(
+                    {
+                        "problem_id": self.problem_id,
+                        "lang_id": 1,
+                        "code": user_code,
+                        "elapsed": self.elapsed,
+                        "updated_at": now,
+                    }
+                )
 
     def new_best(self):
         widget = Static(f"[b]New best time!! --> {fmt_secs(self.elapsed)}[/]")
