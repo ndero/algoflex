@@ -71,7 +71,7 @@ class AttemptScreen(Screen):
         description = question.get("markdown", "")
         code = question.get("code", "")
 
-        yield Title()
+        yield Title(show_language_selector=True)
         with Horizontal():
             yield Problem(description)
             with TabbedContent("Attempt", "Timeline", "Past solutions", id="editor"):

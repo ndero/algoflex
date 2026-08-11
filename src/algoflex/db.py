@@ -84,6 +84,7 @@ def get_db() -> sqlite3.Connection:
         [
             (1, "python"),
             (2, "rust"),
+            (3, "javascript"),
         ],
     )
 
