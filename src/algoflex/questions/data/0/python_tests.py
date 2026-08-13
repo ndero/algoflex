@@ -1,7 +1,5 @@
 import sys
 
-from algoflex.questions.utils import run_python_tests
-
 test_cases = [
     [(["5", "2", "C", "D", "+", "+", "C"],), 30],
     [(["9", "C", "6", "D", "C", "C"],), 0],
@@ -16,7 +14,6 @@ test_cases = [
     [(["1", "1"] + ["+"] * 22 + ["C"] * 20 + ["+"] * 20,), 121392],
     [(["1", "1", "C", "D", "D", "+"] * 1000,), 13000],
 ]
-
 
 if __name__ == "__main__":
     sys.exit(run_python_tests(score, test_cases))  # type: ignore  # noqa: F821

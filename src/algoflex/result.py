@@ -141,7 +141,7 @@ class ResultModal(ModalScreen):
                 proc.kill()
                 await proc.wait()
                 output_log.write(
-                    "[red][b]x[/][/] timed out\tyour solution must run within 9 seconds."
+                    "[red][b]✗[/][/] timed out\tyour solution must run within 9 seconds."
                 )
                 return
             finally:
@@ -156,7 +156,7 @@ class ResultModal(ModalScreen):
 
         except Exception as e:  # noqa: BLE001
             output_log.write(
-                f"[red][b]x[/][/] error running code[/]\n\t{e}", animate=True
+                f"[red][b]✗[/][/] error running code[/]\n\t{e}", animate=True
             )
 
         finally:

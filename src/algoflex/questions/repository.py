@@ -38,6 +38,8 @@ class QuestionRepository:
             raise KeyError(f"Question {question_id} does not exist")
 
         metadata = self._load_metadata(question_dir)
+        python_runner = self._read_file(self.data_dir / "run.py")
+        rust_runner = self._read_file(self.data_dir / "run.rs")
 
         return Question(
             id=question_id,
@@ -45,9 +47,10 @@ class QuestionRepository:
             level=metadata["level"],
             markdown=self._read_file(question_dir / "problem.md"),
             python_starter=self._read_file(question_dir / "python_starter.txt"),
-            python_tests=self._read_file(question_dir / "python_tests.py"),
+            python_tests=python_runner
+            + self._read_file(question_dir / "python_tests.py"),
             rust_starter=self._read_file(question_dir / "rust_starter.txt"),
-            rust_tests=self._read_file(question_dir / "rust_tests.rs"),
+            rust_tests=rust_runner + self._read_file(question_dir / "rust_tests.rs"),
         )
 
     @staticmethod
