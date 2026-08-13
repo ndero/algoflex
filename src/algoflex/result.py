@@ -16,48 +16,30 @@ from algoflex.utils import fmt_secs
 
 class ResultModal(ModalScreen):
     BINDINGS: ClassVar = [("escape", "dismiss", "dismiss")]
+    SPINNER: ClassVar = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"]
     DEFAULT_CSS = """
     ResultModal {
         &>* {
             max-width: 90;
         }
         align: center middle;
+
         RichLog {
             width: 1fr;
             height: auto;
             max-height: 16;
             min-height: 5;
-            padding: 1 2;
+            padding: 0 2;
+            padding-top: 1;
             overflow-y: auto;
             background: $boost;
         }
+
+        #status {
+            background: $boost;
+            padding: 0 2;
+        }
     }
-    """
-    TEST_CODE = """
-import sys
-
-def run_tests():
-    total, passed = len(test_cases), 0
-    for i, [input, expected] in enumerate(test_cases):
-        try:
-            if input == expected:
-                print(f"[green][b]✓[/] test case {i+1} passed![/]")
-                passed += 1
-            else:
-                print(f"[red][b]x[/] test case {i+1} failed![/]\\n\\t[b]got[/]: [red]{input}[/]\\n\\t[b]expected[/]: [green]{expected}[/]")
-                return 1
-        except Exception as e:
-            print(f"[red][b]x[/] test case {i+1} error![/]\\n\\t[b]error[/]: {e}")
-            return 1
-    if passed == total:
-        print(f"\\n{passed}/{total} passed!")
-        return 0
-    if passed < total:
-        print(f"\\n {total - passed} failing.")
-    return 1
-
-if __name__ == "__main__":
-    sys.exit(run_tests())
     """
 
     def __init__(self, problem_id, user_code, elapsed, best):
@@ -69,9 +51,37 @@ if __name__ == "__main__":
 
     def on_mount(self) -> None:
         asyncio.create_task(self.run_user_code())
+        self.spinner_index = 0
+        self.spinner_timer = None
+
+    def start_loading(self, message: str = "Running tests...") -> None:
+        status = self.query_one("#status", Static)
+
+        self.spinner_index = 0
+        status.update(f"{self.SPINNER[0]} {message}")
+
+        self.spinner_timer = self.set_interval(
+            0.08,
+            lambda: self._update_spinner(message),
+        )
+
+    def _update_spinner(self, message: str) -> None:
+        self.spinner_index = (self.spinner_index + 1) % len(self.SPINNER)
+
+        self.query_one("#status", Static).update(
+            f"{self.SPINNER[self.spinner_index]} {message}"
+        )
+
+    def stop_loading(self) -> None:
+        if self.spinner_timer:
+            self.spinner_timer.pause()
+            self.spinner_timer = None
+
+        self.query_one("#status", Static).update("")
 
     def compose(self):
-        yield RichLog(markup=True, wrap=True, max_lines=1_000)
+        yield RichLog(markup=True, wrap=True, max_lines=1_000, auto_scroll=True)
+        yield Static(id="status")
         yield Footer()
 
     async def run_user_code(self) -> None:
@@ -79,13 +89,11 @@ if __name__ == "__main__":
         passed = False
 
         output_log = self.query_one(RichLog)
-        output_log.loading = True
 
         user_code = self.user_code.strip()
-        question = questions.get(self.problem_id, {})
-        test_cases = question.get("test_cases", [])
-        test_code = question.get("test_code", self.TEST_CODE)
-        full_code = f"{user_code}\n\n{test_cases}\n\n{test_code}"
+        question = questions.get(self.problem_id)
+        test_code = question.python_tests
+        full_code = f"{user_code}\n\n{test_code}"
 
         tmp_path = None
 
@@ -102,6 +110,7 @@ if __name__ == "__main__":
             # spawn async subprocess
             proc = await asyncio.create_subprocess_exec(
                 sys.executable,
+                "-u",
                 tmp_path,
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE,
@@ -114,12 +123,13 @@ if __name__ == "__main__":
                         break
                     text = line.decode().rstrip()
                     if is_err:
-                        output_log.write(f"[red]{text}[/]", animate=True)
+                        output_log.write(f"[red][b]x[/][/] {text}", animate=True)
                     else:
                         output_log.write(text, animate=True)
 
             # stream output with timeout
             try:
+                self.start_loading("running test...")
                 await asyncio.wait_for(
                     asyncio.gather(
                         stream(proc.stdout),
@@ -131,9 +141,11 @@ if __name__ == "__main__":
                 proc.kill()
                 await proc.wait()
                 output_log.write(
-                    "[red]Execution timed out[/]\n\tYour solution must run within 9 seconds"
+                    "[red][b]x[/][/] timed out\tyour solution must run within 9 seconds."
                 )
                 return
+            finally:
+                self.stop_loading()
 
             rc = await proc.wait()
 
@@ -143,12 +155,13 @@ if __name__ == "__main__":
                     self.new_best()
 
         except Exception as e:  # noqa: BLE001
-            output_log.write(f"[red]Error running code[/]\n\t{e}")
+            output_log.write(
+                f"[red][b]x[/][/] error running code[/]\n\t{e}", animate=True
+            )
 
         finally:
             if tmp_path and Path(tmp_path).exists():
                 os.remove(tmp_path)
-            output_log.loading = False
 
             add_attempt(
                 {
