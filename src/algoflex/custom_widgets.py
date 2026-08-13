@@ -65,7 +65,7 @@ class Title(Container):
 
         if self.show_language_selector:
             yield Select.from_values(
-                ["python", "rust", "javascript"],
+                ["python", "rust"],
                 allow_blank=False,
                 compact=True,
                 id="language-selector",

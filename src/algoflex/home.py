@@ -75,7 +75,7 @@ class HomeScreen(App):
     problem_id = reactive(0, always_update=True)
     index = reactive(0, bindings=True)
     show_dashboard: reactive[bool] = reactive(False)
-    PROBLEMS: ClassVar = [k for k in questions]
+    PROBLEMS: ClassVar = questions.ids
     PROBLEMS_COUNT = len(PROBLEMS)
 
     def compose(self):
@@ -91,8 +91,8 @@ class HomeScreen(App):
         self.problem_id = self.PROBLEMS[self.index]
 
     def watch_problem_id(self, id):
-        p = questions.get(id, {})
-        problem, level = p.get("markdown", ""), p.get("level", "Breezy")
+        p = questions.get(id)
+        problem, level = p.markdown, p.level
         docs = get_attempts(problem_id=self.problem_id, lang_id=1)
         total_attempts = len(docs)
         passed_attempts = [doc for doc in docs if doc["passed"]]

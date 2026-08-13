@@ -25,13 +25,14 @@ class Dashboard(Widget):
     show_dashboard = reactive(False)
     # get completed questions per level
     docs, breezy, steady, edgy = get_all_attempts(), set(), set(), set()
-    for k, v in q.items():
-        if v["level"] == "Breezy":
-            breezy.add(k)
-        elif v["level"] == "Steady":
-            steady.add(k)
+    for pid in q.ids:
+        question = q.get(pid)
+        if question.level == "Breezy":
+            breezy.add(pid)
+        elif question.level == "Steady":
+            steady.add(pid)
         else:
-            edgy.add(k)
+            edgy.add(pid)
     total = len(breezy) + len(steady) + (len(edgy) * 1.5)
 
     DEFAULT_CSS = """
@@ -206,7 +207,7 @@ class Dashboard(Widget):
             latest[pid] = max(d["created_at"], latest.get(pid, (0, 0))[0]), d["passed"]
             if d["passed"]:
                 completed[pid] += 1
-                level = q.get(pid, {}).get("level", "")
+                level = q.get(pid).level
                 if (
                     (level == "Breezy" and d["elapsed"] <= 15 * 60)
                     or (level == "Steady" and d["elapsed"] <= 25 * 60)
@@ -220,30 +221,30 @@ class Dashboard(Widget):
                         worst[pid] = min(d["elapsed"], worst.get(pid, float("inf")))
         fast = [
             (
-                "✓ " + q.get(id, {}).get("title", ""),
-                q.get(id, {}).get("level", ""),
+                "✓ " + q.get(id).title,
+                q.get(id).level,
                 fmt_secs(tm),
             )
             for id, tm in nsmallest(9, best.items(), key=lambda x: x[1])
         ]
         forever = [
             (
-                "✓ " + q.get(id, {}).get("title", ""),
-                q.get(id, {}).get("level", ""),
+                "✓ " + q.get(id).title,
+                q.get(id).level,
                 fmt_secs(tm),
             )
             for id, tm in worst.items()
         ]
         recent = [
             (
-                ("✓ " if passed else "x ") + q.get(id, {}).get("title", ""),
-                q.get(id, {}).get("level", ""),
+                ("✓ " if passed else "x ") + q.get(id).title,
+                q.get(id).level,
                 time_ago(tm),
             )
             for id, (tm, passed) in nlargest(9, latest.items(), key=lambda x: x[1][0])
         ]
         frequent = [
-            (q.get(id, {}).get("title", ""), q.get(id, {}).get("level", ""), count)
+            (q.get(id).title, q.get(id).level, count)
             for id, count in completed.most_common(9)
         ]
         h_completed = len(h_passed)

@@ -50,8 +50,12 @@ class SearchScreen(ModalScreen):
     async def on_mount(self) -> None:
         passed = get_passed_problems()
         self.problems = [
-            ("✓" if pid in passed else " ", pid, q["title"])
-            for pid, q in questions.items()
+            (
+                "✓" if pid in passed else " ",
+                pid,
+                questions.get(pid).title,
+            )
+            for pid in questions.ids
         ]
         await self.update_results(self.problems)
 

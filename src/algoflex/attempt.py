@@ -67,9 +67,9 @@ class AttemptScreen(Screen):
         self.best = None
 
     def compose(self):
-        question = questions.get(self.problem_id, {})
-        description = question.get("markdown", "")
-        code = question.get("code", "")
+        question = questions.get(self.problem_id)
+        description = question.markdown
+        code = question.python_starter
 
         yield Title(show_language_selector=True)
         with Horizontal():
@@ -113,7 +113,7 @@ class AttemptScreen(Screen):
         elapsed = [doc["elapsed"] for doc in docs if doc["passed"]]
         self.best = min(elapsed) if elapsed else None
         for doc in timeline:
-            md += f"\n|- {('🟢' if doc['passed'] else '🔴')} {time_ago(doc['created_at'])}   ({fmt_secs(doc['elapsed'])})"
+            md += f"\n|- {('🟢' if doc['passed'] else '🔴')} {time_ago(doc['created_at'])}   \t({fmt_secs(doc['elapsed'])}) 🐍"
             if doc["passed"] and doc["elapsed"] == self.best:
                 md += "\t<--- best"
             md += "\n|"
