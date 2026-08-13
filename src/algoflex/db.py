@@ -21,7 +21,7 @@ class Draft(TypedDict):
     problem_id: int
     lang_id: int
     code: str
-    elapsed: str
+    elapsed: float
     updated_at: float
 
 
@@ -61,7 +61,7 @@ def get_db() -> sqlite3.Connection:
             problem_id INTEGER NOT NULL,
             lang_id INTEGER NOT NULL,
             code TEXT NOT NULL,
-            elapsed TEXT NOT NULL,
+            elapsed REAL NOT NULL,
             updated_at REAL NOT NULL,
             PRIMARY KEY (problem_id, lang_id),
             FOREIGN KEY (lang_id) REFERENCES languages(lang_id)
@@ -84,7 +84,6 @@ def get_db() -> sqlite3.Connection:
         [
             (1, "python"),
             (2, "rust"),
-            (3, "javascript"),
         ],
     )
 
