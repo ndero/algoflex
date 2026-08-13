@@ -65,11 +65,16 @@ class AttemptScreen(Screen):
         self.test_time = monotonic()
         self.elapsed_before = 0
         self.best = None
+        self.language = "python"
 
     def compose(self):
         question = questions.get(self.problem_id)
         description = question.markdown
-        code = question.python_starter
+        code = (
+            question.python_starter
+            if self.language == "python"
+            else question.rust_starter
+        )
 
         yield Title(show_language_selector=True)
         with Horizontal():
@@ -80,7 +85,7 @@ class AttemptScreen(Screen):
                         code,
                         id="code",
                         show_line_numbers=True,
-                        language="python",
+                        language=self.language,
                         compact=True,
                         tab_behavior="indent",
                     )
@@ -93,9 +98,10 @@ class AttemptScreen(Screen):
         self.update()
 
     def update(self):
-        docs = get_attempts(problem_id=self.problem_id, lang_id=1)
-        self.update_timeline(docs)
-        self.update_solutions(docs)
+        """Update attempt timeline and past solutions"""
+        attempts = get_attempts(problem_id=self.problem_id)
+        self.update_timeline(attempts)
+        self.update_solutions(attempts)
 
     def attempt(self):
         def update(_id):
@@ -104,34 +110,39 @@ class AttemptScreen(Screen):
         code = self.query_one("#code", TextArea)
         elapsed = (monotonic() - self.test_time) + self.elapsed_before
         self.app.push_screen(
-            ResultModal(self.problem_id, code.text, elapsed, self.best), update
+            ResultModal(self.problem_id, code.text, elapsed, self.best, self.language),
+            update,
         )
 
-    def update_timeline(self, docs):
+    def update_timeline(self, attempts):
+        """Display timeline for all language attempts"""
         md = ""
-        timeline = sorted(docs, key=lambda x: x["created_at"], reverse=True)
-        elapsed = [doc["elapsed"] for doc in docs if doc["passed"]]
+        timeline = sorted(attempts, key=lambda x: x["created_at"], reverse=True)
+        elapsed = [attempt["elapsed"] for attempt in attempts if attempt["passed"]]
         self.best = min(elapsed) if elapsed else None
-        for doc in timeline:
-            md += f"\n|- {('🟢' if doc['passed'] else '🔴')} {time_ago(doc['created_at'])}   \t({fmt_secs(doc['elapsed'])}) 🐍"
-            if doc["passed"] and doc["elapsed"] == self.best:
+        for attempt in timeline:
+            md += f"\n|- {('🟢' if attempt['passed'] else '🔴')} {time_ago(attempt['created_at'])}   \t({fmt_secs(attempt['elapsed'])}) "
+            md += "🐍" if attempt["lang_id"] == 1 else "🦀"
+            if attempt["passed"] and attempt["elapsed"] == self.best:
                 md += "\t<--- best"
             md += "\n|"
         self.query_one("#timeline", Static).update(md.rstrip("|"))
 
-    def update_solutions(self, docs):
+    def update_solutions(self, attempts):
+        """Display all language solutions"""
         passed = sorted(
-            (doc for doc in docs if doc["passed"]),
+            (attempt for attempt in attempts if attempt["passed"]),
             key=lambda x: x["created_at"],
             reverse=True,
         )
         md = ""
-        for doc in passed:
-            md += f"### {time_ago(doc['created_at'])}\n```python\n{doc['code']}\n```\n"
+        for attempt in passed:
+            lang = "python" if attempt["lang_id"] == 1 else "rust"
+            md += f"### {time_ago(attempt['created_at'])}\n```{lang}\n{attempt['code']}\n```\n"
         self.query_one("#solutions", Markdown).update(md)
 
-    def _load_draft(self):
-        draft = get_draft(problem_id=self.problem_id, lang_id=1)
+    def _load_draft(self, lang_id: int = 1) -> None:
+        draft = get_draft(problem_id=self.problem_id, lang_id=lang_id)
         if draft:
             self.query_one("#code", TextArea).text = draft["code"]
             self.elapsed_before = draft["elapsed"]
@@ -148,3 +159,17 @@ class AttemptScreen(Screen):
             self.maximize(editor)
         else:
             self.minimize()
+
+    def on_title_language_changed(self, message: Title.LanguageChanged) -> None:
+        self.update_language(message.language)
+
+    def update_language(self, language: str) -> None:
+        editor = self.query_one("#code", TextArea)
+        question = questions.get(self.problem_id)
+        self.language = language
+        editor.text = (
+            question.python_starter if language == "python" else question.rust_starter
+        )
+        editor.language = language
+        lang_id = 1 if language == "python" else 2
+        self._load_draft(lang_id=lang_id)

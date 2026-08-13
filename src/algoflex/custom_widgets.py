@@ -1,4 +1,5 @@
 from textual.containers import Container, VerticalScroll
+from textual.message import Message
 from textual.widgets import Markdown, Select, Static
 
 
@@ -21,6 +22,11 @@ class Problem(VerticalScroll):
 
 
 class Title(Container):
+    class LanguageChanged(Message):
+        def __init__(self, language: str) -> None:
+            self.language = language
+            super().__init__()
+
     DEFAULT_CSS = """
     Title {
         height: 3;
@@ -54,8 +60,8 @@ class Title(Container):
     """
 
     def __init__(self, show_language_selector: bool = False):
-        super().__init__()
         self.show_language_selector = show_language_selector
+        super().__init__()
 
     def compose(self):
         yield Static(
@@ -64,9 +70,15 @@ class Title(Container):
         )
 
         if self.show_language_selector:
-            yield Select.from_values(
-                ["python", "rust"],
+            yield Select(
+                [
+                    ("Python", "python"),
+                    ("Rust", "rust"),
+                ],
                 allow_blank=False,
                 compact=True,
                 id="language-selector",
             )
+
+    def on_select_changed(self, event: Select.Changed) -> None:
+        self.post_message(self.LanguageChanged(str(event.value)))
