@@ -93,7 +93,7 @@ class HomeScreen(App):
     def watch_problem_id(self, id):
         p = questions.get(id)
         problem, level = p.markdown, p.level
-        docs = get_attempts(problem_id=self.problem_id, lang_id=1)
+        docs = get_attempts(problem_id=self.problem_id)
         total_attempts = len(docs)
         passed_attempts = [doc for doc in docs if doc["passed"]]
         passed = len(passed_attempts)

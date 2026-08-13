@@ -119,14 +119,14 @@ def add_attempt(attempt: Attempt) -> None:
         )
 
 
-def get_attempts(problem_id: int, lang_id: int = 1) -> list[sqlite3.Row]:
+def get_attempts(problem_id: int) -> list[sqlite3.Row]:
     db = get_db()
     return db.execute(
         """
         SELECT * FROM attempts
-        WHERE problem_id = ? AND lang_id = ?
+        WHERE problem_id = ?
         """,
-        (problem_id, lang_id),
+        (problem_id,),
     ).fetchall()
 
 
