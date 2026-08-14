@@ -75,7 +75,7 @@ class ResultModal(ModalScreen):
 
     def stop_loading(self) -> None:
         if self.spinner_timer:
-            self.spinner_timer.pause()
+            self.spinner_timer.stop()
             self.spinner_timer = None
 
         self.query_one("#status", Static).update("")
@@ -193,9 +193,7 @@ class ResultModal(ModalScreen):
                     self.new_best()
 
         except Exception as e:  # noqa: BLE001
-            output_log.write(
-                f"[red][b]✗[/][/] error running code[/]\n\t{e}", animate=True
-            )
+            output_log.write(f"[red][b]✗[/][/] error running code\n\t{e}", animate=True)
 
         finally:
             if tmp_path and Path(tmp_path).exists():
