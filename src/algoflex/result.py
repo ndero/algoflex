@@ -42,12 +42,13 @@ class ResultModal(ModalScreen):
     }
     """
 
-    def __init__(self, problem_id, user_code, elapsed, best):
+    def __init__(self, problem_id, user_code, elapsed, best, language):
         super().__init__()
         self.problem_id = problem_id
         self.user_code = user_code
         self.elapsed = elapsed
         self.best = best
+        self.language = language
 
     def on_mount(self) -> None:
         asyncio.create_task(self.run_user_code())
@@ -89,29 +90,66 @@ class ResultModal(ModalScreen):
         passed = False
 
         output_log = self.query_one(RichLog)
-
         user_code = self.user_code.strip()
-        question = questions.get(self.problem_id)
-        test_code = question.python_tests
-        full_code = f"{user_code}\n\n{test_code}"
 
-        tmp_path = None
+        lang_id = 1 if self.language == "python" else 2
+        question = questions.get(self.problem_id)
+        test_code, suffix = question.python_tests, ".py"
+
+        if lang_id == 2:  # rust
+            test_code = question.rust_tests
+            suffix = ".rs"
+
+        full_code = f"{user_code}\n\n{test_code}"
+        tmp_path = executable_path = None
 
         try:
             with tempfile.NamedTemporaryFile(
                 delete=False,
-                suffix=".py",
+                suffix=suffix,
                 mode="w",
                 encoding="utf-8",
             ) as f:
                 f.write(full_code)
                 tmp_path = f.name
 
-            # spawn async subprocess
+            run_args = [sys.executable, "-u", tmp_path]
+
+            if lang_id == 2:
+                # compile rust source
+                executable_path = tmp_path.removesuffix(".rs")
+                compile_args = [
+                    "rustc",
+                    "--edition",
+                    "2024",
+                    "-O",
+                    tmp_path,
+                    "-o",
+                    executable_path,
+                ]
+
+                compile_proc = await asyncio.create_subprocess_exec(
+                    *compile_args,
+                    stdout=asyncio.subprocess.PIPE,
+                    stderr=asyncio.subprocess.PIPE,
+                )
+                _, stderr = await compile_proc.communicate()
+
+                if compile_proc.returncode != 0:
+                    output_log.write("[red][b]✗[/][/] compilation failed")
+                    if stderr:
+                        for line in stderr.decode().splitlines():
+                            output_log.write(
+                                f"[red][b]x[/][/] {line}",
+                                animate=True,
+                            )
+                    return
+
+                run_args = [executable_path]
+
+            # run the code
             proc = await asyncio.create_subprocess_exec(
-                sys.executable,
-                "-u",
-                tmp_path,
+                *run_args,
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE,
             )
@@ -163,6 +201,9 @@ class ResultModal(ModalScreen):
             if tmp_path and Path(tmp_path).exists():
                 os.remove(tmp_path)
 
+            if executable_path and Path(executable_path).exists():
+                os.remove(executable_path)
+
             add_attempt(
                 {
                     "problem_id": self.problem_id,
@@ -170,17 +211,17 @@ class ResultModal(ModalScreen):
                     "elapsed": self.elapsed,
                     "created_at": now,
                     "code": user_code,
-                    "lang_id": 1,
+                    "lang_id": lang_id,
                 }
             )
 
             if passed:
-                delete_draft(self.problem_id, lang_id=1)
+                delete_draft(self.problem_id, lang_id)
             else:
                 add_draft(
                     {
                         "problem_id": self.problem_id,
-                        "lang_id": 1,
+                        "lang_id": lang_id,
                         "code": user_code,
                         "elapsed": self.elapsed,
                         "updated_at": now,
