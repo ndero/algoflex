@@ -36,11 +36,11 @@ class StatScreen(Vertical):
                 yield Static("[b]Passed[/]")
                 yield Static("...", id="passed")
             with Vertical():
-                yield Static("[b]Best time[/]")
-                yield Static("...", id="best")
-            with Vertical():
                 yield Static("[b]Last attempt[/]")
                 yield Static("...", id="last")
+            with Vertical():
+                yield Static("[b]Best time[/]")
+                yield Static("...", id="best")
             with Vertical():
                 yield Static("[b]Level[/]")
                 yield Static("...", id="level")
@@ -96,12 +96,13 @@ class HomeScreen(App):
         docs = get_attempts(problem_id=self.problem_id)
         total_attempts = len(docs)
         passed_attempts = [doc for doc in docs if doc["passed"]]
-        passed = len(passed_attempts)
-        best_elapsed = (
-            "..."
-            if not passed_attempts
-            else fmt_secs(min(doc["elapsed"] for doc in passed_attempts))
-        )
+        passed, best_elapsed = len(passed_attempts), "..."
+        if passed_attempts:
+            elapsed, lang_id = min(
+                (doc["elapsed"], doc["lang_id"]) for doc in passed_attempts
+            )
+            best_elapsed = fmt_secs(elapsed) + (" 🐍" if lang_id == 1 else " 🦀")
+
         last_at = "..."
         if docs:
             last = max(docs, key=lambda x: x["created_at"])
