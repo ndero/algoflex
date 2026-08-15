@@ -49,20 +49,18 @@ def run_python_tests(func, test_cases) -> int:
         try:
             result = func(*args)
             if result == expected:
-                print(f"[green][b]✓[/][/] test case {i + 1} \tPASS")
+                print(f"[b]✓[/] test case {i + 1} \t[green]... ok[/]")
             else:
                 parameters = ", ".join(format_arg(arg) for arg in args)
                 print(
-                    f"[red][b]✗[/][/] test case {i + 1} \tFAIL\n"
+                    f"[b]x[/] test case {i + 1} \t[red]... FAIL[/]\n"
                     f"\t[b]args[/]: {parameters}\n"
                     f"\t[b]got[/]: [red]{format_result(result)}[/]\n"
                     f"\t[b]expected[/]: [green]{format_result(expected)}[/]"
                 )
                 return 1
         except Exception as e:  # noqa: BLE001
-            print(
-                f"[red][b]✗[/][/] test case {i + 1} \tERROR\n\t[b][red]error[/][/]: {e}"
-            )
+            print(f"[b]x[/] test case {i + 1} \t[red]... ERROR[/]\n\t[b]error[/]: {e}")
             return 1
     print(f"\n{len(test_cases)} passed!")
     return 0

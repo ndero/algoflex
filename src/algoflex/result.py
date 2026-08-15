@@ -136,7 +136,7 @@ class ResultModal(ModalScreen):
                 _, stderr = await compile_proc.communicate()
 
                 if compile_proc.returncode != 0:
-                    output_log.write("[red][b]✗[/][/] compilation failed")
+                    output_log.write("[red][b]x[/][/] compilation failed")
                     if stderr:
                         for line in stderr.decode().splitlines():
                             output_log.write(
@@ -179,7 +179,7 @@ class ResultModal(ModalScreen):
                 proc.kill()
                 await proc.wait()
                 output_log.write(
-                    "[red][b]✗[/][/] timed out\tyour solution must run within 9 seconds."
+                    "[red][b]x[/][/] timed out\tyour solution must run within 9 seconds."
                 )
                 return
             finally:
@@ -193,7 +193,7 @@ class ResultModal(ModalScreen):
                     self.new_best()
 
         except Exception as e:  # noqa: BLE001
-            output_log.write(f"[red][b]✗[/][/] error running code\n\t{e}", animate=True)
+            output_log.write(f"[red][b]x[/][/] error running code\n\t{e}", animate=True)
 
         finally:
             if tmp_path and Path(tmp_path).exists():
