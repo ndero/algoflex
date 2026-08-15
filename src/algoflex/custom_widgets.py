@@ -59,8 +59,11 @@ class Title(Container):
     }
     """
 
-    def __init__(self, show_language_selector: bool = False):
+    def __init__(
+        self, show_language_selector: bool = False, language: str = "python"
+    ) -> None:
         self.show_language_selector = show_language_selector
+        self.language = language
         super().__init__()
 
     def compose(self):
@@ -75,6 +78,7 @@ class Title(Container):
                     ("Python", "python"),
                     ("Rust", "rust"),
                 ],
+                value=self.language,
                 allow_blank=False,
                 compact=True,
                 id="language-selector",

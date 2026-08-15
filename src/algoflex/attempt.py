@@ -7,7 +7,7 @@ from textual.screen import Screen
 from textual.widgets import Footer, Markdown, Static, TabbedContent, TextArea
 
 from algoflex.custom_widgets import Problem, Title
-from algoflex.db import get_attempts, get_draft
+from algoflex.db import get_attempts, get_draft, get_latest_attempt
 from algoflex.questions import questions
 from algoflex.result import ResultModal
 from algoflex.utils import fmt_secs, time_ago
@@ -65,7 +65,11 @@ class AttemptScreen(Screen):
         self.test_time = monotonic()
         self.elapsed_before = 0
         self.best = None
-        self.language = "python"
+
+        recent_attempt = get_latest_attempt()
+        self.language = (
+            "rust" if recent_attempt and recent_attempt["lang_id"] == 2 else "python"
+        )
 
     def compose(self):
         question = questions.get(self.problem_id)
@@ -76,7 +80,7 @@ class AttemptScreen(Screen):
             else question.rust_starter
         )
 
-        yield Title(show_language_selector=True)
+        yield Title(show_language_selector=True, language=self.language)
         with Horizontal():
             yield Problem(description)
             with TabbedContent("Attempt", "Timeline", "Past solutions", id="editor"):
@@ -94,7 +98,6 @@ class AttemptScreen(Screen):
         yield Footer()
 
     def on_mount(self):
-        self._load_draft()
         self.update()
 
     def update(self):

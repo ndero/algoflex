@@ -143,6 +143,18 @@ def get_passed_problems() -> set[int]:
     return {row["problem_id"] for row in rows}
 
 
+def get_latest_attempt() -> sqlite3.Row:
+    db = get_db()
+    row = db.execute("""
+        SELECT *
+        FROM attempts
+        ORDER BY created_at DESC
+        LIMIT 1
+    """).fetchone()
+
+    return row
+
+
 def add_draft(draft: Draft) -> None:
     db = get_db()
     with db:
