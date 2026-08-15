@@ -63,22 +63,26 @@ class AttemptScreen(Screen):
         super().__init__()
         self.problem_id = problem_id
         self.test_time = monotonic()
-        self.elapsed_before = 0
         self.best = None
 
         recent_attempt = get_latest_attempt()
         self.language = (
             "rust" if recent_attempt and recent_attempt["lang_id"] == 2 else "python"
         )
+        self.draft = self.load_draft()
 
     def compose(self):
         question = questions.get(self.problem_id)
         description = question.markdown
+
         code = (
             question.python_starter
             if self.language == "python"
             else question.rust_starter
         )
+
+        if self.draft:
+            code = self.draft["code"]
 
         yield Title(show_language_selector=True, language=self.language)
         with Horizontal():
@@ -111,7 +115,8 @@ class AttemptScreen(Screen):
             self.update()
 
         code = self.query_one("#code", TextArea)
-        elapsed = (monotonic() - self.test_time) + self.elapsed_before
+        elapsed_before = self.draft["elapsed"] if self.draft else 0
+        elapsed = (monotonic() - self.test_time) + elapsed_before
         self.app.push_screen(
             ResultModal(self.problem_id, code.text, elapsed, self.best, self.language),
             update,
@@ -144,11 +149,9 @@ class AttemptScreen(Screen):
             md += f"### {time_ago(attempt['created_at'])}\n```{lang}\n{attempt['code']}\n```\n"
         self.query_one("#solutions", Markdown).update(md)
 
-    def _load_draft(self, lang_id: int = 1) -> None:
-        draft = get_draft(problem_id=self.problem_id, lang_id=lang_id)
-        if draft:
-            self.query_one("#code", TextArea).text = draft["code"]
-            self.elapsed_before = draft["elapsed"]
+    def load_draft(self):
+        lang_id = 2 if self.language == "rust" else 1
+        return get_draft(problem_id=self.problem_id, lang_id=lang_id)
 
     def action_back(self):
         self.dismiss()
@@ -164,15 +167,15 @@ class AttemptScreen(Screen):
             self.minimize()
 
     def on_title_language_changed(self, message: Title.LanguageChanged) -> None:
-        self.update_language(message.language)
+        if message.language != self.language:
+            self.update_language(message.language)
 
     def update_language(self, language: str) -> None:
         editor = self.query_one("#code", TextArea)
-        question = questions.get(self.problem_id)
         self.language = language
-        editor.text = (
+        question, draft = questions.get(self.problem_id), self.load_draft()
+        code = (
             question.python_starter if language == "python" else question.rust_starter
         )
-        editor.language = language
-        lang_id = 1 if language == "python" else 2
-        self._load_draft(lang_id=lang_id)
+
+        editor.text, editor.language = draft["code"] if draft else code, language
