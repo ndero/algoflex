@@ -72,11 +72,15 @@ class HomeScreen(App):
         layers: dashboard;
     }
     """
-    problem_id = reactive(0, always_update=True)
+    PROBLEMS: ClassVar = list(questions.ids)
+    PROBLEMS_COUNT = len(PROBLEMS)
+
     index = reactive(0, bindings=True)
     show_dashboard: reactive[bool] = reactive(False)
-    PROBLEMS: ClassVar = questions.ids
-    PROBLEMS_COUNT = len(PROBLEMS)
+
+    @property
+    def problem_id(self):
+        return self.PROBLEMS[self.index]
 
     def compose(self):
         yield Title()
@@ -88,10 +92,12 @@ class HomeScreen(App):
 
     def on_mount(self):
         shuffle(self.PROBLEMS)
-        self.problem_id = self.PROBLEMS[self.index]
 
-    def watch_problem_id(self, id):
-        p = questions.get(id)
+    def watch_index(self) -> None:
+        self.update_problem_view()
+
+    def update_problem_view(self):
+        p = questions.get(self.problem_id)
         problem, level = p.markdown, p.level
 
         problem_widget = self.query_one(Problem)
@@ -99,9 +105,9 @@ class HomeScreen(App):
         problem_widget.scroll_home()
         self.update_level(level)
 
-        passed, total = get_problem_pass_ratio(id)
-        last_attempts = get_recent_attempts(n=1, problem_id=id)
-        best_attempts = get_best_attempts(n=1, problem_id=id)
+        passed, total = get_problem_pass_ratio(self.problem_id)
+        last_attempts = get_recent_attempts(n=1, problem_id=self.problem_id)
+        best_attempts = get_best_attempts(n=1, problem_id=self.problem_id)
 
         if total:
             self.query_one("#passed", Static).update(
@@ -136,7 +142,7 @@ class HomeScreen(App):
             self.show_dashboard = False
 
         def update(_id):
-            self.problem_id = self.PROBLEMS[self.index]
+            self.update_problem_view()
 
         self.push_screen(AttemptScreen(self.problem_id), update)
 
@@ -145,14 +151,12 @@ class HomeScreen(App):
             self.show_dashboard = False
         if self.index + 1 < self.PROBLEMS_COUNT:
             self.index += 1
-        self.problem_id = self.PROBLEMS[self.index]
 
     def action_previous(self):
         if self.show_dashboard:
             self.show_dashboard = False
         if self.index > 0:
             self.index -= 1
-        self.problem_id = self.PROBLEMS[self.index]
 
     def action_search(self):
         def on_close(result):
@@ -160,7 +164,6 @@ class HomeScreen(App):
                 return
             if result in self.PROBLEMS:
                 self.index = self.PROBLEMS.index(result)
-                self.problem_id = result
 
         if self.show_dashboard:
             self.show_dashboard = False
