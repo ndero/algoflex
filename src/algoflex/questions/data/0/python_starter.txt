@@ -1,2 +1,2 @@
 def score(scores: list[str]) -> int:
-   
+    # your move

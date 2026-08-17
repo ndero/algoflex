@@ -56,5 +56,5 @@ fn main() {
         13_000,
     ));
 
-    std::process::exit(run_tests(total_score, &test_cases));
+    std::process::exit(run_tests!(&test_cases, |input| total_score(input)));
 }
