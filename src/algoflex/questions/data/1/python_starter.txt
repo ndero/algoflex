@@ -1,0 +1,2 @@
+def repeated(s: str) -> list[list[int]]:
+    # your move
