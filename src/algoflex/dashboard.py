@@ -1,5 +1,4 @@
 import random
-from datetime import UTC, datetime
 
 from textual.app import ComposeResult
 from textual.containers import Center, Horizontal
@@ -142,15 +141,6 @@ class Dashboard(Widget):
             self.update_progress(breezy + steady + edgy)
             self.update_highlight()
             self.update_summary()
-
-    def midnight(self) -> float:
-        """Return today's local midnight as a UTC Unix timestamp."""
-        local_tz = datetime.now().astimezone().tzinfo
-        now = datetime.now(local_tz)
-
-        midnight = now.replace(hour=0, minute=0, second=0, microsecond=0)
-
-        return midnight.astimezone(UTC).timestamp()
 
     def md_table(self, headers, rows):
         if not rows:

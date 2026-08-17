@@ -1,9 +1,10 @@
 import sqlite3
-from datetime import datetime
 from pathlib import Path
 from typing import TypedDict
 
 from platformdirs import user_data_dir
+
+from algoflex.utils import midnight
 
 APP_NAME = "algoflex"
 _CONNECTION: sqlite3.Connection | None = None
@@ -211,12 +212,6 @@ def get_best_attempts(n: int = 1, problem_id: int | None = None) -> list[sqlite3
 def get_attempts_today() -> tuple[int, int]:
     db = get_db()
 
-    midnight = (
-        datetime.now()
-        .astimezone()
-        .replace(hour=0, minute=0, second=0, microsecond=0)
-        .timestamp()
-    )
     row = db.execute(
         """
         SELECT 
@@ -225,7 +220,7 @@ def get_attempts_today() -> tuple[int, int]:
         FROM attempts
         WHERE created_at >= ? 
         """,
-        (midnight,),
+        (midnight(),),
     ).fetchone()
 
     return row["today_passed"], row["today_total"]

@@ -1,4 +1,5 @@
 import time
+from datetime import UTC, datetime
 
 
 def time_ago(tm):
@@ -43,3 +44,13 @@ def fmt_secs(tm):
     if hrs > 23:
         return time_ago(tm)
     return f"{hrs:02,.0f}:{mins:02.0f}:{secs:02.0f}"
+
+
+def midnight() -> float:
+    """Return today's local midnight as a UTC Unix timestamp."""
+    local_tz = datetime.now().astimezone().tzinfo
+    now = datetime.now(local_tz)
+
+    midnight = now.replace(hour=0, minute=0, second=0, microsecond=0)
+
+    return midnight.astimezone(UTC).timestamp()
