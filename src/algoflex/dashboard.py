@@ -171,12 +171,16 @@ class Dashboard(Widget):
             else:
                 worst_attempts.append(attempt)
 
+        languages = {1: "python", 2: "rust"}
+
         recent = [
             (
                 ("✓ " if attempt["passed"] else "x ")
                 + q.get(attempt["problem_id"]).title,
                 q.get(attempt["problem_id"]).level,
-                f"{time_ago(attempt['created_at'])}  {('🐍' if attempt['lang_id'] == 1 else '🦀')}",
+                languages[attempt["lang_id"]],
+                fmt_secs(attempt["elapsed"]),
+                time_ago(attempt["created_at"]),
             )
             for attempt in recent_attempts
         ]
@@ -194,7 +198,9 @@ class Dashboard(Widget):
             (
                 "✓ " + q.get(attempt["problem_id"]).title,
                 q.get(attempt["problem_id"]).level,
-                f"{fmt_secs(attempt['elapsed'])}  {('🐍' if attempt['lang_id'] == 1 else '🦀')}",
+                languages[attempt["lang_id"]],
+                fmt_secs(attempt["elapsed"]),
+                time_ago(attempt["created_at"]),
             )
             for attempt in best_attempts[:9]
         ]
@@ -203,7 +209,9 @@ class Dashboard(Widget):
             (
                 "✓ " + q.get(attempt["problem_id"]).title,
                 q.get(attempt["problem_id"]).level,
-                f"{fmt_secs(attempt['elapsed'])}  {('🐍' if attempt['lang_id'] == 1 else '🦀')}",
+                languages[attempt["lang_id"]],
+                fmt_secs(attempt["elapsed"]),
+                time_ago(attempt["created_at"]),
             )
             for attempt in worst_attempts[-9:]
         ]
@@ -243,10 +251,11 @@ class Dashboard(Widget):
 
     def update_summary(self) -> None:
         recent, frequent, fast, forever = self.get_summary()
-        latest = self.md_table(["Question", "Level", "When"], recent)
-        popular = self.md_table(["Question", "Level", "Passed"], frequent)
-        best = self.md_table(["Question", "Level", "Best time"], fast)
-        worst = self.md_table(["Question", "Level", "Best time"], forever)
+        headers = ["Problem", "Level", "Code", "Time", "When"]
+        latest = self.md_table(headers, recent)
+        popular = self.md_table(["Problem", "Level", "Passed"], frequent)
+        best = self.md_table(headers, fast)
+        worst = self.md_table(headers, forever)
         self.query_one("#recent", Markdown).update(latest)
         self.query_one("#frequent", Markdown).update(popular)
         self.query_one("#best", Markdown).update(best)
