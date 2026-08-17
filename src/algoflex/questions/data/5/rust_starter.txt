@@ -1,0 +1,5 @@
+use std::collections::HashSet;
+
+fn exclusive_union(arrays: &[Vec<i64>]) -> HashSet<i64> {
+    // your move
+}

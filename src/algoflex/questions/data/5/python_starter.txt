@@ -1,0 +1,2 @@
+def exclusive_union(*arrays: list[int]) -> set[int]:
+    # your move
