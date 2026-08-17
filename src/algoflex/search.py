@@ -5,7 +5,7 @@ from textual.reactive import reactive
 from textual.screen import ModalScreen
 from textual.widgets import Footer, Input, Label, ListItem, ListView
 
-from algoflex.db import get_passed_problems
+from algoflex.db import get_passed_problem_ids
 from algoflex.questions import questions
 
 
@@ -48,7 +48,7 @@ class SearchScreen(ModalScreen):
         yield Footer()
 
     async def on_mount(self) -> None:
-        passed = get_passed_problems()
+        passed = get_passed_problem_ids()
         self.problems = [
             (
                 "✓" if pid in passed else " ",

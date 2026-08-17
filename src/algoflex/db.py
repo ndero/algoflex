@@ -1,4 +1,5 @@
 import sqlite3
+from datetime import datetime
 from pathlib import Path
 from typing import TypedDict
 
@@ -73,6 +74,15 @@ def get_db() -> sqlite3.Connection:
 
         CREATE INDEX IF NOT EXISTS idx_attempts_lang ON attempts(lang_id);
 
+        CREATE INDEX IF NOT EXISTS idx_attempts_problem_created
+        ON attempts(problem_id, created_at DESC);
+
+        CREATE INDEX IF NOT EXISTS idx_attempts_passed_elapsed
+        ON attempts(passed, elapsed);
+
+        CREATE INDEX IF NOT EXISTS idx_attempts_passed_problem_elapsed
+        ON attempts(passed, problem_id, elapsed);
+
         """
     )
 
@@ -119,40 +129,138 @@ def add_attempt(attempt: Attempt) -> None:
         )
 
 
-def get_attempts(problem_id: int) -> list[sqlite3.Row]:
+def get_problem_pass_ratio(problem_id: int) -> tuple[int, int]:
     db = get_db()
-    return db.execute(
+    row = db.execute(
         """
-        SELECT * FROM attempts
+        SELECT 
+            COUNT(*) FILTER (WHERE passed = 1) AS passed_count,
+            COUNT(*) AS total_count 
+        FROM attempts 
         WHERE problem_id = ?
         """,
         (problem_id,),
+    ).fetchone()
+
+    return row["passed_count"], row["total_count"]
+
+
+def get_recent_attempts(n: int = 1, problem_id: int | None = None) -> list[sqlite3.Row]:
+    db = get_db()
+
+    if problem_id is None:
+        return db.execute(
+            """
+            SELECT * 
+            FROM attempts
+            ORDER BY created_at DESC, attempt_id DESC
+            LIMIT ?
+            """,
+            (n,),
+        ).fetchall()
+
+    return db.execute(
+        """
+        SELECT * 
+        FROM attempts 
+        WHERE problem_id = ? 
+        ORDER BY created_at DESC, attempt_id DESC
+        LIMIT ?
+        """,
+        (problem_id, n),
     ).fetchall()
 
 
-def get_all_attempts() -> list[sqlite3.Row]:
+def get_best_attempts(n: int = 1, problem_id: int | None = None) -> list[sqlite3.Row]:
     db = get_db()
-    return db.execute("SELECT * FROM attempts").fetchall()
+
+    if problem_id is not None:
+        return db.execute(
+            """
+            SELECT * 
+            FROM attempts
+            WHERE problem_id = ? AND passed = 1
+            ORDER BY elapsed ASC, attempt_id DESC
+            LIMIT ?
+            """,
+            (problem_id, n),
+        ).fetchall()
+
+    return db.execute(
+        """
+        WITH best_per_problem AS (
+            SELECT 
+                *,
+                ROW_NUMBER() OVER (
+                    PARTITION BY problem_id
+                    ORDER BY elapsed ASC, attempt_id DESC
+                ) as rn
+                FROM attempts
+                WHERE passed = 1 
+        )
+        SELECT * 
+        FROM best_per_problem
+        WHERE rn = 1
+        ORDER BY elapsed ASC, attempt_id DESC
+        LIMIT ?
+        """,
+        (n,),
+    ).fetchall()
 
 
-def get_passed_problems() -> set[int]:
+def get_attempts_today() -> tuple[int, int]:
     db = get_db()
+
+    midnight = (
+        datetime.now()
+        .astimezone()
+        .replace(hour=0, minute=0, second=0, microsecond=0)
+        .timestamp()
+    )
+    row = db.execute(
+        """
+        SELECT 
+            COALESCE(SUM(passed), 0) AS today_passed,
+            COUNT(*) AS today_total
+        FROM attempts
+        WHERE created_at >= ? 
+        """,
+        (midnight,),
+    ).fetchone()
+
+    return row["today_passed"], row["today_total"]
+
+
+def get_passed_problem_ids() -> set[int]:
+    db = get_db()
+
     rows = db.execute(
-        "SELECT DISTINCT problem_id FROM attempts WHERE passed = 1"
+        """
+        SELECT DISTINCT problem_id 
+        FROM attempts
+        WHERE passed = 1
+        """
     ).fetchall()
+
     return {row["problem_id"] for row in rows}
 
 
-def get_latest_attempt() -> sqlite3.Row:
+def get_most_attempted_problems(n: int = 1) -> list[sqlite3.Row]:
     db = get_db()
-    row = db.execute("""
-        SELECT *
-        FROM attempts
-        ORDER BY created_at DESC
-        LIMIT 1
-    """).fetchone()
 
-    return row
+    return db.execute(
+        """
+        SELECT 
+            problem_id,
+            COUNT(*) AS total_count,
+            COUNT(*) FILTER (WHERE passed = 1) AS passed_count
+            FROM attempts 
+            GROUP BY problem_id 
+            ORDER BY total_count DESC, passed_count DESC
+            LIMIT ?
+        """,
+        (n,),
+    ).fetchall()
 
 
 def add_draft(draft: Draft) -> None:
