@@ -1,7 +1,5 @@
 import random
-from collections import Counter
 from datetime import UTC, datetime
-from heapq import nlargest, nsmallest
 
 from textual.app import ComposeResult
 from textual.containers import Center, Horizontal
@@ -16,15 +14,22 @@ from textual.widgets import (
     Static,
 )
 
-from algoflex.db import get_all_attempts
+from algoflex.db import (
+    get_attempts_today,
+    get_best_attempts,
+    get_most_attempted_problems,
+    get_passed_problem_ids,
+    get_recent_attempts,
+)
 from algoflex.questions import questions as q
 from algoflex.utils import fmt_secs, time_ago
 
 
 class Dashboard(Widget):
     show_dashboard = reactive(False)
-    # get completed questions per level
-    docs, breezy, steady, edgy = get_all_attempts(), set(), set(), set()
+
+    # get questions summary by level
+    breezy, steady, edgy = set(), set(), set()
     for pid in q.ids:
         question = q.get(pid)
         if question.level == "Breezy":
@@ -120,9 +125,9 @@ class Dashboard(Widget):
                 yield ProgressBar(total=self.total, show_eta=False, id="all")
             with Center():
                 yield Static("", id="today")
-            with Collapsible(title="Recent attempts", collapsed=False):
+            with Collapsible(title="Recent Attempts", collapsed=False):
                 yield Markdown(id="recent")
-            with Collapsible(title="Most Solved"):
+            with Collapsible(title="Most Attempts"):
                 yield Markdown(id="frequent")
             with Collapsible(title="Speedy Solves"):
                 yield Markdown(id="best")
@@ -132,41 +137,11 @@ class Dashboard(Widget):
     def watch_show_dashboard(self) -> None:
         ids = ["#d_breezy", "#d_steady", "#d_edgy"]
         if self.show_dashboard:
-            docs = get_all_attempts()
-            breezy, steady, edgy = self.get_complete(docs)
+            breezy, steady, edgy = self.get_complete()
             self.update_digits(ids, [breezy, steady, int(edgy // 1.5)])
             self.update_progress(breezy + steady + edgy)
-            self.update_highlight(docs)
-            self.update_md(docs)
-
-    def update_digit(self, id, value):
-        self.query_one(f"{id}", Digits).update(f"{value}")
-
-    def update_highlight(self, docs):
-        _, _, _, _, comment, completed, attempts = self.get_stats(docs)
-        if not attempts:
-            return
-        desc = f"[$primary]{comment}![/] Solved [$primary]{completed}[/] problem{'s' if completed != 1 else ''} in [$primary]{attempts}[/] attempt{'s' if attempts != 1 else ''} today."
-        today = self.query_one("#today", Static)
-        today.update(desc)
-        today.border_title = "Today's highlight"
-        today.display = True
-
-    def rank_highlight(self, passed, attempts):
-        low = ["Solid", "Great", "Cool", "Good"]
-        mid = ["Excellent", "Super", "Brill", "Fab", "Legit", "Smooth"]
-        high = ["Badass", "Wizard", "Maestro", "Stellar", "Hotshot", "Ninja", "Pro"]
-
-        if passed == 0:
-            return "Not bad" if attempts < 6 else "D for dust"
-        if passed < 3:
-            return random.choice(low)
-        elif passed < 5:
-            return random.choice(mid)
-        elif passed < 9:
-            return random.choice(high)
-        else:
-            return "Ace"
+            self.update_highlight()
+            self.update_summary()
 
     def midnight(self) -> float:
         """Return today's local midnight as a UTC Unix timestamp."""
@@ -185,74 +160,99 @@ class Dashboard(Widget):
         body = "\n".join("|" + "|".join(map(str, r)) + "|" for r in rows)
         return f"{head}\n{sep}\n{body}"
 
-    def get_complete(self, docs):
-        passed = {doc["problem_id"] for doc in docs if doc["passed"]}
+    def get_complete(self):
+        passed = get_passed_problem_ids()
         breezy = len(self.breezy.intersection(passed))
         steady = len(self.steady.intersection(passed))
         edgy = len(self.edgy.intersection(passed))
         return breezy, steady, edgy * 1.5
 
-    def get_stats(self, docs):
-        # get recent, frequent, fast and forever.
-        latest, best, worst, completed = {}, {}, {}, Counter()
-        # get highlights - today's, week's or month's
-        h_attempts, h_passed = 0, set()
-        for d in docs:
-            if d["created_at"] >= self.midnight():
-                h_attempts += 1
-                if d["passed"]:
-                    h_passed.add(d["problem_id"])
+    def get_summary(self):
+        recent_attempts = get_recent_attempts(n=9)
+        most_attempts = get_most_attempted_problems(n=9)
 
-            pid = d["problem_id"]
-            latest[pid] = max(d["created_at"], latest.get(pid, (0, 0))[0]), d["passed"]
-            if d["passed"]:
-                completed[pid] += 1
-                level = q.get(pid).level
-                if (
-                    (level == "Breezy" and d["elapsed"] <= 15 * 60)
-                    or (level == "Steady" and d["elapsed"] <= 25 * 60)
-                    or (level == "Edgy" and d["elapsed"] <= 35 * 60)
-                ):
-                    best[pid] = min(d["elapsed"], best.get(pid, float("inf")))
-                    if worst.get(pid, 0):
-                        del worst[pid]
-                else:
-                    if not best.get(pid, 0):
-                        worst[pid] = min(d["elapsed"], worst.get(pid, float("inf")))
-        fast = [
-            (
-                "✓ " + q.get(id).title,
-                q.get(id).level,
-                fmt_secs(tm),
-            )
-            for id, tm in nsmallest(9, best.items(), key=lambda x: x[1])
-        ]
-        forever = [
-            (
-                "✓ " + q.get(id).title,
-                q.get(id).level,
-                fmt_secs(tm),
-            )
-            for id, tm in worst.items()
-        ]
+        best_per_problem = get_best_attempts(n=-1)
+        cutoff = {"Breezy": 15, "Steady": 25, "Edgy": 40}
+        worst_attempts, best_attempts = [], []
+        for attempt in best_per_problem:
+            level = q.get(attempt["problem_id"]).level
+            if attempt["elapsed"] < cutoff[level]:
+                best_attempts.append(attempt)
+            else:
+                worst_attempts.append(attempt)
+
         recent = [
             (
-                ("✓ " if passed else "x ") + q.get(id).title,
-                q.get(id).level,
-                time_ago(tm),
+                ("✓ " if attempt["passed"] else "x ")
+                + q.get(attempt["problem_id"]).title,
+                q.get(attempt["problem_id"]).level,
+                f"{time_ago(attempt['created_at'])}  {('🐍' if attempt['lang_id'] == 1 else '🦀')}",
             )
-            for id, (tm, passed) in nlargest(9, latest.items(), key=lambda x: x[1][0])
+            for attempt in recent_attempts
         ]
-        frequent = [
-            (q.get(id).title, q.get(id).level, count)
-            for id, count in completed.most_common(9)
-        ]
-        h_completed = len(h_passed)
-        h_rank = self.rank_highlight(h_completed, h_attempts)
-        return recent, frequent, fast, forever, h_rank, h_completed, h_attempts
 
-    def update_md(self, docs) -> None:
-        recent, frequent, fast, forever, _, _, _ = self.get_stats(docs)
+        frequent = [
+            (
+                q.get(p["problem_id"]).title,
+                q.get(p["problem_id"]).level,
+                f"{p['passed_count']}/{p['total_count']}",
+            )
+            for p in most_attempts
+        ]
+
+        fast = [
+            (
+                "✓ " + q.get(attempt["problem_id"]).title,
+                q.get(attempt["problem_id"]).level,
+                f"{fmt_secs(attempt['elapsed'])}  {('🐍' if attempt['lang_id'] == 1 else '🦀')}",
+            )
+            for attempt in best_attempts[:9]
+        ]
+
+        forever = [
+            (
+                "✓ " + q.get(attempt["problem_id"]).title,
+                q.get(attempt["problem_id"]).level,
+                f"{fmt_secs(attempt['elapsed'])}  {('🐍' if attempt['lang_id'] == 1 else '🦀')}",
+            )
+            for attempt in worst_attempts[-9:]
+        ]
+
+        return recent, frequent, fast, forever
+
+    def get_today_highlight(self):
+        passed, total = get_attempts_today()
+        comment = self.get_highlight_comment(passed, total)
+        return comment, passed, total
+
+    def get_highlight_comment(self, passed, attempts):
+        low = ["Solid", "Great", "Cool", "Good"]
+        mid = ["Excellent", "Super", "Brill", "Fab", "Legit", "Smooth"]
+        high = ["Badass", "Wizard", "Maestro", "Stellar", "Hotshot", "Ninja", "Pro"]
+
+        if passed == 0:
+            return "Not bad" if attempts < 6 else "D for dust"
+        if passed < 3:
+            return random.choice(low)
+        elif passed < 5:
+            return random.choice(mid)
+        elif passed < 9:
+            return random.choice(high)
+        else:
+            return "Ace"
+
+    def update_digits(self, ids, values):
+        for id, val in zip(ids, values):
+            self.update_digit(id, val)
+
+    def update_digit(self, id, value):
+        self.query_one(f"{id}", Digits).update(f"{value}")
+
+    def update_progress(self, value):
+        self.query_one(ProgressBar).update(progress=value)
+
+    def update_summary(self) -> None:
+        recent, frequent, fast, forever = self.get_summary()
         latest = self.md_table(["Question", "Level", "When"], recent)
         popular = self.md_table(["Question", "Level", "Passed"], frequent)
         best = self.md_table(["Question", "Level", "Best time"], fast)
@@ -262,9 +262,12 @@ class Dashboard(Widget):
         self.query_one("#best", Markdown).update(best)
         self.query_one("#worst", Markdown).update(worst)
 
-    def update_digits(self, ids, values):
-        for id, val in zip(ids, values):
-            self.update_digit(id, val)
-
-    def update_progress(self, value):
-        self.query_one(ProgressBar).update(progress=value)
+    def update_highlight(self):
+        comment, passed, total = self.get_today_highlight()
+        if not total:
+            return
+        desc = f"[$primary]{comment}![/] Solved [$primary]{passed}[/] problem{'s' if passed != 1 else ''} in [$primary]{total}[/] attempt{'s' if total != 1 else ''} today."
+        today = self.query_one("#today", Static)
+        today.update(desc)
+        today.border_title = "Today's highlight"
+        today.display = True
