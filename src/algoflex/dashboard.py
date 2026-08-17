@@ -162,7 +162,7 @@ class Dashboard(Widget):
         most_attempts = get_most_attempted_problems(n=9)
 
         best_per_problem = get_best_attempts(n=-1)
-        cutoff = {"Breezy": 15, "Steady": 25, "Edgy": 40}
+        cutoff = {"Breezy": 15 * 60, "Steady": 25 * 60, "Edgy": 40 * 60}
         worst_attempts, best_attempts = [], []
         for attempt in best_per_problem:
             level = q.get(attempt["problem_id"]).level
