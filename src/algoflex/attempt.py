@@ -7,7 +7,7 @@ from textual.screen import Screen
 from textual.widgets import Footer, Markdown, Static, TabbedContent, TextArea
 
 from algoflex.custom_widgets import Problem, Title
-from algoflex.db import get_attempts, get_draft, get_latest_attempt
+from algoflex.db import get_best_attempts, get_draft, get_recent_attempts
 from algoflex.questions import questions
 from algoflex.result import ResultModal
 from algoflex.utils import fmt_secs, time_ago
@@ -65,10 +65,8 @@ class AttemptScreen(Screen):
         self.test_time = monotonic()
         self.best = None
 
-        recent_attempt = get_latest_attempt()
-        self.language = (
-            "rust" if recent_attempt and recent_attempt["lang_id"] == 2 else "python"
-        )
+        recent = get_recent_attempts(n=1)
+        self.language = "rust" if recent and recent[0]["lang_id"] == 2 else "python"
         self.draft = self.load_draft()
 
     def compose(self):
@@ -102,17 +100,17 @@ class AttemptScreen(Screen):
         yield Footer()
 
     def on_mount(self):
-        self.update()
+        self.update_attempt_view()
 
-    def update(self):
+    def update_attempt_view(self):
         """Update attempt timeline and past solutions"""
-        attempts = get_attempts(problem_id=self.problem_id)
+        attempts = get_recent_attempts(n=-1, problem_id=self.problem_id)
         self.update_timeline(attempts)
         self.update_solutions(attempts)
 
     def attempt(self):
         def update(_id):
-            self.update()
+            self.update_attempt_view()
 
         code = self.query_one("#code", TextArea)
         elapsed_before = self.draft["elapsed"] if self.draft else 0
@@ -125,28 +123,27 @@ class AttemptScreen(Screen):
     def update_timeline(self, attempts):
         """Display timeline for all language attempts"""
         md = ""
-        timeline = sorted(attempts, key=lambda x: x["created_at"], reverse=True)
-        elapsed = [attempt["elapsed"] for attempt in attempts if attempt["passed"]]
-        self.best = min(elapsed) if elapsed else None
-        for attempt in timeline:
+        best_attempts = get_best_attempts(n=1, problem_id=self.problem_id)
+        best_attempt = best_attempts[0] if best_attempts else None
+
+        for attempt in attempts:
             md += f"\n|- {('🟢' if attempt['passed'] else '🔴')} {time_ago(attempt['created_at'])}   \t({fmt_secs(attempt['elapsed'])}) "
             md += "🐍" if attempt["lang_id"] == 1 else "🦀"
-            if attempt["passed"] and attempt["elapsed"] == self.best:
+            if best_attempt and best_attempt["attempt_id"] == attempt["attempt_id"]:
                 md += "\t<--- best"
             md += "\n|"
         self.query_one("#timeline", Static).update(md.rstrip("|"))
 
     def update_solutions(self, attempts):
         """Display all language solutions"""
-        passed = sorted(
-            (attempt for attempt in attempts if attempt["passed"]),
-            key=lambda x: x["created_at"],
-            reverse=True,
-        )
         md = ""
-        for attempt in passed:
-            lang = "python" if attempt["lang_id"] == 1 else "rust"
-            md += f"### {time_ago(attempt['created_at'])}\n```{lang}\n{attempt['code']}\n```\n"
+
+        for attempt in attempts:
+            if attempt["passed"]:
+                lang = "python" if attempt["lang_id"] == 1 else "rust"
+                md += f"### {time_ago(attempt['created_at'])}\t"
+                md += f"{'🐍' if attempt['lang_id'] == 1 else '🦀'}"
+                md += f"\n```{lang}\n{attempt['code']}\n```\n"
         self.query_one("#solutions", Markdown).update(md)
 
     def load_draft(self):
