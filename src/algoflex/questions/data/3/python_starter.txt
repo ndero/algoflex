@@ -1,0 +1,2 @@
+def max_sum(nums: list[int]) -> int:
+    # your move

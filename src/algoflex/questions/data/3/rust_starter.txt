@@ -1,0 +1,3 @@
+fn max_sum(nums: &[i64]) -> i64 {
+    // your move
+}
