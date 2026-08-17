@@ -214,11 +214,11 @@ def get_attempts_today() -> tuple[int, int]:
 
     row = db.execute(
         """
-        SELECT 
-            COALESCE(SUM(passed), 0) AS today_passed,
+        SELECT
+            COUNT(DISTINCT CASE WHEN passed THEN problem_id END) AS today_passed,
             COUNT(*) AS today_total
         FROM attempts
-        WHERE created_at >= ? 
+        WHERE created_at >= ?
         """,
         (midnight(),),
     ).fetchone()

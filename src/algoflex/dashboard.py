@@ -1,4 +1,4 @@
-import random
+from random import choice
 
 from textual.app import ComposeResult
 from textual.containers import Center, Horizontal
@@ -224,20 +224,16 @@ class Dashboard(Widget):
         return comment, passed, total
 
     def get_highlight_comment(self, passed, attempts):
-        low = ["Solid", "Great", "Cool", "Good"]
-        mid = ["Excellent", "Super", "Brill", "Fab", "Legit", "Smooth"]
-        high = ["Badass", "Wizard", "Maestro", "Stellar", "Hotshot", "Ninja", "Pro"]
-
         if passed == 0:
             return "Not bad" if attempts < 6 else "D for dust"
         if passed < 3:
-            return random.choice(low)
+            return choice(["Solid", "Great", "Cool", "Good"])
         elif passed < 5:
-            return random.choice(mid)
+            return choice(["Excellent", "Super", "Brill", "Fab", "Legit", "Smooth"])
         elif passed < 9:
-            return random.choice(high)
+            return choice(["Wizard", "Maestro", "Stellar", "Hotshot", "Ninja", "Pro"])
         else:
-            return "Ace"
+            return choice(["Ace"] * 5 + ["Flex"])
 
     def update_digits(self, ids, values):
         for id, val in zip(ids, values):
@@ -251,7 +247,7 @@ class Dashboard(Widget):
 
     def update_summary(self) -> None:
         recent, frequent, fast, forever = self.get_summary()
-        headers = ["Problem", "Level", "Code", "Time", "When"]
+        headers = ["Problem", "Level", "Code", "Duration", "When"]
         latest = self.md_table(headers, recent)
         popular = self.md_table(["Problem", "Level", "Passed"], frequent)
         best = self.md_table(headers, fast)
