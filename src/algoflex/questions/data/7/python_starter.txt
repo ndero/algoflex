@@ -1,0 +1,2 @@
+def min_sub_arr_len(nums: list[int], target: int) -> int:
+    # your move
