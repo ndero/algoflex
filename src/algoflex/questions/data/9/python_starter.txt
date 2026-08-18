@@ -1,0 +1,2 @@
+def count_primes(n: int) -> int:
+    # your move
