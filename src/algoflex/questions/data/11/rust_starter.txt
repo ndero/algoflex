@@ -1,0 +1,3 @@
+fn is_power_of_two(n: i128) -> bool {
+    // your move
+}
