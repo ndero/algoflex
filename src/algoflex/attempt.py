@@ -126,6 +126,9 @@ class AttemptScreen(Screen):
         best_attempts = get_best_attempts(n=1, problem_id=self.problem_id)
         best_attempt = best_attempts[0] if best_attempts else None
 
+        if best_attempt:
+            self.best = best_attempt["elapsed"]
+
         for attempt in attempts:
             md += f"\n|- {('🟢' if attempt['passed'] else '🔴')} {time_ago(attempt['created_at'])}   \t({fmt_secs(attempt['elapsed'])}) "
             md += "🐍" if attempt["lang_id"] == 1 else "🦀"
@@ -169,7 +172,7 @@ class AttemptScreen(Screen):
 
     def update_language(self, language: str) -> None:
         editor = self.query_one("#code", TextArea)
-        self.language = language
+        self.language, self.test_time = language, monotonic()
         question, draft = questions.get(self.problem_id), self.load_draft()
         code = (
             question.python_starter if language == "python" else question.rust_starter
