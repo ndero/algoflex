@@ -1,0 +1,2 @@
+def single_num(nums: list[int]) -> int:
+    # your move
