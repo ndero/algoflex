@@ -8,7 +8,9 @@ There no other characters in the string apart from '[', ']', '(', ')', '{'and '}
 ```
 s = "[](){}"
 output = True
+```
 
+```
 s = "{{}}[][](()"
 output = False
 ```

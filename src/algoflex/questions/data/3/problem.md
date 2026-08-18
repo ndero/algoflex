@@ -5,7 +5,9 @@ Given a non empty integer array `nums`, find a contiguous non-empty subarray wit
 ```
 nums = [-2, 0, -1]
 output = 0
+```
 
+```
 nums = [2, 3, -2, 4]
 output = 7
 ```

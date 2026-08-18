@@ -1,0 +1,2 @@
+def pairwise(arr: list[int], target: int) -> int:
+    # your move
