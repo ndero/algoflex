@@ -32,7 +32,7 @@ class QuestionRepository:
 
     def get(self, question_id: int) -> Question:
         """Load and return a question by ID."""
-        question_dir = self.data_dir / str(question_id)
+        question_dir = self.data_dir / f"{question_id:02d}"
 
         if not question_dir.is_dir():
             raise KeyError(f"Question {question_id} does not exist")
