@@ -1,0 +1,2 @@
+def count_arrs(arr: list[int], target: int) -> int:
+    # your move
