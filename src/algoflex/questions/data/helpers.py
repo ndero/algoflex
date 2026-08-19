@@ -11,9 +11,36 @@ class TreeNode:
 def array_to_tree(arr, index=0):
     if index >= len(arr) or arr[index] is None:
         return None
+
     root = TreeNode(arr[index])
     root.left = array_to_tree(arr, index * 2 + 1)
     root.right = array_to_tree(arr, index * 2 + 2)
+    return root
+
+
+def array_to_tree_iterative(arr):
+    from collections import deque
+
+    if not arr or arr[0] is None:
+        return None
+
+    root = TreeNode(arr[0])
+    queue = deque([root])
+    i = 1
+
+    while queue and i < len(arr):
+        node = queue.popleft()
+
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i])
+            queue.append(node.left)
+        i += 1
+
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i])
+            queue.append(node.right)
+        i += 1
+
     return root
 
 
