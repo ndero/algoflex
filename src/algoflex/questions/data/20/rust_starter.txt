@@ -1,0 +1,7 @@
+fn knapsack(
+    capacity: usize,
+    weights: &[usize],
+    values: &[i32],
+) -> (i32, Vec<i32>) {
+    // your move
+}

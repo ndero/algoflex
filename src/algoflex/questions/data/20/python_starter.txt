@@ -1,0 +1,6 @@
+def knapsack(
+    capacity: int,
+    weights: list[int],
+    values: list[int],
+) -> tuple[int, list[int]]:
+    # your move
