@@ -126,12 +126,10 @@ class Dashboard(Widget):
                 yield Static("", id="today")
             with Collapsible(title="Recent Attempts", collapsed=False):
                 yield Markdown(id="recent")
-            with Collapsible(title="Most Attempts"):
+            with Collapsible(title="Most Attempted"):
                 yield Markdown(id="frequent")
-            with Collapsible(title="Speedy Solves"):
+            with Collapsible(title="Personal Bests"):
                 yield Markdown(id="best")
-            with Collapsible(title="Slow Solves"):
-                yield Markdown(id="worst")
 
     def watch_show_dashboard(self) -> None:
         ids = ["#d_breezy", "#d_steady", "#d_edgy"]
@@ -160,16 +158,7 @@ class Dashboard(Widget):
     def get_summary(self):
         recent_attempts = get_recent_attempts(n=9)
         most_attempts = get_most_attempted_problems(n=9)
-
-        best_per_problem = get_best_attempts(n=-1)
-        cutoff = {"Breezy": 15 * 60, "Steady": 25 * 60, "Edgy": 40 * 60}
-        worst_attempts, best_attempts = [], []
-        for attempt in best_per_problem:
-            level = q.get(attempt["problem_id"]).level
-            if attempt["elapsed"] < cutoff[level]:
-                best_attempts.append(attempt)
-            else:
-                worst_attempts.append(attempt)
+        best_per_problem = get_best_attempts(n=9)
 
         languages = {1: "python", 2: "rust"}
 
@@ -202,21 +191,10 @@ class Dashboard(Widget):
                 fmt_secs(attempt["elapsed"]),
                 time_ago(attempt["created_at"]),
             )
-            for attempt in best_attempts[:9]
+            for attempt in best_per_problem
         ]
 
-        forever = [
-            (
-                "✓ " + q.get(attempt["problem_id"]).title,
-                q.get(attempt["problem_id"]).level,
-                languages[attempt["lang_id"]],
-                fmt_secs(attempt["elapsed"]),
-                time_ago(attempt["created_at"]),
-            )
-            for attempt in worst_attempts[-9:]
-        ]
-
-        return recent, frequent, fast, forever
+        return recent, frequent, fast
 
     def get_today_highlight(self):
         passed, total = get_attempts_today()
@@ -246,16 +224,14 @@ class Dashboard(Widget):
         self.query_one(ProgressBar).update(progress=value)
 
     def update_summary(self) -> None:
-        recent, frequent, fast, forever = self.get_summary()
+        recent, frequent, fast = self.get_summary()
         headers = ["Problem", "Level", "Code", "Duration", "When"]
         latest = self.md_table(headers, recent)
         popular = self.md_table(["Problem", "Level", "Passed"], frequent)
         best = self.md_table(headers, fast)
-        worst = self.md_table(headers, forever)
         self.query_one("#recent", Markdown).update(latest)
         self.query_one("#frequent", Markdown).update(popular)
         self.query_one("#best", Markdown).update(best)
-        self.query_one("#worst", Markdown).update(worst)
 
     def update_highlight(self):
         comment, passed, total = self.get_today_highlight()
