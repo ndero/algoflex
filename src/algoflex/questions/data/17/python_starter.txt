@@ -1,0 +1,2 @@
+def fractional_knapsack(capacity: int, weights: list[int], values: list[int]) -> float:
+    # your move
