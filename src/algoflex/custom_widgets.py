@@ -13,12 +13,12 @@ class Problem(VerticalScroll):
     }
     """
 
-    def __init__(self, problem):
+    def __init__(self, markdown):
         super().__init__()
-        self.problem = problem
+        self.markdown = markdown
 
     def compose(self):
-        yield Markdown(self.problem)
+        yield Markdown(self.markdown)
 
 
 class Title(Container):

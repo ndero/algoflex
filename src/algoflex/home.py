@@ -26,6 +26,7 @@ class StatScreen(Vertical):
         }
         #passed, #last, #best, #level {
             padding-top: 1;
+            color: $primary;
         }
     }
     """
@@ -34,12 +35,12 @@ class StatScreen(Vertical):
         with Horizontal():
             with Vertical():
                 yield Static("[b]Passed[/]")
-                yield Static("...", id="passed")
+                yield Static("0/0", id="passed")
             with Vertical():
                 yield Static("[b]Last attempt[/]")
                 yield Static("...", id="last")
             with Vertical():
-                yield Static("[b]Best time[/]")
+                yield Static("[b]Best attempt[/]")
                 yield Static("...", id="best")
             with Vertical():
                 yield Static("[b]Level[/]")
@@ -98,35 +99,26 @@ class HomeScreen(App):
 
     def update_problem_view(self):
         p = questions.get(self.problem_id)
-        problem, level = p.markdown, p.level
+        markdown, level = p.markdown, p.level
 
         problem_widget = self.query_one(Problem)
-        problem_widget.query_one(Markdown).update(markdown=problem)
+        problem_widget.query_one(Markdown).update(markdown)
         problem_widget.scroll_home()
         self.update_level(level)
 
         passed, total = get_problem_pass_ratio(self.problem_id)
         last_attempts = get_recent_attempts(n=1, problem_id=self.problem_id)
         best_attempts = get_best_attempts(n=1, problem_id=self.problem_id)
+        best = fmt_secs(best_attempts[0]["elapsed"]) if best_attempts else "..."
 
-        if total:
-            self.query_one("#passed", Static).update(
-                f"[$primary]{passed!s}/{total!s}[/]"
-            )
-
+        last = "..."
         if last_attempts:
-            last = last_attempts[0]
-            last_attempt = ("🟢 " if last["passed"] else "🔴 ") + time_ago(
-                last["created_at"]
-            )
-            self.query_one("#last", Static).update(f"[$primary]{last_attempt}[/]")
+            row = last_attempts[0]
+            last = ("🟢 " if row["passed"] else "🔴 ") + time_ago(row["created_at"])
 
-        if best_attempts:
-            best = best_attempts[0]
-            best_attempt = fmt_secs(best["elapsed"]) + (
-                " 🐍" if best["lang_id"] == 1 else " 🦀"
-            )
-            self.query_one("#best", Static).update(f"[$primary]{best_attempt}[/]")
+        self.query_one("#passed", Static).update(f"{passed!s}/{total!s}")
+        self.query_one("#last", Static).update(f"{last}")
+        self.query_one("#best", Static).update(f"{best}")
 
     def update_level(self, level):
         target = self.query_one("#level", Static)
