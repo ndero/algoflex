@@ -1,0 +1,11 @@
+class TreeNode:
+    __slots__ = ("left", "right", "val")
+
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+def count_paths(root: TreeNode | None, target: int) -> int:
+    # your move
