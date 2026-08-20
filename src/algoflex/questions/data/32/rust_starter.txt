@@ -1,0 +1,10 @@
+#[derive(Debug)]
+struct TreeNode {
+    val: i32,
+    left: Option<Box<TreeNode>>,
+    right: Option<Box<TreeNode>>,
+}
+
+fn sum_right_nodes(root: &Option<Box<TreeNode>>) -> i32 {
+    // your move
+}
