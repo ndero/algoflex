@@ -1,0 +1,10 @@
+#[derive(Debug)]
+struct TreeNode {
+    val: i32,
+    left: Option<Box<TreeNode>>,
+    right: Option<Box<TreeNode>>,
+}
+
+fn is_valid_bst(root: &Option<Box<TreeNode>>) -> bool {
+    // your move
+}
