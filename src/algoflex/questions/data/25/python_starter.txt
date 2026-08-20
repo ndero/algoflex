@@ -1,0 +1,11 @@
+class TreeNode:
+    __slots__ = ("left", "right", "val")
+
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+def bst_contains(root: TreeNode | None, x: int) -> int:
+    # your move

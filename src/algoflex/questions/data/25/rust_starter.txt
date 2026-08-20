@@ -1,0 +1,10 @@
+#[derive(Debug)]
+struct TreeNode {
+    val: i32,
+    left: Option<Box<TreeNode>>,
+    right: Option<Box<TreeNode>>,
+}
+
+fn bst_contains(root: &Option<Box<TreeNode>>, x: i32) -> bool {
+    // your move
+}
