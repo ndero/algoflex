@@ -1,0 +1,3 @@
+fn count_ways(n: usize) -> usize {
+    // your move 
+}
