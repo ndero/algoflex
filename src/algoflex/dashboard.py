@@ -209,9 +209,9 @@ class Dashboard(Widget):
         elif passed < 5:
             return choice(["Excellent", "Super", "Brill", "Fab", "Legit", "Smooth"])
         elif passed < 9:
-            return choice(["Wizard", "Maestro", "Stellar", "Hotshot", "Ninja", "Pro"])
+            return choice(["Wizard", "Maestro", "Hotshot", "Pro"])
         else:
-            return choice(["Ace"] * 5 + ["Flex"])
+            return "Ace"
 
     def update_digits(self, ids, values):
         for id, val in zip(ids, values):
