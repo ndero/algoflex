@@ -1,0 +1,10 @@
+#[derive(Debug)]
+struct TreeNode {
+    val: i32,
+    left: Option<Box<TreeNode>>,
+    right: Option<Box<TreeNode>>,
+}
+
+fn lowest_common_ancestor(root: &Option<Box<TreeNode>>, p: i32, q: i32) -> i32 {
+    // your move
+}
