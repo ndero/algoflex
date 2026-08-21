@@ -1,0 +1,13 @@
+#[derive(Debug)]
+struct TreeNode {
+    val: i32,
+    left: Option<Box<TreeNode>>,
+    right: Option<Box<TreeNode>>,
+}
+
+fn same_binary_tree(
+    p: &Option<Box<TreeNode>>, 
+    q: &Option<Box<TreeNode>>
+) -> bool {
+    // your move
+}
