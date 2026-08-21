@@ -1,0 +1,3 @@
+fn binary_search(nums: &[i32], y: i32) -> bool {
+    // your move
+}
