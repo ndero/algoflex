@@ -1,0 +1,107 @@
+fn array_to_tree(arr: &[Option<i32>], index: usize) -> Option<Box<TreeNode>> {
+    let val = arr.get(index)?.as_ref()?;
+
+    Some(Box::new(TreeNode {
+        val: *val,
+        left: array_to_tree(arr, index * 2 + 1),
+        right: array_to_tree(arr, index * 2 + 2),
+    }))
+}
+
+fn sorted_to_bst(nums: &[i32]) -> Option<Box<TreeNode>> {
+    if nums.is_empty() {
+        return None;
+    }
+
+    let mid = nums.len() / 2;
+
+    Some(Box::new(TreeNode {
+        val: nums[mid],
+        left: sorted_to_bst(&nums[..mid]),
+        right: sorted_to_bst(&nums[mid + 1..]),
+    }))
+}
+
+fn main() {
+    let root1 = array_to_tree(
+        &[
+            Some(5),
+            Some(4),
+            Some(8),
+            Some(11),
+            None,
+            Some(13),
+            Some(4),
+            Some(7),
+            Some(2),
+            None,
+            None,
+            None,
+            None,
+            None,
+            Some(1),
+        ],
+        0,
+    );
+
+    let root2 = array_to_tree(
+        &[Some(9), Some(8), Some(16)],
+        0,
+    );
+
+    let root3 = array_to_tree(
+        &[
+            Some(100),
+            Some(50),
+            Some(600),
+            Some(45),
+            Some(55),
+            Some(500),
+            Some(1000),
+        ],
+        0,
+    );
+
+    let root4 = sorted_to_bst(&(0..10_000).collect::<Vec<_>>());
+
+    let root5 = array_to_tree(&[Some(5)], 0);
+
+    let root6 = array_to_tree(
+        &[Some(5), Some(3), Some(7)],
+        0,
+    );
+
+    let root7 = array_to_tree(
+        &[
+            Some(5),
+            Some(3),
+            Some(7),
+            Some(1),
+            None,
+            None,
+            Some(9),
+        ],
+        0,
+    );
+
+    let test_cases = vec![
+        ((&root1, 11, 13), true),
+        ((&root1, 7, 4), false),
+        ((&root2, 9, 16), false),
+        ((&root3, 55, 500), true),
+        ((&root4, 4, 13), false),
+        ((&root4, 3, 9999), true),
+        // Edge cases
+        ((&root5, 5, 5), false),
+        ((&root6, 3, 7), false),
+        ((&root6, 5, 3), false),
+        ((&root7, 1, 9), true),
+        ((&root7, 3, 1), false),
+    ];
+
+    std::process::exit(
+        run_tests!(&test_cases, |input| {
+            are_cousins(input.0, input.1, input.2)
+        })
+    );
+}
