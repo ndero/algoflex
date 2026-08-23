@@ -1,0 +1,2 @@
+def majority(nums: list[int]) -> int:
+    # your move
