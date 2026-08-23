@@ -26,9 +26,7 @@ fn main() {
         ((vec![1, 1, 1], 0), false),
     ];
 
-    std::process::exit(
-        run_tests!(&test_cases, |input| {
-            can_reach_zero(&input.0, input.1)
-        })
-    );
+    std::process::exit(run_tests!(&test_cases, |input| {
+        can_reach_zero(&input.0, input.1)
+    }));
 }

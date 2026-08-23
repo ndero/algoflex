@@ -11,10 +11,7 @@ macro_rules! run_tests {
                     $call
                 })) {
                     Ok(result) if result == *expected => {
-                        println!(
-                            "[b]✓[/] test case {}\t[green]... ok[/]",
-                            i + 1
-                        );
+                        println!("[b]✓[/] test case {}\t[green]... ok[/]", i + 1);
                     }
 
                     Ok(result) => {
@@ -50,7 +47,6 @@ macro_rules! run_tests {
         }
     }};
 }
-
 
 fn format_panic(error: Box<dyn std::any::Any + Send>) -> String {
     if let Some(message) = error.downcast_ref::<&str>() {

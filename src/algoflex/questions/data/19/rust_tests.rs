@@ -11,16 +11,36 @@ fn array_to_tree(arr: &[Option<i32>], index: usize) -> Option<Box<TreeNode>> {
 fn main() {
     let root1 = array_to_tree(
         &[
-            Some(10), Some(5), Some(-3), Some(3), Some(2), None, Some(11),
-            Some(3), Some(-2), None, Some(1),
+            Some(10),
+            Some(5),
+            Some(-3),
+            Some(3),
+            Some(2),
+            None,
+            Some(11),
+            Some(3),
+            Some(-2),
+            None,
+            Some(1),
         ],
         0,
     );
 
     let root2 = array_to_tree(
         &[
-            Some(5), Some(4), Some(8), Some(11), None, Some(13), Some(4),
-            Some(7), Some(2), None, None, Some(5), Some(1),
+            Some(5),
+            Some(4),
+            Some(8),
+            Some(11),
+            None,
+            Some(13),
+            Some(4),
+            Some(7),
+            Some(2),
+            None,
+            None,
+            Some(5),
+            Some(1),
         ],
         0,
     );
@@ -29,8 +49,13 @@ fn main() {
 
     let root5 = array_to_tree(
         &[
-            Some(100), Some(50), Some(600), Some(45), Some(55),
-            Some(500), Some(1000),
+            Some(100),
+            Some(50),
+            Some(600),
+            Some(45),
+            Some(55),
+            Some(500),
+            Some(1000),
         ],
         0,
     );
@@ -41,8 +66,13 @@ fn main() {
     let root8 = array_to_tree(&[Some(-2), Some(-3), None, Some(-4)], 0);
     let root9 = array_to_tree(
         &[
-            Some(1), Some(2), Some(3), Some(4),
-            Some(5), Some(6), Some(7),
+            Some(1),
+            Some(2),
+            Some(3),
+            Some(4),
+            Some(5),
+            Some(6),
+            Some(7),
         ],
         0,
     );
@@ -63,6 +93,7 @@ fn main() {
         ((&root9, 7), 3),
     ];
 
-    std::process::exit(
-        run_tests!(&test_cases, |input| count_paths(&input.0, input.1))
-);}
+    std::process::exit(run_tests!(&test_cases, |input| count_paths(
+        &input.0, input.1
+    )));
+}

@@ -19,14 +19,11 @@ fn main() {
         ((nums4,), 2),
         ((nums6,), 9),
         ((nums7,), -4),
-
         // Edge cases
         ((vec![1, 1, 2],), 1),
         ((vec![1, 2, 1, 1, 2, 1, 1],), 1),
         ((vec![-1, -1, 2, -1],), -1),
     ];
 
-    std::process::exit(
-        run_tests!(&test_cases, |input| majority(&input.0))
-    );
+    std::process::exit(run_tests!(&test_cases, |input| majority(&input.0)));
 }

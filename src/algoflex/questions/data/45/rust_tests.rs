@@ -23,7 +23,5 @@ fn main() {
         ((vec![1, 2, 1, 1],), 2),
     ];
 
-    std::process::exit(
-        run_tests!(&test_cases, |input| min_jumps(&input.0))
-    );
+    std::process::exit(run_tests!(&test_cases, |input| min_jumps(&input.0)));
 }

@@ -24,28 +24,12 @@ fn sorted_to_bst(nums: &[i32]) -> Option<Box<TreeNode>> {
 
 fn main() {
     let root1 = array_to_tree(
-        &[
-            Some(6),
-            Some(3),
-            Some(9),
-            None,
-            Some(5),
-            Some(4),
-            Some(9),
-        ],
+        &[Some(6), Some(3), Some(9), None, Some(5), Some(4), Some(9)],
         0,
     );
 
     let root2 = array_to_tree(
-        &[
-            Some(6),
-            Some(3),
-            Some(9),
-            None,
-            Some(5),
-            Some(4),
-            Some(9),
-        ],
+        &[Some(6), Some(3), Some(9), None, Some(5), Some(4), Some(9)],
         0,
     );
 
@@ -59,15 +43,7 @@ fn main() {
     let root8 = array_to_tree(&[Some(1), None, Some(2)], 0);
 
     let root9 = array_to_tree(
-        &[
-            Some(1),
-            Some(2),
-            Some(3),
-            Some(4),
-            Some(5),
-            None,
-            Some(6),
-        ],
+        &[Some(1), Some(2), Some(3), Some(4), Some(5), None, Some(6)],
         0,
     );
 
@@ -99,7 +75,7 @@ fn main() {
         ((&root11, &root12), true),
     ];
 
-    std::process::exit(
-        run_tests!(&test_cases, |input| same_binary_tree(input.0, input.1))
-    );
+    std::process::exit(run_tests!(&test_cases, |input| same_binary_tree(
+        input.0, input.1
+    )));
 }

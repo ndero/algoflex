@@ -12,11 +12,7 @@ fn main() {
         ((arr3,), vec![]),
         ((arr4,), vec![2, 0, 0, 0, 0, 1, 0]),
         ((arr5,), vec![0; 100_000]),
-        (
-            (arr6,),
-            (0..=99_999).rev().collect::<Vec<_>>(),
-        ),
-
+        ((arr6,), (0..=99_999).rev().collect::<Vec<_>>()),
         // Edge cases
         ((vec![1, 1, 1, 1],), vec![0, 0, 0, 0]),
         ((vec![3, 2, 1],), vec![2, 1, 0]),
@@ -24,7 +20,7 @@ fn main() {
         ((vec![-2, -5, -1, -3],), vec![2, 0, 1, 0]),
     ];
 
-    std::process::exit(
-        run_tests!(&test_cases, |input| smaller_to_the_right(&input.0))
-    );
+    std::process::exit(run_tests!(&test_cases, |input| smaller_to_the_right(
+        &input.0
+    )));
 }

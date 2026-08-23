@@ -26,7 +26,5 @@ fn main() {
         ((vec![5, 5],), 0),
     ];
 
-    std::process::exit(
-        run_tests!(&test_cases, |input| max_profit(&input.0))
-    );
+    std::process::exit(run_tests!(&test_cases, |input| max_profit(&input.0)));
 }

@@ -21,7 +21,5 @@ fn main() {
         ((vec![5, 1, 5, 1, 5],), 15),
     ];
 
-    std::process::exit(
-        run_tests!(&test_cases, |input| max_loot(&input.0))
-    );
+    std::process::exit(run_tests!(&test_cases, |input| max_loot(&input.0)));
 }

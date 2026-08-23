@@ -22,7 +22,5 @@ fn main() {
         ((vec![2; 99],), false),
     ];
 
-    std::process::exit(
-        run_tests!(&test_cases, |input| can_partition(&input.0))  
-    );
+    std::process::exit(run_tests!(&test_cases, |input| can_partition(&input.0)));
 }

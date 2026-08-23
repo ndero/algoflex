@@ -2,13 +2,7 @@ fn _generate_parentheses(n: usize) -> Vec<String> {
     let mut res = Vec::new();
     let mut path = String::with_capacity(2 * n);
 
-    fn backtrack(
-        n: usize,
-        open: usize,
-        close: usize,
-        path: &mut String,
-        res: &mut Vec<String>,
-    ) {
+    fn backtrack(n: usize, open: usize, close: usize, path: &mut String, res: &mut Vec<String>) {
         if path.len() == 2 * n {
             res.push(path.clone());
             return;
@@ -41,7 +35,7 @@ fn main() {
         ((5,), _generate_parentheses(5)),
     ];
 
-    std::process::exit(
-        run_tests!(&test_cases, |input| generate_parentheses(input.0))
-    );
+    std::process::exit(run_tests!(&test_cases, |input| generate_parentheses(
+        input.0
+    )));
 }

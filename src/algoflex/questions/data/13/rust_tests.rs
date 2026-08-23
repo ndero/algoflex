@@ -11,16 +11,14 @@ fn main() {
         ((2424,), "MMCDXXIV"),
         ((999,), "CMXCIX"),
         // Edge cases
-        ((3,), "III"),              // Smallest with repetition
-        ((9,), "IX"),               // Subtractive notation
-        ((40,), "XL"),              // Tens subtractive
-        ((90,), "XC"),              // Tens subtractive
-        ((400,), "CD"),             // Hundreds subtractive
-        ((900,), "CM"),             // Hundreds subtractive
-        ((3888,), "MMMDCCCLXXXVIII"),  // Longest roman numeral
+        ((3,), "III"),                // Smallest with repetition
+        ((9,), "IX"),                 // Subtractive notation
+        ((40,), "XL"),                // Tens subtractive
+        ((90,), "XC"),                // Tens subtractive
+        ((400,), "CD"),               // Hundreds subtractive
+        ((900,), "CM"),               // Hundreds subtractive
+        ((3888,), "MMMDCCCLXXXVIII"), // Longest roman numeral
     ];
 
-    std::process::exit(
-        run_tests!(&test_cases, |input| int_to_roman(input.0))
-    );
+    std::process::exit(run_tests!(&test_cases, |input| int_to_roman(input.0)));
 }

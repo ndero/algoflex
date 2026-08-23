@@ -44,10 +44,7 @@ fn main() {
         0,
     );
 
-    let root2 = array_to_tree(
-        &[Some(9), Some(8), Some(16)],
-        0,
-    );
+    let root2 = array_to_tree(&[Some(9), Some(8), Some(16)], 0);
 
     let root3 = array_to_tree(
         &[
@@ -66,21 +63,10 @@ fn main() {
 
     let root5 = array_to_tree(&[Some(5)], 0);
 
-    let root6 = array_to_tree(
-        &[Some(5), Some(3), Some(7)],
-        0,
-    );
+    let root6 = array_to_tree(&[Some(5), Some(3), Some(7)], 0);
 
     let root7 = array_to_tree(
-        &[
-            Some(5),
-            Some(3),
-            Some(7),
-            Some(1),
-            None,
-            None,
-            Some(9),
-        ],
+        &[Some(5), Some(3), Some(7), Some(1), None, None, Some(9)],
         0,
     );
 
@@ -99,9 +85,7 @@ fn main() {
         ((&root7, 3, 1), false),
     ];
 
-    std::process::exit(
-        run_tests!(&test_cases, |input| {
-            are_cousins(input.0, input.1, input.2)
-        })
-    );
+    std::process::exit(run_tests!(&test_cases, |input| {
+        are_cousins(input.0, input.1, input.2)
+    }));
 }

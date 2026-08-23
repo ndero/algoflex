@@ -12,7 +12,5 @@ fn main() {
         ((46,), 2971215073_i64),
     ];
 
-    std::process::exit(
-        run_tests!(&test_cases, |input| climb_stairs(input.0))
-    );
+    std::process::exit(run_tests!(&test_cases, |input| climb_stairs(input.0)));
 }

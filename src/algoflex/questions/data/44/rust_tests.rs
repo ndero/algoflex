@@ -25,7 +25,5 @@ fn main() {
         ((vec![2, 0, 0],), true),
     ];
 
-    std::process::exit(
-        run_tests!(&test_cases, |input| can_reach_end(&input.0))
-    );
+    std::process::exit(run_tests!(&test_cases, |input| can_reach_end(&input.0)));
 }

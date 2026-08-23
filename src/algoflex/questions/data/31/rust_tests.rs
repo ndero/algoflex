@@ -44,11 +44,76 @@ fn _tree_leaves(root: &Option<Box<TreeNode>>) -> Vec<i32> {
 }
 
 fn main() {
-    let root1 = array_to_tree(&[Some(5), Some(4), Some(8), Some(11), None, Some(13), Some(4), Some(7), Some(2), None, None, Some(5), Some(1)], 0);
+    let root1 = array_to_tree(
+        &[
+            Some(5),
+            Some(4),
+            Some(8),
+            Some(11),
+            None,
+            Some(13),
+            Some(4),
+            Some(7),
+            Some(2),
+            None,
+            None,
+            Some(5),
+            Some(1),
+        ],
+        0,
+    );
     let root2 = array_to_tree(&[Some(5)], 0);
-    let root3 = array_to_tree(&[Some(12), Some(8), Some(16), Some(4), Some(9), Some(13), Some(18), Some(1)], 0);
-    let root4 = array_to_tree(&[Some(9), Some(8), Some(16), None, None, None, Some(18), None, None, None, None, None, None, Some(19)], 0);
-    let root5 = array_to_tree(&[Some(9), Some(8), Some(16), None, None, None, Some(18), None, None, None, None, None, Some(15), Some(19)], 0);
+    let root3 = array_to_tree(
+        &[
+            Some(12),
+            Some(8),
+            Some(16),
+            Some(4),
+            Some(9),
+            Some(13),
+            Some(18),
+            Some(1),
+        ],
+        0,
+    );
+    let root4 = array_to_tree(
+        &[
+            Some(9),
+            Some(8),
+            Some(16),
+            None,
+            None,
+            None,
+            Some(18),
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            Some(19),
+        ],
+        0,
+    );
+    let root5 = array_to_tree(
+        &[
+            Some(9),
+            Some(8),
+            Some(16),
+            None,
+            None,
+            None,
+            Some(18),
+            None,
+            None,
+            None,
+            None,
+            None,
+            Some(15),
+            Some(19),
+        ],
+        0,
+    );
     let root6 = array_to_tree(&[Some(12), Some(3), Some(20), None, Some(5)], 0);
     let root7 = array_to_tree(&[], 0);
     let root8 = array_to_tree(
@@ -64,12 +129,28 @@ fn main() {
         0,
     );
     let root9 = sorted_to_bst(&(0..100).collect::<Vec<_>>());
-    let root10 = sorted_to_bst(
-        &(-100_000..100_000).collect::<Vec<_>>()
-    );
+    let root10 = sorted_to_bst(&(-100_000..100_000).collect::<Vec<_>>());
     let root11 = array_to_tree(&[Some(5), None, Some(3)], 0);
     let root12 = array_to_tree(&[Some(4), None, Some(9), None, None, None, Some(12)], 0);
-    let root13 = array_to_tree(&[Some(9), Some(8), Some(16), None, None, None, Some(18), None, None, None, None, None, None, Some(18)], 0);
+    let root13 = array_to_tree(
+        &[
+            Some(9),
+            Some(8),
+            Some(16),
+            None,
+            None,
+            None,
+            Some(18),
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            Some(18),
+        ],
+        0,
+    );
 
     let test_cases = vec![
         ((&root1,), vec![7, 2, 5, 1, 4]),
@@ -84,10 +165,8 @@ fn main() {
         ((&root10,), _tree_leaves(&root10)),
         ((&root11,), vec![3]),
         ((&root12,), vec![12]),
-        ((&root13,), vec![8, 18])
+        ((&root13,), vec![8, 18]),
     ];
 
-    std::process::exit(
-        run_tests!(&test_cases, |input| tree_leaves(input.0))
-    );
+    std::process::exit(run_tests!(&test_cases, |input| tree_leaves(input.0)));
 }

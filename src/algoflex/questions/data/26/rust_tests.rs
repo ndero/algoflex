@@ -24,14 +24,8 @@ fn sorted_to_bst(nums: &[i32]) -> Option<Box<TreeNode>> {
 
 fn main() {
     let root1 = array_to_tree(&[Some(9), Some(8), Some(16)], 0);
-    let root2 = array_to_tree(
-        &[Some(9), Some(8), Some(16), Some(4)],
-        0,
-    );
-    let root3 = array_to_tree(
-        &[Some(12), Some(3), Some(20), None, Some(5)],
-        0,
-    );
+    let root2 = array_to_tree(&[Some(9), Some(8), Some(16), Some(4)], 0);
+    let root3 = array_to_tree(&[Some(12), Some(3), Some(20), None, Some(5)], 0);
     let root6 = array_to_tree(
         &[
             Some(100),
@@ -45,9 +39,7 @@ fn main() {
         0,
     );
     let root7 = sorted_to_bst(&(0..100).collect::<Vec<_>>());
-    let root8 = sorted_to_bst(
-        &(-100_000..100_000).collect::<Vec<_>>()
-    );
+    let root8 = sorted_to_bst(&(-100_000..100_000).collect::<Vec<_>>());
 
     let root9 = array_to_tree(&[Some(5)], 0);
     let root10 = array_to_tree(&[Some(5), Some(3)], 0);
@@ -60,14 +52,11 @@ fn main() {
         ((&root6,), 45),
         ((&root7,), 0),
         ((&root8,), -100_000),
-
         // Edge cases
         ((&root9,), 5),
         ((&root10,), 3),
         ((&root11,), 5),
     ];
 
-    std::process::exit(
-        run_tests!(&test_cases, |input| bst_min(input.0))
-    );
+    std::process::exit(run_tests!(&test_cases, |input| bst_min(input.0)));
 }

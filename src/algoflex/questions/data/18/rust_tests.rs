@@ -6,8 +6,10 @@ fn main() {
         ((vec![1, 4, -5, 5, 10], 5), 3),
         ((vec![13, -1, 8, 12, 3, 9, 7, 5, 9, 10], 75), 1),
         (([13, -1, 8, 12, 3, 9].repeat(20_000), 12), 60_000),
-        (([13, -1, 8, 12, 3, 9, 7, 5, 9, 10].repeat(10_000), 24), 30_000),
-        
+        (
+            ([13, -1, 8, 12, 3, 9, 7, 5, 9, 10].repeat(10_000), 24),
+            30_000,
+        ),
         // Edge cases
         ((vec![], 5), 0),
         ((vec![5], 5), 1),
@@ -16,7 +18,7 @@ fn main() {
         ((vec![-1, -2, -3], -3), 2),
     ];
 
-    std::process::exit(
-        run_tests!(&test_cases, |input| count_arrs(&input.0, input.1))
-    );
+    std::process::exit(run_tests!(&test_cases, |input| count_arrs(
+        &input.0, input.1
+    )));
 }

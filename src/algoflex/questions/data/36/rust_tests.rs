@@ -5,7 +5,10 @@ fn main() {
         (((0..5_000_000).collect::<Vec<_>>(), 5_000_000), false),
         (((-1_000_000..1_000_000).collect::<Vec<_>>(), 0), true),
         (((-1_000_000..1_000_000).collect::<Vec<_>>(), -223), true),
-        (((-1_000_000..1_000_000).step_by(10).collect::<Vec<_>>(), 33), false),
+        (
+            ((-1_000_000..1_000_000).step_by(10).collect::<Vec<_>>(), 33),
+            false,
+        ),
         ((vec![], 1), false),
         ((vec![5], 5), true),
         ((vec![5], 4), false),
@@ -16,7 +19,7 @@ fn main() {
         ((vec![-5, -2, 0, 3, 7], 6), false),
     ];
 
-    std::process::exit(
-        run_tests!(&test_cases, |input| binary_search(&input.0, input.1))
-    );
+    std::process::exit(run_tests!(&test_cases, |input| binary_search(
+        &input.0, input.1
+    )));
 }

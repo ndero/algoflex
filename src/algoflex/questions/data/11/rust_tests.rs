@@ -9,12 +9,10 @@ fn main() {
         ((1267650600228229401496703205377_i128,), false),
         ((-64,), false),
         // Edge cases
-        ((1,), true),                   // 2^0
-        ((-2,), false),                 // Negative power of 2
-        ((i128::MAX,), false),          // Large non-power of 2
+        ((1,), true),          // 2^0
+        ((-2,), false),        // Negative power of 2
+        ((i128::MAX,), false), // Large non-power of 2
     ];
 
-    std::process::exit(
-        run_tests!(&test_cases, |input| is_power_of_two(input.0))
-    );
+    std::process::exit(run_tests!(&test_cases, |input| is_power_of_two(input.0)));
 }

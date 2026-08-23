@@ -12,13 +12,11 @@ fn main() {
         ((i32::MAX,), false),
         ((1,), true),
         // Edge cases
-        ((7,), true),               // Small happy number
-        ((10,), true),              // 1² + 0² = 1
-        ((100,), true),             // 1² + 0² + 0² = 1
-        ((4,), false),              // Small unhappy number
+        ((7,), true),   // Small happy number
+        ((10,), true),  // 1² + 0² = 1
+        ((100,), true), // 1² + 0² + 0² = 1
+        ((4,), false),  // Small unhappy number
     ];
 
-    std::process::exit(
-        run_tests!(&test_cases, |input| is_happy(input.0))
-    );
+    std::process::exit(run_tests!(&test_cases, |input| is_happy(input.0)));
 }

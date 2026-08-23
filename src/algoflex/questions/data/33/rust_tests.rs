@@ -40,21 +40,14 @@ fn main() {
         0,
     );
 
-    let root2 = array_to_tree(
-        &[Some(1), Some(2)],
-        0,
-    );
+    let root2 = array_to_tree(&[Some(1), Some(2)], 0);
 
     let root3 = sorted_to_bst(&(0..10).collect::<Vec<_>>());
 
     let root4 = array_to_tree(&[Some(5)], 0);
 
-    let root5 = array_to_tree(
-        &[Some(5), Some(3), Some(7)],
-        0,
-    );
+    let root5 = array_to_tree(&[Some(5), Some(3), Some(7)], 0);
     let root6 = sorted_to_bst(&(0..10_000).collect::<Vec<_>>());
-
 
     let test_cases = vec![
         ((&root1, 6, 8), 3),
@@ -77,11 +70,7 @@ fn main() {
         ((&root5, 3, 5), 5),
     ];
 
-    std::process::exit(
-        run_tests!(&test_cases, |input| lowest_common_ancestor(
-            input.0,
-            input.1,
-            input.2,
-        ))
-    );
+    std::process::exit(run_tests!(&test_cases, |input| lowest_common_ancestor(
+        input.0, input.1, input.2,
+    )));
 }

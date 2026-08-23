@@ -15,7 +15,5 @@ fn main() {
         ((vec![1, 2, 8, 7, 3, 9], 10), 15),
     ];
 
-    std::process::exit(
-        run_tests!(&test_cases, |input| pairwise(&input.0, input.1))
-    );
+    std::process::exit(run_tests!(&test_cases, |input| pairwise(&input.0, input.1)));
 }
