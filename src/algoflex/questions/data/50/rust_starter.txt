@@ -1,0 +1,3 @@
+fn longest_common_prefix(strs: &[String]) -> String {
+    // your move
+}
