@@ -1,0 +1,2 @@
+def can_reach_zero(nums: list[int], start: int) -> bool:
+    # your move

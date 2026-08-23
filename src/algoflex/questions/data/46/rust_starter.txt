@@ -1,0 +1,3 @@
+fn can_reach_zero(nums: &[i32], start: usize) -> bool {
+    // your move
+}
