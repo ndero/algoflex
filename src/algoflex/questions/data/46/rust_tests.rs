@@ -17,8 +17,6 @@ fn main() {
         ((nums4, 567), true),
         ((nums5, 0), true),
         ((nums6, 8), true),
-
-        // Edge cases
         ((vec![0, 1], 0), true),
         ((vec![0, 1], 1), true),
         ((vec![1, 0], 0), true),

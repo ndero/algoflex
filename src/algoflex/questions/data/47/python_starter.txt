@@ -1,0 +1,2 @@
+def max_loot(nums: list[int]) -> int:
+    # your move

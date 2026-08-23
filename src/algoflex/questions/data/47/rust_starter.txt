@@ -1,0 +1,3 @@
+fn max_loot(nums: &[i32]) -> i32 {
+    // your move
+}
