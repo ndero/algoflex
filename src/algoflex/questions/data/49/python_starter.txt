@@ -1,0 +1,2 @@
+def find_min_height_trees(n: int, edges: list[list[int]]) -> list[int]:
+    # your move
