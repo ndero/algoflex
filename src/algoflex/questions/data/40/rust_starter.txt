@@ -1,0 +1,3 @@
+fn smaller_to_the_right(nums: &[i32]) -> Vec<i32> {
+    // your move
+}

@@ -1,0 +1,2 @@
+def smaller_to_the_right(nums: list[int]) -> list[int]:
+    # your move
