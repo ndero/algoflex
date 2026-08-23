@@ -1,0 +1,2 @@
+def min_jumps(nums: list[int]) -> int:
+    # your move
