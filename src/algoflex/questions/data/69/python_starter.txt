@@ -1,0 +1,2 @@
+def n_queens(n: int) -> int:
+    # your move 
