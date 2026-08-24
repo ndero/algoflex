@@ -1,0 +1,6 @@
+def min_network_delay(
+    times: list[list[int]],
+    n: int, 
+    k: int
+) -> int:
+    # your move

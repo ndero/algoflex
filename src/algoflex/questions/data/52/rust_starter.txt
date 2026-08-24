@@ -1,0 +1,8 @@
+fn min_network_delay(
+    times: &[Vec<i32>], 
+    n: i32, 
+    k: i32
+) -> i32 {
+    // your move
+}
+
