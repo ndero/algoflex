@@ -1,0 +1,6 @@
+def reachable_cities(
+    n: int,
+    edges: list[list[int]],
+    k: int
+) -> int:
+    # your move 
