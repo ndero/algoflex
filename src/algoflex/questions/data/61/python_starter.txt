@@ -1,0 +1,2 @@
+def max_water(nums: list[int]) -> int:
+    # your move 
