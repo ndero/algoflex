@@ -1,0 +1,2 @@
+def daily_temperatures(temparatures: list[int]) -> list[int]:
+    # your move 

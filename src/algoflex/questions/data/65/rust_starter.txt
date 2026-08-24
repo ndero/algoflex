@@ -1,0 +1,3 @@
+fn daily_temperatures(temparatures: &[i32]) -> Vec<i32> {
+    // your move
+}
