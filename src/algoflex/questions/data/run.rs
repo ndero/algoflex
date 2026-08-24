@@ -1,3 +1,25 @@
+use std::fmt::Debug;
+
+fn format_value<T: Debug>(value: &T, max_len: usize) -> String {
+    let rendered = format!("{value:?}");
+    if rendered.len() <= max_len {
+        rendered
+    } else {
+        let truncated: String = rendered.chars().take(max_len).collect();
+        format!("{truncated}... [{} chars total]", rendered.len())
+    }
+}
+
+fn format_panic(error: Box<dyn std::any::Any + Send>) -> String {
+    if let Some(message) = error.downcast_ref::<&str>() {
+        message.to_string()
+    } else if let Some(message) = error.downcast_ref::<String>() {
+        message.clone()
+    } else {
+        "unknown panic".to_string()
+    }
+}
+
 macro_rules! run_tests {
     ($test_cases:expr, |$input:ident| $call:expr) => {{
         use std::panic::{catch_unwind, AssertUnwindSafe};
@@ -17,13 +39,13 @@ macro_rules! run_tests {
                     Ok(result) => {
                         println!(
                             "[b]x[/] test case {}\t[red]... FAIL[/]\n\
-                             \t[b]args[/]: {:?}\n\
-                             \t[b]got[/]: [red]{:?}[/]\n\
-                             \t[b]expected[/]: [green]{:?}[/]",
+                             \t[b]args[/]: {}\n\
+                             \t[b]got[/]: [red]{}[/]\n\
+                             \t[b]expected[/]: [green]{}[/]",
                             i + 1,
-                            input,
-                            result,
-                            expected
+                            format_value(input, 300),
+                            format_value(&result, 300),
+                            format_value(expected, 300)
                         );
 
                         break 'tests 1;
@@ -46,14 +68,4 @@ macro_rules! run_tests {
             0
         }
     }};
-}
-
-fn format_panic(error: Box<dyn std::any::Any + Send>) -> String {
-    if let Some(message) = error.downcast_ref::<&str>() {
-        message.to_string()
-    } else if let Some(message) = error.downcast_ref::<String>() {
-        message.clone()
-    } else {
-        "unknown panic".to_string()
-    }
 }
