@@ -1,0 +1,3 @@
+fn first_last(nums: &[i32], target: i32) -> Vec<i32> {
+    // your move
+}

@@ -1,0 +1,2 @@
+def first_last(nums: list[int], target: int) -> list[int]:
+    # your move 
