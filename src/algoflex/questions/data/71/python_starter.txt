@@ -1,0 +1,2 @@
+def count_scc(v: int, edges: list[list[int]]) -> int:
+    # your move 

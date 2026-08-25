@@ -1,0 +1,3 @@
+fn count_scc(v: usize, edges: &[Vec<usize>]) -> usize {
+    // your move 
+}
