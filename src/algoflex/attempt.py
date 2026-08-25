@@ -173,9 +173,9 @@ class AttemptScreen(Screen):
     def update_language(self, language: str) -> None:
         editor = self.query_one("#code", TextArea)
         self.language, self.test_time = language, monotonic()
-        question, draft = questions.get(self.problem_id), self.load_draft()
+        question, self.draft = questions.get(self.problem_id), self.load_draft()
         code = (
             question.python_starter if language == "python" else question.rust_starter
         )
-
-        editor.text, editor.language = draft["code"] if draft else code, language
+        editor.text = self.draft["code"] if self.draft else code
+        editor.language = language
