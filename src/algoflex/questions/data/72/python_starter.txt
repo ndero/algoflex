@@ -1,0 +1,2 @@
+def common_free_time(schedule: list[list[int]]) -> list[int]:
+    # your move 

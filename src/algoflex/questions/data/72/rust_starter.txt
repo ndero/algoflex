@@ -1,0 +1,3 @@
+fn common_free_time(schedule: &[Vec<[i32; 2]>]) -> Vec<[i32; 2]> {
+    // your move 
+}
