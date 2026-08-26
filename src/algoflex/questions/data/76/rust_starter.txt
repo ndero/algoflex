@@ -1,0 +1,12 @@
+#[derive(Debug)]
+struct ListNode {
+    val: i32,
+    next: Option<Box<ListNode>>,
+}
+
+fn merge_list(
+    mut head1: Option<Box<ListNode>>,
+    mut head2: Option<Box<ListNode>>
+) -> Option<Box<ListNode>> {
+    // your move 
+}

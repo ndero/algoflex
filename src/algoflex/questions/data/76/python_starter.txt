@@ -1,0 +1,13 @@
+class ListNode:
+    __slots__ = ("val", "next")
+
+    def __init__(self, val: int =0, next: "ListNode | None" =None):
+        self.val = val
+        self.next = next
+        
+
+def merge_list(
+    head1: ListNode | None, 
+    head2: ListNode | None
+) -> ListNode | None:
+    # your move 
