@@ -1,0 +1,21 @@
+struct LRUCache {
+    // your fields
+}
+
+
+impl LRUCache {
+    fn new(capacity: i32) -> Self {
+        LRUCache {
+            // initialize
+        }
+    }
+
+    fn get(&mut self, key: i32) -> i32 {
+        // implement get 
+    }
+
+    fn put(&mut self, key: i32, value: i32) {
+        // implement put 
+    }
+}
+
