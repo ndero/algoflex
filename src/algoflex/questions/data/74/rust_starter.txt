@@ -1,0 +1,9 @@
+#[derive(Debug)]
+struct ListNode {
+    val: i32,
+    next: Option<Box<ListNode>>,
+}
+
+fn reverse_list(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+    // your move 
+}
