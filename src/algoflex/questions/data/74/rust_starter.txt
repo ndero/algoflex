@@ -4,6 +4,6 @@ struct ListNode {
     next: Option<Box<ListNode>>,
 }
 
-fn reverse_list(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+fn reverse_list(mut head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
     // your move 
 }
