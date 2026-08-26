@@ -1,0 +1,23 @@
+struct MyHashMap {
+    // Your fields 
+}
+
+impl MyHashMap {
+    fn new() -> Self {
+        MyHashMap {
+            // Initialize
+        }
+    }
+
+    fn put(&mut self, key: i32, value: i32) {
+        // Implement put
+    }
+
+    fn get(&self, key: i32) -> i32 {
+        // Implement get;
+    }
+
+    fn remove(&mut self, key: i32) {
+        // Implement remove
+    }
+}
