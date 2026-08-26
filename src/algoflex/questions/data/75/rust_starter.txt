@@ -1,0 +1,12 @@
+use std::cell::RefCell;
+use std::rc::Rc;
+
+#[derive(Debug)]
+struct ListNode {
+    val: i32,
+    next: Option<Rc<RefCell<ListNode>>>,
+}
+
+fn has_cycle(head: Option<Rc<RefCell<ListNode>>>) -> bool {
+    // your move 
+}
