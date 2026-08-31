@@ -1,7 +1,7 @@
 from typing import ClassVar
 
+from textual.app import ComposeResult
 from textual.containers import Vertical
-from textual.reactive import reactive
 from textual.screen import ModalScreen
 from textual.widgets import Footer, Input, Label, ListItem, ListView
 
@@ -14,8 +14,6 @@ class SearchScreen(ModalScreen):
         ("escape", "dismiss", "dismiss"),
     ]
 
-    problems = reactive([])  # all problems
-    target = reactive("")
     DEFAULT_CSS = """
     SearchScreen {
         align: center middle;
@@ -38,16 +36,22 @@ class SearchScreen(ModalScreen):
     }
     """
 
-    def compose(self):
+    def __init__(self) -> None:
+        super().__init__()
+        self.problems: list[tuple[str, int, str]] = []
+
+    def compose(self) -> ComposeResult:
         with Vertical(id="dialog"):
             yield Input(
-                value=f"{self.target}",
+                id="search",
                 placeholder="Search problems...",
             )
             yield ListView(id="results")
         yield Footer()
 
     async def on_mount(self) -> None:
+        self.list_view = self.query_one("#results", ListView)
+
         passed = get_passed_problem_ids()
         self.problems = [
             (
@@ -60,22 +64,21 @@ class SearchScreen(ModalScreen):
         await self.update_results(self.problems)
 
     async def on_input_changed(self, event: Input.Changed) -> None:
-        self.target = event.value.strip().lower()
-        results = [p for p in self.problems if (self.target in p[2].lower())]
+        target = event.value.strip().casefold()
+        results = [p for p in self.problems if (target in p[2].casefold())]
         await self.update_results(results)
 
-    async def update_results(self, results):
-        list_view = self.query_one("#results", ListView)
-        await list_view.clear()
+    async def update_results(self, results) -> None:
+        await self.list_view.clear()
         for passed, pid, title in results:
-            list_view.append(
+            self.list_view.append(
                 ListItem(
                     Label(f"{passed} [b]{title}[/]"),
                     id=f"item-{pid}",
                 )
             )
 
-    def on_list_view_selected(self, event: ListView.Selected):
+    def on_list_view_selected(self, event: ListView.Selected) -> None:
         selected = event.item.id or ""
-        pid = int(selected.lstrip("item-"))
+        pid = int(selected.removeprefix("item-"))
         self.dismiss(pid)
