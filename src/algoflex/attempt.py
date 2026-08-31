@@ -142,7 +142,7 @@ class AttemptScreen(Screen):
 
         return md
 
-    def attempt(self) -> None:
+    def submit(self) -> None:
         def update(_id):
             self.update_attempt_view()
 
@@ -155,7 +155,7 @@ class AttemptScreen(Screen):
                 code.text,
                 elapsed,
                 self.best,
-                self.LANGUAGES[self.lang_id],
+                self.lang_id,
             ),
             update,
         )
@@ -167,7 +167,7 @@ class AttemptScreen(Screen):
         self.dismiss()
 
     def action_submit(self) -> None:
-        self.attempt()
+        self.submit()
 
     def action_maximize(self) -> None:
         editor = self.query_one("#editor", TabbedContent)
