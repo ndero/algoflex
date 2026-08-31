@@ -1,7 +1,7 @@
 from random import shuffle
 from typing import ClassVar
 
-from textual.app import App
+from textual.app import App, ComposeResult
 from textual.binding import Binding
 from textual.containers import Horizontal, Vertical, VerticalScroll
 from textual.reactive import reactive
@@ -97,7 +97,7 @@ class HomeScreen(App):
     def problems_count(self) -> int:
         return len(self.problems)
 
-    def compose(self):
+    def compose(self) -> ComposeResult:
         yield Title()
         with VerticalScroll():
             yield Dashboard().data_bind(HomeScreen.show_dashboard)
