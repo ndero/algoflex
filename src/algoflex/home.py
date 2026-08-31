@@ -10,7 +10,12 @@ from textual.widgets import Footer, Markdown, Static
 from algoflex.attempt import AttemptScreen
 from algoflex.custom_widgets import Problem, Title
 from algoflex.dashboard import Dashboard
-from algoflex.db import get_best_attempts, get_problem_pass_ratio, get_recent_attempts
+from algoflex.db import (
+    get_best_attempts,
+    get_draft,
+    get_problem_pass_ratio,
+    get_recent_attempts,
+)
 from algoflex.questions import questions
 from algoflex.search import SearchScreen
 from algoflex.utils import fmt_secs, time_ago
@@ -150,7 +155,10 @@ class HomeScreen(App):
         def update(_id):
             self.update_problem_view()
 
-        self.push_screen(AttemptScreen(self.problem_id), update)
+        recent = get_recent_attempts(n=1)
+        lang_id = recent[0]["lang_id"] if recent else 1
+        draft = get_draft(problem_id=self.problem_id, lang_id=lang_id)
+        self.push_screen(AttemptScreen(self.problem_id, lang_id, draft), update)
 
     def action_next(self) -> None:
         if self.show_dashboard:
@@ -186,6 +194,7 @@ class HomeScreen(App):
             None  - show footer key disabled
         """
         if self.screen.id != "_default" and action in {
+            "attempt",
             "next",
             "previous",
             "search",
