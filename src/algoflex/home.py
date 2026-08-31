@@ -55,6 +55,7 @@ class HomeScreen(App):
         Binding("s", "search", "search"),
         Binding("d", "dashboard", "dashboard", tooltip="Show dashboard"),
     ]
+
     DEFAULT_CSS = """
     HomeScreen {
         Problem {
@@ -73,15 +74,23 @@ class HomeScreen(App):
         layers: dashboard;
     }
     """
-    PROBLEMS: ClassVar = list(questions.ids)
-    PROBLEMS_COUNT = len(PROBLEMS)
 
-    index = reactive(0, bindings=True)
+    LEVEL_COLORS: ClassVar[dict[str, str]] = {
+        "Breezy": "green 90%",
+        "Steady": "orange 70%",
+        "Edgy": "red 70%",
+    }
+
+    index: reactive[int] = reactive(0, bindings=True)
     show_dashboard: reactive[bool] = reactive(False)
 
     @property
-    def problem_id(self):
-        return self.PROBLEMS[self.index]
+    def problem_id(self) -> int:
+        return self.problems[self.index]
+
+    @property
+    def problems_count(self) -> int:
+        return len(self.problems)
 
     def compose(self):
         yield Title()
@@ -91,21 +100,23 @@ class HomeScreen(App):
             yield StatScreen()
         yield Footer()
 
-    def on_mount(self):
-        shuffle(self.PROBLEMS)
+    def on_mount(self) -> None:
+        self.problems = list(questions.ids)
+        shuffle(self.problems)
+
+        self.passed = self.query_one("#passed", Static)
+        self.last = self.query_one("#last", Static)
+        self.best = self.query_one("#best", Static)
+        self.level = self.query_one("#level", Static)
+        self.problem = self.query_one(Problem)
+        self.markdown = self.problem.query_one(Markdown)
 
     def watch_index(self) -> None:
         self.update_problem_view()
 
-    def update_problem_view(self):
+    def get_problem_details(self) -> tuple:
         p = questions.get(self.problem_id)
         markdown, level = p.markdown, p.level
-
-        problem_widget = self.query_one(Problem)
-        problem_widget.query_one(Markdown).update(markdown)
-        problem_widget.scroll_home()
-        self.update_level(level)
-
         passed, total = get_problem_pass_ratio(self.problem_id)
         last_attempts = get_recent_attempts(n=1, problem_id=self.problem_id)
         best_attempts = get_best_attempts(n=1, problem_id=self.problem_id)
@@ -116,20 +127,23 @@ class HomeScreen(App):
             row = last_attempts[0]
             last = ("🟢 " if row["passed"] else "🔴 ") + time_ago(row["created_at"])
 
-        self.query_one("#passed", Static).update(f"{passed!s}/{total!s}")
-        self.query_one("#last", Static).update(f"{last}")
-        self.query_one("#best", Static).update(f"{best}")
+        return markdown, level, passed, total, last, best
 
-    def update_level(self, level):
-        target = self.query_one("#level", Static)
-        colors = {"Breezy": "green 90%", "Steady": "orange 70%", "Edgy": "red 70%"}
-        target.update(f"[{colors.get(level, '$primary')}]{level}[/]")
+    def update_problem_view(self) -> None:
+        markdown, level, passed, total, last, best = self.get_problem_details()
+        self.markdown.update(markdown)
+        self.problem.scroll_home()
+        self.level.update(f"[{self.LEVEL_COLORS.get(level, '$primary')}]{level}[/]")
+
+        self.passed.update(f"{passed!s}/{total!s}")
+        self.last.update(f"{last}")
+        self.best.update(f"{best}")
 
     def watch_show_dashboard(self, show_dashboard) -> None:
         dashboard = self.query_one(Dashboard)
         dashboard.set_class(show_dashboard, "-visible")
 
-    def action_attempt(self):
+    def action_attempt(self) -> None:
         if self.show_dashboard:
             self.show_dashboard = False
 
@@ -138,42 +152,47 @@ class HomeScreen(App):
 
         self.push_screen(AttemptScreen(self.problem_id), update)
 
-    def action_next(self):
+    def action_next(self) -> None:
         if self.show_dashboard:
             self.show_dashboard = False
-        if self.index + 1 < self.PROBLEMS_COUNT:
+        if self.index + 1 < self.problems_count:
             self.index += 1
 
-    def action_previous(self):
+    def action_previous(self) -> None:
         if self.show_dashboard:
             self.show_dashboard = False
         if self.index > 0:
             self.index -= 1
 
-    def action_search(self):
+    def action_search(self) -> None:
         def on_close(result):
             if result is None:
                 return
-            if result in self.PROBLEMS:
-                self.index = self.PROBLEMS.index(result)
+            if result in self.problems:
+                self.index = self.problems.index(result)
 
         if self.show_dashboard:
             self.show_dashboard = False
         self.push_screen(SearchScreen(), on_close)
 
-    def action_dashboard(self):
+    def action_dashboard(self) -> None:
         self.show_dashboard = not self.show_dashboard
 
-    def check_action(self, action, parameters):
-        if self.screen.id != "_default" and (
-            action == "attempt"
-            or action == "next"
-            or action == "previous"
-            or action == "search"
-            or action == "dashboard"
-        ):
+    def check_action(self, action, parameters) -> bool | None:
+        """
+        Returns:
+            True  - show footer key active
+            False - hide footer key
+            None  - show footer key disabled
+        """
+        if self.screen.id != "_default" and action in {
+            "next",
+            "previous",
+            "search",
+            "dashboard",
+        }:
             return False
-        if self.index == self.PROBLEMS_COUNT - 1 and action == "next":
+        if self.index == self.problems_count - 1 and action == "next":
             return
         if self.index == 0 and action == "previous":
             return
