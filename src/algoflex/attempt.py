@@ -1,6 +1,8 @@
+import sqlite3
 from time import monotonic
 from typing import ClassVar
 
+from textual.app import ComposeResult
 from textual.binding import Binding
 from textual.containers import Horizontal, ScrollableContainer, Vertical
 from textual.screen import Screen
@@ -21,6 +23,7 @@ class AttemptScreen(Screen):
         ),
         Binding("ctrl+b", "back", "back", tooltip="Go to home"),
     ]
+
     DEFAULT_CSS = """
     Horizontal {
         Problem {
@@ -59,30 +62,23 @@ class AttemptScreen(Screen):
     }
     """
 
-    def __init__(self, problem_id):
+    LANGUAGES: ClassVar = {1: "python", 2: "rust"}
+
+    def __init__(self, problem_id, lang_id, draft):
         super().__init__()
-        self.problem_id = problem_id
-        self.test_time = monotonic()
-        self.best = None
+        self.problem_id: int = problem_id
+        self.test_time: float = monotonic()
+        self.lang_id: int = lang_id
+        self.draft: sqlite3.Row = draft
 
-        recent = get_recent_attempts(n=1)
-        self.language = "rust" if recent and recent[0]["lang_id"] == 2 else "python"
-        self.draft = self.load_draft()
-
-    def compose(self):
+    def compose(self) -> ComposeResult:
         question = questions.get(self.problem_id)
         description = question.markdown
-
-        code = (
-            question.python_starter
-            if self.language == "python"
-            else question.rust_starter
-        )
-
+        code = question.python_starter if self.lang_id == 1 else question.rust_starter
         if self.draft:
             code = self.draft["code"]
 
-        yield Title(show_language_selector=True, language=self.language)
+        yield Title(show_language_selector=True, language=self.LANGUAGES[self.lang_id])
         with Horizontal():
             yield Problem(description)
             with TabbedContent("Attempt", "Timeline", "Past solutions", id="editor"):
@@ -91,7 +87,7 @@ class AttemptScreen(Screen):
                         code,
                         id="code",
                         show_line_numbers=True,
-                        language=self.language,
+                        language=self.LANGUAGES[self.lang_id],
                         compact=True,
                         tab_behavior="indent",
                     )
@@ -99,28 +95,23 @@ class AttemptScreen(Screen):
                 yield Markdown(id="solutions")
         yield Footer()
 
-    def on_mount(self):
+    def on_mount(self) -> None:
+        self.best: float | None = None
+        self.timeline = self.query_one("#timeline", Static)
+        self.solutions = self.query_one("#solutions", Markdown)
+
         self.update_attempt_view()
 
-    def update_attempt_view(self):
+    def update_attempt_view(self) -> None:
         """Update attempt timeline and past solutions"""
         attempts = get_recent_attempts(n=-1, problem_id=self.problem_id)
-        self.update_timeline(attempts)
-        self.update_solutions(attempts)
+        timeline = self.get_timeline(attempts)
+        solutions = self.get_solutions(attempts)
 
-    def attempt(self):
-        def update(_id):
-            self.update_attempt_view()
+        self.timeline.update(timeline)
+        self.solutions.update(solutions)
 
-        code = self.query_one("#code", TextArea)
-        elapsed_before = self.draft["elapsed"] if self.draft else 0
-        elapsed = (monotonic() - self.test_time) + elapsed_before
-        self.app.push_screen(
-            ResultModal(self.problem_id, code.text, elapsed, self.best, self.language),
-            update,
-        )
-
-    def update_timeline(self, attempts):
+    def get_timeline(self, attempts) -> str:
         """Display timeline for all language attempts"""
         md = ""
         best_attempts = get_best_attempts(n=1, problem_id=self.problem_id)
@@ -135,9 +126,10 @@ class AttemptScreen(Screen):
             if best_attempt and best_attempt["attempt_id"] == attempt["attempt_id"]:
                 md += "\t<--- best"
             md += "\n|"
-        self.query_one("#timeline", Static).update(md.rstrip("|"))
 
-    def update_solutions(self, attempts):
+        return md.rstrip("|")
+
+    def get_solutions(self, attempts) -> str:
         """Display all language solutions"""
         md = ""
 
@@ -147,16 +139,34 @@ class AttemptScreen(Screen):
                 md += f"### {time_ago(attempt['created_at'])}\t"
                 md += f"{'🐍' if attempt['lang_id'] == 1 else '🦀'}"
                 md += f"\n```{lang}\n{attempt['code']}\n```\n"
-        self.query_one("#solutions", Markdown).update(md)
 
-    def load_draft(self):
-        lang_id = 2 if self.language == "rust" else 1
-        return get_draft(problem_id=self.problem_id, lang_id=lang_id)
+        return md
 
-    def action_back(self):
+    def attempt(self) -> None:
+        def update(_id):
+            self.update_attempt_view()
+
+        code = self.query_one("#code", TextArea)
+        elapsed_before = self.draft["elapsed"] if self.draft else 0
+        elapsed = (monotonic() - self.test_time) + elapsed_before
+        self.app.push_screen(
+            ResultModal(
+                self.problem_id,
+                code.text,
+                elapsed,
+                self.best,
+                self.LANGUAGES[self.lang_id],
+            ),
+            update,
+        )
+
+    def load_draft(self) -> sqlite3.Row:
+        return get_draft(problem_id=self.problem_id, lang_id=self.lang_id)
+
+    def action_back(self) -> None:
         self.dismiss()
 
-    def action_submit(self):
+    def action_submit(self) -> None:
         self.attempt()
 
     def action_maximize(self) -> None:
@@ -167,15 +177,14 @@ class AttemptScreen(Screen):
             self.minimize()
 
     def on_title_language_changed(self, message: Title.LanguageChanged) -> None:
-        if message.language != self.language:
+        if message.language != self.LANGUAGES[self.lang_id]:
             self.update_language(message.language)
 
     def update_language(self, language: str) -> None:
         editor = self.query_one("#code", TextArea)
-        self.language, self.test_time = language, monotonic()
+        lang_ids = {"python": 1, "rust": 2}
+        self.lang_id, self.test_time = lang_ids[language], monotonic()
         question, self.draft = questions.get(self.problem_id), self.load_draft()
-        code = (
-            question.python_starter if language == "python" else question.rust_starter
-        )
+        code = question.python_starter if self.lang_id == 1 else question.rust_starter
         editor.text = self.draft["code"] if self.draft else code
         editor.language = language
