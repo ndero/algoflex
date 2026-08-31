@@ -1,7 +1,7 @@
 ### Elements in exactly one array 
 Create a function that takes two or more `arrays` and returns a `set` of all elements that appear in exactly one array. 
 
-> Retrn the set of elements belonging to exactly one of the sets.
+> Return the set of elements belonging to exactly one of the sets.
 
 ### Example
 ```
