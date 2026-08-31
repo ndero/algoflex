@@ -6,6 +6,7 @@ import time
 from pathlib import Path
 from typing import ClassVar
 
+from textual.app import ComposeResult
 from textual.screen import ModalScreen
 from textual.widgets import Footer, RichLog, Static
 
@@ -42,13 +43,13 @@ class ResultModal(ModalScreen):
     }
     """
 
-    def __init__(self, problem_id, user_code, elapsed, best, language):
+    def __init__(self, problem_id, user_code, elapsed, best, lang_id):
         super().__init__()
-        self.problem_id = problem_id
-        self.user_code = user_code
-        self.elapsed = elapsed
-        self.best = best
-        self.language = language
+        self.problem_id: int = problem_id
+        self.user_code: str = user_code
+        self.elapsed: float = elapsed
+        self.best: float | None = best
+        self.lang_id: int = lang_id
 
     def on_mount(self) -> None:
         asyncio.create_task(self.run_user_code())
@@ -80,7 +81,7 @@ class ResultModal(ModalScreen):
 
         self.query_one("#status", Static).update("")
 
-    def compose(self):
+    def compose(self) -> ComposeResult:
         yield RichLog(markup=True, wrap=True, max_lines=1_000, auto_scroll=True)
         yield Static(id="status")
         yield Footer()
@@ -92,11 +93,10 @@ class ResultModal(ModalScreen):
         output_log = self.query_one(RichLog)
         user_code = self.user_code.strip()
 
-        lang_id = 1 if self.language == "python" else 2
         question = questions.get(self.problem_id)
         test_code, suffix = question.python_tests, ".py"
 
-        if lang_id == 2:  # rust
+        if self.lang_id == 2:  # rust
             test_code = question.rust_tests
             suffix = ".rs"
 
@@ -115,7 +115,7 @@ class ResultModal(ModalScreen):
 
             run_args = [sys.executable, "-u", tmp_path]
 
-            if lang_id == 2:
+            if self.lang_id == 2:
                 # compile rust source
                 executable_path = tmp_path.removesuffix(".rs")
                 compile_args = [
@@ -209,24 +209,24 @@ class ResultModal(ModalScreen):
                     "elapsed": self.elapsed,
                     "created_at": now,
                     "code": user_code,
-                    "lang_id": lang_id,
+                    "lang_id": self.lang_id,
                 }
             )
 
             if passed:
-                delete_draft(self.problem_id, lang_id)
+                delete_draft(self.problem_id, self.lang_id)
             else:
                 add_draft(
                     {
                         "problem_id": self.problem_id,
-                        "lang_id": lang_id,
+                        "lang_id": self.lang_id,
                         "code": user_code,
                         "elapsed": self.elapsed,
                         "updated_at": now,
                     }
                 )
 
-    def new_best(self):
+    def new_best(self) -> None:
         widget = Static(f"[b]New best time!! --> {fmt_secs(self.elapsed)}[/]")
         widget.styles.height = 3
         widget.styles.content_align = ("center", "middle")
