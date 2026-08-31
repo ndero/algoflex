@@ -27,18 +27,6 @@ from algoflex.utils import fmt_secs, time_ago
 class Dashboard(Widget):
     show_dashboard = reactive(False)
 
-    # get questions summary by level
-    breezy, steady, edgy = set(), set(), set()
-    for pid in q.ids:
-        question = q.get(pid)
-        if question.level == "Breezy":
-            breezy.add(pid)
-        elif question.level == "Steady":
-            steady.add(pid)
-        else:
-            edgy.add(pid)
-    total = len(breezy) + len(steady) + (len(edgy) * 1.5)
-
     DEFAULT_CSS = """
     Dashboard {
         overflow-y: auto;
@@ -110,37 +98,73 @@ class Dashboard(Widget):
             with Horizontal(id="counts"):
                 with Center(id="breezy"):
                     yield Center(Label("Breezy"))
-                    yield Digits("0", id="d_breezy")
-                    yield Center(Label(f"of {len(self.breezy)}"))
+                    yield Digits("0", id="breezy_complete")
+                    yield Center(Label("of 0", id="breezy_total"))
                 with Center(id="steady"):
                     yield Center(Label("Steady"))
-                    yield Digits("0", id="d_steady")
-                    yield Center(Label(f"of {len(self.steady)}"))
+                    yield Digits("0", id="steady_complete")
+                    yield Center(Label("of 0", id="steady_total"))
                 with Center(id="edgy"):
                     yield Center(Label("Edgy"))
-                    yield Digits("0", id="d_edgy")
-                    yield Center(Label(f"of {len(self.edgy)}"))
+                    yield Digits("0", id="edgy_complete")
+                    yield Center(Label("of 0", id="edgy_total"))
             with Center(id="progress"):
-                yield ProgressBar(total=self.total, show_eta=False, id="all")
+                yield ProgressBar(show_eta=False, id="all")
             with Center():
                 yield Static("", id="today")
             with Collapsible(title="Recent Attempts", collapsed=False):
                 yield Markdown(id="recent")
-            with Collapsible(title="Most Attempted"):
+            with Collapsible(title="Most Attempted", collapsed=False):
                 yield Markdown(id="frequent")
             with Collapsible(title="Personal Bests"):
                 yield Markdown(id="best")
 
+    def on_mount(self) -> None:
+        self.breezy_complete = self.query_one("#breezy_complete", Digits)
+        self.steady_complete = self.query_one("#steady_complete", Digits)
+        self.edgy_complete = self.query_one("#edgy_complete", Digits)
+        self.breezy_total = self.query_one("#breezy_total", Label)
+        self.steady_total = self.query_one("#steady_total", Label)
+        self.edgy_total = self.query_one("#edgy_total", Label)
+        self.progress_bar = self.query_one("#all", ProgressBar)
+        self.today = self.query_one("#today", Static)
+        self.recent_markdown = self.query_one("#recent", Markdown)
+        self.frequent_markdown = self.query_one("#frequent", Markdown)
+        self.best_markdown = self.query_one("#best", Markdown)
+
+        self.breezy, self.steady, self.edgy = self.problem_levels()
+        self.total = len(self.breezy) + len(self.steady) + (len(self.edgy) * 1.5)
+
+        self.update_dashboard_totals()
+
+    def problem_levels(self) -> tuple[set[int], set[int], set[int]]:
+        breezy, steady, edgy = set(), set(), set()
+        for pid in q.ids:
+            question = q.get(pid)
+            if question.level == "Breezy":
+                breezy.add(pid)
+            elif question.level == "Steady":
+                steady.add(pid)
+            else:
+                edgy.add(pid)
+
+        return breezy, steady, edgy
+
+    def update_dashboard_totals(self) -> None:
+        self.breezy_total.update(f"of {len(self.breezy)}")
+        self.steady_total.update(f"of {len(self.steady)}")
+        self.edgy_total.update(f"of {len(self.edgy)}")
+        self.progress_bar.update(total=self.total)
+
     def watch_show_dashboard(self) -> None:
-        ids = ["#d_breezy", "#d_steady", "#d_edgy"]
         if self.show_dashboard:
             breezy, steady, edgy = self.get_complete()
-            self.update_digits(ids, [breezy, steady, int(edgy // 1.5)])
+            self.update_digits(breezy, steady, int(edgy // 1.5))
             self.update_progress(breezy + steady + edgy)
             self.update_highlight()
             self.update_summary()
 
-    def md_table(self, headers, rows):
+    def md_table(self, headers, rows) -> str:
         if not rows:
             return "\n\nNo records yet\n\n"
         sep = "|" + "|".join(["---"] * len(headers)) + "|"
@@ -148,14 +172,14 @@ class Dashboard(Widget):
         body = "\n".join("|" + "|".join(map(str, r)) + "|" for r in rows)
         return f"{head}\n{sep}\n{body}"
 
-    def get_complete(self):
+    def get_complete(self) -> tuple[int, int, float]:
         passed = get_passed_problem_ids()
         breezy = len(self.breezy.intersection(passed))
         steady = len(self.steady.intersection(passed))
         edgy = len(self.edgy.intersection(passed))
         return breezy, steady, edgy * 1.5
 
-    def get_summary(self):
+    def get_summary(self) -> tuple[list, list, list]:
         recent_attempts = get_recent_attempts(n=9)
         most_attempts = get_most_attempted_problems(n=9)
         best_per_problem = get_best_attempts(n=9)
@@ -196,32 +220,29 @@ class Dashboard(Widget):
 
         return recent, frequent, fast
 
-    def get_today_highlight(self):
+    def get_today_highlight(self) -> tuple[str, int, int]:
         passed, total = get_attempts_today()
         comment = self.get_highlight_comment(passed, total)
         return comment, passed, total
 
-    def get_highlight_comment(self, passed, attempts):
+    def get_highlight_comment(self, passed: int, attempts: int) -> str:
         if passed == 0:
             return "Not bad" if attempts < 6 else "D for dust"
         if passed < 3:
             return choice(["Solid", "Great", "Cool", "Good"])
-        elif passed < 5:
+        if passed < 5:
             return choice(["Excellent", "Super", "Brill", "Fab", "Legit", "Smooth"])
-        elif passed < 9:
+        if passed < 9:
             return choice(["Wizard", "Maestro", "Hotshot", "Pro"])
-        else:
-            return "Ace"
+        return "Ace"
 
-    def update_digits(self, ids, values):
-        for id, val in zip(ids, values):
-            self.update_digit(id, val)
+    def update_digits(self, breezy, steady, edgy) -> None:
+        self.breezy_complete.update(f"{breezy}")
+        self.steady_complete.update(f"{steady}")
+        self.edgy_complete.update(f"{edgy}")
 
-    def update_digit(self, id, value):
-        self.query_one(f"{id}", Digits).update(f"{value}")
-
-    def update_progress(self, value):
-        self.query_one(ProgressBar).update(progress=value)
+    def update_progress(self, value) -> None:
+        self.progress_bar.update(progress=value)
 
     def update_summary(self) -> None:
         recent, frequent, fast = self.get_summary()
@@ -229,16 +250,15 @@ class Dashboard(Widget):
         latest = self.md_table(headers, recent)
         popular = self.md_table(["Problem", "Level", "Passed"], frequent)
         best = self.md_table(headers, fast)
-        self.query_one("#recent", Markdown).update(latest)
-        self.query_one("#frequent", Markdown).update(popular)
-        self.query_one("#best", Markdown).update(best)
+        self.recent_markdown.update(latest)
+        self.frequent_markdown.update(popular)
+        self.best_markdown.update(best)
 
-    def update_highlight(self):
+    def update_highlight(self) -> None:
         comment, passed, total = self.get_today_highlight()
         if not total:
             return
         desc = f"[$primary]{comment}![/] Solved [$primary]{passed}[/] problem{'s' if passed != 1 else ''} in [$primary]{total}[/] attempt{'s' if total != 1 else ''} today."
-        today = self.query_one("#today", Static)
-        today.update(desc)
-        today.border_title = "Today's highlight"
-        today.display = True
+        self.today.update(desc)
+        self.today.border_title = "Today's highlight"
+        self.today.display = True
