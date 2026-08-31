@@ -78,7 +78,7 @@ class AttemptScreen(Screen):
         if self.draft:
             code = self.draft["code"]
 
-        yield Title(show_language_selector=True, language=self.LANGUAGES[self.lang_id])
+        yield Title(show_language_selector=True, lang_id=self.lang_id)
         with Horizontal():
             yield Problem(description)
             with TabbedContent("Attempt", "Timeline", "Past solutions", id="editor"):
@@ -177,14 +177,13 @@ class AttemptScreen(Screen):
             self.minimize()
 
     def on_title_language_changed(self, message: Title.LanguageChanged) -> None:
-        if message.language != self.LANGUAGES[self.lang_id]:
-            self.update_language(message.language)
+        if message.lang_id != self.lang_id:
+            self.update_language(message.lang_id)
 
-    def update_language(self, language: str) -> None:
+    def update_language(self, lang_id: int) -> None:
         editor = self.query_one("#code", TextArea)
-        lang_ids = {"python": 1, "rust": 2}
-        self.lang_id, self.test_time = lang_ids[language], monotonic()
+        self.lang_id, self.test_time = lang_id, monotonic()
         question, self.draft = questions.get(self.problem_id), self.load_draft()
         code = question.python_starter if self.lang_id == 1 else question.rust_starter
         editor.text = self.draft["code"] if self.draft else code
-        editor.language = language
+        editor.language = self.LANGUAGES[self.lang_id]

@@ -1,3 +1,4 @@
+from textual.app import ComposeResult
 from textual.containers import Container, VerticalScroll
 from textual.message import Message
 from textual.widgets import Markdown, Select, Static
@@ -13,18 +14,18 @@ class Problem(VerticalScroll):
     }
     """
 
-    def __init__(self, markdown):
+    def __init__(self, markdown) -> None:
         super().__init__()
         self.markdown = markdown
 
-    def compose(self):
+    def compose(self) -> ComposeResult:
         yield Markdown(self.markdown)
 
 
 class Title(Container):
     class LanguageChanged(Message):
-        def __init__(self, language: str) -> None:
-            self.language = language
+        def __init__(self, lang_id: int) -> None:
+            self.lang_id = lang_id
             super().__init__()
 
     DEFAULT_CSS = """
@@ -59,14 +60,12 @@ class Title(Container):
     }
     """
 
-    def __init__(
-        self, show_language_selector: bool = False, language: str = "python"
-    ) -> None:
+    def __init__(self, show_language_selector: bool = False, lang_id: int = 1) -> None:
         self.show_language_selector = show_language_selector
-        self.language = language
+        self.lang_id = lang_id
         super().__init__()
 
-    def compose(self):
+    def compose(self) -> ComposeResult:
         yield Static(
             "[b]Algoflex - The terminal code practice app[/]",
             id="title",
@@ -75,14 +74,15 @@ class Title(Container):
         if self.show_language_selector:
             yield Select(
                 [
-                    ("Python", "python"),
-                    ("Rust", "rust"),
+                    ("Python", 1),
+                    ("Rust", 2),
                 ],
-                value=self.language,
+                value=self.lang_id,
                 allow_blank=False,
                 compact=True,
                 id="language-selector",
             )
 
     def on_select_changed(self, event: Select.Changed) -> None:
-        self.post_message(self.LanguageChanged(str(event.value)))
+        if type(event.value) is int:  # never blank and always an integer
+            self.post_message(message=self.LanguageChanged(event.value))
