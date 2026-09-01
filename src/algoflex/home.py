@@ -18,7 +18,7 @@ from algoflex.db import (
 )
 from algoflex.questions import questions
 from algoflex.search import SearchScreen
-from algoflex.types import Language, Level
+from algoflex.types import Language, Level, RunStatus
 from algoflex.utils import fmt_secs, time_ago
 
 
@@ -131,7 +131,7 @@ class HomeScreen(App):
         last = "..."
         if last_attempts:
             row = last_attempts[0]
-            last = ("🟢 " if row["passed"] else "🔴 ") + time_ago(row["created_at"])
+            last = f"{RunStatus(row['status']).icon} {time_ago(row['created_at'])}"
 
         return markdown, level, passed, total, last, best
 

@@ -36,9 +36,25 @@ class Language(IntEnum):
         return suffixes[self]
 
 
+class RunStatus(IntEnum):
+    PASSED = 1
+    FAILED = 2
+    TIMEOUT = 3
+    ERROR = 4
+    COMPILE_ERROR = 5
+
+    @property
+    def label(self) -> str:
+        return self.name.title()
+
+    @property
+    def icon(self) -> str:
+        return "🟢" if self is self.PASSED else "🔴"
+
+
 class Attempt(TypedDict):
     problem_id: int
-    passed: bool
+    status: RunStatus
     elapsed: float
     created_at: float
     code: str

@@ -21,7 +21,7 @@ from algoflex.db import (
     get_recent_attempts,
 )
 from algoflex.questions import questions as q
-from algoflex.types import Language, Level
+from algoflex.types import Language, Level, RunStatus
 from algoflex.utils import fmt_secs, time_ago
 
 
@@ -193,7 +193,7 @@ class Dashboard(Widget):
 
         recent = [
             (
-                ("✓ " if attempt["passed"] else "x ")
+                ("✓ " if RunStatus(attempt["status"]) is RunStatus.PASSED else "x ")
                 + q.get(attempt["problem_id"]).title,
                 q.get(attempt["problem_id"]).level.label,
                 Language(attempt["lang_id"]).label,

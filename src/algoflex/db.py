@@ -3,7 +3,7 @@ from pathlib import Path
 
 from platformdirs import user_data_dir
 
-from algoflex.types import Attempt, Draft, Language
+from algoflex.types import Attempt, Draft, Language, RunStatus
 from algoflex.utils import midnight
 
 APP_NAME = "algoflex"
@@ -34,7 +34,7 @@ def get_db() -> sqlite3.Connection:
         CREATE TABLE IF NOT EXISTS attempts (
             attempt_id INTEGER PRIMARY KEY AUTOINCREMENT,
             problem_id INTEGER NOT NULL,
-            passed INTEGER NOT NULL,
+            status INTEGER NOT NULL,
             elapsed REAL NOT NULL,
             created_at REAL NOT NULL,
             code TEXT NOT NULL,
@@ -61,11 +61,11 @@ def get_db() -> sqlite3.Connection:
         CREATE INDEX IF NOT EXISTS idx_attempts_problem_created
         ON attempts(problem_id, created_at DESC);
 
-        CREATE INDEX IF NOT EXISTS idx_attempts_passed_elapsed
-        ON attempts(passed, elapsed);
+        CREATE INDEX IF NOT EXISTS idx_attempts_status_elapsed
+        ON attempts(status, elapsed);
 
-        CREATE INDEX IF NOT EXISTS idx_attempts_passed_problem_elapsed
-        ON attempts(passed, problem_id, elapsed);
+        CREATE INDEX IF NOT EXISTS idx_attempts_status_problem_elapsed
+        ON attempts(status, problem_id, elapsed);
 
         """
     )
@@ -75,10 +75,7 @@ def get_db() -> sqlite3.Connection:
         INSERT OR IGNORE INTO languages (lang_id, lang)
         VALUES (?, ?)
         """,
-        [
-            (1, "python"),
-            (2, "rust"),
-        ],
+        [(language, language.slug) for language in Language],
     )
 
     db.commit()
@@ -94,7 +91,7 @@ def add_attempt(attempt: Attempt) -> None:
             """
             INSERT INTO attempts (
                 problem_id,
-                passed,
+                status,
                 elapsed,
                 created_at,
                 code,
@@ -104,7 +101,7 @@ def add_attempt(attempt: Attempt) -> None:
             """,
             (
                 attempt["problem_id"],
-                int(attempt["passed"]),
+                attempt["status"],
                 attempt["elapsed"],
                 attempt["created_at"],
                 attempt["code"],
@@ -118,12 +115,12 @@ def get_problem_pass_ratio(problem_id: int) -> tuple[int, int]:
     row = db.execute(
         """
         SELECT 
-            COUNT(*) FILTER (WHERE passed = 1) AS passed_count,
+            COUNT(*) FILTER (WHERE status = ?) AS passed_count,
             COUNT(*) AS total_count 
         FROM attempts 
         WHERE problem_id = ?
         """,
-        (problem_id,),
+        (RunStatus.PASSED, problem_id),
     ).fetchone()
 
     return row["passed_count"], row["total_count"]
@@ -163,11 +160,11 @@ def get_best_attempts(n: int = 1, problem_id: int | None = None) -> list[sqlite3
             """
             SELECT * 
             FROM attempts
-            WHERE problem_id = ? AND passed = 1
+            WHERE problem_id = ? AND status = ?
             ORDER BY elapsed ASC, attempt_id DESC
             LIMIT ?
             """,
-            (problem_id, n),
+            (problem_id, RunStatus.PASSED, n),
         ).fetchall()
 
     return db.execute(
@@ -180,7 +177,7 @@ def get_best_attempts(n: int = 1, problem_id: int | None = None) -> list[sqlite3
                     ORDER BY elapsed ASC, attempt_id DESC
                 ) as rn
                 FROM attempts
-                WHERE passed = 1 
+                WHERE status = ?
         )
         SELECT * 
         FROM best_per_problem
@@ -188,7 +185,7 @@ def get_best_attempts(n: int = 1, problem_id: int | None = None) -> list[sqlite3
         ORDER BY elapsed ASC, attempt_id DESC
         LIMIT ?
         """,
-        (n,),
+        (RunStatus.PASSED, n),
     ).fetchall()
 
 
@@ -198,12 +195,15 @@ def get_attempts_today() -> tuple[int, int]:
     row = db.execute(
         """
         SELECT
-            COUNT(DISTINCT CASE WHEN passed THEN problem_id END) AS today_passed,
+            COUNT(DISTINCT CASE WHEN status = ? THEN problem_id END) AS today_passed,
             COUNT(*) AS today_total
         FROM attempts
         WHERE created_at >= ?
         """,
-        (midnight(),),
+        (
+            RunStatus.PASSED,
+            midnight(),
+        ),
     ).fetchone()
 
     return row["today_passed"], row["today_total"]
@@ -216,8 +216,9 @@ def get_passed_problem_ids() -> set[int]:
         """
         SELECT DISTINCT problem_id 
         FROM attempts
-        WHERE passed = 1
-        """
+        WHERE status = ?
+        """,
+        (RunStatus.PASSED,),
     ).fetchall()
 
     return {row["problem_id"] for row in rows}
@@ -231,13 +232,13 @@ def get_most_attempted_problems(n: int = 1) -> list[sqlite3.Row]:
         SELECT 
             problem_id,
             COUNT(*) AS total_count,
-            COUNT(*) FILTER (WHERE passed = 1) AS passed_count
+            COUNT(*) FILTER (WHERE status = ?) AS passed_count
             FROM attempts 
             GROUP BY problem_id 
             ORDER BY total_count DESC, passed_count DESC
             LIMIT ?
         """,
-        (n,),
+        (RunStatus.PASSED, n),
     ).fetchall()
 
 

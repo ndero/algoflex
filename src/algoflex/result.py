@@ -12,7 +12,7 @@ from textual.widgets import Footer, RichLog, Static
 
 from algoflex.db import add_attempt, add_draft, delete_draft
 from algoflex.questions import questions
-from algoflex.types import Language
+from algoflex.types import Language, RunStatus
 from algoflex.utils import fmt_secs
 
 
@@ -90,7 +90,7 @@ class ResultModal(ModalScreen):
         yield Footer()
 
     async def run_user_code(self) -> None:
-        now, passed = time.time(), False
+        now, status = time.time(), RunStatus.FAILED
         question = questions.get(self.problem_id)
         output_log = self.query_one(RichLog)
 
@@ -132,6 +132,7 @@ class ResultModal(ModalScreen):
                 _, stderr = await compile_proc.communicate()
 
                 if compile_proc.returncode != 0:
+                    status = RunStatus.COMPILE_ERROR
                     output_log.write("[red][b]x[/][/] compilation failed")
                     if stderr:
                         for line in stderr.decode().splitlines():
@@ -172,6 +173,7 @@ class ResultModal(ModalScreen):
                     timeout=9,
                 )
             except TimeoutError:
+                status = RunStatus.TIMEOUT
                 proc.kill()
                 await proc.wait()
                 output_log.write(
@@ -184,11 +186,12 @@ class ResultModal(ModalScreen):
             rc = await proc.wait()
 
             if rc == 0:
-                passed = True
+                status = RunStatus.PASSED
                 if not self.best or self.elapsed < self.best:
                     self.new_best()
 
         except Exception as e:  # noqa: BLE001
+            status = RunStatus.ERROR
             output_log.write(f"[red][b]x[/][/] error running code\n\t{e}", animate=True)
 
         finally:
@@ -201,7 +204,7 @@ class ResultModal(ModalScreen):
             add_attempt(
                 {
                     "problem_id": self.problem_id,
-                    "passed": passed,
+                    "status": status,
                     "elapsed": self.elapsed,
                     "created_at": now,
                     "code": user_code,
@@ -209,7 +212,7 @@ class ResultModal(ModalScreen):
                 }
             )
 
-            if passed:
+            if status is RunStatus.PASSED:
                 delete_draft(self.problem_id, self.language)
             else:
                 add_draft(

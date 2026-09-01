@@ -12,7 +12,7 @@ from algoflex.custom_widgets import Problem, Title
 from algoflex.db import get_best_attempts, get_draft, get_recent_attempts
 from algoflex.questions import questions
 from algoflex.result import ResultModal
-from algoflex.types import Language
+from algoflex.types import Language, RunStatus
 from algoflex.utils import fmt_secs, time_ago
 
 
@@ -120,7 +120,7 @@ class AttemptScreen(Screen):
             self.best = best_attempt["elapsed"]
 
         for attempt in attempts:
-            md += f"\n|- {('🟢' if attempt['passed'] else '🔴')} {time_ago(attempt['created_at'])}   \t({fmt_secs(attempt['elapsed'])}) "
+            md += f"\n|- {RunStatus(attempt['status']).icon} {time_ago(attempt['created_at'])}   \t({fmt_secs(attempt['elapsed'])}) "
             md += Language(attempt["lang_id"]).icon
             if best_attempt and best_attempt["attempt_id"] == attempt["attempt_id"]:
                 md += "\t<--- best"
@@ -133,7 +133,7 @@ class AttemptScreen(Screen):
         md = ""
 
         for attempt in attempts:
-            if attempt["passed"]:
+            if RunStatus(attempt["status"]) is RunStatus.PASSED:
                 language = Language(attempt["lang_id"])
 
                 md += f"### {time_ago(attempt['created_at'])}\t"
