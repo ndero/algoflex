@@ -12,6 +12,7 @@ from textual.widgets import Footer, RichLog, Static
 
 from algoflex.db import add_attempt, add_draft, delete_draft
 from algoflex.questions import questions
+from algoflex.types import Language
 from algoflex.utils import fmt_secs
 
 
@@ -43,13 +44,13 @@ class ResultModal(ModalScreen):
     }
     """
 
-    def __init__(self, problem_id, user_code, elapsed, best, lang_id):
+    def __init__(self, problem_id, user_code, elapsed, best, language):
         super().__init__()
         self.problem_id: int = problem_id
         self.user_code: str = user_code
         self.elapsed: float = elapsed
         self.best: float | None = best
-        self.lang_id: int = lang_id
+        self.language: Language = language
 
     def on_mount(self) -> None:
         asyncio.create_task(self.run_user_code())
@@ -96,7 +97,7 @@ class ResultModal(ModalScreen):
         question = questions.get(self.problem_id)
         test_code, suffix = question.python_tests, ".py"
 
-        if self.lang_id == 2:  # rust
+        if self.language is Language.RUST:
             test_code = question.rust_tests
             suffix = ".rs"
 
@@ -115,7 +116,7 @@ class ResultModal(ModalScreen):
 
             run_args = [sys.executable, "-u", tmp_path]
 
-            if self.lang_id == 2:
+            if self.language is Language.RUST:
                 # compile rust source
                 executable_path = tmp_path.removesuffix(".rs")
                 compile_args = [
@@ -209,17 +210,17 @@ class ResultModal(ModalScreen):
                     "elapsed": self.elapsed,
                     "created_at": now,
                     "code": user_code,
-                    "lang_id": self.lang_id,
+                    "lang_id": self.language,
                 }
             )
 
             if passed:
-                delete_draft(self.problem_id, self.lang_id)
+                delete_draft(self.problem_id, self.language)
             else:
                 add_draft(
                     {
                         "problem_id": self.problem_id,
-                        "lang_id": self.lang_id,
+                        "lang_id": self.language,
                         "code": user_code,
                         "elapsed": self.elapsed,
                         "updated_at": now,

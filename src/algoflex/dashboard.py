@@ -21,6 +21,7 @@ from algoflex.db import (
     get_recent_attempts,
 )
 from algoflex.questions import questions as q
+from algoflex.types import Language
 from algoflex.utils import fmt_secs, time_ago
 
 
@@ -184,14 +185,12 @@ class Dashboard(Widget):
         most_attempts = get_most_attempted_problems(n=9)
         best_per_problem = get_best_attempts(n=9)
 
-        languages = {1: "python", 2: "rust"}
-
         recent = [
             (
                 ("✓ " if attempt["passed"] else "x ")
                 + q.get(attempt["problem_id"]).title,
                 q.get(attempt["problem_id"]).level,
-                languages[attempt["lang_id"]],
+                Language(attempt["lang_id"]).label,
                 fmt_secs(attempt["elapsed"]),
                 time_ago(attempt["created_at"]),
             )
@@ -211,7 +210,7 @@ class Dashboard(Widget):
             (
                 "✓ " + q.get(attempt["problem_id"]).title,
                 q.get(attempt["problem_id"]).level,
-                languages[attempt["lang_id"]],
+                Language(attempt["lang_id"]).label,
                 fmt_secs(attempt["elapsed"]),
                 time_ago(attempt["created_at"]),
             )

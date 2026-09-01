@@ -12,6 +12,7 @@ from algoflex.custom_widgets import Problem, Title
 from algoflex.db import get_best_attempts, get_draft, get_recent_attempts
 from algoflex.questions import questions
 from algoflex.result import ResultModal
+from algoflex.types import Language
 from algoflex.utils import fmt_secs, time_ago
 
 
@@ -62,23 +63,21 @@ class AttemptScreen(Screen):
     }
     """
 
-    LANGUAGES: ClassVar = {1: "python", 2: "rust"}
-
-    def __init__(self, problem_id, lang_id, draft):
+    def __init__(self, problem_id, language, draft):
         super().__init__()
         self.problem_id: int = problem_id
         self.test_time: float = monotonic()
-        self.lang_id: int = lang_id
+        self.language: Language = language
         self.draft: sqlite3.Row = draft
 
     def compose(self) -> ComposeResult:
         question = questions.get(self.problem_id)
         description = question.markdown
-        code = question.python_starter if self.lang_id == 1 else question.rust_starter
+        code = question.starter_for(self.language)
         if self.draft:
             code = self.draft["code"]
 
-        yield Title(show_language_selector=True, lang_id=self.lang_id)
+        yield Title(show_language_selector=True, language=self.language)
         with Horizontal():
             yield Problem(description)
             with TabbedContent("Attempt", "Timeline", "Past solutions", id="editor"):
@@ -87,7 +86,7 @@ class AttemptScreen(Screen):
                         code,
                         id="code",
                         show_line_numbers=True,
-                        language=self.LANGUAGES[self.lang_id],
+                        language=self.language.slug,
                         compact=True,
                         tab_behavior="indent",
                     )
@@ -122,7 +121,7 @@ class AttemptScreen(Screen):
 
         for attempt in attempts:
             md += f"\n|- {('🟢' if attempt['passed'] else '🔴')} {time_ago(attempt['created_at'])}   \t({fmt_secs(attempt['elapsed'])}) "
-            md += "🐍" if attempt["lang_id"] == 1 else "🦀"
+            md += Language(attempt["lang_id"]).icon
             if best_attempt and best_attempt["attempt_id"] == attempt["attempt_id"]:
                 md += "\t<--- best"
             md += "\n|"
@@ -135,10 +134,11 @@ class AttemptScreen(Screen):
 
         for attempt in attempts:
             if attempt["passed"]:
-                lang = "python" if attempt["lang_id"] == 1 else "rust"
+                language = Language(attempt["lang_id"])
+
                 md += f"### {time_ago(attempt['created_at'])}\t"
-                md += f"{'🐍' if attempt['lang_id'] == 1 else '🦀'}"
-                md += f"\n```{lang}\n{attempt['code']}\n```\n"
+                md += language.icon
+                md += f"\n```{language.slug}\n{attempt['code']}\n```\n"
 
         return md
 
@@ -155,13 +155,13 @@ class AttemptScreen(Screen):
                 code.text,
                 elapsed,
                 self.best,
-                self.lang_id,
+                self.language,
             ),
             update,
         )
 
     def load_draft(self) -> sqlite3.Row:
-        return get_draft(problem_id=self.problem_id, lang_id=self.lang_id)
+        return get_draft(problem_id=self.problem_id, lang_id=self.language)
 
     def action_back(self) -> None:
         self.dismiss()
@@ -177,13 +177,13 @@ class AttemptScreen(Screen):
             self.minimize()
 
     def on_title_language_changed(self, message: Title.LanguageChanged) -> None:
-        if message.lang_id != self.lang_id:
-            self.update_language(message.lang_id)
+        if message.language != self.language:
+            self.update_language(message.language)
 
-    def update_language(self, lang_id: int) -> None:
+    def update_language(self, language: Language) -> None:
         editor = self.query_one("#code", TextArea)
-        self.lang_id, self.test_time = lang_id, monotonic()
+        self.language, self.test_time = language, monotonic()
         question, self.draft = questions.get(self.problem_id), self.load_draft()
-        code = question.python_starter if self.lang_id == 1 else question.rust_starter
+        code = question.starter_for(language)
         editor.text = self.draft["code"] if self.draft else code
-        editor.language = self.LANGUAGES[self.lang_id]
+        editor.language = language.slug

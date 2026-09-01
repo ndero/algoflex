@@ -2,6 +2,8 @@ import json
 from dataclasses import dataclass
 from pathlib import Path
 
+from algoflex.types import Language
+
 DATA_DIR = Path(__file__).parent / "data"
 
 
@@ -15,6 +17,9 @@ class Question:
     rust_tests: str
     python_starter: str
     rust_starter: str
+
+    def starter_for(self, language: Language) -> str:
+        return getattr(self, f"{language.slug}_starter")
 
 
 class QuestionRepository:

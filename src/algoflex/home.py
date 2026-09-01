@@ -18,6 +18,7 @@ from algoflex.db import (
 )
 from algoflex.questions import questions
 from algoflex.search import SearchScreen
+from algoflex.types import Language
 from algoflex.utils import fmt_secs, time_ago
 
 
@@ -156,9 +157,9 @@ class HomeScreen(App):
             self.update_problem_view()
 
         recent = get_recent_attempts(n=1)
-        lang_id = recent[0]["lang_id"] if recent else 1
-        draft = get_draft(problem_id=self.problem_id, lang_id=lang_id)
-        self.push_screen(AttemptScreen(self.problem_id, lang_id, draft), update)
+        language = Language(recent[0]["lang_id"]) if recent else Language.PYTHON
+        draft = get_draft(problem_id=self.problem_id, lang_id=language)
+        self.push_screen(AttemptScreen(self.problem_id, language, draft), update)
 
     def action_next(self) -> None:
         if self.show_dashboard:

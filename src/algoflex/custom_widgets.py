@@ -3,6 +3,8 @@ from textual.containers import Container, VerticalScroll
 from textual.message import Message
 from textual.widgets import Markdown, Select, Static
 
+from algoflex.types import Language
+
 
 class Problem(VerticalScroll):
     DEFAULT_CSS = """
@@ -15,8 +17,8 @@ class Problem(VerticalScroll):
     """
 
     def __init__(self, markdown) -> None:
-        super().__init__()
         self.markdown = markdown
+        super().__init__()
 
     def compose(self) -> ComposeResult:
         yield Markdown(self.markdown)
@@ -24,8 +26,8 @@ class Problem(VerticalScroll):
 
 class Title(Container):
     class LanguageChanged(Message):
-        def __init__(self, lang_id: int) -> None:
-            self.lang_id = lang_id
+        def __init__(self, language: Language) -> None:
+            self.language = language
             super().__init__()
 
     DEFAULT_CSS = """
@@ -60,9 +62,11 @@ class Title(Container):
     }
     """
 
-    def __init__(self, show_language_selector: bool = False, lang_id: int = 1) -> None:
+    def __init__(
+        self, show_language_selector: bool = False, language: Language = Language.PYTHON
+    ) -> None:
         self.show_language_selector = show_language_selector
-        self.lang_id = lang_id
+        self.language = language
         super().__init__()
 
     def compose(self) -> ComposeResult:
@@ -73,16 +77,13 @@ class Title(Container):
 
         if self.show_language_selector:
             yield Select(
-                [
-                    ("Python", 1),
-                    ("Rust", 2),
-                ],
-                value=self.lang_id,
+                [(language.label, language) for language in Language],
+                value=self.language,
                 allow_blank=False,
                 compact=True,
                 id="language-selector",
             )
 
     def on_select_changed(self, event: Select.Changed) -> None:
-        if type(event.value) is int:  # never blank and always an integer
-            self.post_message(message=self.LanguageChanged(event.value))
+        language = Language(event.value)
+        self.post_message(message=self.LanguageChanged(language))

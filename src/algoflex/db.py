@@ -4,6 +4,7 @@ from typing import TypedDict
 
 from platformdirs import user_data_dir
 
+from algoflex.types import Language
 from algoflex.utils import midnight
 
 APP_NAME = "algoflex"
@@ -16,12 +17,12 @@ class Attempt(TypedDict):
     elapsed: float
     created_at: float
     code: str
-    lang_id: int
+    lang_id: Language
 
 
 class Draft(TypedDict):
     problem_id: int
-    lang_id: int
+    lang_id: Language
     code: str
     elapsed: float
     updated_at: float
@@ -287,7 +288,7 @@ def add_draft(draft: Draft) -> None:
         )
 
 
-def get_draft(problem_id: int, lang_id: int = 1) -> sqlite3.Row:
+def get_draft(problem_id: int, lang_id: Language = Language.PYTHON) -> sqlite3.Row:
     db = get_db()
     return db.execute(
         """
@@ -299,7 +300,7 @@ def get_draft(problem_id: int, lang_id: int = 1) -> sqlite3.Row:
     ).fetchone()
 
 
-def delete_draft(problem_id: int, lang_id: int = 1) -> None:
+def delete_draft(problem_id: int, lang_id: Language = Language.PYTHON) -> None:
     db = get_db()
     with db:
         db.execute(
