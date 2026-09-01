@@ -1,4 +1,16 @@
+from dataclasses import dataclass
 from enum import IntEnum
+from typing import TypedDict
+
+
+class Level(IntEnum):
+    BREEZY = 1
+    STEADY = 2
+    EDGY = 3
+
+    @property
+    def label(self) -> str:
+        return self.name.title()
 
 
 class Language(IntEnum):
@@ -16,4 +28,44 @@ class Language(IntEnum):
     @property
     def icon(self) -> str:
         icons = {self.PYTHON: "🐍", self.RUST: "🦀"}
-        return icons.get(self, self.name)
+        return icons[self]
+
+    @property
+    def suffix(self) -> str:
+        suffixes = {self.PYTHON: ".py", self.RUST: ".rs"}
+        return suffixes[self]
+
+
+class Attempt(TypedDict):
+    problem_id: int
+    passed: bool
+    elapsed: float
+    created_at: float
+    code: str
+    lang_id: Language
+
+
+class Draft(TypedDict):
+    problem_id: int
+    lang_id: Language
+    code: str
+    elapsed: float
+    updated_at: float
+
+
+@dataclass(frozen=True, slots=True)
+class Question:
+    id: int
+    title: str
+    level: Level
+    markdown: str
+    python_tests: str
+    rust_tests: str
+    python_starter: str
+    rust_starter: str
+
+    def starter_for(self, language: Language) -> str:
+        return getattr(self, f"{language.slug}_starter")
+
+    def tests_for(self, language: Language) -> str:
+        return getattr(self, f"{language.slug}_tests")

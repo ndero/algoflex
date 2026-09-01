@@ -1,25 +1,9 @@
 import json
-from dataclasses import dataclass
 from pathlib import Path
 
-from algoflex.types import Language
+from algoflex.types import Level, Question
 
 DATA_DIR = Path(__file__).parent / "data"
-
-
-@dataclass(frozen=True, slots=True)
-class Question:
-    id: int
-    title: str
-    level: str
-    markdown: str
-    python_tests: str
-    rust_tests: str
-    python_starter: str
-    rust_starter: str
-
-    def starter_for(self, language: Language) -> str:
-        return getattr(self, f"{language.slug}_starter")
 
 
 class QuestionRepository:
@@ -49,7 +33,7 @@ class QuestionRepository:
         return Question(
             id=question_id,
             title=metadata["title"],
-            level=metadata["level"],
+            level=Level(metadata["level"]),
             markdown=self._read_file(question_dir / "problem.md"),
             python_starter=self._read_file(question_dir / "python_starter.txt"),
             python_tests=python_runner

@@ -21,7 +21,7 @@ from algoflex.db import (
     get_recent_attempts,
 )
 from algoflex.questions import questions as q
-from algoflex.types import Language
+from algoflex.types import Language, Level
 from algoflex.utils import fmt_secs, time_ago
 
 
@@ -134,7 +134,11 @@ class Dashboard(Widget):
         self.best_markdown = self.query_one("#best", Markdown)
 
         self.breezy, self.steady, self.edgy = self.problem_levels()
-        self.total = len(self.breezy) + len(self.steady) + (len(self.edgy) * 1.5)
+        self.total = (
+            len(self.breezy) * Level.BREEZY
+            + len(self.steady) * Level.STEADY
+            + len(self.edgy) * Level.EDGY
+        )
 
         self.update_dashboard_totals()
 
@@ -142,9 +146,9 @@ class Dashboard(Widget):
         breezy, steady, edgy = set(), set(), set()
         for pid in q.ids:
             question = q.get(pid)
-            if question.level == "Breezy":
+            if question.level == Level.BREEZY:
                 breezy.add(pid)
-            elif question.level == "Steady":
+            elif question.level == Level.STEADY:
                 steady.add(pid)
             else:
                 edgy.add(pid)
@@ -160,8 +164,10 @@ class Dashboard(Widget):
     def watch_show_dashboard(self) -> None:
         if self.show_dashboard:
             breezy, steady, edgy = self.get_complete()
-            self.update_digits(breezy, steady, int(edgy // 1.5))
-            self.update_progress(breezy + steady + edgy)
+            progress = breezy * Level.BREEZY + steady * Level.STEADY + edgy * Level.EDGY
+
+            self.update_digits(breezy, steady, edgy)
+            self.update_progress(progress)
             self.update_highlight()
             self.update_summary()
 
@@ -178,7 +184,7 @@ class Dashboard(Widget):
         breezy = len(self.breezy.intersection(passed))
         steady = len(self.steady.intersection(passed))
         edgy = len(self.edgy.intersection(passed))
-        return breezy, steady, edgy * 1.5
+        return breezy, steady, edgy
 
     def get_summary(self) -> tuple[list, list, list]:
         recent_attempts = get_recent_attempts(n=9)
@@ -189,7 +195,7 @@ class Dashboard(Widget):
             (
                 ("✓ " if attempt["passed"] else "x ")
                 + q.get(attempt["problem_id"]).title,
-                q.get(attempt["problem_id"]).level,
+                q.get(attempt["problem_id"]).level.label,
                 Language(attempt["lang_id"]).label,
                 fmt_secs(attempt["elapsed"]),
                 time_ago(attempt["created_at"]),
@@ -200,7 +206,7 @@ class Dashboard(Widget):
         frequent = [
             (
                 q.get(p["problem_id"]).title,
-                q.get(p["problem_id"]).level,
+                q.get(p["problem_id"]).level.label,
                 f"{p['passed_count']}/{p['total_count']}",
             )
             for p in most_attempts
@@ -209,7 +215,7 @@ class Dashboard(Widget):
         fast = [
             (
                 "✓ " + q.get(attempt["problem_id"]).title,
-                q.get(attempt["problem_id"]).level,
+                q.get(attempt["problem_id"]).level.label,
                 Language(attempt["lang_id"]).label,
                 fmt_secs(attempt["elapsed"]),
                 time_ago(attempt["created_at"]),
@@ -245,7 +251,7 @@ class Dashboard(Widget):
 
     def update_summary(self) -> None:
         recent, frequent, fast = self.get_summary()
-        headers = ["Problem", "Level", "Code", "Duration", "When"]
+        headers = ["Problem", "Level", "Language", "Duration", "When"]
         latest = self.md_table(headers, recent)
         popular = self.md_table(["Problem", "Level", "Passed"], frequent)
         best = self.md_table(headers, fast)

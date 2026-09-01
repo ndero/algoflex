@@ -18,7 +18,9 @@ from algoflex.utils import fmt_secs
 
 class ResultModal(ModalScreen):
     BINDINGS: ClassVar = [("escape", "dismiss", "dismiss")]
+
     SPINNER: ClassVar = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"]
+
     DEFAULT_CSS = """
     ResultModal {
         &>* {
@@ -88,19 +90,12 @@ class ResultModal(ModalScreen):
         yield Footer()
 
     async def run_user_code(self) -> None:
-        now = time.time()
-        passed = False
-
-        output_log = self.query_one(RichLog)
-        user_code = self.user_code.strip()
-
+        now, passed = time.time(), False
         question = questions.get(self.problem_id)
-        test_code, suffix = question.python_tests, ".py"
+        output_log = self.query_one(RichLog)
 
-        if self.language is Language.RUST:
-            test_code = question.rust_tests
-            suffix = ".rs"
-
+        user_code, test_code = self.user_code.strip(), question.tests_for(self.language)
+        suffix = self.language.suffix
         full_code = f"{user_code}\n\n{test_code}"
         tmp_path = executable_path = None
 

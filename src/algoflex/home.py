@@ -18,7 +18,7 @@ from algoflex.db import (
 )
 from algoflex.questions import questions
 from algoflex.search import SearchScreen
-from algoflex.types import Language
+from algoflex.types import Language, Level
 from algoflex.utils import fmt_secs, time_ago
 
 
@@ -81,10 +81,10 @@ class HomeScreen(App):
     }
     """
 
-    LEVEL_COLORS: ClassVar[dict[str, str]] = {
-        "Breezy": "green 90%",
-        "Steady": "orange 70%",
-        "Edgy": "red 70%",
+    LEVEL_COLORS: ClassVar[dict[Level, str]] = {
+        Level.BREEZY: "green 90%",
+        Level.STEADY: "orange 70%",
+        Level.EDGY: "red 70%",
     }
 
     index: reactive[int] = reactive(0, bindings=True)
@@ -139,7 +139,9 @@ class HomeScreen(App):
         markdown, level, passed, total, last, best = self.get_problem_details()
         self.markdown.update(markdown)
         self.problem.scroll_home()
-        self.level.update(f"[{self.LEVEL_COLORS.get(level, '$primary')}]{level}[/]")
+        self.level.update(
+            f"[{self.LEVEL_COLORS.get(level, '$primary')}]{level.label}[/]"
+        )
 
         self.passed.update(f"{passed!s}/{total!s}")
         self.last.update(f"{last}")

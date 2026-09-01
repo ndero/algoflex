@@ -1,31 +1,13 @@
 import sqlite3
 from pathlib import Path
-from typing import TypedDict
 
 from platformdirs import user_data_dir
 
-from algoflex.types import Language
+from algoflex.types import Attempt, Draft, Language
 from algoflex.utils import midnight
 
 APP_NAME = "algoflex"
 _CONNECTION: sqlite3.Connection | None = None
-
-
-class Attempt(TypedDict):
-    problem_id: int
-    passed: bool
-    elapsed: float
-    created_at: float
-    code: str
-    lang_id: Language
-
-
-class Draft(TypedDict):
-    problem_id: int
-    lang_id: Language
-    code: str
-    elapsed: float
-    updated_at: float
 
 
 def get_db() -> sqlite3.Connection:
