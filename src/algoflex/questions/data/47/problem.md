@@ -7,7 +7,6 @@ The dock's security system is highly advanced: opening any two adjacent containe
 
 Given an integer array `nums` where `nums[i]` represents the value of the goods inside the $i$-th container, return the maximum total value you can steal without triggering the security system.
 
----
 
 **Example 1:**
 
