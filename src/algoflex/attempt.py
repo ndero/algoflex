@@ -98,6 +98,7 @@ class AttemptScreen(Screen):
         self.best: float | None = None
         self.timeline = self.query_one("#timeline", Static)
         self.solutions = self.query_one("#solutions", Markdown)
+        self.editor = self.query_one("#code", TextArea)
 
         self.update_attempt_view()
 
@@ -181,9 +182,8 @@ class AttemptScreen(Screen):
             self.update_language(message.language)
 
     def update_language(self, language: Language) -> None:
-        editor = self.query_one("#code", TextArea)
-        self.language, self.test_time = language, monotonic()
+        self.language = language
         question, self.draft = questions.get(self.problem_id), self.load_draft()
         code = question.starter_for(language)
-        editor.text = self.draft["code"] if self.draft else code
-        editor.language = language.slug
+        self.editor.text = self.draft["code"] if self.draft else code
+        self.editor.language = language.slug
