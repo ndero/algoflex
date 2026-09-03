@@ -19,10 +19,7 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [
-    { name = "textual", specifier = ">=3.5.0" },
-    { name = "textual", extras = ["syntax"] },
-]
+requires-dist = [{ name = "textual", extras = ["syntax"], specifier = ">=3.5.0" }]
 
 [package.metadata.requires-dev]
 dev = [

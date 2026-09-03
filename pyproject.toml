@@ -11,8 +11,7 @@ requires-python = ">=3.12"
 license = "MIT"
 authors = [{name = "ndero", email = "jnderoh@gmail.com"}]
 dependencies = [
-  "textual>=3.5.0",
-  "textual[syntax]",
+  "textual[syntax]>=3.5.0",
 ]
 
 [project.scripts]
