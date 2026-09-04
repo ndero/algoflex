@@ -8,10 +8,10 @@ from algoflex import utils
 @pytest.mark.parametrize(
     ("elapsed", "expected"),
     [
-        (0, "just now"),
-        (1, "just now"),
-        (30, "just now"),
-        (59, "just now"),
+        (0, "Moments ago"),
+        (1, "1 sec ago"),
+        (30, "30 secs ago"),
+        (59, "59 secs ago"),
         (60, "1 min ago"),
         (61, "1 min ago"),
         (119, "1 min ago"),
@@ -45,7 +45,7 @@ def test_time_ago(monkeypatch, elapsed, expected):
 @pytest.mark.parametrize(
     "value",
     [
-        "just now",
+        "Just now",
         "1 min ago",
         "yesterday",
         "",
@@ -59,14 +59,14 @@ def test_time_ago_truncates_fractional_elapsed_seconds(monkeypatch):
     now = 1_000_000.0
     monkeypatch.setattr(utils.time, "time", lambda: now)
 
-    assert utils.time_ago(now - 59.9) == "just now"
+    assert utils.time_ago(now - 59.9) == "59 secs ago"
     assert utils.time_ago(now - 60.9) == "1 min ago"
 
 
 def test_time_ago_future_timestamp_is_just_now(monkeypatch):
     monkeypatch.setattr(utils.time, "time", lambda: 1_000_000.0)
 
-    assert utils.time_ago(1_000_001.0) == "just now"
+    assert utils.time_ago(1_000_001.0) == "Moments ago"
 
 
 @pytest.mark.parametrize(
@@ -125,7 +125,7 @@ def test_fmt_secs_truncates_fractional_seconds(seconds, expected):
         "0 seconds",
         "1 min, 30 secs",
         "1 hr, 5 mins",
-        "just now",
+        "Just now",
         "",
     ],
 )
