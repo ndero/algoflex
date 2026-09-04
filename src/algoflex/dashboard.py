@@ -251,7 +251,7 @@ class Dashboard(Widget):
 
     def update_summary(self) -> None:
         recent, frequent, fast = self.get_summary()
-        headers = ["Problem", "Level", "Language", "Duration", "When"]
+        headers = ["Problem", "Level", "Language", "Solve Time", "When"]
         latest = self.md_table(headers, recent)
         popular = self.md_table(["Problem", "Level", "Passed"], frequent)
         best = self.md_table(headers, fast)
