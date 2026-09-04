@@ -7,6 +7,7 @@ WEEK = 604_800
 DAY = 86_400
 HOUR = 3_600
 MINUTE = 60
+SECOND = 1
 
 
 def time_ago(tm: float | str) -> str:
@@ -22,6 +23,7 @@ def time_ago(tm: float | str) -> str:
         (DAY, "day"),
         (HOUR, "hr"),
         (MINUTE, "min"),
+        (SECOND, "sec"),
     )
 
     for size, name in units:
@@ -29,7 +31,7 @@ def time_ago(tm: float | str) -> str:
             value = elapsed // size
             return f"{value} {name}{'s' if value != 1 else ''} ago"
 
-    return "just now"
+    return "Moments ago"
 
 
 def fmt_secs(tm: float | str) -> str:
