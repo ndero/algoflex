@@ -10,16 +10,18 @@ APP_NAME = "algoflex"
 _CONNECTION: sqlite3.Connection | None = None
 
 
-def get_db() -> sqlite3.Connection:
-    """Returns Algoflex sqlite3 database connection"""
+def get_db(db_path: Path | None = None) -> sqlite3.Connection:
+    """Return the Algoflex SQLite database connection."""
     global _CONNECTION
 
     if _CONNECTION is not None:
         return _CONNECTION
 
-    db_dir = Path(user_data_dir(APP_NAME))
-    db_dir.mkdir(parents=True, exist_ok=True)
-    db_path = db_dir / "algoflex.db"
+    if db_path is None:
+        db_dir = Path(user_data_dir(APP_NAME))
+        db_dir.mkdir(parents=True, exist_ok=True)
+        db_path = db_dir / "algoflex.db"
+
     db = sqlite3.connect(db_path)
     db.row_factory = sqlite3.Row
     db.execute("PRAGMA foreign_keys = ON")
@@ -52,11 +54,14 @@ def get_db() -> sqlite3.Connection:
             FOREIGN KEY (lang_id) REFERENCES languages(lang_id)
         );
 
-        CREATE INDEX IF NOT EXISTS idx_attempts_problem ON attempts(problem_id);
+        CREATE INDEX IF NOT EXISTS idx_attempts_problem
+        ON attempts(problem_id);
 
-        CREATE INDEX IF NOT EXISTS idx_attempts_created ON attempts(created_at);
+        CREATE INDEX IF NOT EXISTS idx_attempts_created
+        ON attempts(created_at);
 
-        CREATE INDEX IF NOT EXISTS idx_attempts_lang ON attempts(lang_id);
+        CREATE INDEX IF NOT EXISTS idx_attempts_lang
+        ON attempts(lang_id);
 
         CREATE INDEX IF NOT EXISTS idx_attempts_problem_created
         ON attempts(problem_id, created_at DESC);
@@ -66,7 +71,6 @@ def get_db() -> sqlite3.Connection:
 
         CREATE INDEX IF NOT EXISTS idx_attempts_status_problem_elapsed
         ON attempts(status, problem_id, elapsed);
-
         """
     )
 
