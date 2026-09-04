@@ -1,50 +1,66 @@
 import time
 from datetime import UTC, datetime
 
+YEAR = 31_104_000
+MONTH = 2_592_000
+WEEK = 604_800
+DAY = 86_400
+HOUR = 3_600
+MINUTE = 60
 
-def time_ago(tm) -> str:
+
+def time_ago(tm: float | str) -> str:
     if isinstance(tm, str):
         return tm
-    secs = int(time.time() - tm)
-    mn, hr, day, week, month, year = (
-        60,
-        3600,
-        86_400,
-        604_800,
-        2_592_000,
-        31_104_000,
+
+    elapsed = int(time.time() - tm)
+
+    units = (
+        (YEAR, "yr"),
+        (MONTH, "mon"),
+        (WEEK, "wk"),
+        (DAY, "day"),
+        (HOUR, "hr"),
+        (MINUTE, "min"),
     )
-    if secs < mn:
-        v = secs // 1
-        return f"{v} sec{'s' if v > 1 else ''} ago"
-    if secs < hr:
-        v = secs // mn
-        return f"{v} min{'s' if v > 1 else ''} ago"
-    if secs < day:
-        v = secs // hr
-        return f"{v} hr{'s' if v > 1 else ''} ago"
-    if secs < week:
-        v = secs // day
-        return f"{v} day{'s' if v > 1 else ''} ago"
-    if secs < month:
-        v = secs // week
-        return f"{v} wk{'s' if v > 1 else ''} ago"
-    if secs < year:
-        v = secs // month
-        return f"{v} mon{'s' if v > 1 else ''} ago"
-    v = secs // year
-    return f"{v} yr{'s' if v > 1 else ''} ago"
+
+    for size, name in units:
+        if elapsed >= size:
+            value = elapsed // size
+            return f"{value} {name}{'s' if value != 1 else ''} ago"
+
+    return "just now"
 
 
-def fmt_secs(tm) -> str:
+def fmt_secs(tm: float | str) -> str:
     if isinstance(tm, str):
         return tm
-    mins, secs = divmod(tm, 60)
-    hrs, mins = divmod(mins, 60)
-    if hrs > 23:
-        return time_ago(tm)
 
-    return f"{hrs:02,.0f}:{mins:02.0f}:{secs:02.0f}"
+    def unit(value: int, singular: str) -> str:
+        return f"{value} {singular if value == 1 else singular + 's'}"
+
+    secs = int(tm)
+
+    years, secs = divmod(secs, YEAR)
+    months, secs = divmod(secs, MONTH)
+    weeks, secs = divmod(secs, WEEK)
+    days, secs = divmod(secs, DAY)
+    hrs, secs = divmod(secs, HOUR)
+    mins, secs = divmod(secs, MINUTE)
+
+    if years:
+        return f"{unit(years, 'yr')}, {unit(months, 'month')}"
+    if months:
+        return f"{unit(months, 'month')}, {unit(weeks, 'wk')}"
+    if weeks:
+        return f"{unit(weeks, 'wk')}, {unit(days, 'day')}"
+    if days:
+        return f"{unit(days, 'day')}, {unit(hrs, 'hr')}"
+    if hrs:
+        return f"{unit(hrs, 'hr')}, {unit(mins, 'min')}"
+    if mins:
+        return f"{unit(mins, 'min')}, {unit(secs, 'sec')}"
+    return unit(secs, "second")
 
 
 def midnight() -> float:
