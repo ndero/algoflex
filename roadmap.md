@@ -9,7 +9,9 @@
 - [x] Refine individual question tests.
 - [x] New best time - User is alerted when the current attempt is the best so far.
 - [ ] Tips/hints - time and space complexity, walk through - make it click, edge cases, 
-- [ ] Add test cases for questions with a few of them
+- [x] Add test cases for questions with a few of them
 - [ ] Line wrap past solutions
 - [x] Autosave non passing/ non submitted solutions
 - [x] Fix search - freezing if updating search term too quickly.
+- [ ] Add constraints to problem descriptions 
+- [ ] Dashboard improvements to capture language specific progress
