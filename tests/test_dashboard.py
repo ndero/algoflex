@@ -497,7 +497,7 @@ def test_get_summary_builds_personal_bests(
     assert frequent == []
     assert best == [
         (
-            "✓ Trapping Rain Water",
+            "✓ Trap Rain Water",
             Level.EDGY.label,
             Language.RUST.label,
             "duration:25",
@@ -663,7 +663,7 @@ async def test_update_summary_updates_all_three_markdown_widgets(
         assert "Two Sum" in received["recent"]
         assert "Binary Search" in received["frequent"]
         assert "2/4" in received["frequent"]
-        assert "Trapping Rain Water" in received["best"]
+        assert "Trap Rain Water" in received["best"]
 
 
 # Reactive dashboard visibility
