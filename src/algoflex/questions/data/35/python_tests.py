@@ -34,6 +34,7 @@ root9 = array_to_tree([1, 2, 3, 4, 5, None, 6])
 root10 = array_to_tree([1, 2, 3, 4, 5, 7, 6])
 root11 = array_to_tree([5])
 root12 = array_to_tree([5])
+root13 = array_to_tree([1, 0, 2])
 
 test_cases = [
     [(root1, root2), True],
@@ -45,6 +46,7 @@ test_cases = [
     [(root8, root8), True],
     [(root9, root10), False],
     [(root11, root12), True],
+    [(root8, root13), False],
 ]
 
 if __name__ == "__main__":
