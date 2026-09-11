@@ -54,7 +54,7 @@ root7 = array_to_tree([])
 root8 = array_to_tree([100, 50, 600, 45, 55, 500, 1000])
 root9 = sorted_to_bst([i for i in range(100)])
 root10 = sorted_to_bst([i for i in range(-100_000, 100_000)])
-root11 = array_to_tree([5, None, 3])
+root11 = array_to_tree([5, None, 0])
 root12 = array_to_tree([4, None, 9, None, None, None, 12])
 root13 = array_to_tree(
     [9, 8, 16, None, None, None, 18, None, None, None, None, None, None, 18]
@@ -72,7 +72,7 @@ test_cases = [
     [(root8,), [45, 55, 500, 1000]],
     [(root9,), _tree_leaves(root9)],
     [(root10,), _tree_leaves(root10)],
-    [(root11,), [3]],
+    [(root11,), [0]],
     [(root12,), [12]],
     [(root13,), [8, 18]],
 ]
