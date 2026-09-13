@@ -1,2 +1,2 @@
-def daily_temperatures(temparatures: list[int]) -> list[int]:
+def daily_temperatures(temperatures: list[int]) -> list[int]:
     # your move 
