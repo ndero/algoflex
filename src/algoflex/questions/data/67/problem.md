@@ -4,7 +4,9 @@ Given a `logs` array containing logs, sort it such that all letter logs come bef
 Make sure the digit logs stay in their original order (stable sort).
 
 > letter logs - content starts with a letter
+
 > digit logs - content starts with a digit.
+
 > first word of each log is the identifier. i.e each log looks like: 'identifier content...'
 
 ### Example
