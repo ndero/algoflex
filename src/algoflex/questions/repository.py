@@ -1,7 +1,7 @@
-import json
+from functools import cached_property
 from pathlib import Path
 
-from algoflex.types import Level, Question
+from algoflex.types import Question
 
 DATA_DIR = Path(__file__).parent / "data"
 
@@ -10,7 +10,7 @@ class QuestionRepository:
     def __init__(self, data_dir: Path = DATA_DIR) -> None:
         self.data_dir = data_dir
 
-    @property
+    @cached_property
     def ids(self) -> list[int]:
         """Return all available question IDs in ascending order."""
         return sorted(
@@ -20,38 +20,18 @@ class QuestionRepository:
         )
 
     def get(self, question_id: int) -> Question:
-        """Load and return a question by ID."""
+        """Return a question by ID."""
         question_dir = self.data_dir / f"{question_id:02d}"
 
         if not question_dir.is_dir():
             raise KeyError(f"Question {question_id} does not exist")
 
-        metadata = self._load_metadata(question_dir)
-        python_runner = self._read_file(self.data_dir / "run.py")
-        rust_runner = self._read_file(self.data_dir / "run.rs")
-
         return Question(
             id=question_id,
-            title=metadata["title"],
-            level=Level(metadata["level"]),
-            markdown=self._read_file(question_dir / "problem.md"),
-            python_starter=self._read_file(question_dir / "python_starter.txt"),
-            python_tests=python_runner
-            + self._read_file(question_dir / "python_tests.py"),
-            rust_starter=self._read_file(question_dir / "rust_starter.txt"),
-            rust_tests=rust_runner + self._read_file(question_dir / "rust_tests.rs"),
+            _metadata_path=question_dir / "metadata.json",
+            _question_dir=question_dir,
+            _data_dir=self.data_dir,
         )
-
-    @staticmethod
-    def _load_metadata(question_dir: Path) -> dict[str, str]:
-        metadata_file = question_dir / "metadata.json"
-
-        with metadata_file.open(encoding="utf-8") as file:
-            return json.load(file)
-
-    @staticmethod
-    def _read_file(path: Path) -> str:
-        return path.read_text(encoding="utf-8")
 
 
 questions = QuestionRepository()

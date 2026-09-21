@@ -1,5 +1,8 @@
+import json
 from dataclasses import dataclass
 from enum import IntEnum
+from functools import cached_property
+from pathlib import Path
 from typing import TypedDict
 
 
@@ -69,16 +72,65 @@ class Draft(TypedDict):
     updated_at: float
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True)
 class Question:
     id: int
-    title: str
-    level: Level
-    markdown: str
-    python_tests: str
-    rust_tests: str
-    python_starter: str
-    rust_starter: str
+    _metadata_path: Path
+    _question_dir: Path
+    _data_dir: Path
+
+    @cached_property
+    def _metadata(self) -> dict[str, str]:
+        with self._metadata_path.open(encoding="utf-8") as file:
+            return json.load(file)
+
+    @cached_property
+    def title(self) -> str:
+        return self._metadata["title"]
+
+    @cached_property
+    def level(self) -> Level:
+        return Level(self._metadata["level"])
+
+    @cached_property
+    def markdown(self) -> str:
+        return self._read_file(self._question_dir / "problem.md")
+
+    @cached_property
+    def languages(self) -> list[Language]:
+        """Return languages supported by this question."""
+        return [
+            language
+            for language in Language
+            if (self._question_dir / f"{language.slug}_starter.txt").is_file()
+            and (
+                self._question_dir / f"{language.slug}_tests{language.suffix}"
+            ).is_file()
+        ]
+
+    @cached_property
+    def python_starter(self) -> str:
+        return self._read_file(self._question_dir / "python_starter.txt")
+
+    @cached_property
+    def python_tests(self) -> str:
+        return self._read_file(self._data_dir / "run.py") + self._read_file(
+            self._question_dir / "python_tests.py"
+        )
+
+    @cached_property
+    def rust_starter(self) -> str:
+        return self._read_file(self._question_dir / "rust_starter.txt")
+
+    @cached_property
+    def rust_tests(self) -> str:
+        return self._read_file(self._data_dir / "run.rs") + self._read_file(
+            self._question_dir / "rust_tests.rs"
+        )
+
+    @staticmethod
+    def _read_file(path: Path) -> str:
+        return path.read_text(encoding="utf-8")
 
     def starter_for(self, language: Language) -> str:
         return getattr(self, f"{language.slug}_starter")
