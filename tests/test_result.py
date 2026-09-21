@@ -9,53 +9,42 @@ from algoflex.types import Language, RunStatus
 
 
 class FakeQuestion:
-    def __init__(self, tests: str = "assert True") -> None:
+    def __init__(
+        self,
+        question_id: int = 1,
+        tests: str = "assert True",
+    ) -> None:
+        self.id = question_id
         self.tests = tests
 
     def tests_for(self, language: Language) -> str:
         return self.tests
 
 
-class FakeQuestions:
-    def __init__(self) -> None:
-        self._questions = {
-            1: FakeQuestion("assert True"),
-        }
-
-    def get(self, problem_id: int) -> FakeQuestion:
-        return self._questions[problem_id]
-
-
 class HostApp(App):
     """Minimal host for testing modal-screen behavior."""
 
 
+@pytest.fixture
+def question():
+    return FakeQuestion()
+
+
 def make_modal(
     *,
-    problem_id: int = 1,
+    question: FakeQuestion | None = None,
     user_code: str = "print('hello')",
     elapsed: float = 12.5,
     best: float | None = None,
     language: Language = Language.PYTHON,
 ) -> ResultModal:
     return ResultModal(
-        problem_id,
+        question or FakeQuestion(),
         user_code,
         elapsed,
         best,
         language,
     )
-
-
-@pytest.fixture
-def fake_questions(monkeypatch):
-    questions = FakeQuestions()
-    monkeypatch.setattr(
-        result_module,
-        "questions",
-        questions,
-    )
-    return questions
 
 
 @pytest.fixture
@@ -105,9 +94,10 @@ async def test_result_modal_preserves_constructor_state(
     disable_worker,
 ):
     app = HostApp()
+    question = FakeQuestion(question_id=42)
 
     modal = make_modal(
-        problem_id=42,
+        question=question,
         user_code="solution()",
         elapsed=15.75,
         best=20.0,
@@ -118,7 +108,8 @@ async def test_result_modal_preserves_constructor_state(
         app.push_screen(modal)
         await pilot.pause()
 
-        assert modal.problem_id == 42
+        assert modal.question is question
+        assert modal.question.id == 42
         assert modal.user_code == "solution()"
         assert modal.elapsed == 15.75
         assert modal.best == 20.0
@@ -374,8 +365,10 @@ def test_save_passed_result_adds_attempt_and_deletes_draft(
         fake_delete_draft,
     )
 
+    question = FakeQuestion(question_id=7)
+
     modal = make_modal(
-        problem_id=7,
+        question=question,
         user_code="  print('hello')  ",
         elapsed=15.0,
         language=Language.PYTHON,
@@ -423,8 +416,10 @@ def test_save_failed_result_adds_attempt_and_saves_draft(
         fake_add_draft,
     )
 
+    question = FakeQuestion(question_id=7)
+
     modal = make_modal(
-        problem_id=7,
+        question=question,
         user_code="  broken()  ",
         elapsed=25.5,
         language=Language.RUST,
@@ -486,7 +481,10 @@ def test_unsuccessful_result_saves_draft(
         lambda *args: deleted.append(args),
     )
 
+    question = FakeQuestion(question_id=1)
+
     modal = make_modal(
+        question=question,
         user_code="solution()",
         elapsed=8.0,
         language=Language.PYTHON,
@@ -531,13 +529,17 @@ def test_save_result_strips_user_code(
     assert captured["draft"]["code"] == "print('hello')"
 
 
-# Running user code
 @pytest.mark.asyncio
-async def test_run_user_code_uses_problem_tests_and_saves_passed_result(
-    fake_questions,
+async def test_run_user_code_uses_question_tests_and_saves_passed_result(
     monkeypatch,
 ):
     captured = {}
+    saved = {}
+
+    question = FakeQuestion(
+        question_id=42,
+        tests="assert solution() == 42",
+    )
 
     async def fake_run_solution(
         user_code,
@@ -554,8 +556,6 @@ async def test_run_user_code_uses_problem_tests_and_saves_passed_result(
         return ExecutionResult(
             status=RunStatus.PASSED,
         )
-
-    saved = {}
 
     def fake_save_result(self, *, status, created_at):
         saved["status"] = status
@@ -593,7 +593,7 @@ async def test_run_user_code_uses_problem_tests_and_saves_passed_result(
     )
 
     modal = make_modal(
-        problem_id=1,
+        question=question,
         user_code="solution()",
         language=Language.PYTHON,
     )
@@ -601,7 +601,7 @@ async def test_run_user_code_uses_problem_tests_and_saves_passed_result(
     await modal.run_user_code()
 
     assert captured["user_code"] == "solution()"
-    assert captured["test_code"] == "assert True"
+    assert captured["test_code"] == "assert solution() == 42"
     assert captured["language"] is Language.PYTHON
     assert callable(captured["on_line"])
 
@@ -612,10 +612,7 @@ async def test_run_user_code_uses_problem_tests_and_saves_passed_result(
 
 
 @pytest.mark.asyncio
-async def test_run_user_code_shows_compile_error(
-    fake_questions,
-    monkeypatch,
-):
+async def test_run_user_code_shows_compile_error(monkeypatch):
     messages = []
     saved = {}
 
@@ -663,15 +660,13 @@ async def test_run_user_code_shows_compile_error(
     assert messages == [
         ("compilation failed", "expected `;`"),
     ]
+
     assert saved["status"] is RunStatus.COMPILE_ERROR
     assert saved["created_at"] == 100.0
 
 
 @pytest.mark.asyncio
-async def test_run_user_code_shows_timeout(
-    fake_questions,
-    monkeypatch,
-):
+async def test_run_user_code_shows_timeout(monkeypatch):
     messages = []
 
     async def fake_run_solution(*args, **kwargs):
@@ -710,9 +705,7 @@ async def test_run_user_code_shows_timeout(
         lambda self, **kwargs: None,
     )
 
-    modal = make_modal()
-
-    await modal.run_user_code()
+    await make_modal().run_user_code()
 
     assert messages == [
         (
@@ -723,10 +716,7 @@ async def test_run_user_code_shows_timeout(
 
 
 @pytest.mark.asyncio
-async def test_run_user_code_shows_runtime_error(
-    fake_questions,
-    monkeypatch,
-):
+async def test_run_user_code_shows_runtime_error(monkeypatch):
     messages = []
 
     async def fake_run_solution(*args, **kwargs):
@@ -766,9 +756,7 @@ async def test_run_user_code_shows_runtime_error(
         lambda self, **kwargs: None,
     )
 
-    modal = make_modal()
-
-    await modal.run_user_code()
+    await make_modal().run_user_code()
 
     assert messages == [
         ("error running code", "segmentation fault"),
@@ -776,10 +764,7 @@ async def test_run_user_code_shows_runtime_error(
 
 
 @pytest.mark.asyncio
-async def test_run_user_code_shows_success(
-    fake_questions,
-    monkeypatch,
-):
+async def test_run_user_code_shows_success(monkeypatch):
     called = False
 
     async def fake_run_solution(*args, **kwargs):
@@ -822,9 +807,7 @@ async def test_run_user_code_shows_success(
         lambda self, **kwargs: None,
     )
 
-    modal = make_modal()
-
-    await modal.run_user_code()
+    await make_modal().run_user_code()
 
     assert called is True
 

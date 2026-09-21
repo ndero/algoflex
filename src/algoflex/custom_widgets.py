@@ -3,7 +3,7 @@ from textual.containers import Container, VerticalScroll
 from textual.message import Message
 from textual.widgets import Markdown, Select, Static
 
-from algoflex.types import Language
+from algoflex.types import Language, Question
 
 
 class Problem(VerticalScroll):
@@ -63,10 +63,14 @@ class Title(Container):
     """
 
     def __init__(
-        self, show_language_selector: bool = False, language: Language = Language.PYTHON
+        self,
+        question: Question | None = None,
+        language: Language = Language.PYTHON,
+        show_language_selector: bool = False,
     ) -> None:
-        self.show_language_selector = show_language_selector
+        self.question = question
         self.language = language
+        self.show_language_selector = show_language_selector
         super().__init__()
 
     def compose(self) -> ComposeResult:
@@ -75,9 +79,9 @@ class Title(Container):
             id="title",
         )
 
-        if self.show_language_selector:
+        if self.show_language_selector and self.question:
             yield Select(
-                [(language.label, language) for language in Language],
+                [(language.label, language) for language in self.question.languages],
                 value=self.language,
                 allow_blank=False,
                 compact=True,

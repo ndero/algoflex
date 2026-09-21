@@ -1,3 +1,5 @@
+import sqlite3
+
 import pytest
 from textual.app import App
 from textual.screen import Screen
@@ -12,10 +14,12 @@ from algoflex.types import Language, Level, RunStatus
 class FakeQuestion:
     def __init__(
         self,
+        question_id: int = 1,
         markdown: str = "# Problem",
         level: Level = Level.BREEZY,
         starters: dict[Language, str] | None = None,
     ) -> None:
+        self.id = question_id
         self.markdown = markdown
         self.level = level
         self._starters = starters or {
@@ -23,37 +27,25 @@ class FakeQuestion:
             Language.RUST: "fn main() {\n}",
         }
 
+    @property
+    def languages(self) -> list[Language]:
+        return list(self._starters)
+
     def starter_for(self, language: Language) -> str:
         return self._starters[language]
-
-
-class FakeQuestions:
-    def __init__(self) -> None:
-        self._questions = {
-            1: FakeQuestion(
-                markdown="# Two Sum\n\nFind two numbers.",
-            ),
-            2: FakeQuestion(
-                markdown="# Binary Search\n\nSearch a sorted array.",
-                level=Level.STEADY,
-            ),
-        }
-
-    def get(self, problem_id: int) -> FakeQuestion:
-        return self._questions[problem_id]
 
 
 class FakeResultModal(Screen):
     def __init__(
         self,
-        problem_id: int,
+        question: FakeQuestion,
         code: str,
         elapsed: float,
         best: float | None,
         language: Language,
     ) -> None:
         super().__init__()
-        self.problem_id = problem_id
+        self.question = question
         self.code = code
         self.elapsed = elapsed
         self.best = best
@@ -67,24 +59,19 @@ class AttemptApp(App):
 def push_attempt(
     app: AttemptApp,
     *,
-    problem_id: int = 1,
+    question: FakeQuestion | None = None,
     language: Language = Language.PYTHON,
-    draft=None,
+    draft: sqlite3.Row | dict | None = None,
 ) -> AttemptScreen:
+    question = question or FakeQuestion()
+
     screen = AttemptScreen(
-        problem_id,
+        question,
         language,
         draft,
     )
     app.push_screen(screen)
     return screen
-
-
-@pytest.fixture
-def fake_questions(monkeypatch):
-    questions = FakeQuestions()
-    monkeypatch.setattr(attempt, "questions", questions)
-    return questions
 
 
 @pytest.fixture
@@ -102,7 +89,7 @@ def no_attempts(monkeypatch):
 
 
 @pytest.fixture
-def attempt_app(fake_questions, no_attempts):
+def attempt_app(no_attempts):
     return AttemptApp()
 
 
@@ -117,6 +104,7 @@ async def test_attempt_composes_expected_widgets(attempt_app):
         assert attempt_app.screen.query_one("#timeline", Static)
         assert attempt_app.screen.query_one("#solutions", Markdown)
         assert attempt_app.screen.query_one("#editor", TabbedContent)
+        assert attempt_app.screen.query_one(Title)
 
 
 @pytest.mark.asyncio
@@ -170,10 +158,7 @@ async def test_attempt_uses_draft_instead_of_starter_code(
 
 
 # Timeline
-def test_get_timeline_empty_attempts(
-    fake_questions,
-    monkeypatch,
-):
+def test_get_timeline_empty_attempts(monkeypatch):
     monkeypatch.setattr(
         attempt,
         "get_best_attempts",
@@ -181,7 +166,7 @@ def test_get_timeline_empty_attempts(
     )
 
     screen = AttemptScreen(
-        1,
+        FakeQuestion(),
         Language.PYTHON,
         None,
     )
@@ -189,10 +174,7 @@ def test_get_timeline_empty_attempts(
     assert screen.get_timeline([]) == ""
 
 
-def test_get_timeline_formats_attempts(
-    fake_questions,
-    monkeypatch,
-):
+def test_get_timeline_formats_attempts(monkeypatch):
     attempts = [
         {
             "attempt_id": 1,
@@ -227,7 +209,7 @@ def test_get_timeline_formats_attempts(
     )
 
     screen = AttemptScreen(
-        1,
+        FakeQuestion(),
         Language.PYTHON,
         None,
     )
@@ -244,10 +226,7 @@ def test_get_timeline_formats_attempts(
     assert RunStatus.FAILED.icon in result
 
 
-def test_get_timeline_marks_best_attempt(
-    fake_questions,
-    monkeypatch,
-):
+def test_get_timeline_marks_best_attempt(monkeypatch):
     attempts = [
         {
             "attempt_id": 1,
@@ -282,7 +261,7 @@ def test_get_timeline_marks_best_attempt(
     )
 
     screen = AttemptScreen(
-        1,
+        FakeQuestion(),
         Language.PYTHON,
         None,
     )
@@ -293,10 +272,7 @@ def test_get_timeline_marks_best_attempt(
     assert screen.best == 65.0
 
 
-def test_get_timeline_stores_best_elapsed(
-    fake_questions,
-    monkeypatch,
-):
+def test_get_timeline_stores_best_elapsed(monkeypatch):
     best = {
         "attempt_id": 10,
         "elapsed": 42.5,
@@ -309,7 +285,7 @@ def test_get_timeline_stores_best_elapsed(
     )
 
     screen = AttemptScreen(
-        1,
+        FakeQuestion(),
         Language.PYTHON,
         None,
     )
@@ -320,10 +296,7 @@ def test_get_timeline_stores_best_elapsed(
 
 
 # Solutions
-def test_get_solutions_only_includes_passed_attempts(
-    fake_questions,
-    monkeypatch,
-):
+def test_get_solutions_only_includes_passed_attempts(monkeypatch):
     attempts = [
         {
             "status": RunStatus.PASSED,
@@ -346,7 +319,7 @@ def test_get_solutions_only_includes_passed_attempts(
     )
 
     screen = AttemptScreen(
-        1,
+        FakeQuestion(),
         Language.PYTHON,
         None,
     )
@@ -359,10 +332,7 @@ def test_get_solutions_only_includes_passed_attempts(
     assert "100.0 ago" in result
 
 
-def test_get_solutions_supports_multiple_languages(
-    fake_questions,
-    monkeypatch,
-):
+def test_get_solutions_supports_multiple_languages(monkeypatch):
     attempts = [
         {
             "status": RunStatus.PASSED,
@@ -385,7 +355,7 @@ def test_get_solutions_supports_multiple_languages(
     )
 
     screen = AttemptScreen(
-        1,
+        FakeQuestion(),
         Language.PYTHON,
         None,
     )
@@ -398,11 +368,9 @@ def test_get_solutions_supports_multiple_languages(
     assert f"```{Language.RUST.slug}" in result
 
 
-def test_get_solutions_returns_empty_string_for_no_attempts(
-    fake_questions,
-):
+def test_get_solutions_returns_empty_string_for_no_attempts():
     screen = AttemptScreen(
-        1,
+        FakeQuestion(),
         Language.PYTHON,
         None,
     )
@@ -501,7 +469,7 @@ async def test_submit_pushes_result_modal(
         result = captured["screen"]
 
         assert isinstance(result, FakeResultModal)
-        assert result.problem_id == 1
+        assert result.question is screen.question
         assert result.code == "print('solution')"
         assert result.language is Language.PYTHON
         assert result.elapsed == 10.0
@@ -557,10 +525,7 @@ async def test_submit_includes_draft_elapsed_time(
 
 
 # Draft
-def test_load_draft_uses_current_problem_and_language(
-    fake_questions,
-    monkeypatch,
-):
+def test_load_draft_uses_current_problem_and_language(monkeypatch):
     captured = {}
 
     def fake_get_draft(*, problem_id, lang_id):
@@ -575,7 +540,7 @@ def test_load_draft_uses_current_problem_and_language(
     )
 
     screen = AttemptScreen(
-        2,
+        FakeQuestion(question_id=2),
         Language.RUST,
         None,
     )

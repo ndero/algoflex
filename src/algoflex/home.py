@@ -18,7 +18,7 @@ from algoflex.db import (
 )
 from algoflex.questions import questions
 from algoflex.search import SearchScreen
-from algoflex.types import Language, Level, RunStatus
+from algoflex.types import Language, Level, Question, RunStatus
 from algoflex.utils import fmt_secs, time_ago
 
 
@@ -91,8 +91,9 @@ class HomeScreen(App):
     show_dashboard: reactive[bool] = reactive(False)
 
     @property
-    def problem_id(self) -> int:
-        return self.problems[self.index]
+    def question(self) -> Question:
+        id = self.problems[self.index]
+        return questions.get(id)
 
     @property
     def problems_count(self) -> int:
@@ -107,7 +108,7 @@ class HomeScreen(App):
         yield Footer()
 
     def on_mount(self) -> None:
-        self.problems = list(questions.ids)
+        self.problems = questions.ids
         shuffle(self.problems)
 
         self.passed = self.query_one("#passed", Static)
@@ -121,11 +122,10 @@ class HomeScreen(App):
         self.update_problem_view()
 
     def get_problem_details(self) -> tuple:
-        p = questions.get(self.problem_id)
-        markdown, level = p.markdown, p.level
-        passed, total = get_problem_pass_ratio(self.problem_id)
-        last_attempts = get_recent_attempts(n=1, problem_id=self.problem_id)
-        best_attempts = get_best_attempts(n=1, problem_id=self.problem_id)
+        markdown, level = self.question.markdown, self.question.level
+        passed, total = get_problem_pass_ratio(self.question.id)
+        last_attempts = get_recent_attempts(n=1, problem_id=self.question.id)
+        best_attempts = get_best_attempts(n=1, problem_id=self.question.id)
         best = fmt_secs(best_attempts[0]["elapsed"]) if best_attempts else "..."
 
         last = "..."
@@ -158,10 +158,14 @@ class HomeScreen(App):
         def update(_id):
             self.update_problem_view()
 
+        language = self.question.languages[0]
         recent = get_recent_attempts(n=1)
-        language = Language(recent[0]["lang_id"]) if recent else Language.PYTHON
-        draft = get_draft(problem_id=self.problem_id, lang_id=language)
-        self.push_screen(AttemptScreen(self.problem_id, language, draft), update)
+
+        if recent and Language(recent[0]["lang_id"]) in self.question.languages:
+            language = Language(recent[0]["lang_id"])
+
+        draft = get_draft(problem_id=self.question.id, lang_id=language)
+        self.push_screen(AttemptScreen(self.question, language, draft), update)
 
     def action_next(self) -> None:
         if self.show_dashboard:

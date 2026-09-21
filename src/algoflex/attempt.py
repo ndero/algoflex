@@ -10,9 +10,8 @@ from textual.widgets import Footer, Markdown, Static, TabbedContent, TextArea
 
 from algoflex.custom_widgets import Problem, Title
 from algoflex.db import get_best_attempts, get_draft, get_recent_attempts
-from algoflex.questions import questions
 from algoflex.result import ResultModal
-from algoflex.types import Language, RunStatus
+from algoflex.types import Language, Question, RunStatus
 from algoflex.utils import fmt_secs, time_ago
 
 
@@ -63,21 +62,22 @@ class AttemptScreen(Screen):
     }
     """
 
-    def __init__(self, problem_id, language, draft):
+    def __init__(self, question, language, draft):
         super().__init__()
-        self.problem_id: int = problem_id
+        self.question: Question = question
         self.test_time: float = monotonic()
         self.language: Language = language
         self.draft: sqlite3.Row = draft
 
     def compose(self) -> ComposeResult:
-        question = questions.get(self.problem_id)
-        description = question.markdown
-        code = question.starter_for(self.language)
+        description = self.question.markdown
+        code = self.question.starter_for(self.language)
         if self.draft:
             code = self.draft["code"]
 
-        yield Title(show_language_selector=True, language=self.language)
+        yield Title(
+            question=self.question, language=self.language, show_language_selector=True
+        )
         with Horizontal():
             yield Problem(description)
             with TabbedContent("Attempt", "Timeline", "Past solutions", id="editor"):
@@ -104,7 +104,7 @@ class AttemptScreen(Screen):
 
     def update_attempt_view(self) -> None:
         """Update attempt timeline and past solutions"""
-        attempts = get_recent_attempts(n=-1, problem_id=self.problem_id)
+        attempts = get_recent_attempts(n=-1, problem_id=self.question.id)
         timeline = self.get_timeline(attempts)
         solutions = self.get_solutions(attempts)
 
@@ -114,7 +114,7 @@ class AttemptScreen(Screen):
     def get_timeline(self, attempts) -> str:
         """Display timeline for all language attempts"""
         md = ""
-        best_attempts = get_best_attempts(n=1, problem_id=self.problem_id)
+        best_attempts = get_best_attempts(n=1, problem_id=self.question.id)
         best_attempt = best_attempts[0] if best_attempts else None
 
         if best_attempt:
@@ -152,7 +152,7 @@ class AttemptScreen(Screen):
         elapsed = (monotonic() - self.test_time) + elapsed_before
         self.app.push_screen(
             ResultModal(
-                self.problem_id,
+                self.question,
                 code.text,
                 elapsed,
                 self.best,
@@ -162,7 +162,7 @@ class AttemptScreen(Screen):
         )
 
     def load_draft(self) -> sqlite3.Row:
-        return get_draft(problem_id=self.problem_id, lang_id=self.language)
+        return get_draft(problem_id=self.question.id, lang_id=self.language)
 
     def action_back(self) -> None:
         self.dismiss()
@@ -183,7 +183,7 @@ class AttemptScreen(Screen):
 
     def update_language(self, language: Language) -> None:
         self.language = language
-        question, self.draft = questions.get(self.problem_id), self.load_draft()
-        code = question.starter_for(language)
+        self.draft = self.load_draft()
+        code = self.question.starter_for(language)
         self.editor.text = self.draft["code"] if self.draft else code
         self.editor.language = language.slug

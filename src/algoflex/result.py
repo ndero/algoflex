@@ -6,9 +6,8 @@ from textual.screen import ModalScreen
 from textual.widgets import Footer, RichLog, Static
 
 from algoflex.db import add_attempt, add_draft, delete_draft
-from algoflex.questions import questions
 from algoflex.runner import run_solution
-from algoflex.types import RunStatus
+from algoflex.types import Question, RunStatus
 from algoflex.utils import fmt_secs
 
 
@@ -43,10 +42,10 @@ class ResultModal(ModalScreen):
     }
     """
 
-    def __init__(self, problem_id, user_code, elapsed, best, language) -> None:
+    def __init__(self, question, user_code, elapsed, best, language) -> None:
         super().__init__()
 
-        self.problem_id: int = problem_id
+        self.question: Question = question
         self.user_code: str = user_code
         self.elapsed: float = elapsed
         self.best: float | None = best
@@ -73,13 +72,12 @@ class ResultModal(ModalScreen):
 
     async def run_user_code(self) -> None:
         now = time.time()
-        question = questions.get(self.problem_id)
 
         self.start_loading()
 
         result = await run_solution(
             self.user_code,
-            question.tests_for(self.language),
+            self.question.tests_for(self.language),
             self.language,
             on_line=self._write_line,
         )
@@ -154,7 +152,7 @@ class ResultModal(ModalScreen):
     def _save_result(self, *, status: RunStatus, created_at: float) -> None:
         add_attempt(
             {
-                "problem_id": self.problem_id,
+                "problem_id": self.question.id,
                 "status": status,
                 "elapsed": self.elapsed,
                 "created_at": created_at,
@@ -164,11 +162,11 @@ class ResultModal(ModalScreen):
         )
 
         if status is RunStatus.PASSED:
-            delete_draft(self.problem_id, self.language)
+            delete_draft(self.question.id, self.language)
         else:
             add_draft(
                 {
-                    "problem_id": self.problem_id,
+                    "problem_id": self.question.id,
                     "lang_id": self.language,
                     "code": self.user_code.strip(),
                     "elapsed": self.elapsed,
