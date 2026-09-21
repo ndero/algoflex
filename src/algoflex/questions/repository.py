@@ -11,13 +11,13 @@ class QuestionRepository:
         self.data_dir = data_dir
 
     @cached_property
-    def ids(self) -> list[int]:
-        """Return all available question IDs in ascending order."""
-        return sorted(
+    def ids(self) -> set[int]:
+        """Return a set of all available question IDs"""
+        return {
             int(path.name)
             for path in self.data_dir.iterdir()
             if path.is_dir() and path.name.isdigit()
-        )
+        }
 
     def get(self, question_id: int) -> Question:
         """Return a question by ID."""

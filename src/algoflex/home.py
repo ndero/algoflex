@@ -108,7 +108,7 @@ class HomeScreen(App):
         yield Footer()
 
     def on_mount(self) -> None:
-        self.problems = questions.ids
+        self.problems = list(questions.ids)
         shuffle(self.problems)
 
         self.passed = self.query_one("#passed", Static)
