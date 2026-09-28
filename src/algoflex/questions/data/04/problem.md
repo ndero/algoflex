@@ -1,13 +1,17 @@
 ### Max product sub array
 Given a non empty integer array `nums`, find a contiguous non-empty subarray within the array that has the largest product and return the product.
 
-### Example
-```
-nums = [-2, 0, -1]
-output = 0
-```
+**Example 1**
 
-```
-nums = [2, 3, -2, 4]
-output = 6
-```
+* **Input:** `nums = [-2, 0, -1]`
+* **Output:** `0`
+
+**Example 2**
+
+* **Input:** `nums = [2, 3, -2, 4]`
+* **Output:** `6`
+
+**Constraints**
+
+* `1 <= nums.length <= 10^5`
+* `-2^31 < nums[i] < 2^31 - 1`

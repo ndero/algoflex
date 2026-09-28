@@ -4,13 +4,16 @@ Check if the brackets are valid.
 
 There no other characters in the string apart from '[', ']', '(', ')', '{'and '}'.
 
-### Example
-```
-s = "[](){}"
-output = True
-```
+**Example 1**
 
-```
-s = "{{}}[][](()"
-output = False
-```
+* **Input:** `s = "[](){}"`
+* **Output:** `True`
+
+**Example 2**
+
+* **Input:** `s = "{{}}[][](()"`
+* **Output:** `False`
+
+**Constraints**
+
+* `0 <= s.length <= 10^5`

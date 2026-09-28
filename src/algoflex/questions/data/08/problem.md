@@ -3,8 +3,12 @@ Given a sorted (ascending order) but rotated array `nums`, return the minimum el
 
 > an example of rotating an array. If `[0, 1, 2, 4, 5, 6, 7]` is rotated 4 times it becomes `[4, 5, 6, 7, 0, 1, 2]`.
 
-### Example
-```
-arr = [4, 5, 6, 7, 0, 1, 2]
-output = 0
-```
+**Example**
+
+* **Input:** `nums = [4, 5, 6, 7, 0, 1, 2]`
+* **Output:** `0`
+
+**Constraints**
+
+* `1 <= nums.length <= 10^7`
+* `-2^31 < nums[i] < 2^31 -1`

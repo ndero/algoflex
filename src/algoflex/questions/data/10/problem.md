@@ -3,13 +3,17 @@ Given a non-empty array of integers `nums` where every element appears twice exc
 
 You must write an algorithm that runs in **O(n)** average time complexity and uses constant space.
 
-### Example
-```
-nums = [4, 1, 2, 1, 2]
-output = 4
-```
+**Example 1**
 
-```
-nums = [2]
-output = 2
-```
+* **Inputs:** `nums = [4, 1, 2, 1, 2]`
+* **Output:** `4`
+
+**Example 2**
+
+* **Inputs:** `nums = [2]`
+* **Output:** `2`
+
+**Constraints**
+
+* `1 <= nums.length <= 10^6`
+* `-2^31 <= nums[i] <= 2^31 -1`
