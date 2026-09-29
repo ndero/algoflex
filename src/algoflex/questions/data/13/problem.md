@@ -10,13 +10,16 @@ Convert a given integer, `n`,  to its equivalent roman numerals for `0 < n < 400
 |Roman  | L | XL | X | IX| V | IV| I|
 
 
-### Example
-```
-input: 4
-output = 'IV'
-```
+**Example 1**
 
-```
-input: 23
-output = 'XXIII'
-```
+* **Input:** `n = 4`
+* **Output:** `IV`
+
+**Example 2**
+
+* **Input:** `n = 23`
+* **Output:** `XXIII`
+
+**Constraints**
+
+* `0 < n < 4000`

@@ -3,8 +3,15 @@ Given a knapsack `capacity` and two arrays, the first one for `weights` and the 
 
 You are allowed to add a fraction of an item.
 
-### Example
-```
-inputs: capacity = 50, weights = [10, 20, 30], values = [60, 100, 120]
-output = 240
-```
+**Example**
+
+* **Inputs:** `capacity = 50`, `weights = [10, 20, 30]`, `values = [60, 100, 120]`
+* **Output:** `240`
+
+**Constraints**
+
+* `0 <= capacity <= 6000`
+* `0 <= weights.length <= 3 * 10^5`
+* `0 <= values.length <= 3 * 10^5`
+* `5 <= weights[i] <= 100`
+* `30 <= values[i] < 150`

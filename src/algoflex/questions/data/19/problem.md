@@ -3,9 +3,9 @@ Given the `root` of a binary tree and an integer `target`, return the number of 
 
 The path does not need to start or end at the root or a leaf, but it must go downwards (i.e., traveling only from parent nodes to child nodes).
 
-### Example
-```
-root = [10, 5, -3, 3, 2, None, 11, 3, -2, None, 1], target = 8
+**Example**
+
+* **Input:** `root = [10, 5, -3, 3, 2, None, 11, 3, -2, None, 1]`, `target = 8`
 
                 10
                /  \
@@ -15,5 +15,6 @@ root = [10, 5, -3, 3, 2, None, 11, 3, -2, None, 1], target = 8
            / \    \
           3  -2    1
 
-output = 3
-```
+* **output:** `3`
+* **How:** `10 -> (5 -> 3) -> 3`, `10 -> (5 -> 2 -> 1)` and `10 -> (-3 -> 11)`
+

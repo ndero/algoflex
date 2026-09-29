@@ -3,16 +3,23 @@ Given an array `roots` of strings and a `sentence` of words separated by spaces.
 
 Return the sentence after the replacement.
 
-### Example
-```
-input: roots = ["cat", "bat", "rat"], sentence = "the cattle was rattled by the battery"
-output = "the cat was rat by the bat"
-```
+**Example 1**
 
-```
-input: roots = ["a", "b", "c"], sentence = "aadsfasf absbs bbab cadsfafs"
-output = "a a b c"
-```
+* **Inputs:** `roots = ["cat", "bat", "rat"]`, `sentence = "the cattle was rattled by the battery"`
+* **Output:** `"the cat was rat by the bat"`
 
-### Take it further
-Can you do it in a single pass through each word? i.e O(nm) where n is number of words in the sentence and m is the longest word length?
+**Example 2**
+
+* **Input:** `roots = ["a", "b", "c"]`, `sentence = "aadsfasf absbs bbab cadsfafs"`
+* **Output:** `"a a b c"`
+
+**Constraints**
+
+* `0 <= root.length < 30`
+* `1 <= root[i] < 5`
+* `0 <= sentence.length < 100`
+* both `roots` and `sentence` contains only lowercase english letters. s
+
+**Take it further**
+
+Can you do it in a single pass through each word? i.e `O(nm)` where `n` is number of words in the sentence and `m` is the longest word length?

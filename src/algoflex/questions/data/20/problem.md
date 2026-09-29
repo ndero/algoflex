@@ -5,8 +5,15 @@ You can only either include or not include an item. i.e you can't add a portion 
 
 Return a tuple of maximum value and selected items
 
-### Example
-```
-input: capacity = 50, weights = [10, 20, 30], values = [60, 100, 120]
-output = (220, [0, 1, 1])
-```
+**Example**
+
+* **Inputs:** `capacity = 50`, `weights = [10, 20, 30]`, `values = [60, 100, 120]`
+* **Output:** `(220, [0, 1, 1])`
+
+**Constraints**
+
+* `0 <= capacity <= 6000`
+* `0 <= weights.length <= 3 * 10^4`
+* `0 <= values.length <= 3 * 10^4`
+* `5 <= weights[i] <= 100`
+* `30 <= values[i] < 150`
