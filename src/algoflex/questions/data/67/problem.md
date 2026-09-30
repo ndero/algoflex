@@ -9,8 +9,12 @@ Make sure the digit logs stay in their original order (stable sort).
 
 > first word of each log is the identifier. i.e each log looks like: 'identifier content...'
 
-### Example
-```
-logs = ["l2 abc def", "l1 abc def", "d1 1 2"]
-output = ["l1 abc def", "l2 abc def", "d1 1 2"]
-```
+**Example**
+
+* **Input:** `logs = ["l2 abc def", "l1 abc def", "d1 1 2"]`
+* **Output:** `["l1 abc def", "l2 abc def", "d1 1 2"]`
+
+**Constraints**
+
+* `0 <= logs.length < 100`
+* each `log` is the format `identifier content`

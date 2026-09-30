@@ -6,32 +6,41 @@ Given an `m * n` grid where each cell can have a value of `0`, `1` or `2`:
 
 Any fresh orange that is next (up, down, left, right) to a rotten one rots within a minute.
 
-Return the minimum time within which all the oranges in the grid become rotten. Return -1 if it's impossible for all to get rotten.
+Return the minimum time within which all the oranges in the grid become rotten. 
 
-### Example
-```
-Input: grid = [[1]]
-Output: -1
-```
+Return `-1` if it's impossible for all to get rotten.
 
-```
-Input: grid = [[1, 2]]
-Output: 1
-```
+**Example 1**
 
-```
-Input:
+* **Input:** `grid = [[1]]`
+* **Output:** `-1`
+
+**Example 2**
+
+* **Input:** `grid = [[1, 2]]`
+* **Output:** `1`
+
+**Example 3**
+
+* **Input:**
     grid = [
         [2, 1, 1],
         [1, 1, 0],
         [0, 1, 1]
     ]
 
-Output: 4
+* **Output:** `4`
 
-How:
+* **How:**
+```text
 Minute 0:    Minute 1:    Minute 2:    Minute 3:    Minute 4:
 2 1 1        2 2 1        2 2 2        2 2 2        2 2 2
 1 1 0   ->   2 1 0   ->   2 2 0   ->   2 2 0   ->   2 2 0
 0 1 1        0 1 1        0 1 1        0 2 1        0 2 2
 ```
+
+**Constraints**
+
+* `1 <= m <= 20`
+* `0 <= n <= 20`
+* `grid[m][n]` is either `0`, `1` or `2`.
