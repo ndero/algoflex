@@ -26,29 +26,26 @@ CD = 400
 CM = 900
 ```
 
-### Examples
+**Example 1**
 
-```text
-Input: s = "II"
-Output: 2
-How: 1 + 1 =  2, hence II
-```
+* **Input:** `s = "II"`
+* **Output:** `2`
+* **How:** 1 + 1 =  2, hence II
 
-```text
-Input: s = "IX"
-Output: 9
-Explanation: X = 10, I = 1 -> 10 - 1 = 9, one of the special subtraction cases
-```
+**Example 2**
 
-```text
-Input: s = "MCMXCIV"
-Output: 1994
-Explanation: M = 1000, CM = 900, XC = 90, IV = 4, so 1000 + 900 + 90 + 4 = 1994.
-```
+* **Input:** `s = "IX"`
+* **Output:** `9`
+* **How:** X = 10, I = 1 -> 10 - 1 = 9, one of the special subtraction cases
 
-### Constraints
-```text
-1 <= s.length <= 15
-s contains only the characters 'I', 'V', 'X', 'L', 'C', 'D', 'M'.
-It is guaranteed that s is a valid Roman numeral in the range [1, 3999].
-```
+**Example 3**
+
+* **Input:** `s = "MCMXCIV"`
+* **Output:** `1994`
+* **How:** M = 1000, CM = 900, XC = 90, IV = 4, so 1000 + 900 + 90 + 4 = 1994.
+
+**Constraints**
+
+* `1 <= s.length <= 15`
+* `s` contains only the characters `'I', 'V', 'X', 'L', 'C', 'D', 'M'`.
+* It is guaranteed that `s` is a valid Roman numeral in the range [1, 3999].

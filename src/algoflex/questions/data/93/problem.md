@@ -9,25 +9,18 @@ r * r <= x
 
 You must **not** use any built-in exponent function or operator, such as `pow(x, 0.5)` or `x ** 0.5`. You also must not use any built-in `sqrt` function.
 
-### Examples
-```text
-Input: x = 9
-Output: 3
-How: The square root of 9 is 3, so we return 3.
-```
+**Example 1**
 
-```text
-Input: x = 123
-Output: 11
-How: The square root of 123 is 11.0905365..., and since we round it down to the nearest integer, 11 is returned.
-```
+* **Input:** `x = 9`
+* **Output:** `3`
+* **How:** The square root of 9 is 3, so we return 3.
 
-```text
-Input: x = 0
-Output: 0
-```
+**Example 2**
 
-### Constraints
-```text
-0 <= x <= 2^31 - 1
-```
+* **Input:** `x = 123`
+* **Output:** `11`
+* **How:** The square root of 123 is 11.0905365..., and since we round it down to the nearest integer, 11 is returned.
+
+**Constraints**
+
+* `0 <= x <= 2^31 - 1`

@@ -5,35 +5,33 @@ If reversing `x` causes the value to go outside the signed 32-bit integer range 
 
 **Note:** Assume the environment does not allow you to store 64-bit integers (signed or unsigned).
 
-### Examples
-```text
-Input: x = 12
-Output: 21
-```
+**Example 1**
 
-```text
-Input: x = -12
-Output: -21
-```
+* **Input:** `x = 12`
+* **Output:** `21`
 
-```text
-Input: x = 100
-Output: 1
-How: Leading zeros are dropped after reversing.
-```
+**Example 2**
 
-```text
-Input: x = 0
-Output: 0
-```
+* **Input:** `x = -12`
+* **Output:** `-21`
 
-```text
-Input: x = 2_000_000_003
-Output: 0
-Explanation: 2_000_000_003 reversed is 3_000_000_002, which is outside the signed 32-bit integer range.
-```
+**Example 3**
 
-### Constraints
-```text
--2^31 <= x <= 2^31 - 1
-```
+* **Input:** `x = 100`
+* **Output:** `1`
+* **How:** Leading zeros are dropped after reversing.
+
+**Example 4**
+
+* **Input:** `x = 0`
+* **Output:** `0`
+
+**Example 5**
+
+* **Input:** `x = 2_000_000_003`
+* **Output:** `0`
+* **How:** 2_000_000_003 reversed is 3_000_000_002, which is outside the signed 32-bit integer range.
+
+**Constraints**
+
+* `-2^31 <= x <= 2^31 - 1`
