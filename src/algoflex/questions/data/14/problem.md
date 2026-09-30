@@ -5,12 +5,12 @@ Given two strings `text1` and `text2`, return their longest common substring. If
 
 **Example 1**
 
-* **Inputs:** `text1 = "brain"`, `text2 = "drain"`
+* **Input:** `text1 = "brain"`, `text2 = "drain"`
 * **Output:** `"rain"`
 
 **Example 2**
 
-* **Inputs:** `text1 = "math"`, `text2 = "arithmetic"`
+* **Input:** `text1 = "math"`, `text2 = "arithmetic"`
 * **Output:** `"th"`
 
 **Constraints**

@@ -5,13 +5,13 @@ Each element can only construct a single pair. Make sure to pick elements from l
 
 **Example 1**
 
-* **Inputs:** `arr = [7, 9, 11, 13, 15]`, `target = 20`
+* **Input:** `arr = [7, 9, 11, 13, 15]`, `target = 20`
 * **Output:** `6`
 * **How:** pairs 7 + 13 and 9 + 11, indices 0 + 3 and 1 + 2, total 6
 
 **Example 2**
 
-* **Inputs:** `arr = [0, 0, 0, 0, 1, 1]`, `target = 1`
+* **Input:** `arr = [0, 0, 0, 0, 1, 1]`, `target = 1`
 * **Output:** `10`
 * **How:** pairs 0 + 1 and 0 + 1, indices 0 + 4 and 1 + 5, total 10
 

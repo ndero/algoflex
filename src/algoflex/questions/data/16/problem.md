@@ -5,7 +5,7 @@ Return the sentence after the replacement.
 
 **Example 1**
 
-* **Inputs:** `roots = ["cat", "bat", "rat"]`, `sentence = "the cattle was rattled by the battery"`
+* **Input:** `roots = ["cat", "bat", "rat"]`, `sentence = "the cattle was rattled by the battery"`
 * **Output:** `"the cat was rat by the bat"`
 
 **Example 2**

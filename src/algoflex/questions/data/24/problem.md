@@ -5,7 +5,7 @@ Given the `root` of a binary tree and an integer `target`, return true if the tr
 
 **Example**
 
-* **Inputs:** `root = [5, 4, 8, 11, None, 13, 4, 7, 2, None, None, None, None, None, 1]`, `target = 18`
+* **Input:** `root = [5, 4, 8, 11, None, 13, 4, 7, 2, None, None, None, None, None, 1]`, `target = 18`
 ```text
                     5
                    / \

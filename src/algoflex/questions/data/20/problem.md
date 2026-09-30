@@ -7,7 +7,7 @@ Return a tuple of maximum value and selected items.
 
 **Example**
 
-* **Inputs:** `capacity = 50`, `weights = [10, 20, 30]`, `values = [60, 100, 120]`
+* **Input:** `capacity = 50`, `weights = [10, 20, 30]`, `values = [60, 100, 120]`
 * **Output:** `(220, [0, 1, 1])`
 
 **Constraints**

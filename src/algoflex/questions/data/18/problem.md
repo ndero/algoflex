@@ -3,7 +3,7 @@ Given an array `arr` and `target`, return the total number of contigous subarray
 
 **Example**
 
-* **Inputs:** `arr = [13, -1, 8, 12, 3, 9]`, `target = 12`
+* **Input:** `arr = [13, -1, 8, 12, 3, 9]`, `target = 12`
 * **Output:** `3`
 * **How:** `[13, -1]`, `[12]` and `[3, 9]`
 

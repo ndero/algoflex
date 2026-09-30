@@ -3,7 +3,7 @@ Given the `root` of a binary search tree and a value `x`, check whether the valu
 
 **Example 1**
 
-* **Inputs:** `root = [9, 8, 16]`, `x = 5`
+* **Input:** `root = [9, 8, 16]`, `x = 5`
 ```text
       9
      / \
@@ -13,7 +13,7 @@ Given the `root` of a binary search tree and a value `x`, check whether the valu
 
 **Example 2**
 
-* **Inputs:** `root = [12, 3, 20]`, `x = 3`
+* **Input:** `root = [12, 3, 20]`, `x = 3`
 ```text
       12
      /  \

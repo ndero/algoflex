@@ -5,7 +5,7 @@ You are allowed to add a fraction of an item.
 
 **Example**
 
-* **Inputs:** `capacity = 50`, `weights = [10, 20, 30]`, `values = [60, 100, 120]`
+* **Input:** `capacity = 50`, `weights = [10, 20, 30]`, `values = [60, 100, 120]`
 * **Output:** `240`
 
 **Constraints**

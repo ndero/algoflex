@@ -3,15 +3,20 @@ Given a non empty integer array `nums` where `nums[i]` represents the maximum fo
 
 You are guaranteed to reach the last index.
 
-### Example
-```
-Input: nums = [2,5,2,1,4]
-output = 2
-How: jump 1 step to index 1 then 3 steps to the last index.
-```
+**Example 1**
 
-```
-Input: nums = [2,3,0,1,4,0]
-output = 3
-How: jump 1 step to index 1, 3 steps to index 4 then 1 step to the last index.
-```
+* **Input:** `nums = [2, 5, 2, 1, 4]`
+* **Output:** `2`
+* **How:** jump 1 step to index 1 then 3 steps to the last index.
+
+**Example 2**
+
+* **Input:** `nums = [2, 3, 0, 1, 4, 0]`
+* **Output:** `3`
+* **How:** jump 1 step to index 1, 3 steps to index 4 then 1 step to the last index.
+
+**Constraints**
+
+* `1 <= nums.length <= 2 * 10^5`
+* `0 <= nums[i] <= 2 * 10^5`
+
