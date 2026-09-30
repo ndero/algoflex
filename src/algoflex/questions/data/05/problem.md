@@ -1,5 +1,5 @@
 ### Elements in exactly one array 
-Create a function that takes two or more `arrays` and returns a `set` of all elements that appear in exactly one array. 
+Create a function that takes one or more `arrays` and returns a `set` of all elements that appear in exactly one array. 
 
 > Return the set of elements belonging to exactly one of the sets.
 

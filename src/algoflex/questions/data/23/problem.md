@@ -7,16 +7,18 @@ There are four types of common coins in US currency:
   - nickels (5 cents)
   - pennies (1 cent)
 
-### Example
-```
-input: 15
-output = 6
-How: There are six ways to make change for 15 cents
-  - A dime and a nickel
-  - A dime and 5 pennies
-  - 3 nickels
-  - 2 nickels and 5 pennies
-  - A nickel and 10 pennies
-  - 15 pennies
+**Example**
 
-```
+* **Input:** `cents = 15`
+* **Output:** `6`
+* **How:** There are 6 ways to make change for 15 cents:
+  1. A dime and a nickel
+  2. A dime and 5 pennies
+  3. 3 nickels
+  4. 2 nickels and 5 pennies
+  5. A nickel and 10 pennies
+  6. 15 pennies
+
+**Constraints**
+
+* `0 <= cents <= 10^4`

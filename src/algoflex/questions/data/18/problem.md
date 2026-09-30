@@ -1,4 +1,4 @@
-### Subarrays with sum
+### Sub-arrays with sum
 Given an array `arr` and `target`, return the total number of contigous subarrays inside the array whose sum is equal to `target`
 
 **Example**

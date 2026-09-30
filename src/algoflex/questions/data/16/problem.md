@@ -1,4 +1,4 @@
-### Replace words
+### Replace words with roots
 Given an array `roots` of strings and a `sentence` of words separated by spaces. Replace all the words in the sentence with the root forming it. If a word can be replaced by more than one root, replace it with the shortest length root.
 
 Return the sentence after the replacement.
@@ -18,7 +18,7 @@ Return the sentence after the replacement.
 * `0 <= root.length < 30`
 * `1 <= root[i] < 5`
 * `0 <= sentence.length < 100`
-* both `roots` and `sentence` contains only lowercase english letters. s
+* both `roots` and `sentence` contains only lowercase english letters.
 
 **Take it further**
 

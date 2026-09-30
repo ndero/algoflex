@@ -6,12 +6,12 @@ Given a positive integer `n`, return whether it is a happy number or not.
 **Example 1**
 
 * **Input:** `n = 19`
-* **Output:** `True`
+* **Output:** `true`
 
 **Example 2**
 
 * **Input:** `n = 2`
-* **Output:** `False`
+* **Output:** `false`
 
 **Constraints**
 

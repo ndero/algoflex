@@ -1,5 +1,5 @@
 ### Value in array
-Given an array of integers `nums` sorted in a non decreasing order, and a target `y`. Return `True` if y is in the array or `False` otherwise.
+Given an array of integers `nums` sorted in a non decreasing order, and a target `y`. Return `true` if y is in the array or `false` otherwise.
 
 You must write an algorithm that runs in **O(log n)** average time complexity.
 

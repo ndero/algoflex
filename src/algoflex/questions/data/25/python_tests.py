@@ -41,6 +41,9 @@ test_cases = [
     [(root6, 600), True],
     [(root7, 100), False],
     [(root8, 1), True],
+    [(root8, 0), True],
+    [(root8, 100_000), False],
+    [(root8, -100_000), True],
     # Edge cases
     [(root9, 5), True],
     [(root9, 4), False],

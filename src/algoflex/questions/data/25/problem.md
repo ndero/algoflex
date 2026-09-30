@@ -1,23 +1,28 @@
-### Has node BST
-Given the `root` of a binary search tree and a value `x`, check whether the value x is in the tree and return `True` or `False`
+### Binary Search Tree has node with value
+Given the `root` of a binary search tree and a value `x`, check whether the value x is in the tree and return `true` or `false`.
 
-### Example
-```
-root = [9, 8, 16], x = 5
+**Example 1**
 
+* **Inputs:** `root = [9, 8, 16]`, `x = 5`
+```text
       9
      / \
     8   16
-
-output = False
 ```
+* **Output:** `false`
 
-```
-root = [12, 3, 20], x = 3
+**Example 2**
 
+* **Inputs:** `root = [12, 3, 20]`, `x = 3`
+```text
       12
      /  \
     3    20
-
-output = True
 ```
+* **Output:** `true`
+
+**Constraints**
+
+* `0 <= root.length < 2 * 10^5`
+* `root[i]` can be `None` or `-10^5 <= root[i] < 10^5`
+* `-10^5 <= target <= 10^5`

@@ -1,10 +1,10 @@
 ### Score tally
 Given an array of `scores` e.g `[ '5', '2', 'C', 'D', '+', '+', 'C' ]`, calculate the total points where:
-```
+```text
 +  add the last two scores.
 D  double the last score.
 C  cancel the last score and remove it.
-x  add the score
+x  add the score.
 ```
 You're always guaranteed to have the last two scores for `+` and the previous score for `D` and `C`.
 
@@ -22,7 +22,7 @@ You're always guaranteed to have the last two scores for `+` and the previous sc
 '+' - sum last two scores -> [5, 10, 15, 25]
 'C' - cancel last score -> [5, 10, 15]
 
-return sum -> 5 + 10 + 15 = 30
+return total -> 5 + 10 + 15 = 30
 ```
 
 **Constraints**

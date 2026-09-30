@@ -1,5 +1,5 @@
 ### Palindrome Number
-Given an integer `x`, determine whether `x` is a palindrome number and return `True` or `False`. A palindrome number is an integer that reads the same from left to right and from right to left.
+Given an integer `x`, determine whether `x` is a palindrome number and return `true` or `false`. A palindrome number is an integer that reads the same from left to right and from right to left.
 
 Can you do it without converting the integer to a string? With O(log10(x)) time complexity using O(1) extra space?
 

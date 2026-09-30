@@ -3,7 +3,7 @@ Given a knapsack `capacity` and two arrays, the first one for `weights` and the 
 
 You can only either include or not include an item. i.e you can't add a portion of it.
 
-Return a tuple of maximum value and selected items
+Return a tuple of maximum value and selected items.
 
 **Example**
 

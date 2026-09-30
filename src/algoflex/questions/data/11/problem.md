@@ -6,12 +6,12 @@ Can you do it in constant time and constant extra space?
 **Example 1**
 
 * **Input:** `n = 64`
-* **Output:** `True`
+* **Output:** `true`
 
 **Example 2**
 
 * **Input:** `n = 20`
-* **Output:** `False`
+* **Output:** `false`
 
 **Constraints**
 

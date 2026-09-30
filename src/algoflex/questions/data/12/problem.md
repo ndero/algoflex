@@ -1,7 +1,9 @@
 ### Reverse Polish Notation
 Evaluate the value of an arithmetic expression in Reverse Polish Notation. Valid operators are `+`, `-`, `*`, and `/`. Each operand may be an integer or another expression.
 
-Division between two integers should truncate toward zero and it is guaranteed that the given RPN expression is always valid.
+Division between two integers should truncate toward zero.
+
+It is guaranteed that the given RPN expression is always valid.
 
 **Example 1**
 
