@@ -5,12 +5,20 @@ All four edges of the grid are surrounded by water.
 
 > An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically.
 
-### Examples
+**Example**
+
+* **Input:**
 ```
 grid = [
     ['1', '1', '1', '1'],
     ['0', '0', '0', '0'],
     ['1', '1', '1', '1'],
 ]
-output = 2  # 2 horizontal islands.
 ```
+* **Output:** = `2`  
+* **How:** 2 horizontal islands.
+
+**Constraints**
+
+* `1 <= m <= 5 * 10^4`
+* `0 <= n <= 3 * 10^3`

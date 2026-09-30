@@ -5,8 +5,14 @@ Find the minimum time it takes for a signal from a source node `k` to reach all 
 
 Return -1 if it's impossible for all the nodes to receive the signal.
 
-### Example
-```
-Input: times = [[2,1,1],[2,3,1],[3,4,1]], n = 4, k = 2
-output = 2
-```
+**Example**
+
+* **Input:** `times = [[2,1,1],[2,3,1],[3,4,1]]`, `n = 4`, `k = 2`
+* **Output:** `2`
+
+**Constraints**
+
+* `0 <= times.length < 30`
+* `1 <= n <= 11`
+* `1 <= u, v, k <= n`
+* `w > 0`
