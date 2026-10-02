@@ -1,4 +1,4 @@
-### longest increasing subsequence
+### Longest increasing subsequence
 Given an array `nums` of integers return the length of the longest strictly increasing subsequence.
 
 **Example**

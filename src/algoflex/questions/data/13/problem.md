@@ -1,4 +1,4 @@
-### Roman numerals
+### Integer to Roman
 Convert a given integer, `n`,  to its equivalent roman numerals for `0 < n < 4000`.
 
 |Decimal | 1000 | 900 | 500 | 400 | 100 |90|
