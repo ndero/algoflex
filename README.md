@@ -2,22 +2,56 @@
 
 **Sharpen your algorithm skills — right from the terminal.**
 
-Algoflex is a lightweight, terminal-based platform for practicing algorithms and improving problem-solving skills. It provides a curated collection of coding problems, fast feedback, and progress tracking — all without leaving your command line.
+Algoflex is a lightweight, offline-first terminal application for practicing algorithms and data structures. It provides a curated collection of coding problems, fast local feedback, and persistent progress tracking — without requiring an account, server, or browser.
 
 ![Algoflex Home Screen](assets/homepage.png)
 
+## Why Algoflex?
+
+Algoflex is designed around a simple idea: algorithm practice should be fast, focused, and available anywhere a terminal is available.
+
+It combines a keyboard-driven TUI with local problem data, automated code execution, test feedback, and performance tracking. Everything runs locally, making it suitable for practicing without an internet connection.
+
 ## Features
 
-* **Lightweight & offline-first** — Practice algorithms without relying on an internet connection.
+* **Offline-first** — Practice without relying on an internet connection or remote services.
 * **Cross-platform** — Runs on Linux, macOS, and Windows.
-* **Curated problem set** — A focused collection of algorithm and data structure problems designed to strengthen fundamental problem-solving skills.
-* **Keyboard-driven interface** — Navigate quickly and efficiently without a mouse. Mouse input is supported as well.
-* **Progress tracking** — Track your performance, compare solve times, and identify areas for improvement.
+* **Keyboard-driven TUI** — Navigate and solve problems efficiently from the terminal. Mouse input is also supported.
+* **Curated problem set** — A focused collection of algorithm and data-structure problems designed to strengthen fundamental problem-solving skills.
 * **Multiple languages** — Solve problems using Python or Rust.
+* **Automated testing** — Run problem-specific tests against your solution and receive immediate feedback.
+* **Progress tracking** — Track solve times, recent activity, historical attempts, and areas for improvement.
+* **Local persistence** — Problem attempts, drafts, language preferences, and performance data are stored locally.
 
-## Algorithm & Data Structures
+## How It Works
 
-Algoflex's curated problem set covers a range of fundamental algorithms and data structures, including:
+At a high level, Algoflex consists of a terminal user interface, a local persistence layer, and a code execution system.
+
+```text
+                   ┌──────────────────────┐
+                   │    Textual TUI       │
+                   │ Problems / Search /  │
+                   │ Attempts / Dashboard │
+                   └──────────┬───────────┘
+                              │
+             ┌────────────────┼────────────────┐
+             │                                 │
+             ▼                                 ▼
+    ┌─────────────────┐              ┌─────────────────┐
+    │ SQLite Storage  │              │ Code Execution  │
+    │                 │              │                 │
+    │ Attempts        │              │ Python          │
+    │ Drafts          │              │ Rust            │
+    │ Languages       │              │ Tests / Output  │
+    │ Performance     │              │ Timeouts        │
+    └─────────────────┘              └─────────────────┘
+```
+
+Solutions are executed locally as subprocesses. Python and Rust have language-specific source and test handling, including Rust compilation, output streaming, compile-error handling, and configurable execution timeouts.
+
+## Algorithms & Data Structures
+
+The curated problem set covers fundamental algorithms and data structures, including:
 
 * Arrays & Strings
 * Linked Lists
@@ -34,17 +68,17 @@ Algoflex's curated problem set covers a range of fundamental algorithms and data
 * Intervals
 * Bit Manipulation
 
-The problem set is designed to reinforce core concepts, develop problem-solving patterns, and provide progressively challenging practice.
+Problems are curated to reinforce core concepts and develop reusable problem-solving patterns across increasing levels of difficulty. Their order is randomized on each startup, encouraging independent problem-solving.
 
 ## Installation
 
 Algoflex requires **Python 3.12 or later** and runs on **Linux, macOS, and Windows**.
 
-To solve problems in **Rust**, you must also have **Rust 1.97 or later** installed on your system. See the official [Rust installation guide](https://www.rust-lang.org/tools/install) for instructions.
+Rust solutions additionally require **Rust 1.97 or later**.
 
 ### Using `uv`
 
-Install Algoflex as a standalone tool with [Astral's `uv`](https://docs.astral.sh/uv/):
+Install Algoflex as a standalone tool with [uv](https://docs.astral.sh/uv/):
 
 ```bash
 uv tool install algoflex
@@ -52,7 +86,7 @@ uv tool install algoflex
 
 ### Using `pip`
 
-Alternatively, install Algoflex with `pip`:
+Alternatively:
 
 ```bash
 pip install algoflex
@@ -60,7 +94,7 @@ pip install algoflex
 
 ## Getting Started
 
-Once installed, launch Algoflex from your terminal:
+Launch Algoflex from your terminal:
 
 ```bash
 algoflex
@@ -70,14 +104,12 @@ Choose a problem, write your solution, run the tests, and review your results.
 
 ## Supported Languages
 
-Algoflex currently supports:
-
 * **Python 3.12+**
 * **Rust 1.97+**
 
 ## Screenshots
 
-### Attempt Screen
+### Attempt
 
 ![Algoflex Attempt Screen](assets/attempt.png)
 
@@ -91,30 +123,59 @@ Algoflex currently supports:
 
 ## Development
 
-Algoflex uses uv for project management. Make sure you have installed uv. 
+Algoflex uses `uv` for project and dependency management, with pytest for testing, Ruff for linting and formatting, pre-commit hooks for local checks, and GitHub Actions for continuous integration, build validation, and tagged releases.
 
-To set up Algoflex for local development, clone the repo, install dependencies and set up git pre commit hooks using:
+Clone the repository:
 
 ```bash
 git clone https://github.com/ndero/algoflex.git
 cd algoflex
+```
+
+Set up the development environment and install Git hooks:
+
+```bash
 make setup
 ```
 
-Run the test suite with:
+Run the test suite:
 
 ```bash
 make test
 ```
 
-Build and run algoflex locally with:
+Run linting:
+
+```bash
+make lint
+```
+
+Check formatting:
+
+```bash
+make format-check
+```
+
+Build the package:
+
+```bash
+make build
+```
+
+Build and run the local application:
 
 ```bash
 make run
+```
+
+Run the full project checks:
+
+```bash
+make check
 ```
 
 ## License
 
 Algoflex is licensed under the **MIT License**.
 
-See the `LICENSE` file for the full license text.
+See the [`LICENSE`](LICENSE) file for the full license text.
