@@ -23,32 +23,6 @@ It combines a keyboard-driven TUI with local problem data, automated code execut
 * **Progress tracking** — Track solve times, recent activity, historical attempts, and areas for improvement.
 * **Local persistence** — Problem attempts, drafts, language preferences, and performance data are stored locally.
 
-## How It Works
-
-At a high level, Algoflex consists of a terminal user interface, a local persistence layer, and a code execution system.
-
-```text
-                   ┌──────────────────────┐
-                   │    Textual TUI       │
-                   │ Problems / Search /  │
-                   │ Attempts / Dashboard │
-                   └──────────┬───────────┘
-                              │
-             ┌────────────────┼────────────────┐
-             │                                 │
-             ▼                                 ▼
-    ┌─────────────────┐              ┌─────────────────┐
-    │ SQLite Storage  │              │ Code Execution  │
-    │                 │              │                 │
-    │ Attempts        │              │ Python          │
-    │ Drafts          │              │ Rust            │
-    │ Languages       │              │ Tests / Output  │
-    │ Performance     │              │ Timeouts        │
-    └─────────────────┘              └─────────────────┘
-```
-
-Solutions are executed locally as subprocesses. Python and Rust have language-specific source and test handling, including Rust compilation, output streaming, compile-error handling, and configurable execution timeouts.
-
 ## Algorithms & Data Structures
 
 The curated problem set covers fundamental algorithms and data structures, including:
