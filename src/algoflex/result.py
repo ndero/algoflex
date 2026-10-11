@@ -27,7 +27,7 @@ class ResultModal(ModalScreen):
         RichLog {
             width: 1fr;
             height: auto;
-            max-height: 16;
+            max-height: 36;
             min-height: 5;
             padding: 0 2;
             padding-top: 1;
