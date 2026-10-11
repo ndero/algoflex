@@ -6,6 +6,7 @@ from algoflex.custom_widgets import Problem, Title
 from algoflex.types import Language
 
 
+# Test doubles and helper apps
 class FakeQuestion:
     def __init__(
         self,
@@ -53,200 +54,160 @@ class TitleApp(App):
         self.changed_language = event.language
 
 
-@pytest.mark.asyncio
-async def test_problem_renders_markdown():
-    markdown = "# Two Sum\n\nFind two numbers."
-
-    app = ProblemApp(markdown)
-
-    async with app.run_test():
-        problem = app.query_one(Problem)
-        markdown_widget = problem.query_one(Markdown)
-
-        assert problem.markdown == markdown
-        assert markdown_widget is not None
+# Shared helpers
+def get_selector(app: App) -> Select:
+    """Return the language selector Select from a running TitleApp."""
+    return app.query_one("#language-selector", expect_type=Select)
 
 
-@pytest.mark.asyncio
-async def test_problem_contains_one_markdown_widget():
-    app = ProblemApp("# Hello")
-
-    async with app.run_test():
-        assert len(app.query(Markdown)) == 1
+def get_selector_options(app: App) -> OptionList:
+    """Return the OptionList inside the language selector."""
+    return get_selector(app).query_one(OptionList)
 
 
-# Title
-@pytest.mark.asyncio
-async def test_title_displays_application_title():
-    app = TitleApp()
+# Problem widget
+class TestProblem:
+    @pytest.mark.asyncio
+    async def test_renders_markdown(self):
+        markdown = "# Two Sum\n\nFind two numbers."
+        app = ProblemApp(markdown)
 
-    async with app.run_test():
-        title = app.query_one("#title", expect_type=Static)
+        async with app.run_test():
+            problem = app.query_one(Problem)
+            assert problem.markdown == markdown
 
-        rendered = str(title.render())
+    @pytest.mark.asyncio
+    async def test_contains_one_markdown_widget(self):
+        app = ProblemApp("# Hello")
 
-        assert "Algoflex" in rendered
-        assert "terminal code practice app" in rendered
-
-
-@pytest.mark.asyncio
-async def test_title_hides_language_selector_by_default():
-    app = TitleApp()
-
-    async with app.run_test():
-        assert not app.query("#language-selector")
+        async with app.run_test():
+            assert len(app.query(Markdown)) == 1
 
 
-@pytest.mark.asyncio
-async def test_title_hides_language_selector_without_question():
-    app = TitleApp(
-        show_language_selector=True,
-        question=None,
-    )
+# Title header
+class TestTitleHeader:
+    @pytest.mark.asyncio
+    async def test_displays_application_title(self):
+        app = TitleApp()
 
-    async with app.run_test():
-        assert not app.query("#language-selector")
+        async with app.run_test():
+            rendered = str(app.query_one("#title", expect_type=Static).render())
+
+            assert "Algoflex" in rendered
+            assert "terminal code practice app" in rendered
+
+    @pytest.mark.asyncio
+    async def test_hides_language_selector_by_default(self):
+        app = TitleApp()
+
+        async with app.run_test():
+            assert not app.query("#language-selector")
+
+    @pytest.mark.asyncio
+    async def test_hides_language_selector_without_question(self):
+        app = TitleApp(show_language_selector=True, question=None)
+
+        async with app.run_test():
+            assert not app.query("#language-selector")
 
 
-@pytest.mark.asyncio
-async def test_title_displays_language_selector_when_enabled():
-    app = TitleApp(
-        question=FakeQuestion(),
-        show_language_selector=True,
-    )
-
-    async with app.run_test():
-        selector = app.query_one(
-            "#language-selector",
-            expect_type=Select,
+# Language selector
+class TestLanguageSelector:
+    @pytest.mark.asyncio
+    async def test_displays_when_enabled(self):
+        app = TitleApp(
+            question=FakeQuestion(),
+            show_language_selector=True,
         )
 
-        assert selector.value == Language.PYTHON
+        async with app.run_test():
+            assert get_selector(app).value == Language.PYTHON
 
+    @pytest.mark.asyncio
+    async def test_shows_only_supported_languages(self):
+        question = FakeQuestion(languages=[Language.PYTHON])
+        app = TitleApp(question=question, show_language_selector=True)
 
-@pytest.mark.asyncio
-async def test_title_shows_only_supported_languages():
-    question = FakeQuestion(
-        languages=[Language.PYTHON],
+        async with app.run_test():
+            options = get_selector_options(app)
+
+            prompts = {str(option.prompt) for option in options.options}
+
+            assert len(options.options) == len(question.languages)
+            assert prompts == {Language.PYTHON.label}
+
+    @pytest.mark.parametrize(
+        ("supported_languages", "selected_language"),
+        [
+            ([Language.PYTHON, Language.RUST], Language.PYTHON),
+            ([Language.PYTHON, Language.RUST], Language.RUST),
+            ([Language.PYTHON], Language.PYTHON),
+            ([Language.RUST], Language.RUST),
+        ],
     )
-    app = TitleApp(
-        question=question,
-        show_language_selector=True,
-    )
-
-    async with app.run_test():
-        selector = app.query_one(
-            "#language-selector",
-            expect_type=Select,
-        )
-        option_list = selector.query_one(OptionList)
-
-        values = {language for language in question.languages}
-
-        assert len(option_list.options) == len(question.languages)
-        assert values == {Language.PYTHON}
-        assert Language.RUST not in values
-
-
-@pytest.mark.parametrize(
-    ("supported_languages", "selected_language"),
-    [
-        ([Language.PYTHON, Language.RUST], Language.PYTHON),
-        ([Language.PYTHON, Language.RUST], Language.RUST),
-        ([Language.PYTHON], Language.PYTHON),
-        ([Language.RUST], Language.RUST),
-    ],
-)
-@pytest.mark.asyncio
-async def test_title_initializes_supported_selected_language(
-    supported_languages,
-    selected_language,
-):
-    app = TitleApp(
-        question=FakeQuestion(supported_languages),
-        language=selected_language,
-        show_language_selector=True,
-    )
-
-    async with app.run_test():
-        selector = app.query_one(
-            "#language-selector",
-            expect_type=Select,
+    @pytest.mark.asyncio
+    async def test_initializes_to_supported_selected_language(
+        self,
+        supported_languages,
+        selected_language,
+    ):
+        app = TitleApp(
+            question=FakeQuestion(supported_languages),
+            language=selected_language,
+            show_language_selector=True,
         )
 
-        assert selector.value == selected_language
+        async with app.run_test():
+            assert get_selector(app).value == selected_language
 
-
-@pytest.mark.asyncio
-async def test_title_selector_contains_correct_language_labels():
-    question = FakeQuestion(
-        languages=[Language.PYTHON, Language.RUST],
-    )
-    app = TitleApp(
-        question=question,
-        show_language_selector=True,
-    )
-
-    async with app.run_test():
-        selector = app.query_one(
-            "#language-selector",
-            expect_type=Select,
-        )
-        option_list = selector.query_one(OptionList)
-
-        labels = {str(option.prompt) for option in option_list.options}
-
-        assert labels == {
-            Language.PYTHON.label,
-            Language.RUST.label,
-        }
-
-
-@pytest.mark.asyncio
-async def test_title_single_supported_language():
-    question = FakeQuestion(
-        languages=[Language.RUST],
-    )
-    app = TitleApp(
-        question=question,
-        language=Language.RUST,
-        show_language_selector=True,
-    )
-
-    async with app.run_test():
-        selector = app.query_one(
-            "#language-selector",
-            expect_type=Select,
-        )
-        option_list = selector.query_one(OptionList)
-
-        assert len(option_list.options) == 1
-        assert option_list.options[0].prompt == Language.RUST.label
-        assert selector.value == Language.RUST
-
-
-@pytest.mark.asyncio
-async def test_language_change_reaches_parent_app():
-    app = TitleApp(
-        question=FakeQuestion(),
-        show_language_selector=True,
-        language=Language.PYTHON,
-    )
-
-    async with app.run_test() as pilot:
-        title = app.query_one(Title)
-        selector = app.query_one(
-            "#language-selector",
-            expect_type=Select,
+    @pytest.mark.asyncio
+    async def test_contains_correct_language_labels(self):
+        question = FakeQuestion(languages=[Language.PYTHON, Language.RUST])
+        app = TitleApp(
+            question=question,
+            show_language_selector=True,
         )
 
-        title.on_select_changed(
-            Select.Changed(
-                selector,
-                Language.RUST,  # type: ignore
-            )
+        async with app.run_test():
+            options = get_selector_options(app)
+
+            labels = {str(option.prompt) for option in options.options}
+
+            assert labels == {
+                Language.PYTHON.label,
+                Language.RUST.label,
+            }
+
+    @pytest.mark.asyncio
+    async def test_single_supported_language(self):
+        question = FakeQuestion(languages=[Language.RUST])
+        app = TitleApp(
+            question=question,
+            language=Language.RUST,
+            show_language_selector=True,
         )
 
-        await pilot.pause()
+        async with app.run_test():
+            options = get_selector_options(app)
+            selector = get_selector(app)
 
-        assert app.changed_language is Language.RUST
+            assert len(options.options) == 1
+            assert options.options[0].prompt == Language.RUST.label
+            assert selector.value == Language.RUST
+
+
+# Language change events
+class TestLanguageChangedEvent:
+    @pytest.mark.asyncio
+    async def test_reaches_parent_app(self):
+        app = TitleApp(
+            question=FakeQuestion(),
+            show_language_selector=True,
+            language=Language.PYTHON,
+        )
+
+        async with app.run_test() as pilot:
+            get_selector(app).value = Language.RUST
+            await pilot.pause()
+
+            assert app.changed_language is Language.RUST

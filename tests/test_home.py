@@ -10,6 +10,7 @@ from algoflex.home import HomeScreen, StatScreen
 from algoflex.types import Language, Level, RunStatus
 
 
+# Test doubles
 class FakeQuestion:
     def __init__(
         self,
@@ -61,12 +62,7 @@ class FakeQuestions:
 
 
 class FakeAttemptScreen(Screen):
-    def __init__(
-        self,
-        question,
-        language: Language,
-        draft,
-    ) -> None:
+    def __init__(self, question, language: Language, draft) -> None:
         super().__init__()
         self.question = question
         self.language = language
@@ -81,6 +77,14 @@ class HomeTestApp(HomeScreen):
     """Convenience subclass used only to make the test intent explicit."""
 
 
+class AppForStats(App):
+    """Minimal host app for a standalone StatScreen."""
+
+    def compose(self) -> ComposeResult:
+        yield StatScreen()
+
+
+# Fixtures and helpers
 @pytest.fixture
 def fake_questions(monkeypatch):
     questions = FakeQuestions()
@@ -90,11 +94,7 @@ def fake_questions(monkeypatch):
 
 @pytest.fixture
 def deterministic_shuffle(monkeypatch):
-    monkeypatch.setattr(
-        home,
-        "shuffle",
-        lambda values: None,
-    )
+    monkeypatch.setattr(home, "shuffle", lambda values: None)
 
 
 @pytest.fixture
@@ -102,635 +102,495 @@ def home_app(fake_questions, deterministic_shuffle):
     return HomeTestApp()
 
 
+def stub_problem_sources(
+    monkeypatch,
+    *,
+    pass_ratio=(0, 0),
+    recent=None,
+    best=None,
+    fmt_secs=None,
+    time_ago=None,
+):
+    monkeypatch.setattr(home, "get_problem_pass_ratio", lambda problem_id: pass_ratio)
+    monkeypatch.setattr(
+        home, "get_recent_attempts", lambda *, n, problem_id: recent or []
+    )
+    monkeypatch.setattr(home, "get_best_attempts", lambda *, n, problem_id: best or [])
+
+    if fmt_secs is not None:
+        monkeypatch.setattr(home, "fmt_secs", fmt_secs)
+    if time_ago is not None:
+        monkeypatch.setattr(home, "time_ago", time_ago)
+
+
+def stub_attempt_action(monkeypatch, *, recent=None, draft=None):
+    """Stub the collaborators used by HomeScreen.action_attempt.
+
+    Returns a dict that records the keyword arguments that were passed to
+    get_draft, so tests can assert on problem_id/lang_id selection.
+    """
+    captured: dict = {}
+
+    def fake_get_draft(*, problem_id, lang_id):
+        captured["problem_id"] = problem_id
+        captured["lang_id"] = lang_id
+        return draft
+
+    monkeypatch.setattr(home, "AttemptScreen", FakeAttemptScreen)
+    monkeypatch.setattr(
+        home, "get_recent_attempts", lambda *, n, problem_id=None: recent or []
+    )
+    monkeypatch.setattr(home, "get_draft", fake_get_draft)
+    return captured
+
+
+def capture_search_callback(monkeypatch, app):
+    """Replace push_screen and expose the on_close callback the app passes.
+
+    Returns a dict with "screen" and "on_close" keys populated once
+    action_search has been called.
+    """
+    captured: dict = {}
+
+    def fake_push_screen(screen, on_close):
+        captured["screen"] = screen
+        captured["on_close"] = on_close
+
+    monkeypatch.setattr(home, "SearchScreen", FakeSearchScreen)
+    monkeypatch.setattr(app, "push_screen", fake_push_screen)
+    return captured
+
+
 # StatScreen
-@pytest.mark.asyncio
-async def test_stat_screen_composes_expected_widgets():
-    class AppForStats(App):
-        def compose(self) -> ComposeResult:
-            yield StatScreen()
+class TestStatScreen:
+    @pytest.mark.asyncio
+    async def test_composes_expected_widgets(self):
+        app = AppForStats()
 
-    app = AppForStats()
+        async with app.run_test():
+            assert app.query_one("#passed", Static)
+            assert app.query_one("#last", Static)
+            assert app.query_one("#best", Static)
+            assert app.query_one("#level", Static)
 
-    async with app.run_test():
-        assert app.query_one("#passed", Static)
-        assert app.query_one("#last", Static)
-        assert app.query_one("#best", Static)
-        assert app.query_one("#level", Static)
+    @pytest.mark.asyncio
+    async def test_has_expected_initial_values(self):
+        app = AppForStats()
 
-
-@pytest.mark.asyncio
-async def test_stat_screen_has_expected_initial_values():
-    class AppForStats(App):
-        def compose(self) -> ComposeResult:
-            yield StatScreen()
-
-    app = AppForStats()
-
-    async with app.run_test():
-        assert str(app.query_one("#passed", Static).content) == "0/0"
-        assert str(app.query_one("#last", Static).content) == "..."
-        assert str(app.query_one("#best", Static).content) == "..."
-        assert str(app.query_one("#level", Static).content) == "..."
+        async with app.run_test():
+            assert str(app.query_one("#passed", Static).content) == "0/0"
+            assert str(app.query_one("#last", Static).content) == "..."
+            assert str(app.query_one("#best", Static).content) == "..."
+            assert str(app.query_one("#level", Static).content) == "..."
 
 
-# HomeScreen composition / initial state
-@pytest.mark.asyncio
-async def test_home_composes_expected_widgets(home_app):
-    async with home_app.run_test():
-        assert home_app.query_one(Footer)
-        assert home_app.query_one("#title", Static)
-        assert home_app.query_one("#passed", Static)
-        assert home_app.query_one("#last", Static)
-        assert home_app.query_one("#best", Static)
-        assert home_app.query_one("#level", Static)
-        assert home_app.query_one(Markdown)
+# HomeScreen initial state
+class TestHomeInitialState:
+    @pytest.mark.asyncio
+    async def test_composes_expected_widgets(self, home_app):
+        async with home_app.run_test():
+            assert home_app.query_one(Footer)
+            assert home_app.query_one("#title", Static)
+            assert home_app.query_one("#passed", Static)
+            assert home_app.query_one("#last", Static)
+            assert home_app.query_one("#best", Static)
+            assert home_app.query_one("#level", Static)
+            assert home_app.query_one(Markdown)
 
+    @pytest.mark.asyncio
+    async def test_initializes_problems(self, home_app):
+        async with home_app.run_test():
+            assert home_app.problems == [1, 2, 3]
+            assert home_app.problems_count == 3
+            assert home_app.question.id == 1
 
-@pytest.mark.asyncio
-async def test_home_initializes_problems(home_app):
-    async with home_app.run_test():
-        assert home_app.problems == [1, 2, 3]
-        assert home_app.problems_count == 3
-        assert home_app.question.id == 1
+    @pytest.mark.asyncio
+    async def test_starts_at_first_problem(self, home_app):
+        async with home_app.run_test():
+            assert home_app.index == 0
+            assert home_app.question.id == 1
 
-
-@pytest.mark.asyncio
-async def test_home_starts_at_first_problem(home_app):
-    async with home_app.run_test():
-        assert home_app.index == 0
-        assert home_app.question.id == 1
-
-
-@pytest.mark.asyncio
-async def test_home_starts_with_dashboard_hidden(home_app):
-    async with home_app.run_test():
-        assert home_app.show_dashboard is False
+    @pytest.mark.asyncio
+    async def test_starts_with_dashboard_hidden(self, home_app):
+        async with home_app.run_test():
+            assert home_app.show_dashboard is False
 
 
 # Problem details
-@pytest.mark.asyncio
-async def test_get_problem_details_returns_problem_without_attempts(
-    home_app,
-    monkeypatch,
-):
-    monkeypatch.setattr(
-        home,
-        "get_problem_pass_ratio",
-        lambda problem_id: (0, 0),
-    )
-    monkeypatch.setattr(
-        home,
-        "get_recent_attempts",
-        lambda *, n, problem_id: [],
-    )
-    monkeypatch.setattr(
-        home,
-        "get_best_attempts",
-        lambda *, n, problem_id: [],
-    )
+class TestProblemDetails:
+    @pytest.mark.asyncio
+    async def test_returns_problem_without_attempts(self, home_app, monkeypatch):
+        stub_problem_sources(monkeypatch)
 
-    async with home_app.run_test():
-        assert home_app.get_problem_details() == (
-            "# Two Sum\n\nFind two numbers.",
-            Level.BREEZY,
-            0,
-            0,
-            "...",
-            "...",
+        async with home_app.run_test():
+            assert home_app.get_problem_details() == (
+                "# Two Sum\n\nFind two numbers.",
+                Level.BREEZY,
+                0,
+                0,
+                "...",
+                "...",
+            )
+
+    @pytest.mark.asyncio
+    async def test_includes_attempt_statistics(self, home_app, monkeypatch):
+        stub_problem_sources(
+            monkeypatch,
+            pass_ratio=(3, 5),
+            recent=[{"status": RunStatus.PASSED, "created_at": 1000.0}],
+            best=[{"elapsed": 125.0}],
+            fmt_secs=lambda elapsed: f"{elapsed} seconds",
+            time_ago=lambda timestamp: f"{timestamp} ago",
         )
 
+        async with home_app.run_test():
+            assert home_app.get_problem_details() == (
+                "# Two Sum\n\nFind two numbers.",
+                Level.BREEZY,
+                3,
+                5,
+                f"{RunStatus.PASSED.icon} 1000.0 ago",
+                "125.0 seconds",
+            )
 
-@pytest.mark.asyncio
-async def test_get_problem_details_includes_attempt_statistics(
-    home_app,
-    monkeypatch,
-):
-    monkeypatch.setattr(
-        home,
-        "get_problem_pass_ratio",
-        lambda problem_id: (3, 5),
-    )
-    monkeypatch.setattr(
-        home,
-        "get_recent_attempts",
-        lambda *, n, problem_id: [
-            {
-                "status": RunStatus.PASSED,
-                "created_at": 1000.0,
-            }
-        ],
-    )
-    monkeypatch.setattr(
-        home,
-        "get_best_attempts",
-        lambda *, n, problem_id: [
-            {
-                "elapsed": 125.0,
-            }
-        ],
-    )
-    monkeypatch.setattr(
-        home,
-        "fmt_secs",
-        lambda elapsed: f"{elapsed} seconds",
-    )
-    monkeypatch.setattr(
-        home,
-        "time_ago",
-        lambda timestamp: f"{timestamp} ago",
-    )
-
-    async with home_app.run_test():
-        assert home_app.get_problem_details() == (
-            "# Two Sum\n\nFind two numbers.",
-            Level.BREEZY,
-            3,
-            5,
-            f"{RunStatus.PASSED.icon} 1000.0 ago",
-            "125.0 seconds",
+    @pytest.mark.asyncio
+    async def test_uses_failed_status_icon(self, home_app, monkeypatch):
+        stub_problem_sources(
+            monkeypatch,
+            pass_ratio=(0, 1),
+            recent=[{"status": RunStatus.FAILED, "created_at": 1000.0}],
+            time_ago=lambda timestamp: "1 min ago",
         )
 
+        async with home_app.run_test():
+            details = home_app.get_problem_details()
 
-@pytest.mark.asyncio
-async def test_get_problem_details_uses_failed_status_icon(
-    home_app,
-    monkeypatch,
-):
-    monkeypatch.setattr(
-        home,
-        "get_problem_pass_ratio",
-        lambda problem_id: (0, 1),
-    )
-    monkeypatch.setattr(
-        home,
-        "get_recent_attempts",
-        lambda *, n, problem_id: [
-            {
-                "status": RunStatus.FAILED,
-                "created_at": 1000.0,
-            }
-        ],
-    )
-    monkeypatch.setattr(
-        home,
-        "get_best_attempts",
-        lambda *, n, problem_id: [],
-    )
-    monkeypatch.setattr(
-        home,
-        "time_ago",
-        lambda timestamp: "1 min ago",
-    )
-
-    async with home_app.run_test():
-        details = home_app.get_problem_details()
-
-        assert details[4] == f"{RunStatus.FAILED.icon} 1 min ago"
+            assert details[4] == f"{RunStatus.FAILED.icon} 1 min ago"
 
 
 # Problem rendering
-@pytest.mark.asyncio
-async def test_home_updates_problem_view(home_app, monkeypatch):
-    monkeypatch.setattr(
-        home_app,
-        "get_problem_details",
-        lambda: (
-            "# Two Sum",
-            Level.BREEZY,
-            2,
-            4,
-            "✓ 1 min ago",
-            "5 mins",
-        ),
-    )
+class TestProblemRendering:
+    @pytest.mark.asyncio
+    async def test_update_problem_view(self, home_app, monkeypatch):
+        monkeypatch.setattr(
+            home_app,
+            "get_problem_details",
+            lambda: (
+                "# Two Sum",
+                Level.BREEZY,
+                2,
+                4,
+                "✓ 1 min ago",
+                "5 mins",
+            ),
+        )
 
-    async with home_app.run_test():
-        home_app.update_problem_view()
+        async with home_app.run_test():
+            home_app.update_problem_view()
 
-        assert str(home_app.query_one(Markdown).source) == "# Two Sum"
-        assert str(home_app.query_one("#passed", Static).content) == "2/4"
-        assert str(home_app.query_one("#last", Static).content) == "✓ 1 min ago"
-        assert str(home_app.query_one("#best", Static).content) == "5 mins"
-        assert "Breezy" in str(home_app.query_one("#level", Static).content)
+            assert str(home_app.query_one(Markdown).source) == "# Two Sum"
+            assert str(home_app.query_one("#passed", Static).content) == "2/4"
+            assert str(home_app.query_one("#last", Static).content) == "✓ 1 min ago"
+            assert str(home_app.query_one("#best", Static).content) == "5 mins"
+            assert "Breezy" in str(home_app.query_one("#level", Static).content)
 
 
 # Navigation
-@pytest.mark.asyncio
-async def test_action_next_moves_to_next_problem(home_app):
-    async with home_app.run_test():
-        home_app.action_next()
+class TestNavigation:
+    @pytest.mark.asyncio
+    async def test_next_moves_to_next_problem(self, home_app):
+        async with home_app.run_test():
+            home_app.action_next()
 
-        assert home_app.index == 1
-        assert home_app.question.id == 2
+            assert home_app.index == 1
+            assert home_app.question.id == 2
 
+    @pytest.mark.asyncio
+    async def test_next_does_not_move_past_last_problem(self, home_app):
+        async with home_app.run_test():
+            home_app.index = home_app.problems_count - 1
 
-@pytest.mark.asyncio
-async def test_action_next_does_not_move_past_last_problem(home_app):
-    async with home_app.run_test():
-        home_app.index = home_app.problems_count - 1
+            home_app.action_next()
 
-        home_app.action_next()
+            assert home_app.index == home_app.problems_count - 1
+            assert home_app.question.id == 3
 
-        assert home_app.index == home_app.problems_count - 1
-        assert home_app.question.id == 3
+    @pytest.mark.asyncio
+    async def test_previous_moves_to_previous_problem(self, home_app):
+        async with home_app.run_test():
+            home_app.index = 2
 
+            home_app.action_previous()
 
-@pytest.mark.asyncio
-async def test_action_previous_moves_to_previous_problem(home_app):
-    async with home_app.run_test():
-        home_app.index = 2
+            assert home_app.index == 1
+            assert home_app.question.id == 2
 
-        home_app.action_previous()
+    @pytest.mark.asyncio
+    async def test_previous_does_not_move_before_first_problem(self, home_app):
+        async with home_app.run_test():
+            home_app.action_previous()
 
-        assert home_app.index == 1
-        assert home_app.question.id == 2
+            assert home_app.index == 0
+            assert home_app.question.id == 1
 
+    @pytest.mark.asyncio
+    async def test_next_hides_dashboard(self, home_app):
+        async with home_app.run_test():
+            home_app.show_dashboard = True
 
-@pytest.mark.asyncio
-async def test_action_previous_does_not_move_before_first_problem(home_app):
-    async with home_app.run_test():
-        home_app.action_previous()
+            home_app.action_next()
 
-        assert home_app.index == 0
-        assert home_app.question.id == 1
+            assert home_app.show_dashboard is False
 
+    @pytest.mark.asyncio
+    async def test_previous_hides_dashboard(self, home_app):
+        async with home_app.run_test():
+            home_app.show_dashboard = True
 
-@pytest.mark.asyncio
-async def test_next_hides_dashboard(home_app):
-    async with home_app.run_test():
-        home_app.show_dashboard = True
+            home_app.action_previous()
 
-        home_app.action_next()
-
-        assert home_app.show_dashboard is False
-
-
-@pytest.mark.asyncio
-async def test_previous_hides_dashboard(home_app):
-    async with home_app.run_test():
-        home_app.show_dashboard = True
-
-        home_app.action_previous()
-
-        assert home_app.show_dashboard is False
+            assert home_app.show_dashboard is False
 
 
-# Dashboard
-@pytest.mark.asyncio
-async def test_action_dashboard_toggles_visibility(home_app):
-    async with home_app.run_test():
-        assert home_app.show_dashboard is False
+# Dashboard visibility
+class TestDashboardVisibility:
+    @pytest.mark.asyncio
+    async def test_action_toggles_visibility(self, home_app):
+        async with home_app.run_test():
+            assert home_app.show_dashboard is False
 
-        home_app.action_dashboard()
-        assert home_app.show_dashboard is True
+            home_app.action_dashboard()
+            assert home_app.show_dashboard is True
 
-        home_app.action_dashboard()
-        assert home_app.show_dashboard is False
+            home_app.action_dashboard()
+            assert home_app.show_dashboard is False
 
+    @pytest.mark.asyncio
+    async def test_show_dashboard_updates_dashboard_class(self, home_app):
+        async with home_app.run_test():
+            dashboard = home_app.query_one(home.Dashboard)
 
-@pytest.mark.asyncio
-async def test_show_dashboard_updates_dashboard_class(home_app):
-    async with home_app.run_test():
-        dashboard = home_app.query_one(home.Dashboard)
+            assert not dashboard.has_class("-visible")
 
-        assert not dashboard.has_class("-visible")
+            home_app.show_dashboard = True
+            assert dashboard.has_class("-visible")
 
-        home_app.show_dashboard = True
-        assert dashboard.has_class("-visible")
-
-        home_app.show_dashboard = False
-        assert not dashboard.has_class("-visible")
+            home_app.show_dashboard = False
+            assert not dashboard.has_class("-visible")
 
 
 # Attempt action
-@pytest.mark.asyncio
-async def test_action_attempt_defaults_to_python_when_no_recent_attempt(
-    home_app,
-    monkeypatch,
-):
-    captured = {}
+class TestActionAttempt:
+    @pytest.mark.asyncio
+    async def test_defaults_to_python_when_no_recent_attempt(
+        self, home_app, monkeypatch
+    ):
+        captured = stub_attempt_action(monkeypatch)
 
-    monkeypatch.setattr(home, "AttemptScreen", FakeAttemptScreen)
+        async with home_app.run_test() as pilot:
+            home_app.action_attempt()
+            await pilot.pause()
 
-    monkeypatch.setattr(
-        home,
-        "get_recent_attempts",
-        lambda *, n, problem_id=None: [],
-    )
-
-    def fake_get_draft(*, problem_id, lang_id):
-        captured["problem_id"] = problem_id
-        captured["lang_id"] = lang_id
-
-    monkeypatch.setattr(home, "get_draft", fake_get_draft)
-
-    async with home_app.run_test() as pilot:
-        home_app.action_attempt()
-        await pilot.pause()
-
-        assert captured == {
-            "problem_id": 1,
-            "lang_id": Language.PYTHON,
-        }
-
-        assert isinstance(home_app.screen, FakeAttemptScreen)
-        assert home_app.screen.question is home_app.screen.question
-        assert home_app.screen.language is Language.PYTHON
-        assert home_app.screen.draft is None
-
-
-@pytest.mark.asyncio
-async def test_action_attempt_uses_supported_recent_language(
-    home_app,
-    monkeypatch,
-):
-    monkeypatch.setattr(home, "AttemptScreen", FakeAttemptScreen)
-
-    monkeypatch.setattr(
-        home,
-        "get_recent_attempts",
-        lambda *, n, problem_id=None: [
-            {
-                "created_at": 1_000.0,
-                "lang_id": Language.RUST,
-                "status": RunStatus.PASSED,
+            assert captured == {
+                "problem_id": 1,
+                "lang_id": Language.PYTHON,
             }
-        ],
-    )
 
-    monkeypatch.setattr(
-        home,
-        "get_draft",
-        lambda *, problem_id, lang_id: "draft",
-    )
+            assert isinstance(home_app.screen, FakeAttemptScreen)
+            assert home_app.screen.question is home_app.question
+            assert home_app.screen.language is Language.PYTHON
+            assert home_app.screen.draft is None
 
-    async with home_app.run_test() as pilot:
-        home_app.action_attempt()
-        await pilot.pause()
+    @pytest.mark.asyncio
+    async def test_uses_supported_recent_language(self, home_app, monkeypatch):
+        stub_attempt_action(
+            monkeypatch,
+            recent=[
+                {
+                    "created_at": 1_000.0,
+                    "lang_id": Language.RUST,
+                    "status": RunStatus.PASSED,
+                }
+            ],
+            draft="draft",
+        )
 
-        assert isinstance(home_app.screen, FakeAttemptScreen)
-        assert home_app.screen.language is Language.RUST
-        assert home_app.screen.draft == "draft"
+        async with home_app.run_test() as pilot:
+            home_app.action_attempt()
+            await pilot.pause()
 
+            assert isinstance(home_app.screen, FakeAttemptScreen)
+            assert home_app.screen.language is Language.RUST
+            assert home_app.screen.draft == "draft"
 
-@pytest.mark.asyncio
-async def test_action_attempt_falls_back_to_first_supported_language_when_recent_language_unsupported(
-    home_app,
-    monkeypatch,
-):
-    monkeypatch.setattr(home, "AttemptScreen", FakeAttemptScreen)
+    @pytest.mark.asyncio
+    async def test_falls_back_to_first_supported_language_when_recent_language_unsupported(
+        self, home_app, monkeypatch
+    ):
+        captured = stub_attempt_action(
+            monkeypatch,
+            recent=[
+                {
+                    "created_at": 1_000.0,
+                    "lang_id": Language.RUST,
+                    "status": RunStatus.PASSED,
+                }
+            ],
+        )
 
-    monkeypatch.setattr(
-        home,
-        "get_recent_attempts",
-        lambda *, n, problem_id=None: [
-            {
-                "created_at": 1_000.0,
-                "lang_id": Language.RUST,
-                "status": RunStatus.PASSED,
+        async with home_app.run_test() as pilot:
+            home_app.index = 1  # question 2 only supports python
+            await pilot.pause()
+
+            home_app.action_attempt()
+            await pilot.pause()
+
+            assert isinstance(home_app.screen, FakeAttemptScreen)
+            assert home_app.screen.question.languages == [Language.PYTHON]
+            assert home_app.screen.language is Language.PYTHON
+            assert captured == {
+                "problem_id": 2,
+                "lang_id": Language.PYTHON,
             }
-        ],
-    )
 
-    captured = {}
+    @pytest.mark.asyncio
+    async def test_hides_dashboard(self, home_app, monkeypatch):
+        stub_attempt_action(monkeypatch)
 
-    def fake_get_draft(*, problem_id, lang_id):
-        captured["problem_id"] = problem_id
-        captured["lang_id"] = lang_id
+        async with home_app.run_test() as pilot:
+            home_app.show_dashboard = True
 
-    monkeypatch.setattr(home, "get_draft", fake_get_draft)
+            home_app.action_attempt()
+            await pilot.pause()
 
-    async with home_app.run_test() as pilot:
-        home_app.index = 1  # question 2 only supports python
-        await pilot.pause()
+            assert home_app.show_dashboard is False
 
-        home_app.action_attempt()
-        await pilot.pause()
+    @pytest.mark.asyncio
+    async def test_passes_current_question(self, home_app, monkeypatch):
+        stub_attempt_action(monkeypatch)
 
-        assert isinstance(home_app.screen, FakeAttemptScreen)
-        assert home_app.screen.question.languages == [Language.PYTHON]
-        assert home_app.screen.language is Language.PYTHON
-        assert captured == {
-            "problem_id": 2,
-            "lang_id": Language.PYTHON,
-        }
+        async with home_app.run_test() as pilot:
+            home_app.action_attempt()
+            await pilot.pause()
 
-
-@pytest.mark.asyncio
-async def test_action_attempt_hides_dashboard(
-    home_app,
-    monkeypatch,
-):
-    monkeypatch.setattr(
-        home,
-        "get_recent_attempts",
-        lambda *, n, problem_id=None: [],
-    )
-    monkeypatch.setattr(
-        home,
-        "get_draft",
-        lambda *, problem_id, lang_id: None,
-    )
-    monkeypatch.setattr(home, "AttemptScreen", FakeAttemptScreen)
-
-    async with home_app.run_test() as pilot:
-        home_app.show_dashboard = True
-
-        home_app.action_attempt()
-        await pilot.pause()
-
-        assert home_app.show_dashboard is False
-
-
-@pytest.mark.asyncio
-async def test_action_attempt_passes_current_question(
-    home_app,
-    monkeypatch,
-):
-    monkeypatch.setattr(home, "AttemptScreen", FakeAttemptScreen)
-    monkeypatch.setattr(
-        home,
-        "get_recent_attempts",
-        lambda *, n, problem_id=None: [],
-    )
-    monkeypatch.setattr(
-        home,
-        "get_draft",
-        lambda *, problem_id, lang_id: None,
-    )
-
-    async with home_app.run_test() as pilot:
-        home_app.action_attempt()
-        await pilot.pause()
-
-        assert isinstance(home_app.screen, FakeAttemptScreen)
-        assert home_app.screen.question.id == 1
-        assert home_app.screen.question.title == "Two Sum"
+            assert isinstance(home_app.screen, FakeAttemptScreen)
+            assert home_app.screen.question.id == 1
+            assert home_app.screen.question.title == "Two Sum"
 
 
 # Search action
-@pytest.mark.asyncio
-async def test_action_search_hides_dashboard(
-    home_app,
-    monkeypatch,
-):
-    monkeypatch.setattr(home, "SearchScreen", FakeSearchScreen)
+class TestActionSearch:
+    @pytest.mark.asyncio
+    async def test_hides_dashboard(self, home_app, monkeypatch):
+        monkeypatch.setattr(home, "SearchScreen", FakeSearchScreen)
 
-    async with home_app.run_test():
-        home_app.show_dashboard = True
+        async with home_app.run_test() as pilot:
+            home_app.show_dashboard = True
+            home_app.action_search()
+            await pilot.pause()
 
-        home_app.action_search()
+            assert home_app.show_dashboard is False
+            assert isinstance(home_app.screen, FakeSearchScreen)
 
-        assert home_app.show_dashboard is False
-        assert isinstance(home_app.screen, FakeSearchScreen)
+    @pytest.mark.asyncio
+    async def test_callback_selects_existing_problem(self, home_app, monkeypatch):
+        captured = capture_search_callback(monkeypatch, home_app)
 
+        async with home_app.run_test():
+            home_app.action_search()
 
-@pytest.mark.asyncio
-async def test_search_callback_selects_existing_problem(
-    home_app,
-    monkeypatch,
-):
-    monkeypatch.setattr(home, "SearchScreen", FakeSearchScreen)
+            assert captured["on_close"] is not None
 
-    callback = None
+            captured["on_close"](3)
 
-    def push_screen(screen, on_close):
-        nonlocal callback
-        callback = on_close
+            assert home_app.index == 2
+            assert home_app.question.id == 3
 
-    monkeypatch.setattr(home_app, "push_screen", push_screen)
+    @pytest.mark.asyncio
+    async def test_callback_ignores_unknown_problem(self, home_app, monkeypatch):
+        captured = capture_search_callback(monkeypatch, home_app)
 
-    async with home_app.run_test():
-        home_app.action_search()
+        async with home_app.run_test():
+            home_app.index = 1
 
-        assert callback is not None
+            home_app.action_search()
 
-        callback(3)
+            assert captured["on_close"] is not None
 
-        assert home_app.index == 2
-        assert home_app.question.id == 3
+            captured["on_close"](999)
 
+            assert home_app.index == 1
 
-@pytest.mark.asyncio
-async def test_search_callback_ignores_unknown_problem(
-    home_app,
-    monkeypatch,
-):
-    monkeypatch.setattr(home, "SearchScreen", FakeSearchScreen)
+    @pytest.mark.asyncio
+    async def test_callback_ignores_cancel(self, home_app, monkeypatch):
+        captured = capture_search_callback(monkeypatch, home_app)
 
-    callback = None
+        async with home_app.run_test():
+            home_app.index = 1
 
-    def push_screen(screen, on_close):
-        nonlocal callback
-        callback = on_close
+            home_app.action_search()
 
-    monkeypatch.setattr(home_app, "push_screen", push_screen)
+            assert captured["on_close"] is not None
 
-    async with home_app.run_test():
-        home_app.index = 1
+            captured["on_close"](None)
 
-        home_app.action_search()
-
-        assert callback is not None
-
-        callback(999)
-
-        assert home_app.index == 1
-
-
-@pytest.mark.asyncio
-async def test_search_callback_ignores_cancel(
-    home_app,
-    monkeypatch,
-):
-    monkeypatch.setattr(home, "SearchScreen", FakeSearchScreen)
-
-    callback = None
-
-    def push_screen(screen, on_close):
-        nonlocal callback
-        callback = on_close
-
-    monkeypatch.setattr(home_app, "push_screen", push_screen)
-
-    async with home_app.run_test():
-        home_app.index = 1
-
-        home_app.action_search()
-
-        assert callback is not None
-
-        callback(None)
-
-        assert home_app.index == 1
+            assert home_app.index == 1
 
 
 # Action availability
-@pytest.mark.parametrize(
-    ("action", "expected"),
-    [
-        ("attempt", True),
-        ("next", True),
-        ("previous", None),
-        ("search", True),
-        ("dashboard", True),
-    ],
-)
-@pytest.mark.asyncio
-async def test_check_action_at_first_problem(
-    home_app,
-    action,
-    expected,
-):
-    async with home_app.run_test():
-        home_app.index = 0
+class TestActionAvailability:
+    @pytest.mark.parametrize(
+        ("action", "expected"),
+        [
+            ("attempt", True),
+            ("next", True),
+            ("previous", None),
+            ("search", True),
+            ("dashboard", True),
+        ],
+    )
+    @pytest.mark.asyncio
+    async def test_at_first_problem(self, home_app, action, expected):
+        async with home_app.run_test():
+            home_app.index = 0
 
-        assert home_app.check_action(action, []) is expected
+            assert home_app.check_action(action, []) is expected
 
+    @pytest.mark.parametrize(
+        ("action", "expected"),
+        [
+            ("attempt", True),
+            ("next", None),
+            ("previous", True),
+            ("search", True),
+            ("dashboard", True),
+        ],
+    )
+    @pytest.mark.asyncio
+    async def test_at_last_problem(self, home_app, action, expected):
+        async with home_app.run_test():
+            home_app.index = home_app.problems_count - 1
 
-@pytest.mark.parametrize(
-    ("action", "expected"),
-    [
-        ("attempt", True),
-        ("next", None),
-        ("previous", True),
-        ("search", True),
-        ("dashboard", True),
-    ],
-)
-@pytest.mark.asyncio
-async def test_check_action_at_last_problem(
-    home_app,
-    action,
-    expected,
-):
-    async with home_app.run_test():
-        home_app.index = home_app.problems_count - 1
+            assert home_app.check_action(action, []) is expected
 
-        assert home_app.check_action(action, []) is expected
+    @pytest.mark.asyncio
+    async def test_at_intermediate_problem(self, home_app):
+        async with home_app.run_test():
+            home_app.index = 1
 
+            assert home_app.check_action("attempt", []) is True
+            assert home_app.check_action("next", []) is True
+            assert home_app.check_action("previous", []) is True
+            assert home_app.check_action("search", []) is True
+            assert home_app.check_action("dashboard", []) is True
 
-@pytest.mark.asyncio
-async def test_check_action_on_intermediate_problem(home_app):
-    async with home_app.run_test():
-        home_app.index = 1
+    @pytest.mark.asyncio
+    async def test_hides_home_actions_on_non_default_screen(self, home_app):
+        async with home_app.run_test():
+            home_app.push_screen(FakeSearchScreen())
 
-        assert home_app.check_action("attempt", []) is True
-        assert home_app.check_action("next", []) is True
-        assert home_app.check_action("previous", []) is True
-        assert home_app.check_action("search", []) is True
-        assert home_app.check_action("dashboard", []) is True
-
-
-@pytest.mark.asyncio
-async def test_check_action_hides_home_actions_on_non_default_screen(
-    home_app,
-):
-    async with home_app.run_test():
-        home_app.push_screen(FakeSearchScreen())
-
-        assert home_app.check_action("attempt", []) is False
-        assert home_app.check_action("next", []) is False
-        assert home_app.check_action("previous", []) is False
-        assert home_app.check_action("search", []) is False
-        assert home_app.check_action("dashboard", []) is False
+            assert home_app.check_action("attempt", []) is False
+            assert home_app.check_action("next", []) is False
+            assert home_app.check_action("previous", []) is False
+            assert home_app.check_action("search", []) is False
+            assert home_app.check_action("dashboard", []) is False

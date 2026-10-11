@@ -8,6 +8,7 @@ from algoflex import search
 from algoflex.search import SearchScreen
 
 
+# Test doubles and helper app
 class FakeQuestion:
     def __init__(self, title: str) -> None:
         self.title = title
@@ -43,6 +44,7 @@ class SearchApp(App):
         self.result = result
 
 
+# Fixtures and helpers
 @pytest.fixture
 def fake_questions(monkeypatch):
     questions = FakeQuestions()
@@ -62,258 +64,174 @@ def search_app(fake_questions, passed_problem_ids):
     return SearchApp()
 
 
-@pytest.mark.asyncio
-async def test_search_screen_composes_search_input_and_results(search_app):
-    async with search_app.run_test():
-        assert search_app.screen.query_one("#search", Input)
-        assert search_app.screen.query_one("#results", ListView)
-
-
-@pytest.mark.asyncio
-async def test_search_input_has_expected_placeholder(search_app):
-    async with search_app.run_test():
-        search_input = search_app.screen.query_one("#search", Input)
-
-        assert search_input.placeholder == "Search problems..."
-
-
-@pytest.mark.asyncio
-async def test_search_screen_loads_all_problems(
-    search_app,
-    fake_questions,
-    passed_problem_ids,
-):
-    async with search_app.run_test():
-        screen = search_app.screen
-        results = screen.query_one("#results", ListView)
-
-        assert len(screen.problems) == 4
-        assert len(results.children) == 4
-
-
-@pytest.mark.asyncio
-async def test_search_screen_builds_problem_data(
-    search_app,
-    fake_questions,
-    passed_problem_ids,
-):
-    async with search_app.run_test():
-        assert search_app.screen.problems == [
-            (" ", 1, "Two Sum"),
-            ("✓", 2, "Valid Parentheses"),
-            (" ", 3, "Binary Search"),
-            (" ", 4, "Merge Intervals"),
-        ]
-
-
-@pytest.mark.asyncio
-async def test_passed_problem_is_marked(
-    search_app,
-    fake_questions,
-    passed_problem_ids,
-):
-    async with search_app.run_test():
-        results = search_app.screen.query_one("#results", ListView)
-        labels = list(results.query(Label))
-
-        assert len(labels) == 4
-        assert str(labels[0].render()).startswith(" ")
-        assert str(labels[1].render()).startswith("✓")
-
-
-@pytest.mark.asyncio
-async def test_each_result_uses_problem_id_as_widget_id(
-    search_app,
-    fake_questions,
-    passed_problem_ids,
-):
-    async with search_app.run_test():
-        results = search_app.screen.query_one("#results", ListView)
-
-        assert [item.id for item in results.children] == [
-            "item-1",
-            "item-2",
-            "item-3",
-            "item-4",
-        ]
-
-
-@pytest.mark.asyncio
-async def test_search_filters_by_title(
-    search_app,
-    fake_questions,
-    passed_problem_ids,
-):
-    async with search_app.run_test() as pilot:
-        search_input = search_app.screen.query_one("#search", Input)
-
-        search_input.value = "binary"
-        await pilot.pause()
+async def apply_filter(pilot, app, value: str) -> ListView:
+    """Set the search input to `value` and wait for the filter to settle.
+
+    Returns the ListView so callers can assert on its children directly.
+    """
+    search_input = app.screen.query_one("#search", Input)
+    search_input.value = value
+    await pilot.pause()
+    return app.screen.query_one("#results", ListView)
+
+
+# Composition
+class TestComposition:
+    @pytest.mark.asyncio
+    async def test_composes_search_input_and_results(self, search_app):
+        async with search_app.run_test():
+            assert search_app.screen.query_one("#search", Input)
+            assert search_app.screen.query_one("#results", ListView)
+
+    @pytest.mark.asyncio
+    async def test_input_has_expected_placeholder(self, search_app):
+        async with search_app.run_test():
+            search_input = search_app.screen.query_one("#search", Input)
+
+            assert search_input.placeholder == "Search problems..."
+
+
+# Initial problem list
+class TestProblemList:
+    @pytest.mark.asyncio
+    async def test_loads_all_problems(self, search_app):
+        async with search_app.run_test():
+            screen = search_app.screen
+            results = screen.query_one("#results", ListView)
+
+            assert len(screen.problems) == 4
+            assert len(results.children) == 4
+
+    @pytest.mark.asyncio
+    async def test_builds_problem_data(self, search_app):
+        async with search_app.run_test():
+            assert search_app.screen.problems == [
+                (" ", 1, "Two Sum"),
+                ("✓", 2, "Valid Parentheses"),
+                (" ", 3, "Binary Search"),
+                (" ", 4, "Merge Intervals"),
+            ]
+
+    @pytest.mark.asyncio
+    async def test_passed_problem_is_marked(self, search_app):
+        async with search_app.run_test():
+            results = search_app.screen.query_one("#results", ListView)
+            labels = list(results.query(Label))
+
+            assert len(labels) == 4
+            assert str(labels[0].render()).startswith(" ")
+            assert str(labels[1].render()).startswith("✓")
+
+    @pytest.mark.asyncio
+    async def test_each_result_uses_problem_id_as_widget_id(self, search_app):
+        async with search_app.run_test():
+            results = search_app.screen.query_one("#results", ListView)
+
+            assert [item.id for item in results.children] == [
+                "item-1",
+                "item-2",
+                "item-3",
+                "item-4",
+            ]
+
+
+# Filtering
+class TestFiltering:
+    @pytest.mark.asyncio
+    async def test_filters_by_title(self, search_app):
+        async with search_app.run_test() as pilot:
+            results = await apply_filter(pilot, search_app, "binary")
+
+            assert len(results.children) == 1
+            assert results.children[0].id == "item-3"
+
+    @pytest.mark.asyncio
+    async def test_is_case_insensitive(self, search_app):
+        async with search_app.run_test() as pilot:
+            results = await apply_filter(pilot, search_app, "VALID PARENTHESES")
+
+            assert len(results.children) == 1
+            assert results.children[0].id == "item-2"
+
+    @pytest.mark.asyncio
+    async def test_strips_leading_and_trailing_whitespace(self, search_app):
+        async with search_app.run_test() as pilot:
+            results = await apply_filter(pilot, search_app, "   two sum   ")
+
+            assert len(results.children) == 1
+            assert results.children[0].id == "item-1"
+
+    @pytest.mark.asyncio
+    async def test_matches_partial_title(self, search_app):
+        async with search_app.run_test() as pilot:
+            results = await apply_filter(pilot, search_app, "search")
 
-        results = search_app.screen.query_one("#results", ListView)
-
-        assert len(results.children) == 1
-        assert results.children[0].id == "item-3"
-
-
-@pytest.mark.asyncio
-async def test_search_is_case_insensitive(
-    search_app,
-    fake_questions,
-    passed_problem_ids,
-):
-    async with search_app.run_test() as pilot:
-        search_input = search_app.screen.query_one("#search", Input)
+            assert len(results.children) == 1
+            assert results.children[0].id == "item-3"
 
-        search_input.value = "VALID PARENTHESES"
-        await pilot.pause()
+    @pytest.mark.asyncio
+    async def test_no_matches_returns_empty_results(self, search_app):
+        async with search_app.run_test() as pilot:
+            results = await apply_filter(pilot, search_app, "does not exist")
 
-        results = search_app.screen.query_one("#results", ListView)
+            assert len(results.children) == 0
 
-        assert len(results.children) == 1
-        assert results.children[0].id == "item-2"
+    @pytest.mark.asyncio
+    async def test_empty_query_restores_all_problems(self, search_app):
+        async with search_app.run_test() as pilot:
+            results = await apply_filter(pilot, search_app, "binary")
+            assert len(results.children) == 1
 
+            await apply_filter(pilot, search_app, "")
 
-@pytest.mark.asyncio
-async def test_search_strips_leading_and_trailing_whitespace(
-    search_app,
-    fake_questions,
-    passed_problem_ids,
-):
-    async with search_app.run_test() as pilot:
-        search_input = search_app.screen.query_one("#search", Input)
+            assert len(results.children) == 4
 
-        search_input.value = "   two sum   "
-        await pilot.pause()
+    @pytest.mark.asyncio
+    async def test_filtering_does_not_mutate_stored_problems(self, search_app):
+        async with search_app.run_test() as pilot:
+            screen = search_app.screen
+            original = screen.problems.copy()
 
-        results = search_app.screen.query_one("#results", ListView)
+            await apply_filter(pilot, search_app, "binary")
 
-        assert len(results.children) == 1
-        assert results.children[0].id == "item-1"
+            assert screen.problems == original
 
 
-@pytest.mark.asyncio
-async def test_search_matches_partial_title(
-    search_app,
-    fake_questions,
-    passed_problem_ids,
-):
-    async with search_app.run_test() as pilot:
-        search_input = search_app.screen.query_one("#search", Input)
+# Selection
+class TestSelection:
+    @pytest.mark.parametrize(
+        ("index", "expected_result"),
+        [
+            (0, 1),
+            (2, 3),
+        ],
+    )
+    @pytest.mark.asyncio
+    async def test_enter_dismisses_with_problem_id(
+        self, search_app, index, expected_result
+    ):
+        async with search_app.run_test() as pilot:
+            results = search_app.screen.query_one("#results", ListView)
 
-        search_input.value = "search"
-        await pilot.pause()
+            results.index = index
+            results.focus()
 
-        results = search_app.screen.query_one("#results", ListView)
+            await pilot.press("enter")
+            await pilot.pause()
 
-        assert len(results.children) == 1
-        assert results.children[0].id == "item-3"
+            assert search_app.result == expected_result
+            assert not isinstance(search_app.screen, SearchScreen)
 
 
-@pytest.mark.asyncio
-async def test_search_with_no_matches_returns_empty_results(
-    search_app,
-    fake_questions,
-    passed_problem_ids,
-):
-    async with search_app.run_test() as pilot:
-        search_input = search_app.screen.query_one("#search", Input)
+# Dismissal
+class TestDismissal:
+    @pytest.mark.asyncio
+    async def test_escape_dismisses_without_result(self, search_app):
+        async with search_app.run_test() as pilot:
+            assert isinstance(search_app.screen, SearchScreen)
 
-        search_input.value = "does not exist"
-        await pilot.pause()
+            await pilot.press("escape")
+            await pilot.pause()
 
-        results = search_app.screen.query_one("#results", ListView)
-
-        assert len(results.children) == 0
-
-
-@pytest.mark.asyncio
-async def test_empty_search_restores_all_problems(
-    search_app,
-    fake_questions,
-    passed_problem_ids,
-):
-    async with search_app.run_test() as pilot:
-        search_input = search_app.screen.query_one("#search", Input)
-
-        search_input.value = "binary"
-        await pilot.pause()
-
-        results = search_app.screen.query_one("#results", ListView)
-        assert len(results.children) == 1
-
-        search_input.value = ""
-        await pilot.pause()
-
-        assert len(results.children) == 4
-
-
-@pytest.mark.asyncio
-async def test_search_filters_without_changing_original_problem_list(
-    search_app,
-    fake_questions,
-    passed_problem_ids,
-):
-    async with search_app.run_test() as pilot:
-        screen = search_app.screen
-        search_input = screen.query_one("#search", Input)
-
-        original = screen.problems.copy()
-
-        search_input.value = "binary"
-        await pilot.pause()
-
-        assert screen.problems == original
-
-
-@pytest.mark.asyncio
-async def test_selecting_result_dismisses_with_problem_id(
-    search_app,
-    fake_questions,
-    passed_problem_ids,
-):
-    async with search_app.run_test() as pilot:
-        results = search_app.screen.query_one("#results", ListView)
-
-        results.index = 2
-        results.focus()
-
-        await pilot.press("enter")
-        await pilot.pause()
-
-        assert search_app.result == 3
-        assert not isinstance(search_app.screen, SearchScreen)
-
-
-@pytest.mark.asyncio
-async def test_selecting_first_result_returns_first_problem_id(
-    search_app,
-    fake_questions,
-    passed_problem_ids,
-):
-    async with search_app.run_test() as pilot:
-        results = search_app.screen.query_one("#results", ListView)
-
-        results.index = 0
-        results.focus()
-
-        await pilot.press("enter")
-        await pilot.pause()
-
-        assert search_app.result == 1
-
-
-@pytest.mark.asyncio
-async def test_escape_dismisses_search_without_result(
-    search_app,
-    fake_questions,
-    passed_problem_ids,
-):
-    async with search_app.run_test() as pilot:
-        assert isinstance(search_app.screen, SearchScreen)
-
-        await pilot.press("escape")
-        await pilot.pause()
-
-        assert search_app.result is None
-        assert not isinstance(search_app.screen, SearchScreen)
+            assert search_app.result is None
+            assert not isinstance(search_app.screen, SearchScreen)

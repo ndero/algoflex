@@ -1,3 +1,5 @@
+from types import SimpleNamespace
+
 import pytest
 from textual.app import App
 from textual.widgets import Footer, RichLog, Static
@@ -8,6 +10,7 @@ from algoflex.runner import ExecutionResult
 from algoflex.types import Language, RunStatus
 
 
+# Test doubles and helpers
 class FakeQuestion:
     def __init__(
         self,
@@ -23,11 +26,6 @@ class FakeQuestion:
 
 class HostApp(App):
     """Minimal host for testing modal-screen behavior."""
-
-
-@pytest.fixture
-def question():
-    return FakeQuestion()
 
 
 def make_modal(
@@ -47,804 +45,467 @@ def make_modal(
     )
 
 
+def find_new_best_indicator(modal: ResultModal) -> str | None:
+    """Return the rendered text of the new-best Static, or None if absent."""
+    for widget in modal.query(Static):
+        if widget.id == "status":
+            continue
+        text = str(widget.render())
+        if "New best time!!" in text:
+            return text
+    return None
+
+
+def stub_attempt_persistence(monkeypatch) -> SimpleNamespace:
+    """Patch attempt/draft persistence and capture what was written.
+
+    The returned namespace has .attempts, .drafts, and .deleted lists.
+    """
+    cap = SimpleNamespace(attempts=[], drafts=[], deleted=[])
+
+    monkeypatch.setattr(result_module, "add_attempt", cap.attempts.append)
+    monkeypatch.setattr(result_module, "add_draft", cap.drafts.append)
+    monkeypatch.setattr(
+        result_module,
+        "delete_draft",
+        lambda problem_id, language: cap.deleted.append((problem_id, language)),
+    )
+
+    return cap
+
+
+def stub_run_user_code(monkeypatch, *, result, created_at=100.0) -> SimpleNamespace:
+    """Patch run_user_code's collaborators and return a capture namespace.
+
+    The namespace has:
+      captured         dict of args passed to run_solution
+      errors           list of (title, message) tuples from _show_error
+      saved            dict of kwargs passed to _save_result
+      success_called   True if _show_success was invoked
+    """
+    cap = SimpleNamespace(captured={}, errors=[], saved={}, success_called=False)
+
+    async def fake_run_solution(user_code, test_code, language, *, on_line):
+        cap.captured.update(
+            user_code=user_code,
+            test_code=test_code,
+            language=language,
+            on_line=on_line,
+        )
+        return result
+
+    monkeypatch.setattr(result_module, "run_solution", fake_run_solution)
+    monkeypatch.setattr(result_module.time, "time", lambda: created_at)
+    monkeypatch.setattr(ResultModal, "start_loading", lambda self: None)
+    monkeypatch.setattr(ResultModal, "stop_loading", lambda self: None)
+    monkeypatch.setattr(
+        ResultModal,
+        "_show_error",
+        lambda self, title, message: cap.errors.append((title, message)),
+    )
+    monkeypatch.setattr(
+        ResultModal,
+        "_save_result",
+        lambda self, **kwargs: cap.saved.update(kwargs),
+    )
+
+    def _mark_success(self):
+        cap.success_called = True
+
+    monkeypatch.setattr(ResultModal, "_show_success", _mark_success)
+
+    return cap
+
+
 @pytest.fixture
 def disable_worker(monkeypatch):
     async def noop(self):
         pass
 
-    monkeypatch.setattr(
-        ResultModal,
-        "run_user_code",
-        noop,
-    )
+    monkeypatch.setattr(ResultModal, "run_user_code", noop)
 
 
 # Composition
-@pytest.mark.asyncio
-async def test_result_modal_composes_expected_widgets(disable_worker):
-    app = HostApp()
-    modal = make_modal()
+class TestComposition:
+    @pytest.mark.asyncio
+    async def test_composes_expected_widgets(self, disable_worker):
+        app = HostApp()
+        modal = make_modal()
 
-    async with app.run_test() as pilot:
-        app.push_screen(modal)
-        await pilot.pause()
+        async with app.run_test() as pilot:
+            app.push_screen(modal)
+            await pilot.pause()
 
-        assert app.screen is modal
-        assert modal.query_one(RichLog)
-        assert modal.query_one("#status", Static)
-        assert modal.query_one(Footer)
+            assert app.screen is modal
+            assert modal.query_one(RichLog)
+            assert modal.query_one("#status", Static)
+            assert modal.query_one(Footer)
 
+    @pytest.mark.asyncio
+    async def test_starts_with_empty_status(self, disable_worker):
+        app = HostApp()
+        modal = make_modal()
 
-@pytest.mark.asyncio
-async def test_result_modal_starts_with_empty_status(disable_worker):
-    app = HostApp()
-    modal = make_modal()
+        async with app.run_test() as pilot:
+            app.push_screen(modal)
+            await pilot.pause()
 
-    async with app.run_test() as pilot:
-        app.push_screen(modal)
-        await pilot.pause()
+            status = modal.query_one("#status", Static)
 
-        status = modal.query_one("#status", Static)
+            assert str(status.content) == ""
 
-        assert str(status.content) == ""
+    @pytest.mark.asyncio
+    async def test_preserves_constructor_state(self, disable_worker):
+        app = HostApp()
+        question = FakeQuestion(question_id=42)
 
+        modal = make_modal(
+            question=question,
+            user_code="solution()",
+            elapsed=15.75,
+            best=20.0,
+            language=Language.RUST,
+        )
 
-@pytest.mark.asyncio
-async def test_result_modal_preserves_constructor_state(
-    disable_worker,
-):
-    app = HostApp()
-    question = FakeQuestion(question_id=42)
+        async with app.run_test() as pilot:
+            app.push_screen(modal)
+            await pilot.pause()
 
-    modal = make_modal(
-        question=question,
-        user_code="solution()",
-        elapsed=15.75,
-        best=20.0,
-        language=Language.RUST,
-    )
-
-    async with app.run_test() as pilot:
-        app.push_screen(modal)
-        await pilot.pause()
-
-        assert modal.question is question
-        assert modal.question.id == 42
-        assert modal.user_code == "solution()"
-        assert modal.elapsed == 15.75
-        assert modal.best == 20.0
-        assert modal.language is Language.RUST
+            assert modal.question is question
+            assert modal.question.id == 42
+            assert modal.user_code == "solution()"
+            assert modal.elapsed == 15.75
+            assert modal.best == 20.0
+            assert modal.language is Language.RUST
 
 
 # Loading spinner
-@pytest.mark.asyncio
-async def test_start_loading_updates_status(
-    disable_worker,
-):
-    app = HostApp()
-    modal = make_modal()
+class TestLoadingSpinner:
+    @pytest.mark.asyncio
+    async def test_start_loading_updates_status(self, disable_worker):
+        app = HostApp()
+        modal = make_modal()
 
-    async with app.run_test() as pilot:
-        app.push_screen(modal)
-        await pilot.pause()
+        async with app.run_test() as pilot:
+            app.push_screen(modal)
+            await pilot.pause()
 
-        modal.start_loading()
+            modal.start_loading()
 
-        status = modal.query_one("#status", Static)
+            status = modal.query_one("#status", Static)
 
-        assert str(status.content) == "⠋ Running tests..."
-        assert modal._spinner_timer is not None
+            assert str(status.content) == "⠋ Running tests..."
+            assert modal._spinner_timer is not None
 
+    @pytest.mark.asyncio
+    async def test_start_loading_accepts_custom_message(self, disable_worker):
+        app = HostApp()
+        modal = make_modal()
 
-@pytest.mark.asyncio
-async def test_start_loading_accepts_custom_message(
-    disable_worker,
-):
-    app = HostApp()
-    modal = make_modal()
+        async with app.run_test() as pilot:
+            app.push_screen(modal)
+            await pilot.pause()
 
-    async with app.run_test() as pilot:
-        app.push_screen(modal)
-        await pilot.pause()
+            modal.start_loading("Compiling...")
 
-        modal.start_loading("Compiling...")
+            status = modal.query_one("#status", Static)
 
-        status = modal.query_one("#status", Static)
+            assert str(status.content) == "⠋ Compiling..."
 
-        assert str(status.content) == "⠋ Compiling..."
+    @pytest.mark.asyncio
+    async def test_spinner_advances_frame(self, disable_worker):
+        app = HostApp()
+        modal = make_modal()
 
+        async with app.run_test() as pilot:
+            app.push_screen(modal)
+            await pilot.pause()
 
-@pytest.mark.asyncio
-async def test_spinner_updates(
-    disable_worker,
-):
-    app = HostApp()
-    modal = make_modal()
+            modal.start_loading()
 
-    async with app.run_test() as pilot:
-        app.push_screen(modal)
-        await pilot.pause()
+            assert modal._spinner_index == 0
 
-        modal.start_loading()
+            modal._update_spinner("Running tests...")
 
-        assert modal._spinner_index == 0
+            status = modal.query_one("#status", Static)
 
-        modal._update_spinner("Running tests...")
+            assert modal._spinner_index == 1
+            assert str(status.content) == "⠙ Running tests..."
 
-        status = modal.query_one("#status", Static)
+    @pytest.mark.asyncio
+    async def test_stop_loading_stops_spinner_and_clears_status(self, disable_worker):
+        app = HostApp()
+        modal = make_modal()
 
-        assert modal._spinner_index == 1
-        assert str(status.content) == "⠙ Running tests..."
+        async with app.run_test() as pilot:
+            app.push_screen(modal)
+            await pilot.pause()
 
+            modal.start_loading()
+            modal.stop_loading()
 
-@pytest.mark.asyncio
-async def test_stop_loading_stops_spinner_and_clears_status(
-    disable_worker,
-):
-    app = HostApp()
-    modal = make_modal()
+            status = modal.query_one("#status", Static)
 
-    async with app.run_test() as pilot:
-        app.push_screen(modal)
-        await pilot.pause()
+            assert modal._spinner_timer is None
+            assert str(status.content) == ""
 
-        modal.start_loading()
-        modal.stop_loading()
+    @pytest.mark.asyncio
+    async def test_stop_loading_is_safe_without_active_spinner(self, disable_worker):
+        app = HostApp()
+        modal = make_modal()
 
-        status = modal.query_one("#status", Static)
+        async with app.run_test() as pilot:
+            app.push_screen(modal)
+            await pilot.pause()
 
-        assert modal._spinner_timer is None
-        assert str(status.content) == ""
+            modal.stop_loading()
 
+            status = modal.query_one("#status", Static)
 
-@pytest.mark.asyncio
-async def test_stop_loading_is_safe_without_active_spinner(
-    disable_worker,
-):
-    app = HostApp()
-    modal = make_modal()
-
-    async with app.run_test() as pilot:
-        app.push_screen(modal)
-        await pilot.pause()
-
-        modal.stop_loading()
-
-        status = modal.query_one("#status", Static)
-
-        assert modal._spinner_timer is None
-        assert str(status.content) == ""
+            assert modal._spinner_timer is None
+            assert str(status.content) == ""
 
 
-# New best time taken
-@pytest.mark.asyncio
-async def test_show_new_best_mounts_new_best_message(
-    disable_worker,
-    monkeypatch,
-):
-    app = HostApp()
-    modal = make_modal(elapsed=12.5)
-
-    monkeypatch.setattr(
-        result_module,
-        "fmt_secs",
-        lambda value: "12 secs",
+# New-best indicator
+class TestNewBestIndicator:
+    @pytest.mark.parametrize(
+        ("elapsed", "best", "expected"),
+        [
+            (10.0, None, True),
+            (10.0, 20.0, True),
+            (20.0, 10.0, False),
+            (10.0, 10.0, False),
+        ],
     )
+    @pytest.mark.asyncio
+    async def test_shown_only_for_new_best(
+        self, disable_worker, monkeypatch, elapsed, best, expected
+    ):
+        monkeypatch.setattr(result_module, "fmt_secs", lambda value: "12 secs")
 
-    async with app.run_test() as pilot:
-        app.push_screen(modal)
-        await pilot.pause()
+        app = HostApp()
+        modal = make_modal(elapsed=elapsed, best=best)
 
-        modal._show_new_best()
+        async with app.run_test() as pilot:
+            app.push_screen(modal)
+            await pilot.pause()
 
-        messages = [
-            widget
-            for widget in modal.query(Static)
-            if "New best time!!" in str(widget.render())
-        ]
+            modal._show_success()
 
-        assert len(messages) == 1
-        assert "New best time!!" in str(messages[0].render())
-        assert "12 secs" in str(messages[0].render())
+            assert (find_new_best_indicator(modal) is not None) is expected
 
+    @pytest.mark.asyncio
+    async def test_shows_elapsed(self, disable_worker, monkeypatch):
+        monkeypatch.setattr(result_module, "fmt_secs", lambda value: "12 secs")
 
-@pytest.mark.asyncio
-async def test_show_success_does_nothing_when_not_a_new_best(
-    disable_worker,
-):
-    app = HostApp()
-    modal = make_modal(elapsed=20.0, best=10.0)
+        app = HostApp()
+        modal = make_modal(elapsed=12.5)
 
-    async with app.run_test() as pilot:
-        app.push_screen(modal)
-        await pilot.pause()
+        async with app.run_test() as pilot:
+            app.push_screen(modal)
+            await pilot.pause()
 
-        modal._show_success()
+            modal._show_new_best()
 
-        assert not any(
-            "New best time!!" in str(widget.render())
-            for widget in modal.query(Static)
-            if widget.id != "status"
-        )
+            text = find_new_best_indicator(modal)
 
-
-@pytest.mark.asyncio
-async def test_show_success_creates_new_best_when_no_previous_best(
-    disable_worker,
-    monkeypatch,
-):
-    app = HostApp()
-    modal = make_modal(elapsed=20.0, best=None)
-
-    monkeypatch.setattr(
-        result_module,
-        "fmt_secs",
-        lambda value: "20 secs",
-    )
-
-    async with app.run_test() as pilot:
-        app.push_screen(modal)
-        await pilot.pause()
-
-        modal._show_success()
-
-        assert any(
-            "New best time!!" in str(widget.render())
-            for widget in modal.query(Static)
-            if widget.id != "status"
-        )
-
-
-@pytest.mark.asyncio
-async def test_show_success_creates_new_best_when_faster(
-    disable_worker,
-    monkeypatch,
-):
-    app = HostApp()
-    modal = make_modal(elapsed=10.0, best=20.0)
-
-    monkeypatch.setattr(
-        result_module,
-        "fmt_secs",
-        lambda value: "10 secs",
-    )
-
-    async with app.run_test() as pilot:
-        app.push_screen(modal)
-        await pilot.pause()
-
-        modal._show_success()
-
-        assert any(
-            "New best time!!" in str(widget.render())
-            for widget in modal.query(Static)
-            if widget.id != "status"
-        )
-
-
-@pytest.mark.asyncio
-async def test_show_success_does_not_create_new_best_when_equal(
-    disable_worker,
-):
-    app = HostApp()
-    modal = make_modal(elapsed=10.0, best=10.0)
-
-    async with app.run_test() as pilot:
-        app.push_screen(modal)
-        await pilot.pause()
-
-        modal._show_success()
-
-        assert not any(
-            "New best time!!" in str(widget.render())
-            for widget in modal.query(Static)
-            if widget.id != "status"
-        )
+            assert text is not None
+            assert "12 secs" in text
 
 
 # Saving results
-def test_save_passed_result_adds_attempt_and_deletes_draft(
-    monkeypatch,
-):
-    captured = {}
+class TestSaveResult:
+    def test_passed_result_adds_attempt_and_deletes_draft(self, monkeypatch):
+        cap = stub_attempt_persistence(monkeypatch)
 
-    def fake_add_attempt(attempt):
-        captured["attempt"] = attempt
-
-    def fake_delete_draft(problem_id, language):
-        captured["deleted"] = (problem_id, language)
-
-    monkeypatch.setattr(
-        result_module,
-        "add_attempt",
-        fake_add_attempt,
-    )
-    monkeypatch.setattr(
-        result_module,
-        "delete_draft",
-        fake_delete_draft,
-    )
-
-    question = FakeQuestion(question_id=7)
-
-    modal = make_modal(
-        question=question,
-        user_code="  print('hello')  ",
-        elapsed=15.0,
-        language=Language.PYTHON,
-    )
-
-    modal._save_result(
-        status=RunStatus.PASSED,
-        created_at=1234.5,
-    )
-
-    assert captured["attempt"] == {
-        "problem_id": 7,
-        "status": RunStatus.PASSED,
-        "elapsed": 15.0,
-        "created_at": 1234.5,
-        "code": "print('hello')",
-        "lang_id": Language.PYTHON,
-    }
-
-    assert captured["deleted"] == (
-        7,
-        Language.PYTHON,
-    )
-
-
-def test_save_failed_result_adds_attempt_and_saves_draft(
-    monkeypatch,
-):
-    captured = {}
-
-    def fake_add_attempt(attempt):
-        captured["attempt"] = attempt
-
-    def fake_add_draft(draft):
-        captured["draft"] = draft
-
-    monkeypatch.setattr(
-        result_module,
-        "add_attempt",
-        fake_add_attempt,
-    )
-    monkeypatch.setattr(
-        result_module,
-        "add_draft",
-        fake_add_draft,
-    )
-
-    question = FakeQuestion(question_id=7)
-
-    modal = make_modal(
-        question=question,
-        user_code="  broken()  ",
-        elapsed=25.5,
-        language=Language.RUST,
-    )
-
-    modal._save_result(
-        status=RunStatus.FAILED,
-        created_at=1234.5,
-    )
-
-    assert captured["attempt"] == {
-        "problem_id": 7,
-        "status": RunStatus.FAILED,
-        "elapsed": 25.5,
-        "created_at": 1234.5,
-        "code": "broken()",
-        "lang_id": Language.RUST,
-    }
-
-    assert captured["draft"] == {
-        "problem_id": 7,
-        "lang_id": Language.RUST,
-        "code": "broken()",
-        "elapsed": 25.5,
-        "updated_at": 1234.5,
-    }
-
-
-@pytest.mark.parametrize(
-    "status",
-    [
-        RunStatus.FAILED,
-        RunStatus.COMPILE_ERROR,
-        RunStatus.TIMEOUT,
-        RunStatus.ERROR,
-    ],
-)
-def test_unsuccessful_result_saves_draft(
-    monkeypatch,
-    status,
-):
-    attempts = []
-    drafts = []
-    deleted = []
-
-    monkeypatch.setattr(
-        result_module,
-        "add_attempt",
-        attempts.append,
-    )
-    monkeypatch.setattr(
-        result_module,
-        "add_draft",
-        drafts.append,
-    )
-    monkeypatch.setattr(
-        result_module,
-        "delete_draft",
-        lambda *args: deleted.append(args),
-    )
-
-    question = FakeQuestion(question_id=1)
-
-    modal = make_modal(
-        question=question,
-        user_code="solution()",
-        elapsed=8.0,
-        language=Language.PYTHON,
-    )
-
-    modal._save_result(
-        status=status,
-        created_at=100.0,
-    )
-
-    assert len(attempts) == 1
-    assert len(drafts) == 1
-    assert deleted == []
-
-
-def test_save_result_strips_user_code(
-    monkeypatch,
-):
-    captured = {}
-
-    monkeypatch.setattr(
-        result_module,
-        "add_attempt",
-        lambda value: captured.setdefault("attempt", value),
-    )
-    monkeypatch.setattr(
-        result_module,
-        "add_draft",
-        lambda value: captured.setdefault("draft", value),
-    )
-
-    modal = make_modal(
-        user_code="\n\n  print('hello')  \n\n",
-    )
-
-    modal._save_result(
-        status=RunStatus.FAILED,
-        created_at=100.0,
-    )
-
-    assert captured["attempt"]["code"] == "print('hello')"
-    assert captured["draft"]["code"] == "print('hello')"
-
-
-@pytest.mark.asyncio
-async def test_run_user_code_uses_question_tests_and_saves_passed_result(
-    monkeypatch,
-):
-    captured = {}
-    saved = {}
-
-    question = FakeQuestion(
-        question_id=42,
-        tests="assert solution() == 42",
-    )
-
-    async def fake_run_solution(
-        user_code,
-        test_code,
-        language,
-        *,
-        on_line,
-    ):
-        captured["user_code"] = user_code
-        captured["test_code"] = test_code
-        captured["language"] = language
-        captured["on_line"] = on_line
-
-        return ExecutionResult(
-            status=RunStatus.PASSED,
+        modal = make_modal(
+            question=FakeQuestion(question_id=7),
+            user_code="  print('hello')  ",
+            elapsed=15.0,
+            language=Language.PYTHON,
         )
 
-    def fake_save_result(self, *, status, created_at):
-        saved["status"] = status
-        saved["created_at"] = created_at
+        modal._save_result(status=RunStatus.PASSED, created_at=1234.5)
 
-    monkeypatch.setattr(
-        result_module,
-        "run_solution",
-        fake_run_solution,
-    )
-    monkeypatch.setattr(
-        result_module.time,
-        "time",
-        lambda: 1234.5,
-    )
-    monkeypatch.setattr(
-        ResultModal,
-        "_save_result",
-        fake_save_result,
-    )
-    monkeypatch.setattr(
-        ResultModal,
-        "_show_success",
-        lambda self: None,
-    )
-    monkeypatch.setattr(
-        ResultModal,
-        "start_loading",
-        lambda self: None,
-    )
-    monkeypatch.setattr(
-        ResultModal,
-        "stop_loading",
-        lambda self: None,
-    )
+        assert cap.attempts == [
+            {
+                "problem_id": 7,
+                "status": RunStatus.PASSED,
+                "elapsed": 15.0,
+                "created_at": 1234.5,
+                "code": "print('hello')",
+                "lang_id": Language.PYTHON,
+            }
+        ]
+        assert cap.drafts == []
+        assert cap.deleted == [(7, Language.PYTHON)]
 
-    modal = make_modal(
-        question=question,
-        user_code="solution()",
-        language=Language.PYTHON,
-    )
+    def test_failed_result_adds_attempt_and_saves_draft(self, monkeypatch):
+        cap = stub_attempt_persistence(monkeypatch)
 
-    await modal.run_user_code()
-
-    assert captured["user_code"] == "solution()"
-    assert captured["test_code"] == "assert solution() == 42"
-    assert captured["language"] is Language.PYTHON
-    assert callable(captured["on_line"])
-
-    assert saved == {
-        "status": RunStatus.PASSED,
-        "created_at": 1234.5,
-    }
-
-
-@pytest.mark.asyncio
-async def test_run_user_code_shows_compile_error(monkeypatch):
-    messages = []
-    saved = {}
-
-    async def fake_run_solution(*args, **kwargs):
-        return ExecutionResult(
-            status=RunStatus.COMPILE_ERROR,
-            stderr="expected `;`",
+        modal = make_modal(
+            question=FakeQuestion(question_id=7),
+            user_code="  broken()  ",
+            elapsed=25.5,
+            language=Language.RUST,
         )
 
-    monkeypatch.setattr(
-        result_module,
-        "run_solution",
-        fake_run_solution,
+        modal._save_result(status=RunStatus.FAILED, created_at=1234.5)
+
+        assert cap.attempts == [
+            {
+                "problem_id": 7,
+                "status": RunStatus.FAILED,
+                "elapsed": 25.5,
+                "created_at": 1234.5,
+                "code": "broken()",
+                "lang_id": Language.RUST,
+            }
+        ]
+        assert cap.drafts == [
+            {
+                "problem_id": 7,
+                "lang_id": Language.RUST,
+                "code": "broken()",
+                "elapsed": 25.5,
+                "updated_at": 1234.5,
+            }
+        ]
+        assert cap.deleted == []
+
+    @pytest.mark.parametrize(
+        "status",
+        [
+            RunStatus.FAILED,
+            RunStatus.COMPILE_ERROR,
+            RunStatus.TIMEOUT,
+            RunStatus.ERROR,
+        ],
     )
-    monkeypatch.setattr(
-        result_module.time,
-        "time",
-        lambda: 100.0,
-    )
-    monkeypatch.setattr(
-        ResultModal,
-        "start_loading",
-        lambda self: None,
-    )
-    monkeypatch.setattr(
-        ResultModal,
-        "stop_loading",
-        lambda self: None,
-    )
-    monkeypatch.setattr(
-        ResultModal,
-        "_show_error",
-        lambda self, title, message: messages.append((title, message)),
-    )
-    monkeypatch.setattr(
-        ResultModal,
-        "_save_result",
-        lambda self, **kwargs: saved.update(kwargs),
-    )
+    def test_unsuccessful_status_saves_draft_and_no_deletion(self, monkeypatch, status):
+        cap = stub_attempt_persistence(monkeypatch)
 
-    modal = make_modal()
-
-    await modal.run_user_code()
-
-    assert messages == [
-        ("compilation failed", "expected `;`"),
-    ]
-
-    assert saved["status"] is RunStatus.COMPILE_ERROR
-    assert saved["created_at"] == 100.0
-
-
-@pytest.mark.asyncio
-async def test_run_user_code_shows_timeout(monkeypatch):
-    messages = []
-
-    async def fake_run_solution(*args, **kwargs):
-        return ExecutionResult(
-            status=RunStatus.TIMEOUT,
+        modal = make_modal(
+            user_code="solution()",
+            elapsed=8.0,
+            language=Language.PYTHON,
         )
 
-    monkeypatch.setattr(
-        result_module,
-        "run_solution",
-        fake_run_solution,
-    )
-    monkeypatch.setattr(
-        result_module.time,
-        "time",
-        lambda: 100.0,
-    )
-    monkeypatch.setattr(
-        ResultModal,
-        "start_loading",
-        lambda self: None,
-    )
-    monkeypatch.setattr(
-        ResultModal,
-        "stop_loading",
-        lambda self: None,
-    )
-    monkeypatch.setattr(
-        ResultModal,
-        "_show_error",
-        lambda self, title, message: messages.append((title, message)),
-    )
-    monkeypatch.setattr(
-        ResultModal,
-        "_save_result",
-        lambda self, **kwargs: None,
-    )
+        modal._save_result(status=status, created_at=100.0)
 
-    await make_modal().run_user_code()
+        assert len(cap.attempts) == 1
+        assert len(cap.drafts) == 1
+        assert cap.deleted == []
 
-    assert messages == [
-        (
-            "timed out",
-            "your solution must run within 9 seconds.",
-        ),
-    ]
+    def test_strips_user_code(self, monkeypatch):
+        cap = stub_attempt_persistence(monkeypatch)
+
+        modal = make_modal(user_code="\n\n  print('hello')  \n\n")
+
+        modal._save_result(status=RunStatus.FAILED, created_at=100.0)
+
+        assert cap.attempts[0]["code"] == "print('hello')"
+        assert cap.drafts[0]["code"] == "print('hello')"
 
 
-@pytest.mark.asyncio
-async def test_run_user_code_shows_runtime_error(monkeypatch):
-    messages = []
-
-    async def fake_run_solution(*args, **kwargs):
-        return ExecutionResult(
-            status=RunStatus.ERROR,
-            stderr="segmentation fault",
+# run_user_code
+class TestRunUserCode:
+    @pytest.mark.asyncio
+    async def test_passes_question_tests_and_saves_passed_result(self, monkeypatch):
+        question = FakeQuestion(
+            question_id=42,
+            tests="assert solution() == 42",
+        )
+        cap = stub_run_user_code(
+            monkeypatch,
+            result=ExecutionResult(status=RunStatus.PASSED),
+            created_at=1234.5,
         )
 
-    monkeypatch.setattr(
-        result_module,
-        "run_solution",
-        fake_run_solution,
-    )
-    monkeypatch.setattr(
-        result_module.time,
-        "time",
-        lambda: 100.0,
-    )
-    monkeypatch.setattr(
-        ResultModal,
-        "start_loading",
-        lambda self: None,
-    )
-    monkeypatch.setattr(
-        ResultModal,
-        "stop_loading",
-        lambda self: None,
-    )
-    monkeypatch.setattr(
-        ResultModal,
-        "_show_error",
-        lambda self, title, message: messages.append((title, message)),
-    )
-    monkeypatch.setattr(
-        ResultModal,
-        "_save_result",
-        lambda self, **kwargs: None,
-    )
+        modal = make_modal(question=question, user_code="solution()")
+        await modal.run_user_code()
 
-    await make_modal().run_user_code()
+        assert cap.captured["user_code"] == "solution()"
+        assert cap.captured["test_code"] == "assert solution() == 42"
+        assert cap.captured["language"] is Language.PYTHON
+        assert callable(cap.captured["on_line"])
+        assert cap.saved == {
+            "status": RunStatus.PASSED,
+            "created_at": 1234.5,
+        }
 
-    assert messages == [
-        ("error running code", "segmentation fault"),
-    ]
-
-
-@pytest.mark.asyncio
-async def test_run_user_code_shows_success(monkeypatch):
-    called = False
-
-    async def fake_run_solution(*args, **kwargs):
-        return ExecutionResult(
-            status=RunStatus.PASSED,
+    @pytest.mark.asyncio
+    async def test_shows_compile_error(self, monkeypatch):
+        cap = stub_run_user_code(
+            monkeypatch,
+            result=ExecutionResult(
+                status=RunStatus.COMPILE_ERROR,
+                stderr="expected `;`",
+            ),
         )
 
-    def fake_show_success(self):
-        nonlocal called
-        called = True
+        await make_modal().run_user_code()
 
-    monkeypatch.setattr(
-        result_module,
-        "run_solution",
-        fake_run_solution,
-    )
-    monkeypatch.setattr(
-        result_module.time,
-        "time",
-        lambda: 100.0,
-    )
-    monkeypatch.setattr(
-        ResultModal,
-        "start_loading",
-        lambda self: None,
-    )
-    monkeypatch.setattr(
-        ResultModal,
-        "stop_loading",
-        lambda self: None,
-    )
-    monkeypatch.setattr(
-        ResultModal,
-        "_show_success",
-        fake_show_success,
-    )
-    monkeypatch.setattr(
-        ResultModal,
-        "_save_result",
-        lambda self, **kwargs: None,
-    )
+        assert cap.errors == [("compilation failed", "expected `;`")]
+        assert cap.saved["status"] is RunStatus.COMPILE_ERROR
+        assert cap.saved["created_at"] == 100.0
 
-    await make_modal().run_user_code()
+    @pytest.mark.asyncio
+    async def test_shows_timeout(self, monkeypatch):
+        cap = stub_run_user_code(
+            monkeypatch,
+            result=ExecutionResult(status=RunStatus.TIMEOUT),
+        )
 
-    assert called is True
+        await make_modal().run_user_code()
+
+        assert cap.errors == [
+            ("timed out", "your solution must run within 9 seconds."),
+        ]
+
+    @pytest.mark.asyncio
+    async def test_shows_runtime_error(self, monkeypatch):
+        cap = stub_run_user_code(
+            monkeypatch,
+            result=ExecutionResult(
+                status=RunStatus.ERROR,
+                stderr="segmentation fault",
+            ),
+        )
+
+        await make_modal().run_user_code()
+
+        assert cap.errors == [
+            ("error running code", "segmentation fault"),
+        ]
+
+    @pytest.mark.asyncio
+    async def test_shows_success(self, monkeypatch):
+        cap = stub_run_user_code(
+            monkeypatch,
+            result=ExecutionResult(status=RunStatus.PASSED),
+        )
+
+        await make_modal().run_user_code()
+
+        assert cap.success_called is True
 
 
 # Dismissal
-@pytest.mark.asyncio
-async def test_escape_dismisses_result_modal(disable_worker):
-    app = HostApp()
+class TestDismissal:
+    @pytest.mark.asyncio
+    async def test_escape_dismisses_modal(self, disable_worker):
+        app = HostApp()
 
-    async with app.run_test() as pilot:
-        modal = make_modal()
+        async with app.run_test() as pilot:
+            modal = make_modal()
 
-        app.push_screen(modal)
-        await pilot.pause()
+            app.push_screen(modal)
+            await pilot.pause()
 
-        assert app.screen is modal
+            assert app.screen is modal
 
-        await pilot.press("escape")
-        await pilot.pause()
+            await pilot.press("escape")
+            await pilot.pause()
 
-        assert app.screen is not modal
-
-
-# Best-time behavior
-@pytest.mark.parametrize(
-    ("elapsed", "best", "is_new_best"),
-    [
-        (10.0, None, True),
-        (10.0, 20.0, True),
-        (20.0, 10.0, False),
-        (10.0, 10.0, False),
-    ],
-)
-def test_new_best_condition(elapsed, best, is_new_best):
-    modal = make_modal(
-        elapsed=elapsed,
-        best=best,
-    )
-
-    assert (modal.best is None or modal.elapsed < modal.best) is is_new_best
+            assert app.screen is not modal

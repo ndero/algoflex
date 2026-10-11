@@ -11,6 +11,7 @@ from algoflex.custom_widgets import Title
 from algoflex.types import Language, Level, RunStatus
 
 
+# Shared fakes and helpers
 class FakeQuestion:
     def __init__(
         self,
@@ -64,14 +65,29 @@ def push_attempt(
     draft: sqlite3.Row | dict | None = None,
 ) -> AttemptScreen:
     question = question or FakeQuestion()
-
-    screen = AttemptScreen(
-        question,
-        language,
-        draft,
-    )
+    screen = AttemptScreen(question, language, draft)
     app.push_screen(screen)
     return screen
+
+
+def make_attempt(
+    *,
+    attempt_id: int = 1,
+    status: RunStatus = RunStatus.PASSED,
+    created_at: float = 100.0,
+    elapsed: float = 60.0,
+    lang_id: Language = Language.PYTHON,
+    code: str = "print('hello')",
+) -> dict:
+    """Build an attempt row dict with sensible defaults."""
+    return {
+        "attempt_id": attempt_id,
+        "status": status,
+        "created_at": created_at,
+        "elapsed": elapsed,
+        "lang_id": lang_id,
+        "code": code,
+    }
 
 
 @pytest.fixture
@@ -94,632 +110,419 @@ def attempt_app(no_attempts):
 
 
 # Composition
-@pytest.mark.asyncio
-async def test_attempt_composes_expected_widgets(attempt_app):
-    async with attempt_app.run_test() as pilot:
-        push_attempt(attempt_app)
-        await pilot.pause()
+class TestComposition:
+    @pytest.mark.asyncio
+    async def test_composes_expected_widgets(self, attempt_app):
+        async with attempt_app.run_test() as pilot:
+            push_attempt(attempt_app)
+            await pilot.pause()
 
-        assert attempt_app.screen.query_one("#code", TextArea)
-        assert attempt_app.screen.query_one("#timeline", Static)
-        assert attempt_app.screen.query_one("#solutions", Markdown)
-        assert attempt_app.screen.query_one("#editor", TabbedContent)
-        assert attempt_app.screen.query_one(Title)
+            assert attempt_app.screen.query_one("#code", TextArea)
+            assert attempt_app.screen.query_one("#timeline", Static)
+            assert attempt_app.screen.query_one("#solutions", Markdown)
+            assert attempt_app.screen.query_one("#editor", TabbedContent)
+            assert attempt_app.screen.query_one(Title)
 
+    @pytest.mark.asyncio
+    async def test_uses_python_starter_code(self, attempt_app):
+        async with attempt_app.run_test() as pilot:
+            push_attempt(attempt_app)
+            await pilot.pause()
 
-@pytest.mark.asyncio
-async def test_attempt_uses_language_starter_code(attempt_app):
-    async with attempt_app.run_test() as pilot:
-        push_attempt(attempt_app)
-        await pilot.pause()
+            editor = attempt_app.screen.query_one("#code", TextArea)
 
-        editor = attempt_app.screen.query_one("#code", TextArea)
+            assert editor.text == "def solution():\n    pass"
+            assert editor.language == Language.PYTHON.slug
 
-        assert editor.text == "def solution():\n    pass"
-        assert editor.language == Language.PYTHON.slug
+    @pytest.mark.asyncio
+    async def test_uses_rust_starter_code(self, attempt_app):
+        async with attempt_app.run_test() as pilot:
+            push_attempt(attempt_app, language=Language.RUST)
+            await pilot.pause()
 
+            editor = attempt_app.screen.query_one("#code", TextArea)
 
-@pytest.mark.asyncio
-async def test_attempt_uses_requested_rust_starter_code(
-    attempt_app,
-):
-    async with attempt_app.run_test() as pilot:
-        push_attempt(
-            attempt_app,
-            language=Language.RUST,
-        )
-        await pilot.pause()
+            assert editor.text == "fn main() {\n}"
+            assert editor.language == Language.RUST.slug
 
-        editor = attempt_app.screen.query_one("#code", TextArea)
+    @pytest.mark.asyncio
+    async def test_uses_draft_instead_of_starter_code(self, attempt_app):
+        draft = {"code": "print('saved draft')", "elapsed": 12.5}
 
-        assert editor.text == "fn main() {\n}"
-        assert editor.language == Language.RUST.slug
+        async with attempt_app.run_test() as pilot:
+            push_attempt(attempt_app, draft=draft)
+            await pilot.pause()
 
+            editor = attempt_app.screen.query_one("#code", TextArea)
 
-@pytest.mark.asyncio
-async def test_attempt_uses_draft_instead_of_starter_code(
-    attempt_app,
-):
-    draft = {
-        "code": "print('saved draft')",
-        "elapsed": 12.5,
-    }
-
-    async with attempt_app.run_test() as pilot:
-        push_attempt(
-            attempt_app,
-            draft=draft,
-        )
-        await pilot.pause()
-
-        editor = attempt_app.screen.query_one("#code", TextArea)
-
-        assert editor.text == "print('saved draft')"
+            assert editor.text == "print('saved draft')"
 
 
 # Timeline
-def test_get_timeline_empty_attempts(monkeypatch):
-    monkeypatch.setattr(
-        attempt,
-        "get_best_attempts",
-        lambda *, n, problem_id: [],
-    )
+class TestTimeline:
+    @staticmethod
+    def make_screen() -> AttemptScreen:
+        return AttemptScreen(FakeQuestion(), Language.PYTHON, None)
 
-    screen = AttemptScreen(
-        FakeQuestion(),
-        Language.PYTHON,
-        None,
-    )
+    def test_empty_attempts(self, monkeypatch):
+        monkeypatch.setattr(attempt, "get_best_attempts", lambda *, n, problem_id: [])
 
-    assert screen.get_timeline([]) == ""
+        assert self.make_screen().get_timeline([]) == ""
 
+    def test_formats_attempts(self, monkeypatch):
+        attempts = [
+            make_attempt(attempt_id=1, created_at=100.0, elapsed=65.0),
+            make_attempt(
+                attempt_id=2,
+                status=RunStatus.FAILED,
+                created_at=200.0,
+                elapsed=120.0,
+                lang_id=Language.RUST,
+            ),
+        ]
 
-def test_get_timeline_formats_attempts(monkeypatch):
-    attempts = [
-        {
-            "attempt_id": 1,
-            "status": RunStatus.PASSED,
-            "created_at": 100.0,
-            "elapsed": 65.0,
-            "lang_id": Language.PYTHON,
-        },
-        {
-            "attempt_id": 2,
-            "status": RunStatus.FAILED,
-            "created_at": 200.0,
-            "elapsed": 120.0,
-            "lang_id": Language.RUST,
-        },
-    ]
+        monkeypatch.setattr(attempt, "get_best_attempts", lambda *, n, problem_id: [])
+        monkeypatch.setattr(attempt, "time_ago", lambda value: f"{value} ago")
+        monkeypatch.setattr(attempt, "fmt_secs", lambda value: f"{value}s")
 
-    monkeypatch.setattr(
-        attempt,
-        "get_best_attempts",
-        lambda *, n, problem_id: [],
-    )
-    monkeypatch.setattr(
-        attempt,
-        "time_ago",
-        lambda value: f"{value} ago",
-    )
-    monkeypatch.setattr(
-        attempt,
-        "fmt_secs",
-        lambda value: f"{value}s",
-    )
+        result = self.make_screen().get_timeline(attempts)
 
-    screen = AttemptScreen(
-        FakeQuestion(),
-        Language.PYTHON,
-        None,
-    )
+        assert "100.0 ago" in result
+        assert "200.0 ago" in result
+        assert "65.0s" in result
+        assert "120.0s" in result
+        assert Language.PYTHON.icon in result
+        assert Language.RUST.icon in result
+        assert RunStatus.PASSED.icon in result
+        assert RunStatus.FAILED.icon in result
 
-    result = screen.get_timeline(attempts)
+    def test_marks_best_attempt(self, monkeypatch):
+        best = make_attempt(attempt_id=1, created_at=100.0, elapsed=65.0)
+        attempts = [
+            best,
+            make_attempt(
+                attempt_id=2,
+                created_at=200.0,
+                elapsed=120.0,
+                lang_id=Language.RUST,
+            ),
+        ]
 
-    assert "100.0 ago" in result
-    assert "200.0 ago" in result
-    assert "65.0s" in result
-    assert "120.0s" in result
-    assert Language.PYTHON.icon in result
-    assert Language.RUST.icon in result
-    assert RunStatus.PASSED.icon in result
-    assert RunStatus.FAILED.icon in result
+        monkeypatch.setattr(
+            attempt, "get_best_attempts", lambda *, n, problem_id: [best]
+        )
+        monkeypatch.setattr(attempt, "time_ago", lambda _: "1 min ago")
+        monkeypatch.setattr(attempt, "fmt_secs", lambda _: "1 min")
 
+        screen = self.make_screen()
+        result = screen.get_timeline(attempts)
 
-def test_get_timeline_marks_best_attempt(monkeypatch):
-    attempts = [
-        {
-            "attempt_id": 1,
-            "status": RunStatus.PASSED,
-            "created_at": 100.0,
-            "elapsed": 65.0,
-            "lang_id": Language.PYTHON,
-        },
-        {
-            "attempt_id": 2,
-            "status": RunStatus.PASSED,
-            "created_at": 200.0,
-            "elapsed": 120.0,
-            "lang_id": Language.RUST,
-        },
-    ]
+        assert "<--- best" in result
+        assert screen.best == 65.0
 
-    monkeypatch.setattr(
-        attempt,
-        "get_best_attempts",
-        lambda *, n, problem_id: [attempts[0]],
-    )
-    monkeypatch.setattr(
-        attempt,
-        "time_ago",
-        lambda _: "1 min ago",
-    )
-    monkeypatch.setattr(
-        attempt,
-        "fmt_secs",
-        lambda _: "1 min",
-    )
+    def test_stores_best_elapsed(self, monkeypatch):
+        best = {"attempt_id": 10, "elapsed": 42.5}
 
-    screen = AttemptScreen(
-        FakeQuestion(),
-        Language.PYTHON,
-        None,
-    )
+        monkeypatch.setattr(
+            attempt, "get_best_attempts", lambda *, n, problem_id: [best]
+        )
 
-    result = screen.get_timeline(attempts)
+        screen = self.make_screen()
+        screen.get_timeline([])
 
-    assert "<--- best" in result
-    assert screen.best == 65.0
-
-
-def test_get_timeline_stores_best_elapsed(monkeypatch):
-    best = {
-        "attempt_id": 10,
-        "elapsed": 42.5,
-    }
-
-    monkeypatch.setattr(
-        attempt,
-        "get_best_attempts",
-        lambda *, n, problem_id: [best],
-    )
-
-    screen = AttemptScreen(
-        FakeQuestion(),
-        Language.PYTHON,
-        None,
-    )
-
-    screen.get_timeline([])
-
-    assert screen.best == 42.5
+        assert screen.best == 42.5
 
 
 # Solutions
-def test_get_solutions_only_includes_passed_attempts(monkeypatch):
-    attempts = [
-        {
-            "status": RunStatus.PASSED,
-            "created_at": 100.0,
-            "lang_id": Language.PYTHON,
-            "code": "print('hello')",
-        },
-        {
-            "status": RunStatus.FAILED,
-            "created_at": 200.0,
-            "lang_id": Language.RUST,
-            "code": "broken code",
-        },
-    ]
+class TestSolutions:
+    @staticmethod
+    def make_screen() -> AttemptScreen:
+        return AttemptScreen(FakeQuestion(), Language.PYTHON, None)
 
-    monkeypatch.setattr(
-        attempt,
-        "time_ago",
-        lambda value: f"{value} ago",
-    )
+    def test_only_includes_passed_attempts(self, monkeypatch):
+        attempts = [
+            make_attempt(
+                status=RunStatus.PASSED,
+                created_at=100.0,
+                lang_id=Language.PYTHON,
+                code="print('hello')",
+            ),
+            make_attempt(
+                status=RunStatus.FAILED,
+                created_at=200.0,
+                lang_id=Language.RUST,
+                code="broken code",
+            ),
+        ]
 
-    screen = AttemptScreen(
-        FakeQuestion(),
-        Language.PYTHON,
-        None,
-    )
+        monkeypatch.setattr(attempt, "time_ago", lambda value: f"{value} ago")
 
-    result = screen.get_solutions(attempts)
+        result = self.make_screen().get_solutions(attempts)
 
-    assert "print('hello')" in result
-    assert "broken code" not in result
-    assert Language.PYTHON.icon in result
-    assert "100.0 ago" in result
+        assert "print('hello')" in result
+        assert "broken code" not in result
+        assert Language.PYTHON.icon in result
+        assert "100.0 ago" in result
 
+    def test_supports_multiple_languages(self, monkeypatch):
+        attempts = [
+            make_attempt(
+                status=RunStatus.PASSED,
+                created_at=100.0,
+                lang_id=Language.PYTHON,
+                code="print('python')",
+            ),
+            make_attempt(
+                status=RunStatus.PASSED,
+                created_at=200.0,
+                lang_id=Language.RUST,
+                code='println!("rust");',
+            ),
+        ]
 
-def test_get_solutions_supports_multiple_languages(monkeypatch):
-    attempts = [
-        {
-            "status": RunStatus.PASSED,
-            "created_at": 100.0,
-            "lang_id": Language.PYTHON,
-            "code": "print('python')",
-        },
-        {
-            "status": RunStatus.PASSED,
-            "created_at": 200.0,
-            "lang_id": Language.RUST,
-            "code": 'println!("rust");',
-        },
-    ]
+        monkeypatch.setattr(attempt, "time_ago", lambda _: "1 min ago")
 
-    monkeypatch.setattr(
-        attempt,
-        "time_ago",
-        lambda _: "1 min ago",
-    )
+        result = self.make_screen().get_solutions(attempts)
 
-    screen = AttemptScreen(
-        FakeQuestion(),
-        Language.PYTHON,
-        None,
-    )
+        assert "print('python')" in result
+        assert 'println!("rust");' in result
+        assert f"```{Language.PYTHON.slug}" in result
+        assert f"```{Language.RUST.slug}" in result
 
-    result = screen.get_solutions(attempts)
-
-    assert "print('python')" in result
-    assert 'println!("rust");' in result
-    assert f"```{Language.PYTHON.slug}" in result
-    assert f"```{Language.RUST.slug}" in result
-
-
-def test_get_solutions_returns_empty_string_for_no_attempts():
-    screen = AttemptScreen(
-        FakeQuestion(),
-        Language.PYTHON,
-        None,
-    )
-
-    assert screen.get_solutions([]) == ""
+    def test_returns_empty_string_for_no_attempts(self):
+        assert self.make_screen().get_solutions([]) == ""
 
 
 # Attempt view
-@pytest.mark.asyncio
-async def test_update_attempt_view_loads_recent_attempts(
-    attempt_app,
-    monkeypatch,
-):
-    recent = [
-        {
-            "attempt_id": 1,
-            "status": RunStatus.PASSED,
-            "created_at": 100.0,
-            "elapsed": 60.0,
-            "lang_id": Language.PYTHON,
-            "code": "print('hello')",
-        }
-    ]
+class TestAttemptView:
+    @pytest.mark.asyncio
+    async def test_loads_recent_attempts(self, attempt_app, monkeypatch):
+        recent = [
+            make_attempt(
+                attempt_id=1,
+                created_at=100.0,
+                elapsed=60.0,
+                code="print('hello')",
+            )
+        ]
 
-    monkeypatch.setattr(
-        attempt,
-        "get_recent_attempts",
-        lambda *, n, problem_id: recent,
-    )
-    monkeypatch.setattr(
-        attempt,
-        "get_best_attempts",
-        lambda *, n, problem_id: [],
-    )
-    monkeypatch.setattr(
-        attempt,
-        "time_ago",
-        lambda _: "1 min ago",
-    )
-    monkeypatch.setattr(
-        attempt,
-        "fmt_secs",
-        lambda _: "1 min",
-    )
+        monkeypatch.setattr(
+            attempt, "get_recent_attempts", lambda *, n, problem_id: recent
+        )
+        monkeypatch.setattr(attempt, "get_best_attempts", lambda *, n, problem_id: [])
+        monkeypatch.setattr(attempt, "time_ago", lambda _: "1 min ago")
+        monkeypatch.setattr(attempt, "fmt_secs", lambda _: "1 min")
 
-    async with attempt_app.run_test() as pilot:
-        screen = push_attempt(attempt_app)
-        await pilot.pause()
+        async with attempt_app.run_test() as pilot:
+            screen = push_attempt(attempt_app)
+            await pilot.pause()
 
-        screen.update_attempt_view()
+            screen.update_attempt_view()
 
-        assert "1 min ago" in str(screen.timeline.content)
-        assert "print('hello')" in screen.solutions.source
+            assert "1 min ago" in str(screen.timeline.content)
+            assert "print('hello')" in screen.solutions.source
 
 
 # Submit
-@pytest.mark.asyncio
-async def test_submit_pushes_result_modal(
-    attempt_app,
-    monkeypatch,
-):
-    monkeypatch.setattr(
-        attempt,
-        "ResultModal",
-        FakeResultModal,
-    )
-    monkeypatch.setattr(
-        attempt,
-        "monotonic",
-        lambda: 110.0,
-    )
+class TestSubmit:
+    @pytest.fixture(autouse=True)
+    def stub_result_modal(self, monkeypatch):
+        monkeypatch.setattr(attempt, "ResultModal", FakeResultModal)
+        monkeypatch.setattr(attempt, "monotonic", lambda: 110.0)
 
-    async with attempt_app.run_test() as pilot:
-        screen = push_attempt(attempt_app)
-        await pilot.pause()
+    @staticmethod
+    def capture_push_screen(monkeypatch, app):
+        captured: dict = {}
 
-        captured = {}
-
-        def fake_push_screen(screen, callback=None):
-            captured["screen"] = screen
+        def fake_push_screen(new_screen, callback=None):
+            captured["screen"] = new_screen
             captured["callback"] = callback
 
-        monkeypatch.setattr(
-            attempt_app,
-            "push_screen",
-            fake_push_screen,
-        )
+        monkeypatch.setattr(app, "push_screen", fake_push_screen)
+        return captured
 
-        screen.test_time = 100.0
+    @pytest.mark.asyncio
+    async def test_pushes_result_modal(self, attempt_app, monkeypatch):
+        async with attempt_app.run_test() as pilot:
+            screen = push_attempt(attempt_app)
+            await pilot.pause()
 
-        editor = screen.query_one("#code", TextArea)
-        editor.text = "print('solution')"
+            captured = self.capture_push_screen(monkeypatch, attempt_app)
 
-        screen.submit()
+            screen.test_time = 100.0
+            screen.query_one("#code", TextArea).text = "print('solution')"
+            screen.submit()
 
-        result = captured["screen"]
+            result = captured["screen"]
 
-        assert isinstance(result, FakeResultModal)
-        assert result.question is screen.question
-        assert result.code == "print('solution')"
-        assert result.language is Language.PYTHON
-        assert result.elapsed == 10.0
-        assert result.best is None
-        assert callable(captured["callback"])
+            assert isinstance(result, FakeResultModal)
+            assert result.question is screen.question
+            assert result.code == "print('solution')"
+            assert result.language is Language.PYTHON
+            assert result.elapsed == 10.0
+            assert result.best is None
+            assert callable(captured["callback"])
 
+    @pytest.mark.asyncio
+    async def test_includes_draft_elapsed_time(self, attempt_app, monkeypatch):
+        draft = {"code": "saved", "elapsed": 25.0}
 
-@pytest.mark.asyncio
-async def test_submit_includes_draft_elapsed_time(
-    attempt_app,
-    monkeypatch,
-):
-    draft = {
-        "code": "saved",
-        "elapsed": 25.0,
-    }
+        async with attempt_app.run_test() as pilot:
+            screen = push_attempt(attempt_app, draft=draft)
+            await pilot.pause()
 
-    monkeypatch.setattr(
-        attempt,
-        "ResultModal",
-        FakeResultModal,
-    )
-    monkeypatch.setattr(
-        attempt,
-        "monotonic",
-        lambda: 110.0,
-    )
+            captured = self.capture_push_screen(monkeypatch, attempt_app)
 
-    async with attempt_app.run_test() as pilot:
-        screen = push_attempt(
-            attempt_app,
-            draft=draft,
-        )
-        await pilot.pause()
+            screen.test_time = 100.0
+            screen.submit()
 
-        captured = {}
-
-        def fake_push_screen(screen, callback=None):
-            captured["screen"] = screen
-            captured["callback"] = callback
-
-        monkeypatch.setattr(
-            attempt_app,
-            "push_screen",
-            fake_push_screen,
-        )
-
-        screen.test_time = 100.0
-
-        screen.submit()
-
-        assert captured["screen"].elapsed == 35.0
+            assert captured["screen"].elapsed == 35.0
 
 
 # Draft
-def test_load_draft_uses_current_problem_and_language(monkeypatch):
-    captured = {}
+class TestDraft:
+    def test_load_uses_current_problem_and_language(self, monkeypatch):
+        captured = {}
 
-    def fake_get_draft(*, problem_id, lang_id):
-        captured["problem_id"] = problem_id
-        captured["lang_id"] = lang_id
-        return "draft"
+        def fake_get_draft(*, problem_id, lang_id):
+            captured["problem_id"] = problem_id
+            captured["lang_id"] = lang_id
+            return "draft"
 
-    monkeypatch.setattr(
-        attempt,
-        "get_draft",
-        fake_get_draft,
-    )
+        monkeypatch.setattr(attempt, "get_draft", fake_get_draft)
 
-    screen = AttemptScreen(
-        FakeQuestion(question_id=2),
-        Language.RUST,
-        None,
-    )
+        screen = AttemptScreen(
+            FakeQuestion(question_id=2),
+            Language.RUST,
+            None,
+        )
 
-    assert screen.load_draft() == "draft"
-    assert captured == {
-        "problem_id": 2,
-        "lang_id": Language.RUST,
-    }
+        assert screen.load_draft() == "draft"
+        assert captured == {
+            "problem_id": 2,
+            "lang_id": Language.RUST,
+        }
 
 
 # Actions
-@pytest.mark.asyncio
-async def test_action_submit_calls_submit(
-    attempt_app,
-    monkeypatch,
-):
-    called = False
+class TestActions:
+    """Key-binding action handlers."""
 
-    def fake_submit():
-        nonlocal called
-        called = True
+    @pytest.mark.asyncio
+    async def test_action_submit_calls_submit(self, attempt_app, monkeypatch):
+        called = False
 
-    async with attempt_app.run_test() as pilot:
-        screen = push_attempt(attempt_app)
-        await pilot.pause()
+        def fake_submit():
+            nonlocal called
+            called = True
 
-        monkeypatch.setattr(screen, "submit", fake_submit)
+        async with attempt_app.run_test() as pilot:
+            screen = push_attempt(attempt_app)
+            await pilot.pause()
 
-        screen.action_submit()
+            monkeypatch.setattr(screen, "submit", fake_submit)
+            screen.action_submit()
 
-        assert called is True
+            assert called is True
 
+    @pytest.mark.asyncio
+    async def test_action_back_dismisses_screen(self, attempt_app):
+        async with attempt_app.run_test() as pilot:
+            push_attempt(attempt_app)
+            await pilot.pause()
 
-@pytest.mark.asyncio
-async def test_action_back_dismisses_screen(
-    attempt_app,
-):
-    async with attempt_app.run_test() as pilot:
-        push_attempt(attempt_app)
-        await pilot.pause()
+            assert isinstance(attempt_app.screen, AttemptScreen)
 
-        assert isinstance(attempt_app.screen, AttemptScreen)
+            attempt_app.screen.action_back()
+            await pilot.pause()
 
-        attempt_app.screen.action_back()
-        await pilot.pause()
-
-        assert not isinstance(attempt_app.screen, AttemptScreen)
+            assert not isinstance(attempt_app.screen, AttemptScreen)
 
 
 # Language changes
-@pytest.mark.asyncio
-async def test_update_language_changes_editor_language(
-    attempt_app,
-    monkeypatch,
-):
-    async with attempt_app.run_test() as pilot:
-        screen = push_attempt(attempt_app)
-        await pilot.pause()
+class TestLanguageChanges:
+    @pytest.mark.asyncio
+    async def test_update_changes_editor_language(self, attempt_app, monkeypatch):
+        async with attempt_app.run_test() as pilot:
+            screen = push_attempt(attempt_app)
+            await pilot.pause()
 
-        monkeypatch.setattr(
-            screen,
-            "load_draft",
-            lambda: None,
-        )
+            monkeypatch.setattr(screen, "load_draft", lambda: None)
+            screen.update_language(Language.RUST)
 
-        screen.update_language(Language.RUST)
+            editor = screen.query_one("#code", TextArea)
 
-        editor = screen.query_one("#code", TextArea)
+            assert screen.language is Language.RUST
+            assert editor.language == Language.RUST.slug
+            assert editor.text == "fn main() {\n}"
 
-        assert screen.language is Language.RUST
-        assert editor.language == Language.RUST.slug
-        assert editor.text == "fn main() {\n}"
+    @pytest.mark.asyncio
+    async def test_update_uses_language_specific_draft(self, attempt_app, monkeypatch):
+        draft = {"code": 'fn main() {\n    println!("saved");\n}'}
 
+        async with attempt_app.run_test() as pilot:
+            screen = push_attempt(attempt_app)
+            await pilot.pause()
 
-@pytest.mark.asyncio
-async def test_update_language_uses_language_specific_draft(
-    attempt_app,
-    monkeypatch,
-):
-    draft = {
-        "code": 'fn main() {\n    println!("saved");\n}',
-    }
+            monkeypatch.setattr(screen, "load_draft", lambda: draft)
+            screen.update_language(Language.RUST)
 
-    async with attempt_app.run_test() as pilot:
-        screen = push_attempt(attempt_app)
-        await pilot.pause()
+            editor = screen.query_one("#code", TextArea)
 
-        monkeypatch.setattr(
-            screen,
-            "load_draft",
-            lambda: draft,
-        )
+            assert screen.language is Language.RUST
+            assert editor.language == Language.RUST.slug
+            assert editor.text == draft["code"]
 
-        screen.update_language(Language.RUST)
+    @pytest.mark.asyncio
+    async def test_update_uses_starter_when_no_draft(self, attempt_app, monkeypatch):
+        async with attempt_app.run_test() as pilot:
+            screen = push_attempt(attempt_app)
+            await pilot.pause()
 
-        editor = screen.query_one("#code", TextArea)
+            monkeypatch.setattr(screen, "load_draft", lambda: None)
+            screen.update_language(Language.RUST)
 
-        assert screen.language is Language.RUST
-        assert editor.language == Language.RUST.slug
-        assert editor.text == draft["code"]
+            editor = screen.query_one("#code", TextArea)
 
+            assert screen.language is Language.RUST
+            assert editor.language == Language.RUST.slug
+            assert editor.text == "fn main() {\n}"
 
-@pytest.mark.asyncio
-async def test_update_language_uses_starter_when_no_draft(
-    attempt_app,
-    monkeypatch,
-):
-    async with attempt_app.run_test() as pilot:
-        screen = push_attempt(attempt_app)
-        await pilot.pause()
+    @pytest.mark.asyncio
+    async def test_same_language_change_does_not_reload(self, attempt_app, monkeypatch):
+        called = False
 
-        monkeypatch.setattr(
-            screen,
-            "load_draft",
-            lambda: None,
-        )
+        def fake_update_language(language):
+            nonlocal called
+            called = True
 
-        screen.update_language(Language.RUST)
+        async with attempt_app.run_test() as pilot:
+            screen = push_attempt(attempt_app)
+            await pilot.pause()
 
-        editor = screen.query_one("#code", TextArea)
+            monkeypatch.setattr(screen, "update_language", fake_update_language)
 
-        assert screen.language is Language.RUST
-        assert editor.language == Language.RUST.slug
-        assert editor.text == "fn main() {\n}"
+            title = screen.query_one(Title)
+            screen.on_title_language_changed(title.LanguageChanged(Language.PYTHON))
 
+            assert called is False
 
-@pytest.mark.asyncio
-async def test_same_language_change_does_not_reload(
-    attempt_app,
-    monkeypatch,
-):
-    called = False
+    @pytest.mark.asyncio
+    async def test_different_language_change_updates_language(
+        self, attempt_app, monkeypatch
+    ):
+        captured = {}
 
-    def fake_update_language(language):
-        nonlocal called
-        called = True
+        def fake_update_language(language):
+            captured["language"] = language
 
-    async with attempt_app.run_test() as pilot:
-        screen = push_attempt(attempt_app)
-        await pilot.pause()
+        async with attempt_app.run_test() as pilot:
+            screen = push_attempt(attempt_app)
+            await pilot.pause()
 
-        monkeypatch.setattr(
-            screen,
-            "update_language",
-            fake_update_language,
-        )
+            monkeypatch.setattr(screen, "update_language", fake_update_language)
 
-        title = screen.query_one(Title)
+            title = screen.query_one(Title)
+            screen.on_title_language_changed(title.LanguageChanged(Language.RUST))
 
-        screen.on_title_language_changed(title.LanguageChanged(Language.PYTHON))
-
-        assert called is False
-
-
-@pytest.mark.asyncio
-async def test_different_language_change_updates_language(
-    attempt_app,
-    monkeypatch,
-):
-    captured = {}
-
-    def fake_update_language(language):
-        captured["language"] = language
-
-    async with attempt_app.run_test() as pilot:
-        screen = push_attempt(attempt_app)
-        await pilot.pause()
-
-        monkeypatch.setattr(
-            screen,
-            "update_language",
-            fake_update_language,
-        )
-
-        title = screen.query_one(Title)
-
-        screen.on_title_language_changed(title.LanguageChanged(Language.RUST))
-
-        assert captured == {
-            "language": Language.RUST,
-        }
+            assert captured == {"language": Language.RUST}
