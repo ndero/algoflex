@@ -16,9 +16,14 @@ class Level(IntEnum):
         return self.name.title()
 
 
+ICONS = {1: "🐍", 2: "🦀", 3: "🛢️"}
+SUFFIXES = {1: ".py", 2: ".rs", 3: ".sql"}
+
+
 class Language(IntEnum):
     PYTHON = 1
     RUST = 2
+    SQL = 3
 
     @property
     def label(self) -> str:
@@ -30,13 +35,11 @@ class Language(IntEnum):
 
     @property
     def icon(self) -> str:
-        icons = {self.PYTHON: "🐍", self.RUST: "🦀"}
-        return icons[self]
+        return ICONS[self]
 
     @property
     def suffix(self) -> str:
-        suffixes = {self.PYTHON: ".py", self.RUST: ".rs"}
-        return suffixes[self]
+        return SUFFIXES[self]
 
 
 class RunStatus(IntEnum):
@@ -114,7 +117,7 @@ class Question:
 
     @cached_property
     def python_tests(self) -> str:
-        return self._read_file(self._data_dir / "run.py") + self._read_file(
+        return self._read_file(self._data_dir / "run_python.py") + self._read_file(
             self._question_dir / "python_tests.py"
         )
 
@@ -124,9 +127,17 @@ class Question:
 
     @cached_property
     def rust_tests(self) -> str:
-        return self._read_file(self._data_dir / "run.rs") + self._read_file(
+        return self._read_file(self._data_dir / "run_rust.rs") + self._read_file(
             self._question_dir / "rust_tests.rs"
         )
+
+    @cached_property
+    def sql_starter(self) -> str:
+        return self._read_file(self._question_dir / "sql_starter.txt")
+
+    @cached_property
+    def sql_tests(self) -> str:
+        return self._read_file(self._question_dir / "sql_tests.sql")
 
     @staticmethod
     def _read_file(path: Path) -> str:

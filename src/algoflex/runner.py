@@ -3,7 +3,7 @@ from __future__ import annotations
 import asyncio
 import sys
 import tempfile
-from collections.abc import Awaitable, Callable
+from collections.abc import Awaitable, Callable, Sequence
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -28,6 +28,7 @@ async def run_solution(
     *,
     on_line: LineCallback | None = None,
     timeout: float = TIMEOUT,
+    args: Sequence[str] = (),
 ) -> ExecutionResult:
     source = f"{user_code.strip()}\n\n{test_code}"
 
@@ -38,12 +39,27 @@ async def run_solution(
         source_path.write_text(source, encoding="utf-8")
 
         executable_path = tmp_dir / "main"
+
         if language is Language.RUST:
             return await _run_rust(
                 source_path,
                 executable_path,
                 on_line=on_line,
                 timeout=timeout,
+            )
+
+        if language is Language.SQL:
+            sql_path = tmp_dir / "submission.sql"
+            tests_path = tmp_dir / "sql_tests.sql"
+
+            sql_path.write_text(user_code, encoding="utf-8")
+            tests_path.write_text(test_code, encoding="utf-8")
+
+            return await _run_python(
+                Path(__file__).with_name("sql_runner.py"),
+                on_line=on_line,
+                timeout=timeout,
+                args=(str(sql_path), str(tests_path)),
             )
 
         return await _run_python(
@@ -58,11 +74,13 @@ async def _run_python(
     *,
     on_line: LineCallback | None,
     timeout: float,
+    args: Sequence[str] = (),
 ) -> ExecutionResult:
     proc = await asyncio.create_subprocess_exec(
         sys.executable,
         "-u",
         str(source_path),
+        *args,
         stdout=asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.PIPE,
     )
