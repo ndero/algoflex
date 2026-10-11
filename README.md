@@ -18,29 +18,28 @@ It combines a keyboard-driven TUI with local problem data, automated code execut
 * **Cross-platform** — Runs on Linux, macOS, and Windows.
 * **Keyboard-driven TUI** — Navigate and solve problems efficiently from the terminal. Mouse input is also supported.
 * **Curated problem set** — A focused collection of algorithm and data-structure problems designed to strengthen fundamental problem-solving skills.
-* **Multiple languages** — Solve problems using Python or Rust.
+* **Multiple languages** — Solve problems using Python, Rust or SQL.
 * **Automated testing** — Run problem-specific tests against your solution and receive immediate feedback.
 * **Progress tracking** — Track solve times, recent activity, historical attempts, and areas for improvement.
-* **Local persistence** — Problem attempts, drafts, language preferences, and performance data are stored locally.
+* **Local persistence** — Problem attempts, drafts and language preferences are stored locally.
 
-## Algorithms & Data Structures
+## Problem set
 
-The curated problem set covers fundamental algorithms and data structures, including:
+The curated problem set covers fundamental algorithms and data structures, and SQL fundamentals. These include:
 
 * Arrays & Strings
-* Linked Lists
 * Stacks & Queues
-* Hashing
+* Linked Lists
 * Trees & Binary Search Trees
 * Heaps & Priority Queues
 * Graphs
-* Searching & Sorting
+* Hashing
 * Greedy Algorithms
 * Dynamic Programming
 * Backtracking
 * Recursion
-* Intervals
 * Bit Manipulation
+* SQL Queries, CTEs, partition windows & window functions. 
 
 Problems are curated to reinforce core concepts and develop reusable problem-solving patterns across increasing levels of difficulty. Their order is randomized on each startup, encouraging independent problem-solving.
 
