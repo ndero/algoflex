@@ -15,3 +15,4 @@
 - [x] Fix search - freezing if updating search term too quickly.
 - [x] Add constraints to problem descriptions. 
 - [ ] Dashboard improvements to capture language specific progress.
+- [ ] Show monthly highlight if no daily highlight. 

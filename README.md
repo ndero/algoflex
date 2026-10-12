@@ -10,8 +10,6 @@ Algoflex is a lightweight, offline-first terminal application for practicing alg
 
 Algoflex is designed around a simple idea: algorithm practice should be fast, focused, and available anywhere a terminal is available.
 
-It combines a keyboard-driven TUI with local problem data, automated code execution, test feedback, and performance tracking. Everything runs locally, making it suitable for practicing without an internet connection.
-
 ## Features
 
 * **Offline-first** — Practice without relying on an internet connection or remote services.
@@ -49,6 +47,8 @@ Algoflex requires **Python 3.12 or later** and runs on **Linux, macOS, and Windo
 
 Rust solutions additionally require **Rust 1.97 or later**.
 
+SQL solutions use Python's SQLite3. 
+
 ### Using `uv`
 
 Install Algoflex as a standalone tool with [uv](https://docs.astral.sh/uv/):
@@ -79,6 +79,7 @@ Choose a problem, write your solution, run the tests, and review your results.
 
 * **Python 3.12+**
 * **Rust 1.97+**
+* **SQL** using Python's **SQlite3**
 
 ## Screenshots
 
